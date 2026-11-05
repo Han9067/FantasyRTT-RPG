@@ -4,7 +4,7 @@ extends RefCounted
 ## Originals remain available for reference through use_original=true.
 const FRAME_SIZE := Vector2i(32, 36)
 const SELECTED_NUMBERS := [1, 2, 3, 4]
-const SOURCE_FRAMES := {"idle": [0, 1], "walk": [0, 1, 2, 3]}
+const SOURCE_FRAMES := {"idle": [0, 1], "walk": [0, 1]}
 const ORIGINAL_FRAMES := {"idle": [0, 2], "walk": [1, 3, 5, 7]}
 static var sheet_cache: Dictionary = {}
 
@@ -40,7 +40,7 @@ static func animations(gender: int, look: int) -> SpriteFrames:
 		frames.add_animation(animation)
 		frames.set_animation_loop(animation, true)
 		# Keep the original cycle duration after reducing frames: 4×330 ms and 8×105 ms.
-		frames.set_animation_speed(animation, 1.0 / 0.66 if animation == "idle" else 1.0 / 0.21)
+		frames.set_animation_speed(animation, 1.0 / 0.66 if animation == "idle" else 1.0 / 0.42)
 		for i in range(SOURCE_FRAMES[animation].size()):
 			frames.add_frame(animation, texture(gender, look, animation, i))
 	return frames
