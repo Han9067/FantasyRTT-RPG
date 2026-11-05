@@ -17,6 +17,7 @@ const VARIANTS := [
 
 var poses: Array[Image] = []
 var hair_masks: Array[PackedByteArray] = []
+var hair_edges: Array[Dictionary] = []
 
 func extract_reference() -> void:
 	var source := Image.load_from_file(REFERENCE)
@@ -26,6 +27,7 @@ func extract_reference() -> void:
 		poses.append(source.get_region(Rect2i(origin,17,FRAME_SIZE.x,FRAME_SIZE.y)))
 	for pose in poses:
 		hair_masks.append(hair_mask(pose))
+		hair_edges.append(edge_samples(pose,hair_masks[-1]))
 	# Keep the requested minimal near-boot adjustment in SOURCE pixels only.
 	# Shift the right-hand contour left by one source pixel on the boot/toe rows.
 	for y in range(623,670):
@@ -69,11 +71,67 @@ func hair_mask(pose: Image) -> PackedByteArray:
 				queue.append(index)
 	return mask
 
-func variant_pixel(color: Color, gender: int, look: int, is_head: bool, is_hair: bool) -> Color:
-	if color.a == 0 or (gender==0 and look==0): return color
+func skin_colour(color: Color) -> bool:
+	return color.a > 0.8 and color.r > 0.85 and color.g > 0.5 and color.r > color.g*1.1 and color.b > 0.25
+
+func edge_samples(pose: Image, mask: PackedByteArray) -> Dictionary:
+	# Recover coverage of mixed hair/skin pixels from nearby unblended samples.
+	# Recolour only the hair contribution, then blend with the original skin colour.
+	var edges := {}
+	for y in range(195,358):
+		for x in range(175,400):
+			var point := Vector2i(x,y)
+			var original := pose.get_pixelv(point)
+			if original.a < 0.8: continue
+			var skin := Color.TRANSPARENT
+			var hair := Color.TRANSPARENT
+			for distance in range(1,5):
+				for direction in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
+					var neighbor: Vector2i = point+direction*distance
+					var sample := pose.get_pixelv(neighbor)
+					var index := neighbor.y*FRAME_SIZE.x+neighbor.x
+					if skin.a==0 and mask[index]==0 and skin_colour(sample): skin=sample
+					if hair.a==0 and mask[index]==1 and distance>=3:
+						# Avoid picking a second blended boundary pixel as the hair sample.
+						if mask[index-1]==1 and mask[index+1]==1 and mask[index-FRAME_SIZE.x]==1 and mask[index+FRAME_SIZE.x]==1:
+							hair=sample
+			if skin.a==0 or hair.a==0: continue
+			var h := Vector3(hair.r,hair.g,hair.b)
+			var delta := Vector3(skin.r,skin.g,skin.b)-h
+			var raw := Vector3(original.r,original.g,original.b)
+			var coverage := clampf((raw-h).dot(delta)/maxf(delta.length_squared(),0.001),0,1)
+			var reconstructed := h+delta*coverage
+			if (raw-reconstructed).length() < 0.09 and coverage>0.01 and coverage<0.99:
+				edges[y*FRAME_SIZE.x+x]=[hair,skin,coverage]
+	return edges
+
+func hair_tint(color: Color, gender: int, look: int) -> Color:
 	var v: Array = VARIANTS[gender*4+look]
-	if is_head and is_hair:
-		return tint(color,Color(v[0]),Color("69432f"))
+	var mid := Color(v[0])
+	var light := Color(v[1])
+	var change := color.get_luminance()-Color("69432f").get_luminance()
+	# Bounded ramps preserve texture without overflowing RGB channels to white.
+	var result := mid.lerp(light,clampf(change/0.25,0,1)) if change>=0 else mid.darkened(clampf(-change/0.29,0,0.85))
+	result.a=color.a
+	return result
+
+func is_collar(color: Color, position: Vector2i) -> bool:
+	return Rect2i(170,357,150,55).has_point(position) and color.v>0.24 and color.r>=color.g*0.99 and color.g>color.r*0.80 and color.b>color.r*0.62
+
+func variant_pixel(color: Color, gender: int, look: int, is_head: bool, position: Vector2i, pose_index: int) -> Color:
+	if color.a == 0: return color
+	var v: Array = VARIANTS[gender*4+look]
+	# The collar crosses the layer split: use the same material rule on both layers.
+	if is_collar(color,position): return tint(color,Color(v[3]),Color("eedbb9"))
+	if gender==0 and look==0: return color
+	var index := position.y*FRAME_SIZE.x+position.x
+	if is_head and hair_edges[pose_index].has(index):
+		var samples: Array = hair_edges[pose_index][index]
+		var result := hair_tint(samples[0],gender,look).lerp(samples[1],samples[2])
+		result.a=color.a
+		return result
+	if is_head and position.y<HEAD_END and hair_masks[pose_index][index]==1:
+		return hair_tint(color,gender,look)
 	if not is_head and color.g > color.r*1.02 and color.g > color.b*1.2:
 		return tint(color,Color(v[3]),Color("788a43"))
 	return color
@@ -94,14 +152,12 @@ func make_layers(gender: int, look: int, pose_index: int) -> Array[Image]:
 	var pose := poses[pose_index]
 	head.blit_rect(pose,Rect2i(0,0,FRAME_SIZE.x,HEAD_END),Vector2i.ZERO)
 	body.blit_rect(pose,Rect2i(0,HEAD_END,FRAME_SIZE.x,FRAME_SIZE.y-HEAD_END),Vector2i(0,HEAD_END))
-	if gender==0 and look==0: return [body,head]
 	for part in [head,body]:
 		for y in range(FRAME_SIZE.y):
 			for x in range(FRAME_SIZE.x):
 				var pixel: Color = part.get_pixel(x,y)
 				if pixel.a > 0:
-					var is_hair := y < HEAD_END and hair_masks[pose_index][y*FRAME_SIZE.x+x]==1
-					part.set_pixel(x,y,variant_pixel(pixel,gender,look,part==head,is_hair))
+					part.set_pixel(x,y,variant_pixel(pixel,gender,look,part==head,Vector2i(x,y),pose_index))
 	var v: Array = VARIANTS[gender*4+look]
 	var colors := {"o":Color("302923"),"h":Color(v[0]),"H":Color(v[1]),"r":Color("b75f66"),"g":Color("c9ab70")}
 	if gender == 0:

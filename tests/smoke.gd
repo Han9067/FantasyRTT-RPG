@@ -54,6 +54,7 @@ func run() -> void:
 	# Independent fixture coordinates: translations only, never resize, recolour or replace heads.
 	var approved := Image.load_from_file("res://tools/references/approved_male_01.png")
 	var idle_changes := 0
+	var collar_changes := 0
 	for pose in range(3):
 		var rendered: Image = game.animations[0].get_frame_texture("idle" if pose==0 else "walk",0 if pose==0 else pose-1).get_image()
 		assert(rendered.get_size() == Vector2i(512,704))
@@ -65,10 +66,14 @@ func run() -> void:
 				if expected.a > 0:
 					matches = matches and absf(actual.r-expected.r) <= 1.01/255 and absf(actual.g-expected.g) <= 1.01/255 and absf(actual.b-expected.b) <= 1.01/255
 				if not matches:
-					# Only the requested one-source-pixel idle boot contour edit may differ.
-					assert(pose==0 and y>=623 and y<670 and x>=180 and x<=350, "Approved artwork changed outside the idle toe")
-					idle_changes += 1
+					if Rect2i(170,357,150,55).has_point(Vector2i(x,y)):
+						assert(actual.a==expected.a, "Collar recolouring changed silhouette")
+						collar_changes += 1
+					else:
+						assert(pose==0 and y>=623 and y<670 and x>=180 and x<=350, "Approved artwork changed outside requested toe/collar edits")
+						idle_changes += 1
 	assert(idle_changes > 0 and idle_changes <= 94, "Idle correction exceeded one contour column plus its edge")
+	assert(collar_changes > 1000, "Tunic collar was not applied")
 	# Recolouring blond/silver hair must never tint eyes, ear shading or facial skin.
 	# Check each imported runtime frame against the independently approved source.
 	for pose in range(3):
@@ -82,6 +87,22 @@ func run() -> void:
 	for appearance in [2,6]:
 		var changed: Image = game.animations[appearance].get_frame_texture("idle",0).get_image()
 		assert(changed.get_pixel(200,100) != approved.get_pixel(357,117), "Variant hair colour was lost")
+	# Former clipped-white pixels at the forehead, ear and jaw remain below skin brightness.
+	# This checks actual imported colours, independent of the generator's edge/mask algorithm.
+	for appearance in [2,6]:
+		for pose in range(3):
+			var actual: Image = game.animations[appearance].get_frame_texture("idle" if pose==0 else "walk",0 if pose==0 else pose-1).get_image()
+			for point in [Vector2i(313,202),Vector2i(313,224),Vector2i(295,226),Vector2i(210,252),Vector2i(229,352)]:
+				assert(actual.get_pixelv(point).get_luminance()<0.88, "Bright hair/skin boundary halo returned")
+	# Collar samples above and below the head/body split must match each tunic's hue.
+	var tunic_colours := [Color("788a43"),Color("aa6454"),Color("809653"),Color("52738b"),Color("698d9b"),Color("a27b54"),Color("9181a4"),Color("8c657e")]
+	for appearance in range(8):
+		for pose in range(3):
+			var actual: Image = game.animations[appearance].get_frame_texture("idle" if pose==0 else "walk",0 if pose==0 else pose-1).get_image()
+			for point in [Vector2i(220,365),Vector2i(240,370),Vector2i(275,390),Vector2i(300,400),Vector2i(200,386)]:
+				var pixel := actual.get_pixelv(point)
+				assert(absf(pixel.h-tunic_colours[appearance].h)<0.04, "Collar does not match its tunic")
+				assert(pixel.v<0.80, "Cream collar remained")
 	game.show_creation()
 	assert(game.choices.get_child_count() == 4)
 	game.name_input.text = "테스트 인물"
@@ -117,7 +138,7 @@ func run() -> void:
 	assert(game.player_name == "테스트 인물")
 	assert(game.selected_gender == 1)
 	assert(game.selected_looks[1] == 3)
-	print("PASS: original references preserved, 24 source-resolution frames/layers valid, approved artwork and eye/face colour comparisons passed, menu, 8 appearances, gender, portrait, name, age bounds, 1/2 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
+	print("PASS: original references preserved, 24 source-resolution frames/layers valid, approved artwork, eye/face colours, hair boundaries and tunic collars verified, menu, 8 appearances, gender, portrait, name, age bounds, 1/2 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
 	quit()
 
 func opaque_bounds(image: Image) -> Rect2i:

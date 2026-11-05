@@ -1,7 +1,7 @@
 # Project conventions
 
 - The main menu displays the current release as `버전 : 0.0.N`.
-- Current release: 0.0.9. For each subsequent completed user-requested update, increment the last component by one (next: 0.0.10). One increment per delivered update, not per commit or build attempt.
+- Current release: 0.0.10. For each subsequent completed user-requested update, increment the last component by one (next: 0.0.11). One increment per delivered update, not per commit or build attempt.
 - Never change either of the first two version components unless the user explicitly requests it.
 - Keep the project.godot application version and main menu display in sync.
 - Deliver playable changes to the existing GitHub Pages site by updating the `gh-pages` branch after validation; keep editable source on `main`.
@@ -11,6 +11,8 @@
 - Each appearance has 1 idle and 2 walking frames, drawn as separate side-profile poses. Preserve the original cycle duration.
 - The world map is a non-interactive prototype. Preserve the approved city/terrain scale and detailed pixel style.
 
-- Version 0.0.8 fixes the destructive 32×36 conversion. Keep the approved preview in tools/references/approved_male_01.png at source resolution and original colours for male 01. Do not quantize, resample or replace its heads between frames. Only the requested one-source-pixel idle toe contour correction is permitted. Display size is independent of source resolution; the world figure stays about 30 world units tall. Other variants use continuous colour adjustments and their existing hair accessories. Verify imported/composed male-01 textures against the approved artwork before publishing.
+- Version 0.0.8 fixes the destructive 32×36 conversion. Keep the approved preview in tools/references/approved_male_01.png at source resolution and original colours for male 01. Do not quantize, resample or replace its heads between frames. The requested one-source-pixel idle toe correction and tunic-coloured collar are permitted. Display size is independent of source resolution; the world figure stays about 30 world units tall. Other variants use continuous colour adjustments and their existing hair accessories. Verify imported/composed male-01 textures against the approved artwork before publishing.
 
-- Hair recolouring must be restricted to the connected hair region. Preserve original eyes, skin and ear shading in every appearance/frame; brown facial features are not hair. The cream collar remains part of the approved artwork.
+- Hair recolouring must be restricted to the connected hair region and its mixed skin boundary pixels. Preserve original eyes, skin and ear shading in every appearance/frame; brown facial features are not hair. Use each tunic colour on the collar, across both head/body layers.
+
+- Use bounded hair colour ramps and reconstruct mixed hair/skin edge coverage to avoid clipped white outlines on blond/silver variants. Preserve source resolution, facial features, alpha and pose geometry.
