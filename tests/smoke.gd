@@ -9,8 +9,8 @@ func run() -> void:
 	await process_frame
 	assert(game.textures.size() == 8)
 	for frames in game.animations:
-		assert(frames.get_frame_count("idle") == 4)
-		assert(frames.get_frame_count("walk") == 8)
+		assert(frames.get_frame_count("idle") == 2)
+		assert(frames.get_frame_count("walk") == 4)
 		for animation in ["idle", "walk"]:
 			var images := {}
 			for i in range(frames.get_frame_count(animation)):
@@ -33,7 +33,7 @@ func run() -> void:
 	assert(game.player_age == 40)
 	game.preview_animation = "walk"
 	game.animation_time = 0.0
-	game._process(0.15)
+	game._process(0.2)
 	assert(game.portrait.texture == game.animations[7].get_frame_texture("walk", 1))
 	game.create_button.pressed.emit()
 	await process_frame
@@ -50,5 +50,5 @@ func run() -> void:
 	assert(game.player_name == "테스트 인물")
 	assert(game.selected_gender == 1)
 	assert(game.selected_looks[1] == 3)
-	print("PASS: menu, 8 appearances, gender, portrait, name, age bounds, 4/8 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
+	print("PASS: menu, 8 appearances, gender, portrait, name, age bounds, 2/4 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
 	quit()

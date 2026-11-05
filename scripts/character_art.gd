@@ -25,7 +25,7 @@ static func texture(gender: int, look: int, animation := "idle", frame := 0) -> 
 	]
 	var colors: Array = styles[gender * 4 + look]
 	var p := {
-		"o": Color("2c3038"), "c": Color(colors[0]), "C": Color(colors[1]),
+		"o": Color("394047"), "c": Color(colors[0]), "C": Color(colors[1]),
 		"d": Color(colors[2]), "h": Color(colors[3]), "H": Color(colors[4]),
 		"j": Color(colors[5]), "s": Color(colors[6]),
 		"S": Color(colors[6]).lightened(0.12), "t": Color(colors[6]).darkened(0.16),
@@ -34,33 +34,34 @@ static func texture(gender: int, look: int, animation := "idle", frame := 0) -> 
 		"n": Color("545b60"), "N": Color("7b8181"), "e": Color("34323c")
 	}
 	var walking := animation == "walk"
-	var step_cycle := [-3, -2, 0, 2, 3, 2, 0, -2]
-	var stride: int = step_cycle[frame % 8] if walking else 0
-	var lift := 1 if (walking and frame % 4 == 1) or (not walking and frame in [1, 2]) else 0
-	stamp(image, Vector2i(11, 42), [".xxxxxxxxxx.", "..xxxxxxxx.."], {"x": Color(0.06, 0.09, 0.11, 0.35)})
-	# Profile legs: both hips share the same horizontal axis. Far limbs are darker.
-	leg(image, Vector2i(15, 33), -stride, walking and frame < 4, true, p)
-	# Far arm is behind the chest, never at the opposite edge of a frontal torso.
-	arm(image, Vector2i(16, 26 - lift), -stride, true, p)
-	stamp(image, Vector2i(12, 24 - lift), [
-		"...otto..", "..odlLco.", "..odcCCo.", "..odccCo.",
-		"..odccCo.", "..odccCo.", "..oqqgqo.", "..odccCo.",
-		"..odccCo.", "...oooo.."
+	var step_cycle := [-3, 0, 3, 0]
+	var stride: int = step_cycle[frame % 4] if walking else 0
+	var lift := 1 if (walking and frame % 2 == 1) or (not walking and frame == 1) else 0
+	stamp(image, Vector2i(9, 42), ["..xxxxxxxxxxxx..", "...xxxxxxxxxx..."], {"x": Color(0.06, 0.09, 0.11, 0.3)})
+	leg(image, Vector2i(12, 35), -stride, walking and frame == 1, true, p)
+	arm(image, Vector2i(18, 26 - lift), -stride, true, p)
+	# Broad cloth planes and a rounded belly: coloured edges, eight interior pixels.
+	stamp(image, Vector2i(10, 24 - lift), [
+		"...dtssdd...", "..ddllLCcd..", ".ddccCCCCcd.", ".dccCCCCCCcd",
+		"ddcccCCCCCcd", "ddccccCCCCcd", "ddccccCCCCcd", ".dqqBBBgqqd.",
+		".ddcccCCCcd.", "..ddccCCCdd.", "...ddddddd.."
 	], p)
-	if look == 1:
-		stamp(image, Vector2i(17, 26 - lift), ["lC", "lc", "lc"], p)
+	if look == 0:
+		stamp(image, Vector2i(17, 26 - lift), ["Bl..", ".Bl.", "..Bl"], p)
+	elif look == 1:
+		stamp(image, Vector2i(18, 26 - lift), ["lCC", "lcC", "lcC", "lcC"], p)
 	elif look == 2:
-		stamp(image, Vector2i(14, 26 - lift), ["bBl", "bbl", "bBl", "bbl"], p)
+		stamp(image, Vector2i(17, 26 - lift), ["BllC", "bllC", "BllC", "bllC", "BllC"], p)
 	elif look == 3:
-		stamp(image, Vector2i(14, 31 - lift), ["dcCCo", "dcCco", "dcco.", "ooo.."], p)
-	leg(image, Vector2i(16, 33), stride, walking and frame >= 4, false, p)
-	arm(image, Vector2i(15, 26 - lift), stride if walking else (1 if frame == 2 else 0), false, p)
+		stamp(image, Vector2i(12, 32 - lift), ["dccCCCCcd", "dccCCCCcd", "ddccCCcdd", ".ddddddd."], p)
+	leg(image, Vector2i(15, 35), stride, walking and frame == 3, false, p)
+	arm(image, Vector2i(12, 26 - lift), stride, false, p)
 	# Same face dimensions as 0.0.2, with a shortened body and overlapping shoulders.
 	stamp(image, Vector2i(12, 14 - lift), [
 		"..oooooo..", ".ojhhHHho.", "ojhhHHHhho", "ojhhhhhsSo", "ojhhhssSSo",
 		"ojhhstseSo", ".ojhstSSSso", "..otssSSSo", "...otssSo.", "....oooo.."
 	], p)
-	if not walking and frame == 3:
+	if not walking and frame == 1:
 		image.set_pixel(19, 19 - lift, p["t"])
 	# Hair silhouettes: all eight are youthful, uncovered faces.
 	if gender == 0:
@@ -94,17 +95,17 @@ static func stroke(image: Image, points: Array[Vector2i], width: int, color: Col
 
 static func leg(image: Image, hip: Vector2i, stride: int, raised: bool, far: bool, p: Dictionary) -> void:
 	var foot := Vector2i(hip.x + stride, 39 - (2 if raised else 0))
-	var knee := Vector2i(hip.x + stride / 2, 36 - (1 if raised else 0))
-	stroke(image, [hip, knee, foot], 3, p["o"])
-	stroke(image, [hip + Vector2i.ONE, knee + Vector2i.ONE, foot + Vector2i.ONE], 1, p["n"] if far else p["N"])
-	stamp(image, foot, ["obo..", "obBbo", "ooooo"], p)
+	var knee := Vector2i(hip.x + stride / 2, 37 - (1 if raised else 0))
+	stroke(image, [hip, knee, foot], 5, p["n"].darkened(0.18))
+	stroke(image, [hip + Vector2i.ONE, knee + Vector2i.ONE, foot + Vector2i.ONE], 3, p["n"] if far else p["N"])
+	stamp(image, foot, ["qbbbq..", "bBBBbq.", "qbbbbbo", ".qqqqq."], p)
 
 static func arm(image: Image, shoulder: Vector2i, swing: int, far: bool, p: Dictionary) -> void:
-	var elbow := shoulder + Vector2i(swing / 2, 3)
-	var hand := shoulder + Vector2i(swing, 5)
-	stroke(image, [shoulder, elbow, hand], 3, p["o"])
-	stroke(image, [shoulder + Vector2i.ONE, elbow + Vector2i.ONE, hand + Vector2i.ONE], 1, p["d"] if far else p["C"])
-	image.set_pixel(hand.x + 1, hand.y + 1, p["t"] if far else p["s"])
+	var elbow := shoulder + Vector2i(swing / 2, 2)
+	var hand := shoulder + Vector2i(swing, 4)
+	stroke(image, [shoulder, elbow, hand], 5, p["d"])
+	stroke(image, [shoulder + Vector2i.ONE, elbow + Vector2i.ONE, hand + Vector2i.ONE], 3, p["c"] if far else p["C"])
+	stamp(image, hand + Vector2i(1, 1), ["lll", "tss", "tSs", ".tt"], p)
 
 static func animations(gender: int, look: int) -> SpriteFrames:
 	var frames := SpriteFrames.new()
@@ -112,7 +113,7 @@ static func animations(gender: int, look: int) -> SpriteFrames:
 	for animation in ["idle", "walk"]:
 		frames.add_animation(animation)
 		frames.set_animation_loop(animation, true)
-		frames.set_animation_speed(animation, 4.0 if animation == "idle" else 10.0)
-		for i in range(4 if animation == "idle" else 8):
+		frames.set_animation_speed(animation, 2.0 if animation == "idle" else 6.0)
+		for i in range(2 if animation == "idle" else 4):
 			frames.add_frame(animation, texture(gender, look, animation, i))
 	return frames
