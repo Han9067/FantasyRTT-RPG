@@ -69,6 +69,19 @@ func run() -> void:
 					assert(pose==0 and y>=623 and y<670 and x>=180 and x<=350, "Approved artwork changed outside the idle toe")
 					idle_changes += 1
 	assert(idle_changes > 0 and idle_changes <= 94, "Idle correction exceeded one contour column plus its edge")
+	# Recolouring blond/silver hair must never tint eyes, ear shading or facial skin.
+	# Check each imported runtime frame against the independently approved source.
+	for pose in range(3):
+		for appearance in range(8):
+			var actual: Image = game.animations[appearance].get_frame_texture("idle" if pose==0 else "walk",0 if pose==0 else pose-1).get_image()
+			for region in [Rect2i(332,240,24,55),Rect2i(205,275,22,22),Rect2i(285,315,70,20)]:
+				for y in range(region.position.y,region.end.y):
+					for x in range(region.position.x,region.end.x):
+						var expected := approved.get_pixel([157,835,1514][pose]+x,17+y)
+						assert(actual.get_pixel(x,y).is_equal_approx(expected), "Hair recolouring changed eyes or facial skin")
+	for appearance in [2,6]:
+		var changed: Image = game.animations[appearance].get_frame_texture("idle",0).get_image()
+		assert(changed.get_pixel(200,100) != approved.get_pixel(357,117), "Variant hair colour was lost")
 	game.show_creation()
 	assert(game.choices.get_child_count() == 4)
 	game.name_input.text = "테스트 인물"
@@ -104,7 +117,7 @@ func run() -> void:
 	assert(game.player_name == "테스트 인물")
 	assert(game.selected_gender == 1)
 	assert(game.selected_looks[1] == 3)
-	print("PASS: original references preserved, 24 source-resolution frames/layers valid, approved artwork pixel comparison passed, menu, 8 appearances, gender, portrait, name, age bounds, 1/2 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
+	print("PASS: original references preserved, 24 source-resolution frames/layers valid, approved artwork and eye/face colour comparisons passed, menu, 8 appearances, gender, portrait, name, age bounds, 1/2 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
 	quit()
 
 func opaque_bounds(image: Image) -> Rect2i:

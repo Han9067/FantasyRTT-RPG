@@ -16,6 +16,7 @@ const VARIANTS := [
 ]
 
 var poses: Array[Image] = []
+var hair_masks: Array[PackedByteArray] = []
 
 func extract_reference() -> void:
 	var source := Image.load_from_file(REFERENCE)
@@ -23,6 +24,8 @@ func extract_reference() -> void:
 	for origin in ORIGINS:
 		# Translation only: same crop size and y origin, no individual fitting/scaling.
 		poses.append(source.get_region(Rect2i(origin,17,FRAME_SIZE.x,FRAME_SIZE.y)))
+	for pose in poses:
+		hair_masks.append(hair_mask(pose))
 	# Keep the requested minimal near-boot adjustment in SOURCE pixels only.
 	# Shift the right-hand contour left by one source pixel on the boot/toe rows.
 	for y in range(623,670):
@@ -36,10 +39,40 @@ func tint(color: Color, target: Color, base: Color) -> Color:
 	# Continuous colour ratios retain source shading instead of mapping to a fixed palette.
 	return Color(clampf(color.r*target.r/base.r,0,1),clampf(color.g*target.g/base.g,0,1),clampf(color.b*target.b/base.b,0,1),color.a)
 
-func variant_pixel(color: Color, gender: int, look: int, is_head: bool) -> Color:
+func is_hair_colour(color: Color) -> bool:
+	return color.a > 0 and color.r > color.g*1.15 and color.g > color.b*1.05 and color.v > 0.2 and color.v < 0.77
+
+func hair_mask(pose: Image) -> PackedByteArray:
+	# Brown eyes share the hair palette. Only recolour the connected hair mass,
+	# starting inside the crown; skin separates the eyes from this component.
+	var candidates := PackedByteArray()
+	candidates.resize(FRAME_SIZE.x*HEAD_END)
+	for y in range(HEAD_END):
+		for x in range(FRAME_SIZE.x):
+			candidates[y*FRAME_SIZE.x+x] = int(is_hair_colour(pose.get_pixel(x,y)))
+	var mask := PackedByteArray()
+	mask.resize(candidates.size())
+	var seed := 100*FRAME_SIZE.x+200
+	assert(candidates[seed]==1, "Hair seed must remain inside the approved crown")
+	var queue := PackedInt32Array([seed])
+	mask[seed] = 1
+	var cursor := 0
+	while cursor < queue.size():
+		var point := queue[cursor]
+		cursor += 1
+		for step in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
+			var neighbor: Vector2i = Vector2i(point % FRAME_SIZE.x,point / FRAME_SIZE.x)+step
+			if neighbor.x < 0 or neighbor.x >= FRAME_SIZE.x or neighbor.y < 0 or neighbor.y >= HEAD_END: continue
+			var index := neighbor.y*FRAME_SIZE.x+neighbor.x
+			if candidates[index]==1 and mask[index]==0:
+				mask[index] = 1
+				queue.append(index)
+	return mask
+
+func variant_pixel(color: Color, gender: int, look: int, is_head: bool, is_hair: bool) -> Color:
 	if color.a == 0 or (gender==0 and look==0): return color
 	var v: Array = VARIANTS[gender*4+look]
-	if is_head and color.r > color.g*1.15 and color.g > color.b*1.05 and color.v > 0.2 and color.v < 0.77:
+	if is_head and is_hair:
 		return tint(color,Color(v[0]),Color("69432f"))
 	if not is_head and color.g > color.r*1.02 and color.g > color.b*1.2:
 		return tint(color,Color(v[3]),Color("788a43"))
@@ -66,7 +99,9 @@ func make_layers(gender: int, look: int, pose_index: int) -> Array[Image]:
 		for y in range(FRAME_SIZE.y):
 			for x in range(FRAME_SIZE.x):
 				var pixel: Color = part.get_pixel(x,y)
-				if pixel.a > 0: part.set_pixel(x,y,variant_pixel(pixel,gender,look,part==head))
+				if pixel.a > 0:
+					var is_hair := y < HEAD_END and hair_masks[pose_index][y*FRAME_SIZE.x+x]==1
+					part.set_pixel(x,y,variant_pixel(pixel,gender,look,part==head,is_hair))
 	var v: Array = VARIANTS[gender*4+look]
 	var colors := {"o":Color("302923"),"h":Color(v[0]),"H":Color(v[1]),"r":Color("b75f66"),"g":Color("c9ab70")}
 	if gender == 0:
