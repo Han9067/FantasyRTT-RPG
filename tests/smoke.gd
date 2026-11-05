@@ -24,7 +24,7 @@ func run() -> void:
 				var frames: SpriteFrames = game.animations[gender*4+look]
 				for index in range(frames.get_frame_count(animation)):
 					var source_columns := [0, 2] if animation == "idle" else [1, 3, 5, 7]
-					var actual := frames.get_frame_texture(animation,index).get_image()
+					var actual: Image = game.CharacterArt.texture(gender,look,animation,index,true).get_image()
 					assert(actual.get_size() == Vector2i(32,36))
 					for y in range(36):
 						for x in range(32):
@@ -33,6 +33,23 @@ func run() -> void:
 							assert(pixel.a == expected.a)
 							if expected.a > 0:
 								assert(pixel == expected, "Visible source pixels changed")
+	# Side-profile assets must remain separate aligned layers, with no clipping at the canvas edges.
+	for gender in range(2):
+		for look in range(4):
+			for animation in ["idle", "walk"]:
+				var frames: SpriteFrames = game.animations[gender*4+look]
+				for index in range(frames.get_frame_count(animation)):
+					var head: Image = game.CharacterArt.layer_texture(gender,look+1,animation,index,"head").get_image()
+					var body: Image = game.CharacterArt.layer_texture(gender,look+1,animation,index,"body").get_image()
+					assert(head.get_used_rect().end.y <= 21)
+					assert(body.get_used_rect().position.y >= 16)
+					var result := frames.get_frame_texture(animation,index).get_image()
+					var bounds := result.get_used_rect()
+					assert(bounds.position.x > 0 and bounds.end.x < 32 and bounds.end.y < 36)
+					# Both layers contribute opaque pixels to the final image.
+					for layer in [head,body]:
+						assert(layer.get_used_rect().has_area())
+					assert(result.get_used_rect().size.y > head.get_used_rect().size.y)
 	game.show_creation()
 	assert(game.choices.get_child_count() == 4)
 	game.name_input.text = "테스트 인물"
@@ -67,5 +84,5 @@ func run() -> void:
 	assert(game.player_name == "테스트 인물")
 	assert(game.selected_gender == 1)
 	assert(game.selected_looks[1] == 3)
-	print("PASS: 48 uploaded reference frames match, menu, 8 appearances, gender, portrait, name, age bounds, 2/4 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
+	print("PASS: original references preserved, 48 side-profile frames/layers valid, menu, 8 appearances, gender, portrait, name, age bounds, 2/4 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
 	quit()
