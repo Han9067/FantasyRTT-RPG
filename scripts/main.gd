@@ -1,5 +1,8 @@
 extends Control
 
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.1")
+const CharacterArt = preload("res://scripts/character_art.gd")
+
 const GOLD = Color("c9ab70")
 const INK = Color("e6dfce")
 var screen: VBoxContainer
@@ -105,7 +108,7 @@ func show_menu() -> void:
 	menu.add_child(button("새 게임", show_creation))
 	menu.add_child(button("게임 종료", func(): get_tree().quit()))
 	spacer(screen)
-	var footer := label_text("내전의 시대 · 한 평민의 이야기", 14)
+	var footer := label_text("버전 : " + game_version, 14)
 	footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	footer.modulate = GOLD
 	screen.add_child(footer)
@@ -229,36 +232,4 @@ func select_look(value: int) -> void:
 		choices.get_child(i).button_pressed = i == value
 
 func make_character(gender: int, look: int) -> Texture2D:
-	var image := Image.create(32, 48, false, Image.FORMAT_RGBA8)
-	var outline := Color("1b2026")
-	var skin: Color = [Color("ddb58c"), Color("c79870"), Color("a77857"), Color("efd0a5")][look]
-	var hair: Color = [Color("513829"), Color("b18b4c"), Color("302b2a"), Color("864a34")][look]
-	var cloth: Color = [Color("66795b"), Color("596b80"), Color("985a4e"), Color("a28c63")][look]
-	image.fill_rect(Rect2i(8, 43, 17, 2), Color("12191c"))
-	image.fill_rect(Rect2i(10, 29, 12, 14), outline)
-	image.fill_rect(Rect2i(11, 30, 4, 11), Color("514b44"))
-	image.fill_rect(Rect2i(17, 30, 4, 11), Color("625a4e"))
-	image.fill_rect(Rect2i(9, 40, 6, 4), outline)
-	image.fill_rect(Rect2i(17, 40, 6, 4), outline)
-	image.fill_rect(Rect2i(7, 18, 18, 15), outline)
-	image.fill_rect(Rect2i(8, 19, 16, 12), cloth.darkened(0.2))
-	image.fill_rect(Rect2i(11, 18, 10, 12), cloth)
-	image.fill_rect(Rect2i(11, 28, 10, 2), Color("46382e"))
-	image.fill_rect(Rect2i(15, 28, 2, 2), GOLD)
-	image.fill_rect(Rect2i(8, 27, 3, 4), skin)
-	image.fill_rect(Rect2i(21, 27, 3, 4), skin.darkened(0.15))
-	image.fill_rect(Rect2i(10, 5, 12, 14 if gender == 0 else 20), outline)
-	image.fill_rect(Rect2i(11, 6, 10, 12 if gender == 0 else 18), hair)
-	image.fill_rect(Rect2i(12, 9, 8, 9), skin)
-	image.fill_rect(Rect2i(12, 7, 8, 4), hair)
-	image.fill_rect(Rect2i(12, 13, 2, 1), outline)
-	image.fill_rect(Rect2i(18, 13, 2, 1), outline)
-	image.fill_rect(Rect2i(15, 16, 3, 1), skin.darkened(0.3))
-	if gender == 0 and look % 2 == 0:
-		image.fill_rect(Rect2i(12, 16, 8, 3), hair)
-	if gender == 1:
-		image.fill_rect(Rect2i(10, 8, 2, 15), hair)
-		image.fill_rect(Rect2i(20, 8, 3, 17 if look % 2 == 0 else 11), hair)
-	if look == 3:
-		image.fill_rect(Rect2i(10, 8, 12, 2), cloth)
-	return ImageTexture.create_from_image(image)
+	return CharacterArt.texture(gender, look)

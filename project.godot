@@ -2,6 +2,7 @@ config_version=5
 
 [application]
 config/name="분열의 시대"
+config/version="0.0.1"
 run/main_scene="res://main.tscn"
 
 [display]
