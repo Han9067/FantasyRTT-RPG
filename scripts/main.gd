@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.4")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.5")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -253,7 +253,7 @@ func select_gender(value: int) -> void:
 		b.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		b.expand_icon = true
 		b.add_theme_constant_override("icon_max_width", 110)
-		b.tooltip_text = "외형 %d" % (i + 1)
+		b.tooltip_text = "%s 모험가 %02d" % ["남성" if value == 0 else "여성", i + 1]
 		b.accessibility_name = b.tooltip_text
 		choices.add_child(b)
 	select_look(selected_looks[value])

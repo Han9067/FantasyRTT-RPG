@@ -1,0 +1,386 @@
+[
+  {
+    "gender": "male",
+    "number": 1,
+    "internalId": 0,
+    "description": "밤색 머리 · 초록 튜닉"
+  },
+  {
+    "gender": "male",
+    "number": 2,
+    "internalId": 4,
+    "description": "흑발 가르마 · 밝은 피부"
+  },
+  {
+    "gender": "male",
+    "number": 3,
+    "internalId": 5,
+    "description": "금발 · 초록 망토"
+  },
+  {
+    "gender": "male",
+    "number": 4,
+    "internalId": 6,
+    "description": "검갈색 짧은 머리"
+  },
+  {
+    "gender": "male",
+    "number": 5,
+    "internalId": 7,
+    "description": "은빛 가르마"
+  },
+  {
+    "gender": "male",
+    "number": 6,
+    "internalId": 8,
+    "description": "흑갈색 묶은 머리"
+  },
+  {
+    "gender": "male",
+    "number": 7,
+    "internalId": 9,
+    "description": "금빛 옆머리"
+  },
+  {
+    "gender": "male",
+    "number": 8,
+    "internalId": 10,
+    "description": "짙은 남색 머리"
+  },
+  {
+    "gender": "male",
+    "number": 9,
+    "internalId": 11,
+    "description": "붉은 짧은 머리"
+  },
+  {
+    "gender": "male",
+    "number": 10,
+    "internalId": 12,
+    "description": "애쉬브라운 옆가르마 · 밝은 피부"
+  },
+  {
+    "gender": "male",
+    "number": 11,
+    "internalId": 20,
+    "description": "올림머리"
+  },
+  {
+    "gender": "male",
+    "number": 12,
+    "internalId": 21,
+    "description": "옆으로 올린 머리"
+  },
+  {
+    "gender": "male",
+    "number": 13,
+    "internalId": 22,
+    "description": "짧은 수염 미남"
+  },
+  {
+    "gender": "male",
+    "number": 14,
+    "internalId": 23,
+    "description": "가르마 수염 미남"
+  },
+  {
+    "gender": "male",
+    "number": 15,
+    "internalId": 24,
+    "description": "풍성한 수염"
+  },
+  {
+    "gender": "male",
+    "number": 16,
+    "internalId": 25,
+    "description": "거친 수염 아저씨"
+  },
+  {
+    "gender": "male",
+    "number": 17,
+    "internalId": 26,
+    "description": "대머리"
+  },
+  {
+    "gender": "male",
+    "number": 18,
+    "internalId": 27,
+    "description": "묶은 장발 미남"
+  },
+  {
+    "gender": "male",
+    "number": 19,
+    "internalId": 28,
+    "description": "단정한 가르마"
+  },
+  {
+    "gender": "male",
+    "number": 20,
+    "internalId": 29,
+    "description": "짧은 앞머리"
+  },
+  {
+    "gender": "male",
+    "number": 21,
+    "internalId": 30,
+    "description": "부드러운 옆머리"
+  },
+  {
+    "gender": "male",
+    "number": 22,
+    "internalId": 31,
+    "description": "은빛 올림머리"
+  },
+  {
+    "gender": "male",
+    "number": 23,
+    "internalId": 32,
+    "description": "짧은 곱슬머리"
+  },
+  {
+    "gender": "male",
+    "number": 24,
+    "internalId": 33,
+    "description": "대머리 · 턱수염"
+  },
+  {
+    "gender": "male",
+    "number": 25,
+    "internalId": 34,
+    "description": "묶은 머리"
+  },
+  {
+    "gender": "male",
+    "number": 26,
+    "internalId": 35,
+    "description": "옆가르마"
+  },
+  {
+    "gender": "male",
+    "number": 27,
+    "internalId": 36,
+    "description": "풍성한 턱수염"
+  },
+  {
+    "gender": "male",
+    "number": 28,
+    "internalId": 37,
+    "description": "긴 앞머리"
+  },
+  {
+    "gender": "male",
+    "number": 29,
+    "internalId": 38,
+    "description": "바가지 머리"
+  },
+  {
+    "gender": "male",
+    "number": 30,
+    "internalId": 39,
+    "description": "짧은 뾰족머리"
+  },
+  {
+    "gender": "male",
+    "number": 31,
+    "internalId": 40,
+    "description": "둥근 곱슬머리"
+  },
+  {
+    "gender": "male",
+    "number": 32,
+    "internalId": 41,
+    "description": "단정한 수염"
+  },
+  {
+    "gender": "female",
+    "number": 1,
+    "internalId": 1,
+    "description": "갈색 머리 · 젊은 여성 · 푸른 망토"
+  },
+  {
+    "gender": "female",
+    "number": 2,
+    "internalId": 2,
+    "description": "붉은 머리 · 갈색 가죽옷"
+  },
+  {
+    "gender": "female",
+    "number": 3,
+    "internalId": 3,
+    "description": "은빛 머리 · 보랏빛 로브"
+  },
+  {
+    "gender": "female",
+    "number": 4,
+    "internalId": 13,
+    "description": "밤색 땋은 머리"
+  },
+  {
+    "gender": "female",
+    "number": 5,
+    "internalId": 14,
+    "description": "검은 단발"
+  },
+  {
+    "gender": "female",
+    "number": 6,
+    "internalId": 15,
+    "description": "금빛 양갈래"
+  },
+  {
+    "gender": "female",
+    "number": 7,
+    "internalId": 16,
+    "description": "적갈색 올림머리"
+  },
+  {
+    "gender": "female",
+    "number": 8,
+    "internalId": 17,
+    "description": "은빛 긴 머리"
+  },
+  {
+    "gender": "female",
+    "number": 9,
+    "internalId": 18,
+    "description": "짙은 갈색 땋은 머리"
+  },
+  {
+    "gender": "female",
+    "number": 10,
+    "internalId": 19,
+    "description": "자주빛 긴 머리"
+  },
+  {
+    "gender": "female",
+    "number": 11,
+    "internalId": 42,
+    "description": "긴 생머리"
+  },
+  {
+    "gender": "female",
+    "number": 12,
+    "internalId": 43,
+    "description": "옆으로 땋은 머리"
+  },
+  {
+    "gender": "female",
+    "number": 13,
+    "internalId": 44,
+    "description": "단정한 단발"
+  },
+  {
+    "gender": "female",
+    "number": 14,
+    "internalId": 45,
+    "description": "높이 묶은 머리"
+  },
+  {
+    "gender": "female",
+    "number": 15,
+    "internalId": 46,
+    "description": "양갈래"
+  },
+  {
+    "gender": "female",
+    "number": 16,
+    "internalId": 47,
+    "description": "긴 웨이브"
+  },
+  {
+    "gender": "female",
+    "number": 17,
+    "internalId": 48,
+    "description": "옆머리 장식"
+  },
+  {
+    "gender": "female",
+    "number": 18,
+    "internalId": 49,
+    "description": "묶은 옆머리"
+  },
+  {
+    "gender": "female",
+    "number": 19,
+    "internalId": 50,
+    "description": "부드러운 단발"
+  },
+  {
+    "gender": "female",
+    "number": 20,
+    "internalId": 51,
+    "description": "긴 은빛 머리"
+  },
+  {
+    "gender": "female",
+    "number": 21,
+    "internalId": 52,
+    "description": "긴 땋은 머리"
+  },
+  {
+    "gender": "female",
+    "number": 22,
+    "internalId": 53,
+    "description": "반묶음 머리"
+  },
+  {
+    "gender": "female",
+    "number": 23,
+    "internalId": 54,
+    "description": "가르마 단발"
+  },
+  {
+    "gender": "female",
+    "number": 24,
+    "internalId": 55,
+    "description": "붉은 양갈래"
+  },
+  {
+    "gender": "female",
+    "number": 25,
+    "internalId": 56,
+    "description": "높은 올림머리"
+  },
+  {
+    "gender": "female",
+    "number": 26,
+    "internalId": 57,
+    "description": "옆으로 넘긴 머리"
+  },
+  {
+    "gender": "female",
+    "number": 27,
+    "internalId": 58,
+    "description": "리본 장발"
+  },
+  {
+    "gender": "female",
+    "number": 28,
+    "internalId": 59,
+    "description": "금빛 땋은 머리"
+  },
+  {
+    "gender": "female",
+    "number": 29,
+    "internalId": 60,
+    "description": "짧은 웨이브"
+  },
+  {
+    "gender": "female",
+    "number": 30,
+    "internalId": 61,
+    "description": "갈색 반묶음"
+  },
+  {
+    "gender": "female",
+    "number": 31,
+    "internalId": 62,
+    "description": "장식 있는 장발"
+  },
+  {
+    "gender": "female",
+    "number": 32,
+    "internalId": 63,
+    "description": "짙은 긴 머리"
+  }
+]

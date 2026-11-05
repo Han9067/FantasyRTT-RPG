@@ -9,7 +9,7 @@ func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	player_sprite = AnimatedSprite2D.new()
 	player_sprite.sprite_frames = character_frames
-	player_sprite.position = Vector2(358, 284)
+	player_sprite.position = Vector2(358, 288)
 	player_sprite.centered = false
 	add_child(player_sprite)
 	player_sprite.play("idle")
