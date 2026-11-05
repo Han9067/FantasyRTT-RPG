@@ -11,7 +11,7 @@ static func stamp(image: Image, origin: Vector2i, rows: Array, palette: Dictiona
 			if palette.has(key):
 				image.set_pixel(origin.x + x, origin.y + y, palette[key])
 
-static func texture(gender: int, look: int) -> Texture2D:
+static func texture(gender: int, look: int, animation := "idle", frame := 0) -> Texture2D:
 	var image := Image.create(32, 48, false, Image.FORMAT_RGBA8)
 	var styles := [
 		["65816b", "91a781", "40594d", "694735", "97694a", "423329", "e2b38c"],
@@ -33,59 +33,86 @@ static func texture(gender: int, look: int) -> Texture2D:
 		"B": Color("aa8660"), "q": Color("514138"), "g": Color("d2b77a"),
 		"n": Color("545b60"), "N": Color("7b8181"), "e": Color("34323c")
 	}
-	stamp(image, Vector2i(10, 44), [".xxxxxxxxxxx.", "..xxxxxxxxx.."], {"x": Color(0.06, 0.09, 0.11, 0.35)})
-	# Upright resting stance: short boots, straight knees, modest overlap of the legs.
-	stamp(image, Vector2i(11, 31), [
-		".onnnonnNo.", ".onnnonnNo.", ".onnnonnNo.", ".onnnonnNo.",
-		".onno.onNo.", ".onno.onNo.", ".onno.onNo.", ".onno.onNo.",
-		".oqbo.obBo.", ".obbo.obBo.", ".obbo.obBo.", ".obbb.obBbo", ".oooo.ooooo"
+	var walking := animation == "walk"
+	var step_cycle := [-3, -2, 0, 2, 3, 2, 0, -2]
+	var stride: int = step_cycle[frame % 8] if walking else 0
+	var lift := 1 if (walking and frame % 4 == 1) or (not walking and frame in [1, 2]) else 0
+	stamp(image, Vector2i(11, 42), [".xxxxxxxxxx.", "..xxxxxxxx.."], {"x": Color(0.06, 0.09, 0.11, 0.35)})
+	# Profile legs: both hips share the same horizontal axis. Far limbs are darker.
+	leg(image, Vector2i(15, 33), -stride, walking and frame < 4, true, p)
+	# Far arm is behind the chest, never at the opposite edge of a frontal torso.
+	arm(image, Vector2i(16, 26 - lift), -stride, true, p)
+	stamp(image, Vector2i(12, 24 - lift), [
+		"...otto..", "..odlLco.", "..odcCCo.", "..odccCo.",
+		"..odccCo.", "..odccCo.", "..oqqgqo.", "..odccCo.",
+		"..odccCo.", "...oooo.."
 	], p)
-	# Body tapers gently at the waist; collar sits directly underneath the head.
-	stamp(image, Vector2i(10, 19), [
-		"...olllo...", "..odcLCco..", ".odccCccCo.", ".odccCccCo.",
-		".odccCccCo.", "..odcCccCo.", "..odcCccCo.", "..odcCccCo.",
-		"..odccccCo.", "..oqbbgqqo.", "..odccCcco.", "..odccCcco.",
-		"..odccCcco.", "...oodooo.."
-	], p)
-	# Different tailoring, with restrained details visible at the native resolution.
-	match look:
-		0:
-			stamp(image, Vector2i(13, 21), ["B....", ".B...", "..B..", "...B.", "....B"], p)
-		1:
-			stamp(image, Vector2i(13, 21), ["ll....", "lc....", "lc....", "lc....", "lc....", "lc...."], p)
-		2:
-			stamp(image, Vector2i(12, 21), ["bBlL..", "bbll..", "bBll..", "bbll..", "bBll..", "bbll..", "bbll.."], p)
-		3:
-			stamp(image, Vector2i(12, 29), ["dcCcccCo", "dcCcccCo", "dcCcccCo", "dcCcccCo", "odccCco.", ".ooooo.."], p)
-	# Near arm lies naturally alongside the torso, with a small hand at hip height.
-	stamp(image, Vector2i(17, 21), [
-		".CCo", "cCCo", "ccCo", "dcCo", "dcCo", "dcCo", "dcCo", "qlLo", "tsSo", "tsso", ".oo."
-	], p)
-	# Neck and compact, smooth face: one eye and a one-pixel nose, no beard or wrinkles.
-	stamp(image, Vector2i(15, 17), ["tso", "tSo", "lLo"], p)
-	stamp(image, Vector2i(12, 8), [
+	if look == 1:
+		stamp(image, Vector2i(17, 26 - lift), ["lC", "lc", "lc"], p)
+	elif look == 2:
+		stamp(image, Vector2i(14, 26 - lift), ["bBl", "bbl", "bBl", "bbl"], p)
+	elif look == 3:
+		stamp(image, Vector2i(14, 31 - lift), ["dcCCo", "dcCco", "dcco.", "ooo.."], p)
+	leg(image, Vector2i(16, 33), stride, walking and frame >= 4, false, p)
+	arm(image, Vector2i(15, 26 - lift), stride if walking else (1 if frame == 2 else 0), false, p)
+	# Same face dimensions as 0.0.2, with a shortened body and overlapping shoulders.
+	stamp(image, Vector2i(12, 14 - lift), [
 		"..oooooo..", ".ojhhHHho.", "ojhhHHHhho", "ojhhhhhsSo", "ojhhhssSSo",
 		"ojhhstseSo", ".ojhstSSSso", "..otssSSSo", "...otssSo.", "....oooo.."
 	], p)
+	if not walking and frame == 3:
+		image.set_pixel(19, 19 - lift, p["t"])
 	# Hair silhouettes: all eight are youthful, uncovered faces.
 	if gender == 0:
 		match look:
 			0: # Soft chestnut fringe.
-				stamp(image, Vector2i(12, 8), ["..o.oooo..", ".ohhHHHho.", "ohhhHHhhho", "ojhhh.hho.", ".ojh......"], p)
+				stamp(image, Vector2i(12, 14 - lift), ["..o.oooo..", ".ohhHHHho.", "ohhhHHhhho", "ojhhh.hho.", ".ojh......"], p)
 			1: # Short, gently swept blonde hair.
-				stamp(image, Vector2i(12, 8), ["...ooooo..", "..ohHHHho.", ".ohHHHhhho", "ojhHhhhho.", "ojhh......"], p)
+				stamp(image, Vector2i(12, 14 - lift), ["...ooooo..", "..ohHHHho.", ".ohHHHhhho", "ojhHhhhho.", "ojhh......"], p)
 			2: # Dark, tousled crop.
-				stamp(image, Vector2i(12, 7), ["...o.oo...", "..ohhHho..", ".ohhHHHho.", "ohhHhhHhho", "ojhhh.hhho", ".ojh......"], p)
+				stamp(image, Vector2i(12, 13 - lift), ["...o.oo...", "..ohhHho..", ".ohhHHHho.", "ohhHhhHhho", "ojhhh.hhho", ".ojh......"], p)
 			3: # Short side-parted auburn hair.
-				stamp(image, Vector2i(12, 8), ["..oooooo..", ".ohHHjhho.", "ohHHhHhhho", "ojhh..hho.", "ojhh......"], p)
+				stamp(image, Vector2i(12, 14 - lift), ["..oooooo..", ".ohHHjhho.", "ohHHhHhhho", "ojhh..hho.", "ojhh......"], p)
 	else:
 		match look:
 			0: # Loose shoulder-length hair.
-				stamp(image, Vector2i(10, 11), ["..ojh", "..ojH", ".ojhH", ".ojhH", ".ojhH", "ojhhH", "ojhHh", "ojhhH", ".ojhh", "..ooo"], p)
+				stamp(image, Vector2i(10, 17 - lift), ["..ojh", "..ojH", ".ojhH", ".ojhH", ".ojhH", "ojhhH", "ojhHh", "ojhhH", ".ojhh", "..ooo"], p)
 			1: # Small low ponytail.
-				stamp(image, Vector2i(9, 12), ["..ooo", ".ohHo", "ohHgo", "ohho.", "ojho.", "ojho.", ".oho.", "..o.."], p)
+				stamp(image, Vector2i(9, 18 - lift), ["..ooo", ".ohHo", "ohHgo", "ohho.", "ojho.", "ojho.", ".oho.", "..o.."], p)
 			2: # Rounded chin-length bob.
-				stamp(image, Vector2i(11, 10), ["ojhhH", "ojhHh", "ojhHh", "ojhHh", "ojhhH", "ojhhH", ".ojhh", "..ooo"], p)
+				stamp(image, Vector2i(11, 16 - lift), ["ojhhH", "ojhHh", "ojhHh", "ojhHh", "ojhhH", "ojhhH", ".ojhh", "..ooo"], p)
 			3: # A light braid, tied at the shoulder.
-				stamp(image, Vector2i(10, 12), ["..ojh", ".ojhH", ".ojhH", "..ohh", "..ojH", "..ohh", "..ojH", "..oggo", "...oo"], p)
+				stamp(image, Vector2i(10, 18 - lift), ["..ojh", ".ojhH", ".ojhH", "..ohh", "..ojH", "..ohh", "..ojH", "..oggo", "...oo"], p)
 	return ImageTexture.create_from_image(image)
+
+static func stroke(image: Image, points: Array[Vector2i], width: int, color: Color) -> void:
+	for k in range(points.size() - 1):
+		var distance := maxi(absi(points[k+1].x-points[k].x), absi(points[k+1].y-points[k].y))
+		for i in range(distance + 1):
+			var pos := Vector2(points[k]).lerp(Vector2(points[k+1]), float(i) / maxi(distance, 1))
+			image.fill_rect(Rect2i(Vector2i(pos.round()), Vector2i(width, width)), color)
+
+static func leg(image: Image, hip: Vector2i, stride: int, raised: bool, far: bool, p: Dictionary) -> void:
+	var foot := Vector2i(hip.x + stride, 39 - (2 if raised else 0))
+	var knee := Vector2i(hip.x + stride / 2, 36 - (1 if raised else 0))
+	stroke(image, [hip, knee, foot], 3, p["o"])
+	stroke(image, [hip + Vector2i.ONE, knee + Vector2i.ONE, foot + Vector2i.ONE], 1, p["n"] if far else p["N"])
+	stamp(image, foot, ["obo..", "obBbo", "ooooo"], p)
+
+static func arm(image: Image, shoulder: Vector2i, swing: int, far: bool, p: Dictionary) -> void:
+	var elbow := shoulder + Vector2i(swing / 2, 3)
+	var hand := shoulder + Vector2i(swing, 5)
+	stroke(image, [shoulder, elbow, hand], 3, p["o"])
+	stroke(image, [shoulder + Vector2i.ONE, elbow + Vector2i.ONE, hand + Vector2i.ONE], 1, p["d"] if far else p["C"])
+	image.set_pixel(hand.x + 1, hand.y + 1, p["t"] if far else p["s"])
+
+static func animations(gender: int, look: int) -> SpriteFrames:
+	var frames := SpriteFrames.new()
+	frames.remove_animation("default")
+	for animation in ["idle", "walk"]:
+		frames.add_animation(animation)
+		frames.set_animation_loop(animation, true)
+		frames.set_animation_speed(animation, 4.0 if animation == "idle" else 10.0)
+		for i in range(4 if animation == "idle" else 8):
+			frames.add_frame(animation, texture(gender, look, animation, i))
+	return frames

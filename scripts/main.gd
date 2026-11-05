@@ -1,10 +1,16 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.2")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.3")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
 const INK = Color("e6dfce")
+const WorldMapScene = preload("res://scripts/world_map.gd")
+var animations: Array[SpriteFrames] = []
+var preview_animation := "idle"
+var animation_time := 0.0
+var current_screen := ""
+var world: Node2D
 var screen: VBoxContainer
 var selected_gender := 0
 var selected_looks := [0, 0]
@@ -20,6 +26,9 @@ var create_button: Button
 var textures: Array[Texture2D] = []
 
 func _ready() -> void:
+	resized.connect(func():
+		queue_redraw()
+		if is_instance_valid(world): world.scale = size / Vector2(640, 400))
 	var t := Theme.new()
 	t.default_font = load("res://assets/fonts/NotoSansCJK-Regular.ttc")
 	t.default_font_size = 18
@@ -39,7 +48,9 @@ func _ready() -> void:
 	theme = t
 	for gender in range(2):
 		for look in range(4):
-			textures.append(make_character(gender, look))
+			var frames := CharacterArt.animations(gender, look)
+			animations.append(frames)
+			textures.append(frames.get_frame_texture("idle", 0))
 	show_menu()
 
 func _draw() -> void:
@@ -68,7 +79,18 @@ func button(value: String, callback: Callable) -> Button:
 	b.pressed.connect(callback)
 	return b
 
+func _process(delta: float) -> void:
+	animation_time += delta
+	if current_screen == "creation" and is_instance_valid(portrait):
+		var frames := animations[selected_gender * 4 + selected_looks[selected_gender]]
+		var index := int(animation_time * frames.get_animation_speed(preview_animation)) % frames.get_frame_count(preview_animation)
+		portrait.texture = frames.get_frame_texture(preview_animation, index)
+
 func clear_screen() -> void:
+	if is_instance_valid(world):
+		remove_child(world)
+		world.queue_free()
+		world = null
 	if is_instance_valid(screen):
 		remove_child(screen)
 		screen.queue_free()
@@ -88,6 +110,7 @@ func spacer(parent: Control) -> void:
 
 func show_menu() -> void:
 	clear_screen()
+	current_screen = "menu"
 	spacer(screen)
 	var overline := label_text("F A N T A S Y R T T  ·  R P G", 16)
 	overline.modulate = GOLD
@@ -125,6 +148,8 @@ func panel() -> PanelContainer:
 
 func show_creation() -> void:
 	clear_screen()
+	current_screen = "creation"
+	preview_animation = "idle"
 	genders.clear()
 	var header := HBoxContainer.new()
 	screen.add_child(header)
@@ -195,13 +220,20 @@ func show_creation() -> void:
 	content.add_theme_constant_override("separation", 12)
 	bottom.add_child(content)
 	content.add_child(label_text("외형 선택", 22))
-	content.add_child(label_text("성별마다 네 가지 외형을 선택할 수 있습니다.", 14))
+	var preview_row := HBoxContainer.new()
+	content.add_child(preview_row)
+	var hint := label_text("성별마다 네 가지 외형 · 액자에서 동작 확인", 14)
+	hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	preview_row.add_child(hint)
+	preview_row.add_child(button("대기 · 4프레임", func(): preview_animation = "idle"; animation_time = 0.0))
+	preview_row.add_child(button("이동 · 8프레임", func(): preview_animation = "walk"; animation_time = 0.0))
 	choices = HBoxContainer.new()
 	choices.add_theme_constant_override("separation", 16)
 	choices.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content.add_child(choices)
 	create_button = Button.new()
 	create_button.text = "캐릭터 생성"
+	create_button.pressed.connect(show_world)
 	create_button.custom_minimum_size.y = 54
 	screen.add_child(create_button)
 	select_gender(selected_gender)
@@ -234,3 +266,29 @@ func select_look(value: int) -> void:
 
 func make_character(gender: int, look: int) -> Texture2D:
 	return CharacterArt.texture(gender, look)
+
+func show_world() -> void:
+	clear_screen()
+	current_screen = "world"
+	world = WorldMapScene.new()
+	world.character_name = player_name if not player_name.is_empty() else "여행자"
+	world.character_frames = animations[selected_gender * 4 + selected_looks[selected_gender]]
+	world.scale = size / Vector2(640, 400)
+	add_child(world)
+	move_child(world, 0)
+	var header := HBoxContainer.new()
+	screen.add_child(header)
+	var title := label_text("서부 변경  /  월드맵", 28)
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.add_child(title)
+	header.add_child(button("← 캐릭터", show_creation))
+	screen.add_child(label_text("넓은 초원과 산맥 사이, 제국의 작은 요새도시", 16))
+	spacer(screen)
+	var info := panel()
+	screen.add_child(info)
+	var row := HBoxContainer.new()
+	info.add_child(row)
+	var description := label_text("그레이워치  ·  요새도시\n" + world.character_name + "의 여정이 시작되는 곳", 18)
+	description.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(description)
+	row.add_child(label_text("지형 미리보기  ·  상호작용 없음\n버전 : " + game_version, 14))
