@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.1")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.2")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -218,6 +218,7 @@ func select_gender(value: int) -> void:
 		b.toggle_mode = true
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.icon = textures[value * 4 + i]
+		b.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		b.expand_icon = true
 		b.add_theme_constant_override("icon_max_width", 110)
 		b.tooltip_text = "외형 %d" % (i + 1)

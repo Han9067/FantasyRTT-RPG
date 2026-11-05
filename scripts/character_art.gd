@@ -1,8 +1,7 @@
 class_name CharacterArt
 extends RefCounted
-## Original 32×48 pixel figures. All face right; shared foot baseline for future animation.
-## Palette keys: outline, hair/shade/light, skin/shade/light, cloth/shade/light,
-## linen, leather/shade, iron/shade, brass. No antialiasing or image scaling.
+## Original young-adult side profiles, 32×48 pixels. Right-facing, shared foot baseline.
+## Pixel patterns are layered back to front; dots are transparent.
 
 static func stamp(image: Image, origin: Vector2i, rows: Array, palette: Dictionary) -> void:
 	for y in range(rows.size()):
@@ -15,98 +14,78 @@ static func stamp(image: Image, origin: Vector2i, rows: Array, palette: Dictiona
 static func texture(gender: int, look: int) -> Texture2D:
 	var image := Image.create(32, 48, false, Image.FORMAT_RGBA8)
 	var styles := [
-		["526b59", "76917a", "344a43", "57392d", "896044", "302723", "c89d76"],
-		["60788a", "8ba1a8", "3d4e61", "b48a4e", "d9b76e", "715633", "e4bb8d"],
-		["89544a", "b57a60", "583d3b", "373334", "625352", "23262b", "aa795b"],
-		["9b8761", "c0ad7e", "655e4a", "814c32", "b57547", "48302b", "d7a782"],
-		["536f71", "83a19a", "354c58", "523b30", "926b45", "2e2929", "d7ad86"],
-		["805463", "ae7b7d", "543d51", "b18b50", "dec17d", "765b3a", "e5bf98"],
-		["6d7653", "a1a479", "424f40", "302d30", "60514e", "22262b", "b88666"],
-		["756381", "a496a6", "494354", "884831", "bd7950", "4d302a", "d9ab89"]
+		["65816b", "91a781", "40594d", "694735", "97694a", "423329", "e2b38c"],
+		["677f9e", "98adba", "45586f", "c19a5b", "e0bd7c", "88683e", "ecc8a2"],
+		["9b6556", "c29571", "684b47", "3b363b", "66606a", "282932", "ca9b78"],
+		["998961", "c3b185", "695f49", "995f3e", "c28958", "653e31", "e6b994"],
+		["648a85", "9db6a1", "435e61", "634735", "987453", "3c302d", "e5b996"],
+		["8e728c", "b8a1ae", "604f6c", "c3a066", "e6c78c", "8e6b44", "edc6a4"],
+		["7c8860", "adb48a", "535e47", "39353d", "62586a", "282731", "c99b7d"],
+		["737f9f", "a5b2c6", "50596e", "98593f", "c17e53", "633d30", "e5b995"]
 	]
 	var colors: Array = styles[gender * 4 + look]
 	var p := {
-		"o": Color("20262a"), "c": Color(colors[0]), "C": Color(colors[1]),
+		"o": Color("2c3038"), "c": Color(colors[0]), "C": Color(colors[1]),
 		"d": Color(colors[2]), "h": Color(colors[3]), "H": Color(colors[4]),
 		"j": Color(colors[5]), "s": Color(colors[6]),
-		"S": Color(colors[6]).lightened(0.18), "t": Color(colors[6]).darkened(0.22),
-		"l": Color("d3c7a1"), "L": Color("eee0b6"),
-		"b": Color("70503a"), "B": Color("a17a4e"), "q": Color("44372f"),
-		"i": Color("8a9798"), "I": Color("c1c7b4"), "v": Color("515e69"),
-		"g": Color("c5a66a"), "n": Color("4b5051"), "N": Color("74766a")
+		"S": Color(colors[6]).lightened(0.12), "t": Color(colors[6]).darkened(0.16),
+		"l": Color("d4c8ab"), "L": Color("f0dfba"), "b": Color("795b46"),
+		"B": Color("aa8660"), "q": Color("514138"), "g": Color("d2b77a"),
+		"n": Color("545b60"), "N": Color("7b8181"), "e": Color("34323c")
 	}
-	# A grounded shadow and offset legs make the profile readable at battle scale.
-	stamp(image, Vector2i(6, 44), ["....oooooooooooooo....", "......oooooooooo......"], {"o": Color("131d22", 0.55)})
-	stamp(image, Vector2i(10, 31), [
-		".onnnnoonnnno.", ".onNno.onNNno.", ".onnno..onNno.",
-		".onnno..onNno.", "onnno...onNno.", "onnno...obBbo.",
-		"oqqqo...obBbo.", "obBbo...obBbo.", "obBbo...obbbo.",
-		"obbbbo..obbbbo", "oqbbbbo.oqqbbbo", "ooooooo.ooooooo"
+	stamp(image, Vector2i(10, 44), [".xxxxxxxxxxx.", "..xxxxxxxxx.."], {"x": Color(0.06, 0.09, 0.11, 0.35)})
+	# Upright resting stance: short boots, straight knees, modest overlap of the legs.
+	stamp(image, Vector2i(11, 31), [
+		".onnnonnNo.", ".onnnonnNo.", ".onnnonnNo.", ".onnnonnNo.",
+		".onno.onNo.", ".onno.onNo.", ".onno.onNo.", ".onno.onNo.",
+		".oqbo.obBo.", ".obbo.obBo.", ".obbo.obBo.", ".obbb.obBbo", ".oooo.ooooo"
 	], p)
-	# Narrow torso, a back shoulder and a single near arm. Hem and seams differ by outfit.
-	var bodies := [
-		["....oooooo...", "..oodcllcCo..", ".odddclccCCo.", "oddddcCccCCo.",
-		 "oddddcCcccCo.", ".odddcCcccCo.", ".oddddcCccCo.", ".oddddcCccCo.",
-		 ".oddddcCccCo.", ".oddddcccccCo", ".oqqqqBgqqqqo", ".oddddcCcccdo",
-		 ".oddddcCcccdo", ".oddddcCcccdo", "..odddcccddo.", "...ooooooo..."],
-		["....oooooo...", "..oovIlllIo..", ".ovviiIiiIIo.", "ovviiiIiiIIo.",
-		 "ovviivIiiIIo.", ".ovviiviiIIo.", ".ovviiviiIIo.", ".ovviiviiIIo.",
-		 ".ovviiviiIIo.", ".ovviiviiIIo.", ".oqqqqBgqqqqo", ".oddddcCccCo.",
-		 ".oddddcCccCo.", ".oddddcCccCo.", "..odddcccCo..", "...ooooooo..."],
-		["....oooooo...", "..ooqlLLllo..", ".oqqqlLllLLo.", "oqqbblLllLLo.",
-		 "oqqbblLllLLo.", ".oqqblLllLLo.", ".oqqblLllLLo.", ".oqqblLllLLo.",
-		 ".oqqblLllLLo.", ".oqqblLllLLo.", ".oqqqqBgqqqqo", ".oddddcCccCo.",
-		 ".oddddcCccCo.", ".oddddcCccCo.", "..odddcccCo..", "...ooooooo..."],
-		["....oooooo...", "..oodcLllCo..", ".odddcCccCCo.", "oddddcCccCCo.",
-		 "oddddcCccCCo.", ".odddcCccCCo.", ".odddcCccCCo.", ".odddcCccCCo.",
-		 ".odddcCccCCo.", ".odddcCccCCo.", ".oqqqqBgqqqqo", ".oddddcCccCo.",
-		 ".oddddcCccCo.", ".oddddcCccCo.", ".oddddccccCo.", ".oddddccccCo.",
-		 "..odddcccCo..", "...ooooooo..."]
-	]
-	# Unrecognized letters in patterns intentionally stay transparent.
-	stamp(image, Vector2i(8, 17), bodies[look], p)
-	# A belt pouch at the back and a diagonal leather baldric on the traveller.
-	stamp(image, Vector2i(8, 27), ["oo...", "obBo.", "obgo.", "obbo.", "oooo."], p)
-	if look == 0:
-		stamp(image, Vector2i(12, 19), ["Bb...", ".Bb..", "..Bb.", "...Bb", "....B"], p)
-	# Near sleeve is forward of the torso, ending in a relaxed, visible hand.
-	stamp(image, Vector2i(17, 19), [
-		".oooo..", "ocCCCo.", "occCCo.", "odcCCo.", "odccCo.",
-		".odcCo.", ".odcCo.", ".odcCo.", ".oqBBo.", ".otsSo.",
-		".otssSo", "..ottso", "...ooo."
+	# Body tapers gently at the waist; collar sits directly underneath the head.
+	stamp(image, Vector2i(10, 19), [
+		"...olllo...", "..odcLCco..", ".odccCccCo.", ".odccCccCo.",
+		".odccCccCo.", "..odcCccCo.", "..odcCccCo.", "..odcCccCo.",
+		"..odccccCo.", "..oqbbgqqo.", "..odccCcco.", "..odccCcco.",
+		"..odccCcco.", "...oodooo.."
 	], p)
-	# Small neck, then a single visible eye, projected nose, chin and ear.
-	stamp(image, Vector2i(14, 14), [".otto..", ".otsSo.", ".otsSo.", ".olLlo.", "..ooo.."], p)
-	stamp(image, Vector2i(12, 5), [
-		"...oooooo....", "..ohhHHhho...", ".ojhhHHhhho..", ".ojhhhHHhho..",
-		"ojjhhhhhSSo..", "ojjhhhtSSSo..", "ojjhhstSSSo..", ".ojhstSooSo..",
-		"..ojstSSSSSoo", "...ottSSSSSSo", "...otttSSSoo.", "....ottsSSSo.",
-		".....otttSo..", "......oooo..."
+	# Different tailoring, with restrained details visible at the native resolution.
+	match look:
+		0:
+			stamp(image, Vector2i(13, 21), ["B....", ".B...", "..B..", "...B.", "....B"], p)
+		1:
+			stamp(image, Vector2i(13, 21), ["ll....", "lc....", "lc....", "lc....", "lc....", "lc...."], p)
+		2:
+			stamp(image, Vector2i(12, 21), ["bBlL..", "bbll..", "bBll..", "bbll..", "bBll..", "bbll..", "bbll.."], p)
+		3:
+			stamp(image, Vector2i(12, 29), ["dcCcccCo", "dcCcccCo", "dcCcccCo", "dcCcccCo", "odccCco.", ".ooooo.."], p)
+	# Near arm lies naturally alongside the torso, with a small hand at hip height.
+	stamp(image, Vector2i(17, 21), [
+		".CCo", "cCCo", "ccCo", "dcCo", "dcCo", "dcCo", "dcCo", "qlLo", "tsSo", "tsso", ".oo."
 	], p)
-	# Each head has its own silhouette, not just a palette swap.
+	# Neck and compact, smooth face: one eye and a one-pixel nose, no beard or wrinkles.
+	stamp(image, Vector2i(15, 17), ["tso", "tSo", "lLo"], p)
+	stamp(image, Vector2i(12, 8), [
+		"..oooooo..", ".ojhhHHho.", "ojhhHHHhho", "ojhhhhhsSo", "ojhhhssSSo",
+		"ojhhstseSo", ".ojhstSSSso", "..otssSSSo", "...otssSo.", "....oooo.."
+	], p)
+	# Hair silhouettes: all eight are youthful, uncovered faces.
 	if gender == 0:
 		match look:
-			0: # Cropped hair, sideburn and short beard.
-				stamp(image, Vector2i(13, 7), [".hhHhHhh..", "jhHhhhhh..", "jhhh......", "jhh.......", ".jh......."], p)
-				stamp(image, Vector2i(18, 15), ["j...hh.", "jhhhho.", ".jhhho.", "..ooo.."], p)
-			1: # Wavy fair hair, clean-shaven profile.
-				stamp(image, Vector2i(12, 5), ["...ooooo...", "..ohHHHho..", ".ohHHhHHho.", ".ojhHHhhho.", "ojjhhhHho..", ".ojhh......", "..ojh......"], p)
-			2: # Close-cut head and a long beard.
-				stamp(image, Vector2i(13, 6), ["..ohHHhho.", ".ojhhhhhho", ".ojhhhhhho", ".ojh......"], p)
-				stamp(image, Vector2i(18, 14), ["j....h.", "jh.hHho", "jhhHHho", ".jhhHho", ".jhhho.", "..jho..", "...o..."], p)
-			3: # Tied-back chestnut hair with a cloth headband.
-				stamp(image, Vector2i(10, 8), ["..ojhh......", ".ojhHh......", "ojhho.......", "ojho........", ".oo........."], p)
-				stamp(image, Vector2i(13, 9), ["ccccCCCCcc", "ddddcccccc"], p)
+			0: # Soft chestnut fringe.
+				stamp(image, Vector2i(12, 8), ["..o.oooo..", ".ohhHHHho.", "ohhhHHhhho", "ojhhh.hho.", ".ojh......"], p)
+			1: # Short, gently swept blonde hair.
+				stamp(image, Vector2i(12, 8), ["...ooooo..", "..ohHHHho.", ".ohHHHhhho", "ojhHhhhho.", "ojhh......"], p)
+			2: # Dark, tousled crop.
+				stamp(image, Vector2i(12, 7), ["...o.oo...", "..ohhHho..", ".ohhHHHho.", "ohhHhhHhho", "ojhhh.hhho", ".ojh......"], p)
+			3: # Short side-parted auburn hair.
+				stamp(image, Vector2i(12, 8), ["..oooooo..", ".ohHHjhho.", "ohHHhHhhho", "ojhh..hho.", "ojhh......"], p)
 	else:
 		match look:
-			0: # Thick braid behind the shoulder.
-				stamp(image, Vector2i(10, 11), [".ojh...", "ojhHo..", "ojhho..", ".ohHo..", ".ojhHo.", "..ohho.", "..ojhHo", "...ohho", "...ojho", "...oggo", "....oo."], p)
-			1: # Low round bun and loose fringe.
-				stamp(image, Vector2i(9, 9), ["..oooo..", ".ohHHho.", "ojhHHHho", "ojhhHhho", ".ojhhho.", "..oooo.."], p)
-				stamp(image, Vector2i(19, 8), ["Hhhho", "hho..", "ho..."], p)
-			2: # Short, jaw-length dark hair.
-				stamp(image, Vector2i(11, 9), ["ojhhHh...", "ojhhHh...", "ojhhh....", "ojhHh....", "ojhh.....", ".ojh.....", ".ojhho...", "..ooo...."], p)
-			3: # Long ponytail, bound high with a brass clasp.
-				stamp(image, Vector2i(8, 7), ["...oooo...", "..ojHHho..", ".ojhHHhgo.", "ojjhHho...", "ojjhho....", "ojjhho....", ".ojhho....", ".ojhho....", "..ojho....", "..ojho....", "...oho....", "....o....."], p)
-	# All assets have the same canvas and baseline and are safe to mirror later.
+			0: # Loose shoulder-length hair.
+				stamp(image, Vector2i(10, 11), ["..ojh", "..ojH", ".ojhH", ".ojhH", ".ojhH", "ojhhH", "ojhHh", "ojhhH", ".ojhh", "..ooo"], p)
+			1: # Small low ponytail.
+				stamp(image, Vector2i(9, 12), ["..ooo", ".ohHo", "ohHgo", "ohho.", "ojho.", "ojho.", ".oho.", "..o.."], p)
+			2: # Rounded chin-length bob.
+				stamp(image, Vector2i(11, 10), ["ojhhH", "ojhHh", "ojhHh", "ojhHh", "ojhhH", "ojhhH", ".ojhh", "..ooo"], p)
+			3: # A light braid, tied at the shoulder.
+				stamp(image, Vector2i(10, 12), ["..ojh", ".ojhH", ".ojhH", "..ohh", "..ojH", "..ohh", "..ojH", "..oggo", "...oo"], p)
 	return ImageTexture.create_from_image(image)
