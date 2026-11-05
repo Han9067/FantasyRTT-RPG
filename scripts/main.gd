@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.7")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.8")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -225,7 +225,7 @@ func show_creation() -> void:
 	var hint := label_text("성별마다 네 가지 외형 · 액자에서 동작 확인", 14)
 	hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	preview_row.add_child(hint)
-	preview_row.add_child(button("대기 · 2프레임", func(): preview_animation = "idle"; animation_time = 0.0))
+	preview_row.add_child(button("대기 · 1프레임", func(): preview_animation = "idle"; animation_time = 0.0))
 	preview_row.add_child(button("이동 · 2프레임", func(): preview_animation = "walk"; animation_time = 0.0))
 	choices = HBoxContainer.new()
 	choices.add_theme_constant_override("separation", 16)

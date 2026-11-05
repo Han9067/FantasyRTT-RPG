@@ -1,10 +1,13 @@
 class_name CharacterArt
 extends RefCounted
-## Side-profile adaptation of the uploaded adventurers. Separate 32×36 layers, body then head.
+## Side-profile adaptation of the uploaded adventurers. Separate source-resolution layers, body then head.
 ## Originals remain available for reference through use_original=true.
-const FRAME_SIZE := Vector2i(32, 36)
+const FRAME_SIZE := Vector2i(512, 704)
+const ORIGINAL_FRAME_SIZE := Vector2i(32, 36)
+# World footprint is independent of texture resolution.
+const WORLD_SCALE := 30.0 / 654.0
 const SELECTED_NUMBERS := [1, 2, 3, 4]
-const SOURCE_FRAMES := {"idle": [0, 1], "walk": [0, 1]}
+const SOURCE_FRAMES := {"idle": [0], "walk": [0, 1]}
 const ORIGINAL_FRAMES := {"idle": [0, 2], "walk": [1, 3, 5, 7]}
 static var sheet_cache: Dictionary = {}
 
@@ -19,7 +22,8 @@ static func layer_texture(gender: int, number: int, animation: String, frame: in
 	atlas.atlas = sheet_cache[path]
 	var mapping: Dictionary = ORIGINAL_FRAMES if use_original else SOURCE_FRAMES
 	var column: int = mapping[animation][frame]
-	atlas.region = Rect2(column * FRAME_SIZE.x, 0, FRAME_SIZE.x, FRAME_SIZE.y)
+	var frame_size := ORIGINAL_FRAME_SIZE if use_original else FRAME_SIZE
+	atlas.region = Rect2(column * frame_size.x, 0, frame_size.x, frame_size.y)
 	atlas.filter_clip = true
 	return atlas
 
@@ -30,7 +34,7 @@ static func texture(gender: int, look: int, animation := "idle", frame := 0, use
 	# Compose once for each animation frame; keep the original separate layers available for equipment.
 	body.convert(Image.FORMAT_RGBA8)
 	head.convert(Image.FORMAT_RGBA8)
-	body.blend_rect(head, Rect2i(Vector2i.ZERO, FRAME_SIZE), Vector2i.ZERO)
+	body.blend_rect(head, Rect2i(Vector2i.ZERO, head.get_size()), Vector2i.ZERO)
 	return ImageTexture.create_from_image(body)
 
 static func animations(gender: int, look: int) -> SpriteFrames:
@@ -39,7 +43,7 @@ static func animations(gender: int, look: int) -> SpriteFrames:
 	for animation in ["idle", "walk"]:
 		frames.add_animation(animation)
 		frames.set_animation_loop(animation, true)
-		# Keep the original cycle duration after reducing frames: 4×330 ms and 8×105 ms.
+		# Hold the approved idle pose; retain the 420 ms interval between walk contact poses.
 		frames.set_animation_speed(animation, 1.0 / 0.66 if animation == "idle" else 1.0 / 0.42)
 		for i in range(SOURCE_FRAMES[animation].size()):
 			frames.add_frame(animation, texture(gender, look, animation, i))

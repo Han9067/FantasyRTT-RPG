@@ -9,7 +9,7 @@ func run() -> void:
 	await process_frame
 	assert(game.textures.size() == 8)
 	for frames in game.animations:
-		assert(frames.get_frame_count("idle") == 2)
+		assert(frames.get_frame_count("idle") == 1)
 		assert(frames.get_frame_count("walk") == 2)
 		for animation in ["idle", "walk"]:
 			var images := {}
@@ -41,32 +41,34 @@ func run() -> void:
 				for index in range(frames.get_frame_count(animation)):
 					var head: Image = game.CharacterArt.layer_texture(gender,look+1,animation,index,"head").get_image()
 					var body: Image = game.CharacterArt.layer_texture(gender,look+1,animation,index,"body").get_image()
-					assert(head.get_used_rect().end.y <= 21)
-					assert(body.get_used_rect().position.y >= 16)
+					assert(head.get_used_rect().end.y <= 430)
+					assert(body.get_used_rect().position.y >= 380)
 					var result := frames.get_frame_texture(animation,index).get_image()
-					var bounds := result.get_used_rect()
-					assert(bounds.position.x > 0 and bounds.end.x < 32 and bounds.end.y < 36)
+					var bounds := opaque_bounds(result)
+					assert(bounds.position.x > 0 and bounds.end.x < 512 and bounds.end.y < 704)
 					# Both layers contribute opaque pixels to the final image.
 					for layer in [head,body]:
 						assert(layer.get_used_rect().has_area())
 					assert(result.get_used_rect().size.y > head.get_used_rect().size.y)
-	# Exact idle toe correction on the native pixel grid and stable feet during breathing.
-	var idle_0: Image = game.CharacterArt.layer_texture(0,1,"idle",0,"body").get_image()
-	var idle_1: Image = game.CharacterArt.layer_texture(0,1,"idle",1,"body").get_image()
-	assert(idle_0.get_pixel(18,30).a == 0 and idle_0.get_pixel(18,31).a == 0)
-	assert(idle_0.get_pixel(17,30).a == 1)
-	assert(idle_0.get_pixel(13,30) == Color("563629"))
-	for y in range(27,36):
-		for x in range(32):
-			var a := idle_0.get_pixel(x,y)
-			var b := idle_1.get_pixel(x,y)
-			# Imported textures may dilate RGB into fully transparent pixels.
-			assert(a.a == b.a and (a.a == 0 or a == b))
-	for gender in range(2):
-		for look in range(4):
-			var first: Image = game.CharacterArt.layer_texture(gender,look+1,"walk",0,"head").get_image()
-			var second: Image = game.CharacterArt.layer_texture(gender,look+1,"walk",1,"head").get_image()
-			assert(first.get_data() == second.get_data(), "Walking head position changed")
+	# Compare the actual imported/composed textures directly with the approved artwork.
+	# Independent fixture coordinates: translations only, never resize, recolour or replace heads.
+	var approved := Image.load_from_file("res://tools/references/approved_male_01.png")
+	var idle_changes := 0
+	for pose in range(3):
+		var rendered: Image = game.animations[0].get_frame_texture("idle" if pose==0 else "walk",0 if pose==0 else pose-1).get_image()
+		assert(rendered.get_size() == Vector2i(512,704))
+		for y in range(704):
+			for x in range(512):
+				var expected := approved.get_pixel([157,835,1514][pose]+x,17+y)
+				var actual := rendered.get_pixel(x,y)
+				var matches := actual.a == expected.a
+				if expected.a > 0:
+					matches = matches and absf(actual.r-expected.r) <= 1.01/255 and absf(actual.g-expected.g) <= 1.01/255 and absf(actual.b-expected.b) <= 1.01/255
+				if not matches:
+					# Only the requested one-source-pixel idle boot contour edit may differ.
+					assert(pose==0 and y>=623 and y<670 and x>=180 and x<=350, "Approved artwork changed outside the idle toe")
+					idle_changes += 1
+	assert(idle_changes > 0 and idle_changes <= 94, "Idle correction exceeded one contour column plus its edge")
 	game.show_creation()
 	assert(game.choices.get_child_count() == 4)
 	game.name_input.text = "테스트 인물"
@@ -92,6 +94,7 @@ func run() -> void:
 	assert(game.world.character_name == "테스트 인물")
 	assert(game.world.player_sprite.sprite_frames == game.animations[7])
 	assert(game.world.player_sprite.is_playing())
+	assert(is_equal_approx(game.world.player_sprite.scale.y * 654, 30.0))
 	assert(game.world.player_sprite.animation == "idle")
 	var start_position = game.world.player_sprite.position
 	game._process(1.0)
@@ -101,5 +104,15 @@ func run() -> void:
 	assert(game.player_name == "테스트 인물")
 	assert(game.selected_gender == 1)
 	assert(game.selected_looks[1] == 3)
-	print("PASS: original references preserved, 32 side-profile frames/layers valid, menu, 8 appearances, gender, portrait, name, age bounds, 2/2 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
+	print("PASS: original references preserved, 24 source-resolution frames/layers valid, approved artwork pixel comparison passed, menu, 8 appearances, gender, portrait, name, age bounds, 1/2 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
 	quit()
+
+func opaque_bounds(image: Image) -> Rect2i:
+	var minimum := image.get_size()
+	var maximum := Vector2i.ZERO
+	for y in range(image.get_height()):
+		for x in range(image.get_width()):
+			if image.get_pixel(x,y).a > 0.5:
+				minimum = minimum.min(Vector2i(x,y))
+				maximum = maximum.max(Vector2i(x+1,y+1))
+	return Rect2i(minimum,maximum-minimum)
