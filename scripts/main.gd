@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.12")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.13")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -246,7 +246,7 @@ func show_creation() -> void:
 	selector_column.add_theme_constant_override("separation", 10)
 	content.add_child(selector_column)
 	selector_column.add_child(label_text("외형 파츠", 20))
-	selector_column.add_child(label_text("좌우 버튼으로 선택 · 아래로 스크롤하여 장비 선택", 14))
+	selector_column.add_child(label_text("좌우 버튼으로 선택 · 아래에서 무기 선택", 14))
 	parts_scroll = ScrollContainer.new()
 	parts_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	parts_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_ALWAYS

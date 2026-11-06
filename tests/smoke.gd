@@ -7,7 +7,7 @@ func _initialize() -> void:
 func run() -> void:
 	root.size = Vector2i(1280, 800)
 	var catalog := Art.data()
-	assert(catalog.sheets.size() == 124)
+	assert(catalog.sheets.size() == 127)
 	for path in catalog.sheets:
 		var entry: Dictionary = catalog.sheets[path]
 		var hash := HashingContext.new()
@@ -24,37 +24,50 @@ func run() -> void:
 	assert(Art.count(config, "face") == 40)
 	assert(Art.count(config, "body") == 12)
 	assert(Art.count(config, "hair") == 31 and Art.count(config, "beard") == 30)
-	assert(Art.count(config, "hands") == 13)
-	for race in range(4):
-		config.race = race
-		Art.normalize(config)
-		for skin in range(Art.count(config, "skin")):
-			config.skin = skin
-			for face in range(40):
-				config.face = face
-				assert(not Art.compose(config).is_invisible())
-	# All headgear families/colours/shapes must render, including 48px tall pieces.
-	for family in range(7):
-		config.hat_family = family
-		Art.normalize(config)
-		for color in range(Art.count(config, "hat_color")):
-			config.hat_color = color
-			for hat in range(Art.count(config, "hat")):
-				config.hat = hat
-				var composed := Art.compose(config)
-				assert(composed.get_used_rect().end.y == Art.FEET_Y)
-				assert(composed.get_used_rect().position.y > 0, "Tall headgear touches canvas boundary")
+	assert(Art.count(config, "weapon") == 3)
+	assert(catalog.weapons[0].sheet.ends_with("/axe.png") and catalog.weapons[0].slot == 0)
+	assert(catalog.weapons[1].sheet.ends_with("/blunt.png") and catalog.weapons[1].slot == 0)
+	assert(catalog.weapons[2].sheet.ends_with("/sword.png") and catalog.weapons[2].slot == 12)
+	assert(Art.part_rect(catalog.weapons[2].sheet, 12) == Rect2i(160, 32, 32, 32))
+	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].name == "sword_12")
+	for skin in range(Art.count(config, "skin")):
+		config.skin = skin
+		for face in range(40):
+			config.face = face
+			assert(not Art.compose(config).is_invisible())
+		for weapon_index in range(3):
+			config.weapon = weapon_index
+			var weapon: Dictionary = catalog.weapons[weapon_index]
+			for animation in Art.FRAME_COUNTS:
+				for frame in range(Art.FRAME_COUNTS[animation]):
+					var pose := Art.pose(animation, frame)
+					var position := Art.weapon_position(config, animation, frame)
+					assert(position + Vector2i(weapon.grip[0], weapon.grip[1]) == pose.grip, "Weapon detached from hand")
+					var art := Art.compose(config, animation, frame)
+					assert(Rect2i(Art.PREVIEW_REGION).encloses(art.get_used_rect()), "Weapon clipped in preview")
+					# Verify both visible hands use exactly the selected skin, overlaid above the weapon.
+					var hand_path: String = Art.human_data().hand
+					var hand := Art.sheet_image(hand_path).get_region(Art.part_rect(hand_path, skin))
+					for offset in [pose.grip - Vector2i(8, 8), pose.free_hand]:
+						for y in range(16):
+							for x in range(16):
+								if hand.get_pixel(x, y).a == 1.0:
+									assert(art.get_pixelv(offset + Vector2i(x, y)) == hand.get_pixel(x, y), "Hand skin differs from selected skin")
+	config.merge({"race": 3, "hands": 12, "hat_family": 6, "hat_color": 7, "hat": 22})
+	Art.normalize(config)
+	for hidden in ["race", "hands", "hat_family", "hat_color", "hat"]:
+		assert(not config.has(hidden))
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.12")
+	assert(game.game_version == "0.0.13")
 	game.show_creation()
 	await process_frame
 	await process_frame
 	assert(game.bottom_panel.is_ancestor_of(game.portrait))
 	assert(not game.top_panel.is_ancestor_of(game.portrait))
 	assert(game.top_panel.is_ancestor_of(game.name_input))
-	assert(game.part_controls.size() == 12)
+	assert(game.part_controls.size() == 8)
 	assert(game.part_controls.face.number.text == "1/40")
 	assert(game.create_button.get_global_rect().end.y <= root.size.y)
 	assert(game.parts_scroll.get_v_scroll_bar().max_value > game.parts_scroll.size.y)
@@ -71,16 +84,18 @@ func run() -> void:
 	assert(game.appearance.face == 0 and game.part_controls.face.number.text == "1/40")
 	game.change_part("face", -1)
 	assert(game.appearance.face == 39)
-	game.appearance.race = 1
-	game.appearance.skin = 7
-	game.appearance.hat_family = 1
-	game.appearance.hat_color = 7
-	game.appearance.hat = 48
-	game.change_part("race", 1)
-	assert(game.appearance.skin == 3 and game.part_controls.skin.number.text == "4/4")
-	game.change_part("hat_family", 1)
-	assert(game.appearance.hat_color == 0 and game.appearance.hat == 4)
-	assert(game.part_controls.hat_color.right.disabled)
+	for hidden in ["race", "hands", "hat_family", "hat_color", "hat"]:
+		assert(not game.part_controls.has(hidden) and not game.appearance.has(hidden))
+	assert(game.part_controls.weapon.number.text == "1/3")
+	var rendered_weapons := {}
+	for weapon_index in range(3):
+		assert(game.appearance.weapon == weapon_index)
+		assert(game.part_controls.weapon.detail.text == ["한손 도끼", "한손 둔기", "한손 검"][weapon_index])
+		rendered_weapons[game.character_frames.get_frame_texture("idle", 0).get_image().get_data().hex_encode()] = true
+		game.part_controls.weapon.right.pressed.emit()
+	assert(rendered_weapons.size() == 3 and game.appearance.weapon == 0)
+	game.part_controls.weapon.left.pressed.emit()
+	assert(game.appearance.weapon == 2 and game.part_controls.weapon.number.text == "3/3")
 	game.name_input.text = "파츠 테스트"
 	game.name_input.text_changed.emit(game.name_input.text)
 	game.age_slider.value = 16
@@ -110,5 +125,5 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 124 original sheets/hash/pixels, all faces/headgear, 12 selectors/wrapping/dependencies, lower portrait, gender-independent appearance, 4/8/8 animation, world continuity/feet, removed legacy assets")
+	print("PASS: 127 original sheets/hash/pixels; human-only 8 selectors; exact axe_0/blunt_0/sword_12; 3-way wrap; skin-matched hands; grip alignment and unclipped 4/8/8 animations; world continuity")
 	quit()

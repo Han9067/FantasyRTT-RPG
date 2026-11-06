@@ -35324,6 +35324,492 @@
           ]
         }
       ]
+    },
+    "sprites/weapons/melee weapons/axe.png": {
+      "size": [
+        320,
+        64
+      ],
+      "sha256": "92c11e1b6d800cec631aa33531240a7d96bceeb907e785b42f9a1f1095987dc7",
+      "slots": [
+        {
+          "name": "axe_0",
+          "rect": [
+            0,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_1",
+          "rect": [
+            32,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_2",
+          "rect": [
+            64,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_3",
+          "rect": [
+            96,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_4",
+          "rect": [
+            128,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_5",
+          "rect": [
+            160,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_6",
+          "rect": [
+            192,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_7",
+          "rect": [
+            224,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_8",
+          "rect": [
+            256,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_9",
+          "rect": [
+            288,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_10",
+          "rect": [
+            0,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_11",
+          "rect": [
+            32,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_12",
+          "rect": [
+            64,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_13",
+          "rect": [
+            96,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_14",
+          "rect": [
+            128,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_15",
+          "rect": [
+            160,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_16",
+          "rect": [
+            192,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_17",
+          "rect": [
+            224,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "axe_18",
+          "rect": [
+            256,
+            32,
+            32,
+            32
+          ]
+        }
+      ]
+    },
+    "sprites/weapons/melee weapons/blunt.png": {
+      "size": [
+        320,
+        64
+      ],
+      "sha256": "bcb2b68b31d7254e219cebb2d881312ba6682159c35217828bbe5b63d854665e",
+      "slots": [
+        {
+          "name": "blunt_0",
+          "rect": [
+            0,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_1",
+          "rect": [
+            32,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_2",
+          "rect": [
+            64,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_3",
+          "rect": [
+            96,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_4",
+          "rect": [
+            128,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_5",
+          "rect": [
+            160,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_6",
+          "rect": [
+            192,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_7",
+          "rect": [
+            224,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_8",
+          "rect": [
+            256,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_9",
+          "rect": [
+            288,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_10",
+          "rect": [
+            0,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_11",
+          "rect": [
+            32,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_12",
+          "rect": [
+            64,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_13",
+          "rect": [
+            96,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_14",
+          "rect": [
+            128,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_15",
+          "rect": [
+            160,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_16",
+          "rect": [
+            192,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_17",
+          "rect": [
+            224,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "blunt_18",
+          "rect": [
+            256,
+            32,
+            32,
+            32
+          ]
+        }
+      ]
+    },
+    "sprites/weapons/melee weapons/sword.png": {
+      "size": [
+        224,
+        64
+      ],
+      "sha256": "a7a7828f24a2a26bff2c6869db885a2d34aa27eaa937167becd0d63c4cbed5e3",
+      "slots": [
+        {
+          "name": "sword_0",
+          "rect": [
+            0,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_1",
+          "rect": [
+            32,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_2",
+          "rect": [
+            64,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_3",
+          "rect": [
+            96,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_4",
+          "rect": [
+            128,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_5",
+          "rect": [
+            160,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_6",
+          "rect": [
+            192,
+            0,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_7",
+          "rect": [
+            0,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_8",
+          "rect": [
+            32,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_9",
+          "rect": [
+            64,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_10",
+          "rect": [
+            96,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_11",
+          "rect": [
+            128,
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "sword_12",
+          "rect": [
+            160,
+            32,
+            32,
+            32
+          ]
+        }
+      ]
     }
   },
   "races": {
@@ -35528,5 +36014,37 @@
       ]
     }
   ],
-  "gloves": "sprites/Characters/hand gloved/gloved.png"
+  "gloves": "sprites/Characters/hand gloved/gloved.png",
+  "weapons": [
+    {
+      "id": "axe",
+      "label": "한손 도끼",
+      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "slot": 0,
+      "grip": [
+        15,
+        22
+      ]
+    },
+    {
+      "id": "blunt",
+      "label": "한손 둔기",
+      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "slot": 0,
+      "grip": [
+        16,
+        25
+      ]
+    },
+    {
+      "id": "sword",
+      "label": "한손 검",
+      "sheet": "sprites/weapons/melee weapons/sword.png",
+      "slot": 12,
+      "grip": [
+        15,
+        28
+      ]
+    }
+  ]
 }

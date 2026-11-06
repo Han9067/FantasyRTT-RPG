@@ -52,6 +52,13 @@ def main():
             ('metal','금속 투구',['metal/metal.png']),
             ('metal_tall','장식 금속 투구',[f'metal/metal_{c}.png' for c in COLORS])]:
             catalog['headgear'].append({'id':key,'label':label,'sheets':[add('sprites/wardrobe/'+p) for p in paths]})
+        # Fixed starter weapons selected by the user. Last sword means the last
+        # non-empty registered sprite, not the final empty cell in the PNG grid.
+        catalog['weapons'] = []
+        for kind, label, grip in [('axe', '한손 도끼', [15, 22]), ('blunt', '한손 둔기', [16, 25]), ('sword', '한손 검', [15, 28])]:
+            path = add(f'sprites/weapons/melee weapons/{kind}.png')
+            index = len(catalog['sheets'][path]['slots']) - 1 if kind == 'sword' else 0
+            catalog['weapons'].append({'id': kind, 'label': label, 'sheet': path, 'slot': index, 'grip': grip})
     (DEST/'catalog.json').write_text(json.dumps(catalog, ensure_ascii=False, indent=2)+'\n')
     print(f'Imported {len(catalog["sheets"])} unchanged PNG sheets.')
 
