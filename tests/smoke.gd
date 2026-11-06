@@ -103,7 +103,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.20")
+	assert(game.game_version == "0.0.21")
 	game.show_creation()
 	await process_frame
 	await process_frame
@@ -171,15 +171,16 @@ func run() -> void:
 				assert(game.portrait.texture.atlas == frames.get_frame_texture(animation, i))
 		game.create_button.pressed.emit()
 		await process_frame
-		assert(game.world.character_frames == frame_set)
-		assert(game.world.player_sprite.position.y + Art.FEET_Y == 320)
-		assert(game.world.character_name == "파츠 테스트")
+		assert(game.battle.character_frames == frame_set)
+		assert(game.battle.unit_position == game.battle.map_size * 0.5)
+		assert(game.battle.scale == Vector2.ONE and game.battle.player_sprite.scale == Vector2.ONE)
+		assert(game.battle.character_name == "파츠 테스트")
 		game.show_creation()
 		assert(game.selected_gender == gender and game.appearance == selected)
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 1288 loose source parts match two atlases byte-for-byte; exact starter weapons; 8 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world continuity")
+	print("PASS: 1288 loose source parts match two atlases byte-for-byte; exact starter weapons; 8 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and battle entry continuity")
 	quit()
 
 func verify_equipment(catalog: Dictionary) -> void:

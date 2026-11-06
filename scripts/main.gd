@@ -1,10 +1,11 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.20")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.21")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
 const INK = Color("e6dfce")
+const BattleMapScene = preload("res://scripts/battle_map.gd")
 const WorldMapScene = preload("res://scripts/world_map.gd")
 var character_frames: SpriteFrames
 var appearance: Dictionary = CharacterArt.defaults()
@@ -16,6 +17,8 @@ var last_preview_frame := -1
 var preview_animation := "idle"
 var animation_time := 0.0
 var current_screen := ""
+var battle: BattleMap
+var battle_status: Label
 var world: Node2D
 var screen: VBoxContainer
 var selected_gender := 0
@@ -29,6 +32,7 @@ var age_slider: HSlider
 var create_button: Button
 
 func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	resized.connect(func():
 		queue_redraw()
 		if is_instance_valid(world): world.scale = size / Vector2(640, 400))
@@ -53,6 +57,7 @@ func _ready() -> void:
 	show_menu()
 
 func _draw() -> void:
+	if current_screen == "battle": return
 	draw_rect(Rect2(Vector2.ZERO, size), Color("171f22"))
 	# Quiet silhouettes of a fortified city, drawn on an integer pixel grid.
 	var base := size.y * 0.80
@@ -87,6 +92,14 @@ func _process(delta: float) -> void:
 			last_preview_frame = index
 
 func clear_screen() -> void:
+	queue_redraw()
+	if is_instance_valid(battle):
+		battle.set_process_unhandled_input(false)
+		battle.set_physics_process(false)
+		remove_child(battle)
+		battle.queue_free()
+		battle = null
+	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	if is_instance_valid(world):
 		remove_child(world)
 		world.queue_free()
@@ -287,7 +300,7 @@ func show_creation() -> void:
 		detail.modulate = GOLD
 		row.add_child(detail)
 		part_controls[key] = {"left": left, "right": right, "number": number, "detail": detail}
-	create_button = button("캐릭터 생성", show_world)
+	create_button = button("캐릭터 생성", show_battle)
 	create_button.custom_minimum_size.y = 50
 	screen.add_child(create_button)
 	select_gender(selected_gender)
@@ -358,3 +371,56 @@ func show_world() -> void:
 	description.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(description)
 	row.add_child(label_text("지형 미리보기  ·  상호작용 없음\n버전 : " + game_version, 14))
+
+
+func ignore_battle_overlay_input(node: Node) -> void:
+	if node is Control:
+		node.mouse_filter = Control.MOUSE_FILTER_STOP if node is Button else Control.MOUSE_FILTER_IGNORE
+	for child in node.get_children(): ignore_battle_overlay_input(child)
+
+func show_battle() -> void:
+	clear_screen()
+	current_screen = "battle"
+	# Battle pixels map directly to viewport pixels; UI screens keep their responsive stretch.
+	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
+	screen.offset_left = 24
+	screen.offset_right = -24
+	screen.offset_top = 18
+	screen.offset_bottom = -14
+	battle = BattleMapScene.new()
+	battle.character_name = player_name if not player_name.is_empty() else "여행자"
+	battle.character_frames = character_frames
+	add_child(battle)
+	move_child(battle,0)
+	var header := HBoxContainer.new()
+	screen.add_child(header)
+	var title := label_text("서부 초원  /  전투 시험장", 22)
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header.add_child(title)
+	header.add_child(button("← 캐릭터", show_creation))
+	spacer(screen)
+	var info := panel()
+	var style := info.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
+	style.set_content_margin_all(10)
+	style.bg_color = Color("252e30e8")
+	info.add_theme_stylebox_override("panel",style)
+	screen.add_child(info)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation",16)
+	info.add_child(row)
+	battle_status = label_text("",14)
+	battle_status.custom_minimum_size.x = 190
+	row.add_child(battle_status)
+	var instructions := label_text("좌클릭 / 드래그 : 선택     우클릭 : 이동",14)
+	instructions.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(instructions)
+	row.add_child(label_text("버전 : " + game_version,13))
+	battle.status_changed.connect(refresh_battle_status)
+	refresh_battle_status()
+	ignore_battle_overlay_input(screen)
+
+func refresh_battle_status() -> void:
+	if not is_instance_valid(battle_status) or not is_instance_valid(battle): return
+	var state := "선택되지 않음"
+	if battle.selected: state = "이동 중" if battle.moving else "선택됨 · 대기"
+	battle_status.text = battle.character_name + "  ·  " + state
