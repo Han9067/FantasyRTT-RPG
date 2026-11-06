@@ -2,14 +2,17 @@ class_name CharacterArt
 extends RefCounted
 ## Composite original modular sprites at integer coordinates; never resample source art.
 const ROOT := "res://assets/medieval/"
-const FRAME_SIZE := Vector2i(64, 64)
-const PREVIEW_REGION := Rect2(8, 4, 48, 56)
+const FRAME_SIZE := Vector2i(80, 64)
+const PREVIEW_REGION := Rect2(0, 4, 80, 56)
 const WORLD_SCALE := 1.0
 const FEET_Y := 56
-const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8, "attack": 7}
-# Guide: guard, wind-up, three impact trails, follow-through, guard/recovery.
-const ATTACK_BODIES := [0, 22, 21, 21, 21, 0, 0]
-const ATTACK_DURATIONS := [1.5, 1.5, 1.0, 1.0, 1.0, 1.0, 4.0]
+const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8, "attack": 6}
+# Original chop_attack_sample.gif: six fixed-body frames, exactly 100ms each.
+# Extra space on the left accommodates the longest sword without shifting its hand.
+const BODY_ORIGIN := Vector2i(32, 24)
+const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
+const ATTACK_DURATIONS := [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+const ATTACK_EFFECT_ORIGIN := Vector2i(0, 21)
 const BODY_LABELS := ["검정", "파랑", "갈색", "금색", "초록", "회색", "주황", "분홍", "보라", "빨강", "은색", "노랑"]
 const PARTS := [
 	["skin", "피부색"], ["face", "얼굴"], ["body", "복장 색상"],
@@ -63,14 +66,15 @@ static func description(config: Dictionary, key: String) -> String:
 # Keep weapon, gripping hand and body bob in one pose calculation.
 static func pose(animation: String, frame: int) -> Dictionary:
 	if animation == "attack":
-		var bob: int = [0, -2, 1, 1, 1, 0, 0][frame]
-		var grip: Vector2i = [Vector2i(20,49), Vector2i(28,24), Vector2i(20,49), Vector2i(20,49), Vector2i(20,49), Vector2i(36,49), Vector2i(20,49)][frame]
-		return {"bob": bob, "grip": grip, "free_hand": Vector2i(30,41+bob),
-			"rotation": [0,1,0,0,0,-1,0][frame], "visible": frame not in [2,3,4],
+		# Relative to the guide's unchanged body origin (22,9), shifted to (32,24).
+		# Hands in the reference: guard (25,34), wind-up (31,9), follow-through (22,32).
+		var grip: Vector2i = [Vector2i(35,49), Vector2i(41,24), Vector2i(35,49), Vector2i(35,49), Vector2i(35,49), Vector2i(32,47)][frame]
+		return {"bob": 0, "grip": grip, "free_hand": Vector2i(46,41),
+			"rotation": [0,1,0,0,0,-1][frame], "visible": frame not in [2,3,4],
 			"effect": frame - 2 if frame in [2,3,4] else -1, "body_frame": ATTACK_BODIES[frame]}
 	var bob := int([0, 1, 2, 1][frame]) if animation == "idle" else int([0, 1, 0, -1, 0, 1, 0, -1][frame])
 	var swing := 0 if animation == "idle" else int([0, 1, 1, 0, 0, -1, -1, 0][frame])
-	return {"bob": bob, "grip": Vector2i(20, 49 + bob + swing), "free_hand": Vector2i(30, 41 + bob - swing),
+	return {"bob": bob, "grip": Vector2i(35, 49 + bob + swing), "free_hand": Vector2i(46, 41 + bob - swing),
 		"rotation": 0, "visible": true, "effect": -1,
 		"body_frame": frame + (0 if animation == "idle" else (4 if animation == "walk" else 12))}
 
@@ -112,9 +116,9 @@ static func paste_rotated(target: Image, path: String, index: int, position: Vec
 
 static func compose(config: Dictionary, animation := "idle", frame := 0) -> Image:
 	assert(FRAME_COUNTS.has(animation) and frame >= 0 and frame < FRAME_COUNTS[animation])
-	var img := Image.create(64, 64, false, Image.FORMAT_RGBA8)
+	var img := Image.create(FRAME_SIZE.x, FRAME_SIZE.y, false, Image.FORMAT_RGBA8)
 	img.fill(Color.TRANSPARENT)
-	var base := Vector2i(16, 24)
+	var base := BODY_ORIGIN
 	var current_pose := pose(animation, frame)
 	var head := base + Vector2i(0, current_pose.bob)
 	var race := human_data()
@@ -135,7 +139,7 @@ static func compose(config: Dictionary, animation := "idle", frame := 0) -> Imag
 		paste_rotated(img, hand_path, config.skin, hand_origin, current_pose.rotation)
 	paste(img, hand_path, config.skin, current_pose.free_hand)
 	if current_pose.effect >= 0:
-		paste(img, data().attack_effect, current_pose.effect, Vector2i(0, 24))
+		paste(img, data().attack_effect, current_pose.effect, ATTACK_EFFECT_ORIGIN)
 	return img
 
 static func animations(config: Dictionary) -> SpriteFrames:
@@ -144,7 +148,7 @@ static func animations(config: Dictionary) -> SpriteFrames:
 	for animation in FRAME_COUNTS:
 		frames.add_animation(animation)
 		frames.set_animation_loop(animation, true)
-		frames.set_animation_speed(animation, 6.0 if animation == "idle" else 12.0)
+		frames.set_animation_speed(animation, 6.0 if animation == "idle" else (10.0 if animation == "attack" else 12.0))
 		for i in range(FRAME_COUNTS[animation]):
 			frames.add_frame(animation, ImageTexture.create_from_image(compose(config, animation, i)), ATTACK_DURATIONS[i] if animation == "attack" else 1.0)
 	return frames

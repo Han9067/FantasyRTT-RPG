@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.14")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.15")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -9,7 +9,7 @@ const WorldMapScene = preload("res://scripts/world_map.gd")
 var character_frames: SpriteFrames
 var appearance: Dictionary = CharacterArt.defaults()
 var part_controls: Dictionary = {}
-var parts_scroll: ScrollContainer
+var parts_columns: Array[VBoxContainer] = []
 var top_panel: PanelContainer
 var bottom_panel: PanelContainer
 var last_preview_frame := -1
@@ -154,6 +154,7 @@ func show_creation() -> void:
 	last_preview_frame = -1
 	genders.clear()
 	part_controls.clear()
+	parts_columns.clear()
 	var header := HBoxContainer.new()
 	screen.add_child(header)
 	var heading := label_text("새로운 인물", 30)
@@ -215,14 +216,14 @@ func show_creation() -> void:
 	content.add_theme_constant_override("separation", 28)
 	bottom_panel.add_child(content)
 	var preview_column := VBoxContainer.new()
-	preview_column.custom_minimum_size.x = 258
+	preview_column.custom_minimum_size.x = 330
 	preview_column.add_theme_constant_override("separation", 10)
 	content.add_child(preview_column)
 	preview_column.add_child(label_text("외형 미리보기", 20))
 	var frame := panel()
 	frame.name = "PortraitFrame"
 	frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	frame.custom_minimum_size = Vector2(258, 210)
+	frame.custom_minimum_size = Vector2(330, 210)
 	preview_column.add_child(frame)
 	portrait = TextureRect.new()
 	portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -246,39 +247,43 @@ func show_creation() -> void:
 	selector_column.add_theme_constant_override("separation", 10)
 	content.add_child(selector_column)
 	selector_column.add_child(label_text("외형 파츠", 20))
-	selector_column.add_child(label_text("좌우 버튼으로 선택 · 아래에서 무기 선택", 14))
-	parts_scroll = ScrollContainer.new()
-	parts_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	parts_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_ALWAYS
-	parts_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	parts_scroll.follow_focus = true
-	selector_column.add_child(parts_scroll)
-	var rows := VBoxContainer.new()
-	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	rows.add_theme_constant_override("separation", 6)
-	parts_scroll.add_child(rows)
+	selector_column.add_child(label_text("좌우 버튼으로 외형과 무기 선택", 14))
+	var columns := HBoxContainer.new()
+	columns.name = "PartColumns"
+	columns.add_theme_constant_override("separation", 20)
+	columns.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	selector_column.add_child(columns)
+	for i in range(2):
+		var rows := VBoxContainer.new()
+		rows.name = "BodyParts" if i == 0 else "BeardAndWeapon"
+		rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		rows.size_flags_stretch_ratio = 1.0
+		rows.add_theme_constant_override("separation", 6)
+		columns.add_child(rows)
+		parts_columns.append(rows)
 	for entry in CharacterArt.PARTS:
 		var key: String = entry[0]
 		var row := HBoxContainer.new()
 		row.name = key
-		row.add_theme_constant_override("separation", 8)
-		rows.add_child(row)
+		row.add_theme_constant_override("separation", 6)
+		parts_columns[1 if key in ["beard", "beard_color", "weapon"] else 0].add_child(row)
 		var title := label_text(entry[1], 16)
-		title.custom_minimum_size.x = 156
+		title.custom_minimum_size.x = 88
 		row.add_child(title)
-		var left := button("◀", change_part.bind(key, -1))
+		var left := part_button("◀", change_part.bind(key, -1))
 		left.accessibility_name = entry[1] + " 이전"
 		row.add_child(left)
 		var number := label_text("", 17)
-		number.custom_minimum_size.x = 70
+		number.custom_minimum_size.x = 52
 		number.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		row.add_child(number)
-		var right := button("▶", change_part.bind(key, 1))
+		var right := part_button("▶", change_part.bind(key, 1))
 		right.accessibility_name = entry[1] + " 다음"
 		row.add_child(right)
 		var detail := label_text("", 13)
 		detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		detail.clip_text = true
+		detail.custom_minimum_size.x = 64
 		detail.modulate = GOLD
 		row.add_child(detail)
 		part_controls[key] = {"left": left, "right": right, "number": number, "detail": detail}
@@ -288,6 +293,15 @@ func show_creation() -> void:
 	select_gender(selected_gender)
 	refresh_part_controls()
 	_process(0.0)
+
+func part_button(value: String, callback: Callable) -> Button:
+	var result := button(value, callback)
+	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+		var style := theme.get_stylebox(state, "Button").duplicate() as StyleBoxFlat
+		style.content_margin_left = 8
+		style.content_margin_right = 8
+		result.add_theme_stylebox_override(state, style)
+	return result
 
 func set_preview_animation(value: String) -> void:
 	preview_animation = value

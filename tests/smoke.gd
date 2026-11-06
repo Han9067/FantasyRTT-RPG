@@ -68,17 +68,26 @@ func run() -> void:
 						for y in range(effect.get_height()):
 							for x in range(effect.get_width()):
 								if effect.get_pixel(x,y).a == 1.0:
-									assert(art.get_pixel(x,y+24) == effect.get_pixel(x,y), "Guide attack trail missing")
+									assert(art.get_pixelv(Vector2i(x,y) + Art.ATTACK_EFFECT_ORIGIN) == effect.get_pixel(x,y), "Guide attack trail missing")
 	# Guide phases remain distinct, rotations are exact quarter turns, recovery closes the loop.
 	config = Art.defaults()
 	for weapon_index in range(3):
 		config.weapon = weapon_index
 		var unique := {}
-		for frame in range(7):
+		for frame in range(6):
 			unique[Art.compose(config, "attack", frame).get_data().hex_encode()] = true
 		assert(unique.size() == 6)
-		assert(Art.compose(config,"attack",6).get_data() == Art.compose(config,"idle",0).get_data())
-	assert(Art.pose("attack",1).body_frame == 22 and Art.pose("attack",2).body_frame == 21)
+		assert(Art.compose(config,"attack",0).get_data() == Art.compose(config,"idle",0).get_data())
+	for frame in range(6):
+		assert(Art.pose("attack",frame).body_frame == 0 and Art.pose("attack",frame).bob == 0)
+	assert(Art.pose("attack",5).grip.x < Art.BODY_ORIGIN.x + 8, "Follow-through hand crossed the torso")
+	var timing = JSON.parse_string(FileAccess.get_file_as_string("res://docs/asset-guides/chop_timing.json"))
+	var attack_frames := Art.animations(Art.defaults())
+	assert(attack_frames.get_frame_count("attack") == timing.frames)
+	for frame in range(timing.frames):
+		assert(is_equal_approx(attack_frames.get_frame_duration("attack",frame) / attack_frames.get_animation_speed("attack"), timing.durations_ms[frame] / 1000.0))
+	assert(Art.frame_at_time(attack_frames,"attack",0.599) == 5)
+	assert(Art.frame_at_time(attack_frames,"attack",0.601) == 0)
 	assert(Art.pose("attack",1).rotation == 1 and Art.pose("attack",5).rotation == -1)
 	config.merge({"race": 3, "hands": 12, "hat_family": 6, "hat_color": 7, "hat": 22})
 	Art.normalize(config)
@@ -87,7 +96,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.14")
+	assert(game.game_version == "0.0.15")
 	game.show_creation()
 	await process_frame
 	await process_frame
@@ -97,7 +106,16 @@ func run() -> void:
 	assert(game.part_controls.size() == 8)
 	assert(game.part_controls.face.number.text == "1/40")
 	assert(game.create_button.get_global_rect().end.y <= root.size.y)
-	assert(game.parts_scroll.get_v_scroll_bar().max_value > game.parts_scroll.size.y)
+	assert(game.find_children("*", "ScrollContainer", true, false).is_empty())
+	assert(game.parts_columns[0].get_child_count() == 5 and game.parts_columns[1].get_child_count() == 3)
+	for key in ["beard", "beard_color", "weapon"]:
+		assert(game.parts_columns[1].is_ancestor_of(game.part_controls[key].right))
+		assert(game.part_controls[key].right.global_position.x > game.part_controls.skin.right.global_position.x)
+	assert(is_equal_approx(game.part_controls.beard.right.global_position.y, game.part_controls.skin.right.global_position.y))
+	for key in game.part_controls:
+		for control in [game.part_controls[key].left, game.part_controls[key].right, game.part_controls[key].number]:
+			assert(game.bottom_panel.get_global_rect().encloses(control.get_global_rect()), "Part selector is outside the panel")
+	assert(game.part_controls.weapon.right.global_position.y < game.part_controls.hair_color.right.global_position.y)
 	for entry in Art.PARTS:
 		var key: String = entry[0]
 		var previous: int = game.appearance[key]
@@ -154,5 +172,5 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 1113 loose source parts match two atlases byte-for-byte; exact starter weapons; 8 selectors; guide-based seven-frame attack, trail and loop timing; skin-matched hands; unclipped animations and world continuity")
+	print("PASS: 1113 loose source parts match two atlases byte-for-byte; exact starter weapons; 8 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world continuity")
 	quit()
