@@ -4,6 +4,8 @@ cd "$(dirname "$0")/.."
 export XDG_DATA_HOME="${XDG_DATA_HOME:-/workspace/.godot-runtime/data}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-/workspace/.godot-runtime/config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/workspace/.godot-runtime/cache}"
+mkdir -p builds
+touch builds/.gdignore
 python tools/build_medieval_atlas.py
 godot --headless --editor --import --quit
 godot --headless --script res://tests/smoke.gd
