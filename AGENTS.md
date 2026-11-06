@@ -1,11 +1,13 @@
 # Project conventions
 
-- Current release: 0.0.15; next completed update: 0.0.16. Increment only the patch once per delivered game update. Never change the first two components unless asked.
+- Current release: 0.0.16; next completed update: 0.0.17. Increment only the patch once per delivered game update. Never change the first two components unless asked.
 - Validate playable changes, push editable source to main, and publish builds/web to gh-pages for the existing GitHub Pages site.
 - The visual source of truth is the purchased user-supplied MedievalFantasyCharacters.zip. Read docs/character-design.md before changing characters.
 - Preserve loose source PNGs in art/medieval (.gdignore). Build assets/medieval atlases/catalog with tools/build_medieval_atlas.py; do not hand-edit generated images. Runtime uses only needed parts. Preserve original RGBA; no AI redraws, recolouring or resampling.
-- The creator has personal details only at the top, and a portrait on the lower left with two columns of part selectors without scrolling (beard/beard color/weapon at upper right) on the right. Gender is independent of appearance. Creator is human-only; hats/gloves/race have no selectors. Bare hands follow skin. The weapon selector cycles only axe_0, blunt_0, sword_12 in that order. Keep headgear/glove source assets for future equipment; mounts remain excluded.
+- The creator has personal details only at the top, and a portrait on the lower left with two columns of part selectors without scrolling (beard/beard color/weapon at upper right) on the right. Gender is independent of appearance. Creator is human-only; hats/gloves/race have no selectors. Bare hands follow skin. The weapon selector cycles only axe_01.png, blunt_01.png, sword_13.png in that order. Keep headgear/glove source assets for future equipment; mounts remain excluded.
 - Compose 80x64 frames at integer coordinates. Idle/walk/run have 4/8/8 frames; attack has 6 frames at 10fps, matching chop_attack_sample.gif with fixed body/head and no extra recovery pause. Preview controls are idle/walk/attack; respect per-frame durations. Head/accessory offsets follow the body. Use nearest filtering. World feet remain at y=320.
 - Legacy assets/characters, assets/adventurers, tests/fixtures, and tools/references were explicitly removed by the user. Do not restore them.
 - Keep the world map non-interactive and preserve the city/terrain scale and design.
 - Run meaningful smoke checks for source integrity, selector boundaries/dependencies, layout, preview animations, and world continuity, then verify the web UI in a browser before publishing.
+
+- Current source tree mirrors the latest cleaned ZIP (4,729 files). Numbered filenames replace __rNN_cNN. Full ZIP imports validate in staging and replace old trees; never merge removed files back. Guides live only in art/medieval/Animation Guide.

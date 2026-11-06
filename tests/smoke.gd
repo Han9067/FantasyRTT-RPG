@@ -7,12 +7,18 @@ func _initialize() -> void:
 func run() -> void:
 	root.size = Vector2i(1280, 800)
 	var catalog := Art.data()
-	assert(catalog.schema == 2 and catalog.atlases.size() == 2)
+	assert(catalog.schema == 3 and catalog.atlases.size() == 2)
+	assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/Characters/elf"))
+	assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/Characters/body/body_black 1"))
+	assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/Characters/body/body_black 2"))
+	assert(not DirAccess.dir_exists_absolute("res://docs/asset-guides"))
 	var part_count := 0
 	for path in catalog.sheets:
 		var entry: Dictionary = catalog.sheets[path]
 		for i in range(entry.slots.size()):
 			var slot: Dictionary = entry.slots[i]
+			assert(not slot.source.contains("__r"))
+			assert(slot.id == i + 1, "Renamed parts changed their selection order")
 			var bytes := FileAccess.get_file_as_bytes("res://art/medieval/" + slot.source)
 			var hash := HashingContext.new()
 			hash.start(HashingContext.HASH_SHA256)
@@ -34,8 +40,8 @@ func run() -> void:
 	assert(catalog.weapons[0].sheet.ends_with("/axe.png") and catalog.weapons[0].slot == 0)
 	assert(catalog.weapons[1].sheet.ends_with("/blunt.png") and catalog.weapons[1].slot == 0)
 	assert(catalog.weapons[2].sheet.ends_with("/sword.png") and catalog.weapons[2].slot == 12)
-	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].source.ends_with("sword__r02_c06.png"))
-	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].name == "sword__r02_c06")
+	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].source.ends_with("sword_13.png"))
+	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].name == "sword_13")
 	for skin in range(Art.count(config, "skin")):
 		config.skin = skin
 		for face in range(40):
@@ -81,7 +87,7 @@ func run() -> void:
 	for frame in range(6):
 		assert(Art.pose("attack",frame).body_frame == 0 and Art.pose("attack",frame).bob == 0)
 	assert(Art.pose("attack",5).grip.x < Art.BODY_ORIGIN.x + 8, "Follow-through hand crossed the torso")
-	var timing = JSON.parse_string(FileAccess.get_file_as_string("res://docs/asset-guides/chop_timing.json"))
+	var timing = catalog.attack_reference
 	var attack_frames := Art.animations(Art.defaults())
 	assert(attack_frames.get_frame_count("attack") == timing.frames)
 	for frame in range(timing.frames):
@@ -96,7 +102,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.15")
+	assert(game.game_version == "0.0.16")
 	game.show_creation()
 	await process_frame
 	await process_frame
