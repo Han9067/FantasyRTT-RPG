@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.10")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.11")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -47,10 +47,10 @@ func _ready() -> void:
 	t.set_color("font_color", "LineEdit", INK)
 	theme = t
 	for gender in range(2):
-		for look in range(4):
+		for look in range(CharacterArt.LOOK_COUNT):
 			var frames := CharacterArt.animations(gender, look)
 			animations.append(frames)
-			textures.append(frames.get_frame_texture("idle", 0))
+			textures.append(CharacterArt.preview_texture(frames.get_frame_texture("idle", 0)))
 	show_menu()
 
 func _draw() -> void:
@@ -82,9 +82,9 @@ func button(value: String, callback: Callable) -> Button:
 func _process(delta: float) -> void:
 	animation_time += delta
 	if current_screen == "creation" and is_instance_valid(portrait):
-		var frames := animations[selected_gender * 4 + selected_looks[selected_gender]]
+		var frames := animations[selected_gender * CharacterArt.LOOK_COUNT + selected_looks[selected_gender]]
 		var index := int(animation_time * frames.get_animation_speed(preview_animation)) % frames.get_frame_count(preview_animation)
-		portrait.texture = frames.get_frame_texture(preview_animation, index)
+		portrait.texture = CharacterArt.preview_texture(frames.get_frame_texture(preview_animation, index))
 
 func clear_screen() -> void:
 	if is_instance_valid(world):
@@ -222,13 +222,14 @@ func show_creation() -> void:
 	content.add_child(label_text("외형 선택", 22))
 	var preview_row := HBoxContainer.new()
 	content.add_child(preview_row)
-	var hint := label_text("성별마다 네 가지 외형 · 액자에서 동작 확인", 14)
+	var hint := label_text("남녀 각 1종 · 액자에서 동작 확인", 14)
 	hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	preview_row.add_child(hint)
 	preview_row.add_child(button("대기 · 1프레임", func(): preview_animation = "idle"; animation_time = 0.0))
-	preview_row.add_child(button("이동 · 2프레임", func(): preview_animation = "walk"; animation_time = 0.0))
+	preview_row.add_child(button("이동 · 4프레임", func(): preview_animation = "walk"; animation_time = 0.0))
 	choices = HBoxContainer.new()
 	choices.add_theme_constant_override("separation", 16)
+	choices.alignment = BoxContainer.ALIGNMENT_CENTER
 	choices.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content.add_child(choices)
 	create_button = Button.new()
@@ -245,11 +246,12 @@ func select_gender(value: int) -> void:
 	for child in choices.get_children():
 		choices.remove_child(child)
 		child.queue_free()
-	for i in range(4):
+	for i in range(CharacterArt.LOOK_COUNT):
 		var b := button("", select_look.bind(i))
 		b.toggle_mode = true
-		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		b.icon = textures[value * 4 + i]
+		b.custom_minimum_size = Vector2(244, 84)
+		b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		b.icon = textures[value * CharacterArt.LOOK_COUNT + i]
 		b.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		b.expand_icon = true
 		b.add_theme_constant_override("icon_max_width", 110)
@@ -259,8 +261,9 @@ func select_gender(value: int) -> void:
 	select_look(selected_looks[value])
 
 func select_look(value: int) -> void:
+	assert(value >= 0 and value < CharacterArt.LOOK_COUNT)
 	selected_looks[selected_gender] = value
-	portrait.texture = textures[selected_gender * 4 + value]
+	portrait.texture = textures[selected_gender * CharacterArt.LOOK_COUNT + value]
 	for i in range(choices.get_child_count()):
 		choices.get_child(i).button_pressed = i == value
 
@@ -272,7 +275,7 @@ func show_world() -> void:
 	current_screen = "world"
 	world = WorldMapScene.new()
 	world.character_name = player_name if not player_name.is_empty() else "여행자"
-	world.character_frames = animations[selected_gender * 4 + selected_looks[selected_gender]]
+	world.character_frames = animations[selected_gender * CharacterArt.LOOK_COUNT + selected_looks[selected_gender]]
 	world.scale = size / Vector2(640, 400)
 	add_child(world)
 	move_child(world, 0)

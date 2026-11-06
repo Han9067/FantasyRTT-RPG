@@ -9,7 +9,9 @@ func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	player_sprite = AnimatedSprite2D.new()
 	player_sprite.sprite_frames = character_frames
-	player_sprite.position = Vector2(363, 289)
+	# Full 64x64 source canvas: visible bounds (23,17)-(39,47).
+	# Keep the feet at world y=320 and the figure centred near x=374.
+	player_sprite.position = Vector2(343, 273)
 	player_sprite.scale = Vector2.ONE * CharacterArt.WORLD_SCALE
 	player_sprite.centered = false
 	add_child(player_sprite)

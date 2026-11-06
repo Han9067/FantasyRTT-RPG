@@ -7,146 +7,75 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.textures.size() == 8)
-	for frames in game.animations:
+	assert(game.game_version == "0.0.11")
+	assert(game.CharacterArt.LOOK_COUNT == 1)
+	assert(game.textures.size() == 2 and game.animations.size() == 2)
+	var manifest = JSON.parse_string(FileAccess.get_file_as_string("res://assets/characters/source_manifest.json"))
+	assert(manifest.frames.size() == 10)
+	for entry in manifest.frames:
+		var hash := HashingContext.new()
+		hash.start(HashingContext.HASH_SHA256)
+		hash.update(FileAccess.get_file_as_bytes("res://"+entry.path))
+		assert(hash.finish().hex_encode() == entry.sha256, "Uploaded PNG bytes changed")
+	for gender in range(2):
+		var frames: SpriteFrames = game.animations[gender]
 		assert(frames.get_frame_count("idle") == 1)
-		assert(frames.get_frame_count("walk") == 2)
+		assert(frames.get_frame_count("walk") == 4)
+		assert(is_equal_approx(4.0 / frames.get_animation_speed("walk"), 0.84))
 		for animation in ["idle", "walk"]:
-			var images := {}
+			var unique := {}
 			for i in range(frames.get_frame_count(animation)):
-				images[frames.get_frame_texture(animation, i).get_image().get_data().hex_encode()] = true
-			assert(images.size() == frames.get_frame_count(animation), "Animation contains duplicate poses")
-	# Reference fixtures are the uploaded completed sprites, independent of our compositor.
-	for gender in range(2):
-		for look in range(4):
-			for animation in ["idle", "walk"]:
-				var reference := Image.load_from_file("res://tests/fixtures/%s/%02d/%s_full_sheet.png" % ["male" if gender == 0 else "female", look+1, animation])
-				var frames: SpriteFrames = game.animations[gender*4+look]
-				for index in range(2 if animation == "idle" else 4):
-					var source_columns := [0, 2] if animation == "idle" else [1, 3, 5, 7]
-					var actual: Image = game.CharacterArt.texture(gender,look,animation,index,true).get_image()
-					assert(actual.get_size() == Vector2i(32,36))
-					for y in range(36):
-						for x in range(32):
-							var expected := reference.get_pixel(source_columns[index]*32+x,y)
-							var pixel := actual.get_pixel(x,y)
-							assert(pixel.a == expected.a)
-							if expected.a > 0:
-								assert(pixel == expected, "Visible source pixels changed")
-	# Side-profile assets must remain separate aligned layers, with no clipping at the canvas edges.
-	for gender in range(2):
-		for look in range(4):
-			for animation in ["idle", "walk"]:
-				var frames: SpriteFrames = game.animations[gender*4+look]
-				for index in range(frames.get_frame_count(animation)):
-					var head: Image = game.CharacterArt.layer_texture(gender,look+1,animation,index,"head").get_image()
-					var body: Image = game.CharacterArt.layer_texture(gender,look+1,animation,index,"body").get_image()
-					assert(head.get_used_rect().end.y <= 430)
-					assert(body.get_used_rect().position.y >= 380)
-					var result := frames.get_frame_texture(animation,index).get_image()
-					var bounds := opaque_bounds(result)
-					assert(bounds.position.x > 0 and bounds.end.x < 512 and bounds.end.y < 704)
-					# Both layers contribute opaque pixels to the final image.
-					for layer in [head,body]:
-						assert(layer.get_used_rect().has_area())
-					assert(result.get_used_rect().size.y > head.get_used_rect().size.y)
-	# Compare the actual imported/composed textures directly with the approved artwork.
-	# Independent fixture coordinates: translations only, never resize, recolour or replace heads.
-	var approved := Image.load_from_file("res://tools/references/approved_male_01.png")
-	var idle_changes := 0
-	var collar_changes := 0
-	for pose in range(3):
-		var rendered: Image = game.animations[0].get_frame_texture("idle" if pose==0 else "walk",0 if pose==0 else pose-1).get_image()
-		assert(rendered.get_size() == Vector2i(512,704))
-		for y in range(704):
-			for x in range(512):
-				var expected := approved.get_pixel([157,835,1514][pose]+x,17+y)
-				var actual := rendered.get_pixel(x,y)
-				var matches := actual.a == expected.a
-				if expected.a > 0:
-					matches = matches and absf(actual.r-expected.r) <= 1.01/255 and absf(actual.g-expected.g) <= 1.01/255 and absf(actual.b-expected.b) <= 1.01/255
-				if not matches:
-					if Rect2i(170,357,150,55).has_point(Vector2i(x,y)):
-						assert(actual.a==expected.a, "Collar recolouring changed silhouette")
-						collar_changes += 1
-					else:
-						assert(pose==0 and y>=623 and y<670 and x>=180 and x<=350, "Approved artwork changed outside requested toe/collar edits")
-						idle_changes += 1
-	assert(idle_changes > 0 and idle_changes <= 94, "Idle correction exceeded one contour column plus its edge")
-	assert(collar_changes > 1000, "Tunic collar was not applied")
-	# Recolouring blond/silver hair must never tint eyes, ear shading or facial skin.
-	# Check each imported runtime frame against the independently approved source.
-	for pose in range(3):
-		for appearance in range(8):
-			var actual: Image = game.animations[appearance].get_frame_texture("idle" if pose==0 else "walk",0 if pose==0 else pose-1).get_image()
-			for region in [Rect2i(332,240,24,55),Rect2i(205,275,22,22),Rect2i(285,315,70,20)]:
-				for y in range(region.position.y,region.end.y):
-					for x in range(region.position.x,region.end.x):
-						var expected := approved.get_pixel([157,835,1514][pose]+x,17+y)
-						assert(actual.get_pixel(x,y).is_equal_approx(expected), "Hair recolouring changed eyes or facial skin")
-	for appearance in [2,6]:
-		var changed: Image = game.animations[appearance].get_frame_texture("idle",0).get_image()
-		assert(changed.get_pixel(200,100) != approved.get_pixel(357,117), "Variant hair colour was lost")
-	# Former clipped-white pixels at the forehead, ear and jaw remain below skin brightness.
-	# This checks actual imported colours, independent of the generator's edge/mask algorithm.
-	for appearance in [2,6]:
-		for pose in range(3):
-			var actual: Image = game.animations[appearance].get_frame_texture("idle" if pose==0 else "walk",0 if pose==0 else pose-1).get_image()
-			for point in [Vector2i(313,202),Vector2i(313,224),Vector2i(295,226),Vector2i(210,252),Vector2i(229,352)]:
-				assert(actual.get_pixelv(point).get_luminance()<0.88, "Bright hair/skin boundary halo returned")
-	# Collar samples above and below the head/body split must match each tunic's hue.
-	var tunic_colours := [Color("788a43"),Color("aa6454"),Color("809653"),Color("52738b"),Color("698d9b"),Color("a27b54"),Color("9181a4"),Color("8c657e")]
-	for appearance in range(8):
-		for pose in range(3):
-			var actual: Image = game.animations[appearance].get_frame_texture("idle" if pose==0 else "walk",0 if pose==0 else pose-1).get_image()
-			for point in [Vector2i(220,365),Vector2i(240,370),Vector2i(275,390),Vector2i(300,400),Vector2i(200,386)]:
-				var pixel := actual.get_pixelv(point)
-				assert(absf(pixel.h-tunic_colours[appearance].h)<0.04, "Collar does not match its tunic")
-				assert(pixel.v<0.80, "Cream collar remained")
+				var source := Image.load_from_file(game.CharacterArt.source_path(gender, animation, i))
+				var texture: Texture2D = frames.get_frame_texture(animation, i)
+				var imported := texture.get_image()
+				source.convert(Image.FORMAT_RGBA8)
+				imported.convert(Image.FORMAT_RGBA8)
+				assert(imported.get_size() == Vector2i(64,64))
+				assert(imported.get_data() == source.get_data(), "Source pixels changed during import")
+				assert(imported.get_used_rect() == Rect2i(23,17,16,30))
+				unique[imported.get_data().hex_encode()] = true
+				var preview: AtlasTexture = game.CharacterArt.preview_texture(texture)
+				assert(preview.atlas == texture and preview.region == Rect2(20,14,22,36))
+			assert(unique.size() == frames.get_frame_count(animation), "Repeated walk frame")
 	game.show_creation()
-	assert(game.choices.get_child_count() == 4)
+	assert(game.choices.get_child_count() == 1)
 	game.name_input.text = "테스트 인물"
 	game.name_input.text_changed.emit(game.name_input.text)
 	assert(game.player_name == "테스트 인물")
-	game.genders[1].pressed.emit()
-	assert(game.selected_gender == 1)
-	game.choices.get_child(3).pressed.emit()
-	assert(game.portrait.texture == game.textures[7])
 	game.age_slider.value = 16
 	assert(game.player_age == 16)
 	game.age_slider.value = 40
 	assert(game.player_age == 40)
 	game.age_slider.value = 99
 	assert(game.player_age == 40)
-	game.preview_animation = "walk"
-	game.animation_time = 0.0
-	game._process(0.5)
-	assert(game.portrait.texture == game.animations[7].get_frame_texture("walk", 1))
-	game.create_button.pressed.emit()
-	await process_frame
-	assert(game.current_screen == "world")
-	assert(game.world.character_name == "테스트 인물")
-	assert(game.world.player_sprite.sprite_frames == game.animations[7])
-	assert(game.world.player_sprite.is_playing())
-	assert(is_equal_approx(game.world.player_sprite.scale.y * 654, 30.0))
-	assert(game.world.player_sprite.animation == "idle")
-	var start_position = game.world.player_sprite.position
-	game._process(1.0)
-	assert(game.world.player_sprite.position == start_position)
+	for gender in range(2):
+		game.genders[gender].pressed.emit()
+		assert(game.selected_gender == gender)
+		assert(game.choices.get_child_count() == 1)
+		assert(game.choices.get_child(0).tooltip_text == ("남성" if gender==0 else "여성")+" 모험가 01")
+		game.choices.get_child(0).pressed.emit()
+		assert(game.portrait.texture == game.textures[gender])
+		game.preview_animation = "walk"
+		for i in range(4):
+			game.animation_time = i*0.21+0.01
+			game._process(0.0)
+			assert(game.portrait.texture.atlas == game.animations[gender].get_frame_texture("walk",i))
+		game.create_button.pressed.emit()
+		await process_frame
+		assert(game.current_screen == "world")
+		assert(game.world.character_name == "테스트 인물")
+		assert(game.world.player_sprite.sprite_frames == game.animations[gender])
+		assert(game.world.player_sprite.is_playing() and game.world.player_sprite.animation == "idle")
+		assert(game.world.player_sprite.scale == Vector2.ONE)
+		assert(game.world.player_sprite.position.y + 47 == 320)
+		var start_position = game.world.player_sprite.position
+		game._process(1.0)
+		assert(game.world.player_sprite.position == start_position)
+		game.show_creation()
+		assert(game.selected_gender == gender and game.selected_looks[gender] == 0)
 	game.show_menu()
 	game.show_creation()
-	assert(game.player_name == "테스트 인물")
-	assert(game.selected_gender == 1)
-	assert(game.selected_looks[1] == 3)
-	print("PASS: original references preserved, 24 source-resolution frames/layers valid, approved artwork, eye/face colours, hair boundaries and tunic collars verified, menu, 8 appearances, gender, portrait, name, age bounds, 1/2 unique animation frames per appearance, world transition, selected character, stationary map, retained selections")
+	assert(game.player_name == "테스트 인물" and game.player_age == 40)
+	assert(not DirAccess.dir_exists_absolute("res://assets/adventurers_side"))
+	print("PASS: 10 untouched 64x64 PNGs, exact imported pixels, 1 idle + 4 unique walk frames, one appearance per gender, both world transitions, scale/feet alignment, retained name/age, stationary map")
 	quit()
-
-func opaque_bounds(image: Image) -> Rect2i:
-	var minimum := image.get_size()
-	var maximum := Vector2i.ZERO
-	for y in range(image.get_height()):
-		for x in range(image.get_width()):
-			if image.get_pixel(x,y).a > 0.5:
-				minimum = minimum.min(Vector2i(x,y))
-				maximum = maximum.max(Vector2i(x+1,y+1))
-	return Rect2i(minimum,maximum-minimum)

@@ -1,50 +1,47 @@
 class_name CharacterArt
 extends RefCounted
-## Side-profile adaptation of the uploaded adventurers. Separate source-resolution layers, body then head.
-## Originals remain available for reference through use_original=true.
-const FRAME_SIZE := Vector2i(512, 704)
-const ORIGINAL_FRAME_SIZE := Vector2i(32, 36)
-# World footprint is independent of texture resolution.
-const WORLD_SCALE := 30.0 / 654.0
-const SELECTED_NUMBERS := [1, 2, 3, 4]
-const SOURCE_FRAMES := {"idle": [0], "walk": [0, 1]}
-const ORIGINAL_FRAMES := {"idle": [0, 2], "walk": [1, 3, 5, 7]}
-static var sheet_cache: Dictionary = {}
+## User-supplied char.zip is the visual source of truth. No redrawing or recolouring.
+const FRAME_SIZE := Vector2i(64, 64)
+const LOOK_COUNT := 1
+const FRAME_COUNTS := {"idle": 1, "walk": 4}
+# Same union crop for every portrait frame; the original 64x64 files stay untouched.
+const PREVIEW_REGION := Rect2(20, 14, 22, 36)
+const WORLD_SCALE := 1.0
+static var texture_cache: Dictionary = {}
+static var preview_cache: Dictionary = {}
 
-static func layer_texture(gender: int, number: int, animation: String, frame: int, part: String, use_original := false) -> AtlasTexture:
-	assert(gender in [0, 1] and number >= 1 and number <= 32)
-	assert(part in ["body", "head"] and SOURCE_FRAMES.has(animation))
-	var directory := "adventurers" if use_original else "adventurers_side"
-	var path := "res://assets/%s/%s/%02d/%s_%s_sheet.png" % [directory,"male" if gender == 0 else "female", number, animation, part]
-	if not sheet_cache.has(path):
-		sheet_cache[path] = load(path)
-	var atlas := AtlasTexture.new()
-	atlas.atlas = sheet_cache[path]
-	var mapping: Dictionary = ORIGINAL_FRAMES if use_original else SOURCE_FRAMES
-	var column: int = mapping[animation][frame]
-	var frame_size := ORIGINAL_FRAME_SIZE if use_original else FRAME_SIZE
-	atlas.region = Rect2(column * frame_size.x, 0, frame_size.x, frame_size.y)
-	atlas.filter_clip = true
-	return atlas
+static func source_path(gender: int, animation: String, frame: int) -> String:
+	assert(gender in [0, 1] and FRAME_COUNTS.has(animation))
+	assert(frame >= 0 and frame < FRAME_COUNTS[animation])
+	var filename := "idle.png" if animation == "idle" else "walk_%02d.png" % (frame + 1)
+	return "res://assets/characters/%s/01/%s" % ["male" if gender == 0 else "female", filename]
 
-static func texture(gender: int, look: int, animation := "idle", frame := 0, use_original := false) -> Texture2D:
-	var number: int = SELECTED_NUMBERS[look]
-	var body := layer_texture(gender, number, animation, frame, "body", use_original).get_image()
-	var head := layer_texture(gender, number, animation, frame, "head", use_original).get_image()
-	# Compose once for each animation frame; keep the original separate layers available for equipment.
-	body.convert(Image.FORMAT_RGBA8)
-	head.convert(Image.FORMAT_RGBA8)
-	body.blend_rect(head, Rect2i(Vector2i.ZERO, head.get_size()), Vector2i.ZERO)
-	return ImageTexture.create_from_image(body)
+static func texture(gender: int, look := 0, animation := "idle", frame := 0) -> Texture2D:
+	assert(look == 0, "Only appearance 01 is available for each gender")
+	var path := source_path(gender, animation, frame)
+	if not texture_cache.has(path):
+		texture_cache[path] = load(path)
+	return texture_cache[path]
 
-static func animations(gender: int, look: int) -> SpriteFrames:
+static func preview_texture(source: Texture2D) -> AtlasTexture:
+	var key := source.get_instance_id()
+	if not preview_cache.has(key):
+		var atlas := AtlasTexture.new()
+		atlas.atlas = source
+		atlas.region = PREVIEW_REGION
+		atlas.filter_clip = true
+		preview_cache[key] = atlas
+	return preview_cache[key]
+
+static func animations(gender: int, look := 0) -> SpriteFrames:
+	assert(look == 0)
 	var frames := SpriteFrames.new()
 	frames.remove_animation("default")
 	for animation in ["idle", "walk"]:
 		frames.add_animation(animation)
 		frames.set_animation_loop(animation, true)
-		# Hold the approved idle pose; retain the 420 ms interval between walk contact poses.
-		frames.set_animation_speed(animation, 1.0 / 0.66 if animation == "idle" else 1.0 / 0.42)
-		for i in range(SOURCE_FRAMES[animation].size()):
+		# Preserve the 0.84-second walking cycle; use the uploaded order 1, 2, 3, 4.
+		frames.set_animation_speed(animation, 1.0 if animation == "idle" else 1.0 / 0.21)
+		for i in range(FRAME_COUNTS[animation]):
 			frames.add_frame(animation, texture(gender, look, animation, i))
 	return frames

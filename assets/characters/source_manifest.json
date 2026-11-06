@@ -1,0 +1,165 @@
+{
+  "archive_sha256": "f088ccbeb0a6cc68981be40ec041cad2e835e34bcb1b77c39bc7bd2c3f687aca",
+  "frames": [
+    {
+      "source": "male_idle.png",
+      "path": "assets/characters/male/01/idle.png",
+      "sha256": "1448f21b4a55ce7eab62c1bf15fb59eb9943ea0fc3366a4b556a3eb557b31456",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 18,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "male_walking1.png",
+      "path": "assets/characters/male/01/walk_01.png",
+      "sha256": "23d4e414f3c0cecaf9e022eb5451553c5517172d2abc659d6d977937859524c2",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 17,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "male_walking2.png",
+      "path": "assets/characters/male/01/walk_02.png",
+      "sha256": "f000579b7cdb2f76ebda4b1353eb76510f369e52c0106d2c87a3c487b446ae28",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 18,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "male_walking3.png",
+      "path": "assets/characters/male/01/walk_03.png",
+      "sha256": "a8b0595cc4ab7e8953558642d09a61f96de295b75cbbe695de7a32a41dd7b38c",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 17,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "male_walking4.png",
+      "path": "assets/characters/male/01/walk_04.png",
+      "sha256": "c1fd5331b9bd76ed6cf3b96b6fdc1792a4fbd837b7d4370e5eda8f0d4e293412",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 16,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "female_idle.png",
+      "path": "assets/characters/female/01/idle.png",
+      "sha256": "c459c87f6d096ea7922dc7c9d850b803d20a922b5f28f64e406fbf7e772f14ee",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 22,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "female_walking1.png",
+      "path": "assets/characters/female/01/walk_01.png",
+      "sha256": "c2bef295678178a5c9c45f0580126625bea25c06d5014f5a5fd8301bd489061c",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 22,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "female_walking2.png",
+      "path": "assets/characters/female/01/walk_02.png",
+      "sha256": "13529ccc22bf5d9f0a73b2c3b9b12baa4b46f0c6497ff68dc6cde65fe5ad8c01",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 22,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "female_walking3.png",
+      "path": "assets/characters/female/01/walk_03.png",
+      "sha256": "7f1855bf37b4bd907ca6eada2ae6219bb357bbe06ddd94925c76ec2926ddef9b",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 22,
+      "alpha_values": [
+        0,
+        255
+      ]
+    },
+    {
+      "source": "female_walking4.png",
+      "path": "assets/characters/female/01/walk_04.png",
+      "sha256": "1860fabb48ff6abc2880319ca9c80754f239e47934029a29660d985595b7b8d7",
+      "bounds": [
+        23,
+        17,
+        39,
+        47
+      ],
+      "opaque_colors": 22,
+      "alpha_values": [
+        0,
+        255
+      ]
+    }
+  ]
+}
