@@ -7,19 +7,25 @@ func _initialize() -> void:
 func run() -> void:
 	root.size = Vector2i(1280, 800)
 	var catalog := Art.data()
-	assert(catalog.sheets.size() == 127)
+	assert(catalog.schema == 2 and catalog.atlases.size() == 2)
+	var part_count := 0
 	for path in catalog.sheets:
 		var entry: Dictionary = catalog.sheets[path]
-		var hash := HashingContext.new()
-		hash.start(HashingContext.HASH_SHA256)
-		hash.update(FileAccess.get_file_as_bytes(Art.ROOT + path))
-		assert(hash.finish().hex_encode() == entry.sha256, "Source PNG bytes changed: " + path)
-		var original := Image.new()
-		original.load_png_from_buffer(FileAccess.get_file_as_bytes(Art.ROOT + path))
-		original.convert(Image.FORMAT_RGBA8)
-		assert(original.get_data() == Art.sheet_image(path).get_data(), "Import altered source pixels")
 		for i in range(entry.slots.size()):
-			assert(Rect2i(Vector2i.ZERO, original.get_size()).encloses(Art.part_rect(path, i)))
+			var slot: Dictionary = entry.slots[i]
+			var bytes := FileAccess.get_file_as_bytes("res://art/medieval/" + slot.source)
+			var hash := HashingContext.new()
+			hash.start(HashingContext.HASH_SHA256)
+			hash.update(bytes)
+			assert(hash.finish().hex_encode() == slot.sha256, "Loose PNG changed after packing")
+			var original := Image.new()
+			original.load_png_from_buffer(bytes)
+			original.convert(Image.FORMAT_RGBA8)
+			assert(original.get_size() == Art.part_rect(path, i).size)
+			assert(original.get_data() == Art.part_image(path, i).get_data(), "Atlas/import changed source pixels")
+			assert(Rect2i(Vector2i.ZERO, Art.atlas_image(slot.atlas).get_size()).encloses(Art.part_rect(path, i)))
+			part_count += 1
+	assert(part_count == 1113)
 	var config := Art.defaults()
 	assert(Art.count(config, "face") == 40)
 	assert(Art.count(config, "body") == 12)
@@ -28,8 +34,8 @@ func run() -> void:
 	assert(catalog.weapons[0].sheet.ends_with("/axe.png") and catalog.weapons[0].slot == 0)
 	assert(catalog.weapons[1].sheet.ends_with("/blunt.png") and catalog.weapons[1].slot == 0)
 	assert(catalog.weapons[2].sheet.ends_with("/sword.png") and catalog.weapons[2].slot == 12)
-	assert(Art.part_rect(catalog.weapons[2].sheet, 12) == Rect2i(160, 32, 32, 32))
-	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].name == "sword_12")
+	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].source.ends_with("sword__r02_c06.png"))
+	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].name == "sword__r02_c06")
 	for skin in range(Art.count(config, "skin")):
 		config.skin = skin
 		for face in range(40):
@@ -42,17 +48,38 @@ func run() -> void:
 				for frame in range(Art.FRAME_COUNTS[animation]):
 					var pose := Art.pose(animation, frame)
 					var position := Art.weapon_position(config, animation, frame)
-					assert(position + Vector2i(weapon.grip[0], weapon.grip[1]) == pose.grip, "Weapon detached from hand")
+					assert(position + Art.rotated_point(Vector2i(weapon.grip[0], weapon.grip[1]), Vector2i(32,32), pose.rotation) == pose.grip, "Weapon detached from hand")
 					var art := Art.compose(config, animation, frame)
 					assert(Rect2i(Art.PREVIEW_REGION).encloses(art.get_used_rect()), "Weapon clipped in preview")
 					# Verify both visible hands use exactly the selected skin, overlaid above the weapon.
 					var hand_path: String = Art.human_data().hand
-					var hand := Art.sheet_image(hand_path).get_region(Art.part_rect(hand_path, skin))
-					for offset in [pose.grip - Vector2i(8, 8), pose.free_hand]:
+					var hand := Art.part_image(hand_path, skin)
+					var offsets: Array = [pose.free_hand]
+					if pose.visible and pose.rotation == 0:
+						offsets.append(pose.grip - Vector2i(8, 8))
+					for offset in offsets:
 						for y in range(16):
 							for x in range(16):
 								if hand.get_pixel(x, y).a == 1.0:
 									assert(art.get_pixelv(offset + Vector2i(x, y)) == hand.get_pixel(x, y), "Hand skin differs from selected skin")
+					if pose.effect >= 0:
+						assert(not pose.visible)
+						var effect := Art.part_image(catalog.attack_effect, pose.effect)
+						for y in range(effect.get_height()):
+							for x in range(effect.get_width()):
+								if effect.get_pixel(x,y).a == 1.0:
+									assert(art.get_pixel(x,y+24) == effect.get_pixel(x,y), "Guide attack trail missing")
+	# Guide phases remain distinct, rotations are exact quarter turns, recovery closes the loop.
+	config = Art.defaults()
+	for weapon_index in range(3):
+		config.weapon = weapon_index
+		var unique := {}
+		for frame in range(7):
+			unique[Art.compose(config, "attack", frame).get_data().hex_encode()] = true
+		assert(unique.size() == 6)
+		assert(Art.compose(config,"attack",6).get_data() == Art.compose(config,"idle",0).get_data())
+	assert(Art.pose("attack",1).body_frame == 22 and Art.pose("attack",2).body_frame == 21)
+	assert(Art.pose("attack",1).rotation == 1 and Art.pose("attack",5).rotation == -1)
 	config.merge({"race": 3, "hands": 12, "hat_family": 6, "hat_color": 7, "hat": 22})
 	Art.normalize(config)
 	for hidden in ["race", "hands", "hat_family", "hat_color", "hat"]:
@@ -60,7 +87,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.13")
+	assert(game.game_version == "0.0.14")
 	game.show_creation()
 	await process_frame
 	await process_frame
@@ -111,8 +138,10 @@ func run() -> void:
 			game.set_preview_animation(animation)
 			var frames: SpriteFrames = game.character_frames
 			assert(frames.get_frame_count(animation) == Art.FRAME_COUNTS[animation])
+			var elapsed := 0.0
 			for i in range(Art.FRAME_COUNTS[animation]):
-				game.animation_time = (i + 0.1) / frames.get_animation_speed(animation)
+				game.animation_time = (elapsed + 0.1) / frames.get_animation_speed(animation)
+				elapsed += frames.get_frame_duration(animation, i)
 				game._process(0.0)
 				assert(game.portrait.texture.atlas == frames.get_frame_texture(animation, i))
 		game.create_button.pressed.emit()
@@ -125,5 +154,5 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 127 original sheets/hash/pixels; human-only 8 selectors; exact axe_0/blunt_0/sword_12; 3-way wrap; skin-matched hands; grip alignment and unclipped 4/8/8 animations; world continuity")
+	print("PASS: 1113 loose source parts match two atlases byte-for-byte; exact starter weapons; 8 selectors; guide-based seven-frame attack, trail and loop timing; skin-matched hands; unclipped animations and world continuity")
 	quit()

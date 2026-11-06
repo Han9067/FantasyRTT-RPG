@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.13")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.14")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -81,7 +81,7 @@ func button(value: String, callback: Callable) -> Button:
 func _process(delta: float) -> void:
 	animation_time += delta
 	if current_screen == "creation" and is_instance_valid(portrait):
-		var index := int(animation_time * character_frames.get_animation_speed(preview_animation)) % character_frames.get_frame_count(preview_animation)
+		var index := CharacterArt.frame_at_time(character_frames, preview_animation, animation_time)
 		if index != last_preview_frame:
 			portrait.texture = CharacterArt.preview_texture(character_frames.get_frame_texture(preview_animation, index))
 			last_preview_frame = index
@@ -232,7 +232,7 @@ func show_creation() -> void:
 	var previews := HBoxContainer.new()
 	previews.add_theme_constant_override("separation", 6)
 	preview_column.add_child(previews)
-	for entry in [["idle", "대기"], ["walk", "걷기"], ["run", "달리기"]]:
+	for entry in [["idle", "대기"], ["walk", "걷기"], ["attack", "공격"]]:
 		var b := button(entry[1], set_preview_animation.bind(entry[0]))
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.add_theme_font_size_override("font_size", 14)

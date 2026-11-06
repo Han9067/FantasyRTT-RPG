@@ -6,7 +6,10 @@ const FRAME_SIZE := Vector2i(64, 64)
 const PREVIEW_REGION := Rect2(8, 4, 48, 56)
 const WORLD_SCALE := 1.0
 const FEET_Y := 56
-const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8}
+const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8, "attack": 7}
+# Guide: guard, wind-up, three impact trails, follow-through, guard/recovery.
+const ATTACK_BODIES := [0, 22, 21, 21, 21, 0, 0]
+const ATTACK_DURATIONS := [1.5, 1.5, 1.0, 1.0, 1.0, 1.0, 4.0]
 const BODY_LABELS := ["검정", "파랑", "갈색", "금색", "초록", "회색", "주황", "분홍", "보라", "빨강", "은색", "노랑"]
 const PARTS := [
 	["skin", "피부색"], ["face", "얼굴"], ["body", "복장 색상"],
@@ -59,27 +62,53 @@ static func description(config: Dictionary, key: String) -> String:
 
 # Keep weapon, gripping hand and body bob in one pose calculation.
 static func pose(animation: String, frame: int) -> Dictionary:
+	if animation == "attack":
+		var bob: int = [0, -2, 1, 1, 1, 0, 0][frame]
+		var grip: Vector2i = [Vector2i(20,49), Vector2i(28,24), Vector2i(20,49), Vector2i(20,49), Vector2i(20,49), Vector2i(36,49), Vector2i(20,49)][frame]
+		return {"bob": bob, "grip": grip, "free_hand": Vector2i(30,41+bob),
+			"rotation": [0,1,0,0,0,-1,0][frame], "visible": frame not in [2,3,4],
+			"effect": frame - 2 if frame in [2,3,4] else -1, "body_frame": ATTACK_BODIES[frame]}
 	var bob := int([0, 1, 2, 1][frame]) if animation == "idle" else int([0, 1, 0, -1, 0, 1, 0, -1][frame])
 	var swing := 0 if animation == "idle" else int([0, 1, 1, 0, 0, -1, -1, 0][frame])
-	return {"bob": bob, "grip": Vector2i(20, 49 + bob + swing), "free_hand": Vector2i(30, 41 + bob - swing)}
+	return {"bob": bob, "grip": Vector2i(20, 49 + bob + swing), "free_hand": Vector2i(30, 41 + bob - swing),
+		"rotation": 0, "visible": true, "effect": -1,
+		"body_frame": frame + (0 if animation == "idle" else (4 if animation == "walk" else 12))}
+
+static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector2i:
+	if turns == 1: return Vector2i(size.y - 1 - point.y, point.x)
+	if turns == -1: return Vector2i(point.y, size.x - 1 - point.x)
+	return point
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
-	var grip: Array = data().weapons[config.weapon].grip
-	return pose(animation, frame).grip - Vector2i(int(grip[0]), int(grip[1]))
+	var weapon: Dictionary = data().weapons[config.weapon]
+	var current_pose := pose(animation, frame)
+	var grip := Vector2i(int(weapon.grip[0]), int(weapon.grip[1]))
+	return current_pose.grip - rotated_point(grip, part_rect(weapon.sheet, weapon.slot).size, current_pose.rotation)
 
-static func sheet_image(path: String) -> Image:
-	if not images.has(path):
-		var img: Image = (load(ROOT + path) as Texture2D).get_image()
+static func atlas_image(filename: String) -> Image:
+	if not images.has(filename):
+		var img: Image = (load(ROOT + filename) as Texture2D).get_image()
 		img.convert(Image.FORMAT_RGBA8)
-		images[path] = img
-	return images[path]
+		images[filename] = img
+	return images[filename]
 
 static func part_rect(path: String, index: int) -> Rect2i:
 	var q: Array = data().sheets[path].slots[index].rect
 	return Rect2i(int(q[0]), int(q[1]), int(q[2]), int(q[3]))
 
+static func part_image(path: String, index: int) -> Image:
+	return atlas_image(data().sheets[path].slots[index].atlas).get_region(part_rect(path, index))
+
 static func paste(target: Image, path: String, index: int, position: Vector2i) -> void:
-	target.blend_rect(sheet_image(path), part_rect(path, index), position)
+	target.blend_rect(atlas_image(data().sheets[path].slots[index].atlas), part_rect(path, index), position)
+
+static func paste_rotated(target: Image, path: String, index: int, position: Vector2i, turns: int) -> void:
+	if turns == 0:
+		paste(target, path, index, position)
+		return
+	var part := part_image(path, index)
+	part.rotate_90(CLOCKWISE if turns == 1 else COUNTERCLOCKWISE)
+	target.blend_rect(part, Rect2i(Vector2i.ZERO, part.get_size()), position)
 
 static func compose(config: Dictionary, animation := "idle", frame := 0) -> Image:
 	assert(FRAME_COUNTS.has(animation) and frame >= 0 and frame < FRAME_COUNTS[animation])
@@ -89,10 +118,11 @@ static func compose(config: Dictionary, animation := "idle", frame := 0) -> Imag
 	var current_pose := pose(animation, frame)
 	var head := base + Vector2i(0, current_pose.bob)
 	var race := human_data()
-	var body_index := frame + (0 if animation == "idle" else (4 if animation == "walk" else 12))
+	var body_index: int = current_pose.body_frame
 	paste(img, data().bodies[config.body], body_index, base)
 	var weapon: Dictionary = data().weapons[config.weapon]
-	paste(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame))
+	if current_pose.visible:
+		paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
 	paste(img, race.heads[config.skin], config.face, head)
 	if config.hair > 0:
 		paste(img, race.hair[config.hair_color], config.hair - 1, head)
@@ -100,8 +130,12 @@ static func compose(config: Dictionary, animation := "idle", frame := 0) -> Imag
 		paste(img, race.beard[config.beard_color], config.beard - 1, head)
 	# Skin indices share the original human hand palette. No glove override.
 	var hand_path: String = race.hand
-	paste(img, hand_path, config.skin, current_pose.grip - Vector2i(8, 8))
+	if current_pose.visible:
+		var hand_origin: Vector2i = current_pose.grip - rotated_point(Vector2i(8, 8), Vector2i(16, 16), current_pose.rotation)
+		paste_rotated(img, hand_path, config.skin, hand_origin, current_pose.rotation)
 	paste(img, hand_path, config.skin, current_pose.free_hand)
+	if current_pose.effect >= 0:
+		paste(img, data().attack_effect, current_pose.effect, Vector2i(0, 24))
 	return img
 
 static func animations(config: Dictionary) -> SpriteFrames:
@@ -112,7 +146,7 @@ static func animations(config: Dictionary) -> SpriteFrames:
 		frames.set_animation_loop(animation, true)
 		frames.set_animation_speed(animation, 6.0 if animation == "idle" else 12.0)
 		for i in range(FRAME_COUNTS[animation]):
-			frames.add_frame(animation, ImageTexture.create_from_image(compose(config, animation, i)))
+			frames.add_frame(animation, ImageTexture.create_from_image(compose(config, animation, i)), ATTACK_DURATIONS[i] if animation == "attack" else 1.0)
 	return frames
 
 static func preview_texture(source: Texture2D) -> AtlasTexture:
@@ -121,3 +155,13 @@ static func preview_texture(source: Texture2D) -> AtlasTexture:
 	atlas.region = PREVIEW_REGION
 	atlas.filter_clip = true
 	return atlas
+
+static func frame_at_time(frames: SpriteFrames, animation: String, elapsed: float) -> int:
+	var total := 0.0
+	for i in range(frames.get_frame_count(animation)):
+		total += frames.get_frame_duration(animation, i)
+	var cursor := fposmod(elapsed * frames.get_animation_speed(animation), total)
+	for i in range(frames.get_frame_count(animation)):
+		cursor -= frames.get_frame_duration(animation, i)
+		if cursor < 0.0: return i
+	return 0
