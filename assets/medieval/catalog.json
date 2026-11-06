@@ -22175,7 +22175,7 @@
       "slot": 0,
       "grip": [
         16,
-        25
+        23
       ],
       "attack": "chop_attack",
       "label": "한손 둔기"
@@ -22187,7 +22187,7 @@
       "slot": 0,
       "grip": [
         15,
-        27
+        25
       ],
       "attack": "chop_attack",
       "label": "한손 검"
@@ -22465,7 +22465,7 @@
       "slot": 0,
       "grip": [
         16,
-        25
+        23
       ],
       "attack": "chop_attack"
     },
@@ -23620,7 +23620,7 @@
       "slot": 0,
       "grip": [
         15,
-        27
+        25
       ],
       "attack": "chop_attack"
     },

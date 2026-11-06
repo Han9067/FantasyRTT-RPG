@@ -1,6 +1,6 @@
 # Project conventions
 
-- Current release: 0.0.17; next completed update: 0.0.18. Increment only the patch once per delivered game update. Never change the first two components unless asked.
+- Current release: 0.0.18; next completed update: 0.0.19. Increment only the patch once per delivered game update. Never change the first two components unless asked.
 - Validate playable changes, push editable source to main, and publish builds/web to gh-pages for the existing GitHub Pages site.
 - The visual source of truth is the purchased user-supplied MedievalFantasyCharacters.zip. Read docs/character-design.md before changing characters.
 - Preserve loose source PNGs in art/medieval (.gdignore). Build assets/medieval atlases/catalog with tools/build_medieval_atlas.py; do not hand-edit generated images. Runtime uses only needed parts. Preserve original RGBA; no AI redraws, recolouring or resampling.
