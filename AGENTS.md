@@ -1,6 +1,6 @@
 # Project conventions
 
-- Current release: 0.0.19; next completed update: 0.0.20. Increment only the patch once per delivered game update. Never change the first two components unless asked.
+- Current release: 0.0.20; next completed update: 0.0.21. Increment only the patch once per delivered game update. Never change the first two components unless asked.
 - Validate playable changes, push editable source to main, and publish builds/web to gh-pages for the existing GitHub Pages site.
 - The visual source of truth is the purchased user-supplied MedievalFantasyCharacters.zip. Read docs/character-design.md before changing characters.
 - Preserve loose source PNGs in art/medieval (.gdignore). Build assets/medieval atlases/catalog with tools/build_medieval_atlas.py; do not hand-edit generated images. Runtime uses only needed parts. Preserve original RGBA; no AI redraws, recolouring or resampling.
@@ -10,4 +10,4 @@
 - Keep the world map non-interactive and preserve the city/terrain scale and design.
 - Run meaningful smoke checks for source integrity, selector boundaries/dependencies, layout, preview animations, and world continuity, then verify the web UI in a browser before publishing.
 
-- Current source tree contains 4,573 files: the cleaned character ZIP with its weapons subtree replaced by the latest weapons.zip (406 PNGs). Numbered filenames replace __rNN_cNN. Full ZIP imports validate in staging and replace old trees; never merge removed files back. Guides live only in art/medieval/Animation Guide.
+- Current source tree contains 4,573 files: the cleaned character ZIP with its weapons subtree replaced by the latest weapons.zip (406 PNGs); axe_01.png is overridden by the subsequently uploaded axe_01.zip. Numbered filenames replace __rNN_cNN. Full ZIP imports validate in staging and replace old trees; never merge removed files back. Guides live only in art/medieval/Animation Guide.

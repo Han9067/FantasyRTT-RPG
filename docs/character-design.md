@@ -1,8 +1,8 @@
-# 캐릭터 디자인 기준 — 개별 PNG / 0.0.19
+# 캐릭터 디자인 기준 — 개별 PNG / 0.0.20
 
 원본은 사용자 MedievalFantasyCharacters.zip이며, 무기 부분은 최신 weapons.zip으로 교체했다.
 art/medieval에 4,573개 파일(PNG 4,567장, GIF 5개, RTF 1개)을 보관한다.
-sprites/weapons의 406개 PNG는 새 ZIP과 파일명·바이트가 일치한다. 삭제된 무기는 남기지 않는다.
+sprites/weapons는 weapons.zip의 406개 PNG를 기준으로 한다. axe_01.png는 이후 받은 axe_01.zip의 원본으로 교체했다. 삭제된 무기는 남기지 않는다.
 인물/복장/지형/가이드 원본은 이번 무기 교체에서 변경하지 않는다. 이전 캐릭터 시안은 복원하지 않는다.
 
 ## 편집 원본과 런타임

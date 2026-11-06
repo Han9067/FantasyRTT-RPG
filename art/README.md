@@ -1,7 +1,7 @@
 # MedievalFantasyCharacters 편집용 원본
 
 medieval에는 사용자 캐릭터 에셋과 최신 weapons.zip을 합친 4,573개 파일을 보관합니다.
-medieval/sprites/weapons의 406개 PNG는 새 ZIP과 파일명·바이트가 동일합니다.
+medieval/sprites/weapons는 weapons.zip의 406개 PNG를 기준으로 합니다. axe_01.png는 이후 받은 axe_01.zip의 원본으로 교체했습니다.
 .gdignore와 export 제외 설정으로 원본 전체를 게임에 직접 임포트하지 않습니다.
 
 ## 수정 및 교체
