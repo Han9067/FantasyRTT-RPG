@@ -9,8 +9,8 @@ func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	player_sprite = AnimatedSprite2D.new()
 	player_sprite.sprite_frames = character_frames
-	# Modular 80x64 composite: feet at local y=56; retain world ground y=320.
-	player_sprite.position = Vector2(326, 320 - CharacterArt.FEET_Y)
+	# Anchor the body center and feet; transparent padding must not move the character.
+	player_sprite.position = Vector2(374 - CharacterArt.BODY_ORIGIN.x - 16, 320 - CharacterArt.FEET_Y)
 	player_sprite.scale = Vector2.ONE * CharacterArt.WORLD_SCALE
 	player_sprite.centered = false
 	add_child(player_sprite)

@@ -16,8 +16,34 @@ GUTTER = 1
 BODY_COLORS = ['black','blue','brown','gold','green','grey','orange','pink','purple','red','silver','yellow']
 
 
+def weapon_grip(family, name, image):
+    """Attach to opaque handle pixels at native resolution, including resized art.
+
+    Sword grips sit above the pommel; poles use the lower shaft, leaving a butt
+    behind the hand. Explicit anchors preserve the existing starter attachments.
+    """
+    fixed = {'axe_01': [15,22], 'blunt_01': [16,25], 'sword_01': [15,27],
+             'sling_01': [34,31], 'stick_sling_01': [38,41]}
+    if name in fixed:
+        return fixed[name]
+    bounds = image.getbbox()
+    if bounds is None:
+        raise ValueError(f'Empty weapon: {name}')
+    left, top, right, bottom = bounds
+    if family in ['spear', 'polearm']:
+        y = top + round((bottom - top - 1) * 0.72)
+    elif family in ['shield', 'bow', 'crossbow']:
+        y = (top + bottom - 1) // 2
+    else:
+        y = bottom - (4 if family.startswith('sword') else 5)
+    xs = [x for x in range(left,right) if image.getpixel((x,y))[3] > 0]
+    if not xs:
+        raise ValueError(f'No handle pixels for {name} at row {y}')
+    return [xs[len(xs)//2], y]
+
+
 def build(source=SOURCE, dest=DEST):
-    catalog = {'schema': 3, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'weapons': []}
+    catalog = {'schema': 4, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'weapons': [], 'weapon_items': {}}
     pending = []
     def add(group):
         key = group + '.png'
@@ -58,22 +84,38 @@ def build(source=SOURCE, dest=DEST):
         'beard':[add(f'{human}/hair/facial hair/human_facialhair_{i}') for i in range(1,9)],
         'hand':add(f'{human}/hand/human_hand')}
     catalog['bodies'] = [add(f'sprites/Characters/body/body_{c}') for c in BODY_COLORS]
-    for kind, label, part_id, grip in [
-        ('axe','한손 도끼',1,[15,22]), ('blunt','한손 둔기',1,[16,25]), ('sword','한손 검',13,[15,28])]:
-        key = add(f'sprites/weapons/melee weapons/{kind}')
-        # Pin the requested design by stable numeric filename, even if more weapons are added.
-        index = next(i for i,s in enumerate(catalog['sheets'][key]['slots']) if s['id'] == part_id)
-        catalog['weapons'].append({'id':kind,'label':label,'sheet':key,'slot':index,'grip':grip})
+    # Register every held weapon by filename, not its position in a sheet.
+    # Projectile/shot PNGs remain editable sources, not separate equipped weapons.
+    for category in ['melee weapons', 'ranged weapons']:
+        for folder in sorted((source / 'sprites/weapons' / category).iterdir()):
+            if not folder.is_dir() or folder.name.endswith('_shot'):
+                continue
+            key = add(str(folder.relative_to(source)))
+            slots = catalog['sheets'][key]['slots']
+            equipped_slots = slots[:1] if folder.name in ['sling', 'stick_sling'] else slots
+            for index, slot in enumerate(equipped_slots):
+                with Image.open(source / slot['source']) as image:
+                    grip = weapon_grip(folder.name, slot['name'], image.convert('RGBA'))
+                catalog['weapon_items'][slot['name']] = {
+                    'id': slot['name'], 'family': folder.name, 'sheet': key, 'slot': index,
+                    'grip': grip, 'attack': 'thrust_attack' if folder.name == 'spear' else 'chop_attack'}
+    for item_id, label in [('axe_01','한손 도끼'), ('blunt_01','한손 둔기'), ('sword_01','한손 검')]:
+        catalog['weapons'].append(dict(catalog['weapon_items'][item_id], label=label))
     catalog['attack_effect'] = add('sprites/VFX/weapon/weaponfx03')
-    guide = source / 'Animation Guide/chop_attack_sample.gif'
-    with Image.open(guide) as gif:
-        durations = []
-        for frame in range(gif.n_frames):
-            gif.seek(frame)
-            durations.append(gif.info['duration'])
-    catalog['attack_reference'] = {'source':str(guide.relative_to(source)),
-        'sha256':hashlib.sha256(guide.read_bytes()).hexdigest(),
-        'frames':len(durations), 'durations_ms':durations}
+    catalog['thrust_effect'] = add('sprites/VFX/weapon/weaponfx02')
+    catalog['attack_references'] = {}
+    for attack in ['chop_attack', 'thrust_attack']:
+        guide = source / f'Animation Guide/{attack}_sample.gif'
+        with Image.open(guide) as gif:
+            durations = []
+            for frame in range(gif.n_frames):
+                gif.seek(frame)
+                durations.append(gif.info['duration'])
+        if len(durations) != 6:
+            raise ValueError(f'Expected six reference poses: {guide}')
+        catalog['attack_references'][attack] = {'source':str(guide.relative_to(source)),
+            'sha256':hashlib.sha256(guide.read_bytes()).hexdigest(),
+            'frames':len(durations), 'durations_ms':durations}
 
     pages = [Image.new('RGBA', (PAGE_SIZE,PAGE_SIZE))]
     x = y = GUTTER

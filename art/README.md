@@ -1,25 +1,25 @@
 # MedievalFantasyCharacters 편집용 원본
 
-`medieval/`은 사용자가 제공한 새 ZIP의 4,729개 파일(PNG 4,723장, GIF 5개, RTF 1개)을 파일명·바이트 그대로 보관합니다.
-몸통/얼굴/머리/수염/장비/무기/탈것/효과와 공격 예제 이미지가 포함됩니다.
-`.gdignore` 및 export 제외 설정으로 이 폴더의 수천 개 PNG를 게임에 직접 임포트하지 않습니다.
+medieval에는 사용자 캐릭터 에셋과 최신 weapons.zip을 합친 4,573개 파일을 보관합니다.
+medieval/sprites/weapons의 406개 PNG는 새 ZIP과 파일명·바이트가 동일합니다.
+.gdignore와 export 제외 설정으로 원본 전체를 게임에 직접 임포트하지 않습니다.
 
-## 한 파츠 수정하기
+## 수정 및 교체
 
-1. 해당 PNG만 편집하여 같은 경로와 이름으로 덮어씁니다.
-2. 캔버스 크기·투명 여백·기존 정렬을 유지합니다. 머리/몸통은 32×32, 손은 16×16 등으로 다릅니다.
-3. `python tools/build_medieval_atlas.py` 또는 `bash tools/build-web.sh`를 실행합니다.
+개별 PNG는 같은 경로에 저장한 뒤 `python tools/build_medieval_atlas.py` 또는 `bash tools/build-web.sh`를 실행합니다.
+파일명은 그룹명_번호.png 형식이며 번호 결번도 지원합니다. 원본 이미지의 크기를 줄이지 않습니다.
+무기 손잡이는 tools/build_medieval_atlas.py의 weapon_grip에서 설정합니다.
 
-웹 빌드 명령은 아틀라스를 자동 재생성합니다. 사용자가 다시 시트를 합칠 필요가 없습니다.
-Pillow가 필요합니다. 최초 ZIP 가져오기: `python tools/import_medieval_assets.py /path/to/ZIP`.
-파일명은 `그룹명_번호.png` 형식입니다. 예: `axe_01.png`, `sword_13.png`. 번호를 숫자로 정렬합니다.
-전체 ZIP 가져오기는 먼저 임시 폴더에서 연결과 아틀라스를 검증한 뒤 기존 원본/생성물을 완전히 교체합니다.
-ZIP에서 삭제한 파일은 프로젝트에서도 사라집니다. 개별 PNG 수정은 위의 덮어쓰기 절차를 사용합니다.
-새 파츠 추가 시 다음 식별자를 사용하고 선택기 범위·부착점·테스트 기대값을 함께 확인합니다.
+전체 ZIP: `python tools/import_medieval_assets.py /path/to/MedievalFantasyCharacters.zip`
+
+무기 ZIP만: `python tools/import_medieval_assets.py /path/to/weapons.zip --weapons`
+
+임시 폴더에서 검증 후 교체합니다. 삭제된 파일은 남기지 않으며 무기만 가져올 때 다른 원본은 유지합니다.
 
 ## 생성 결과
 
-`assets/medieval/atlas_*.png`와 `catalog.json`은 자동 생성물입니다. 직접 수정하지 않습니다.
-현재 생성기에서 사용하는 인간/복장/세 시작 무기/내려치기 궤적만 묶습니다.
-다른 종족·모자·장갑·탈것 등의 원본은 미래 작업을 위해 보관하며 게임 빌드에는 들어가지 않습니다.
-선택 무기 디자인은 axe_01.png, blunt_01.png, sword_13.png으로 고정합니다.
+assets/medieval의 아틀라스와 catalog.json은 생성물이므로 직접 수정하지 않습니다.
+현재 1,288개 파츠를 아틀라스 2장으로 묶고, 무기176종은 파일명 식별자로 연결합니다.
+생성 화면은 axe_01, blunt_01, sword_01의 3종입니다.
+spear는 찌르기, 다른 장착 무기는 휘두르기를 사용합니다. 발사체/발사 프레임은 장착 항목이 아닙니다.
+세부 기준은 docs/character-design.md를 참고하세요.

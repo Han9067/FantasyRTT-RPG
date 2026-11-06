@@ -1,6 +1,7 @@
 """Full asset replacement must reject bad input before touching existing files."""
 import contextlib
 import io
+import shutil
 from pathlib import Path
 import sys
 import tempfile
@@ -14,6 +15,31 @@ import import_medieval_assets as importer
 
 
 class AssetImportTest(unittest.TestCase):
+    def test_weapons_import_replaces_only_weapons(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source, runtime = root/'source', root/'runtime'
+            shutil.copytree(ROOT/'art/medieval', source)
+            runtime.mkdir()
+            weapons = source/'sprites/weapons'
+            archive = root/'weapons.zip'
+            inputs = {str(p.relative_to(weapons)): p.read_bytes() for p in weapons.rglob('*.png')}
+            untouched = {str(p.relative_to(source)): p.read_bytes() for p in source.rglob('*') if p.is_file() and not p.is_relative_to(weapons)}
+            (weapons/'removed_weapon.png').write_bytes(b'stale')
+            with zipfile.ZipFile(archive,'w') as z:
+                for name, data in inputs.items(): z.writestr(name, data)
+            with patch.object(importer,'SOURCE',source), patch.object(importer,'DEST',runtime), patch.object(sys,'argv',['import',str(archive),'--weapons']), contextlib.redirect_stdout(io.StringIO()):
+                importer.main()
+            self.assertEqual({str(p.relative_to(weapons)):p.read_bytes() for p in weapons.rglob('*') if p.is_file()}, inputs)
+            for name, data in untouched.items(): self.assertEqual((source/name).read_bytes(), data)
+            # Invalid scoped imports must preserve both source and runtime.
+            catalog = (runtime/'catalog.json').read_bytes()
+            with zipfile.ZipFile(archive,'w') as z: z.writestr('../escape.png', b'invalid')
+            with patch.object(importer,'SOURCE',source), patch.object(importer,'DEST',runtime), patch.object(sys,'argv',['import',str(archive),'--weapons']):
+                with self.assertRaises(ValueError): importer.main()
+            self.assertEqual((runtime/'catalog.json').read_bytes(), catalog)
+            self.assertFalse((root/'escape.png').exists())
+
     def test_invalid_zip_preserves_previous_source_and_runtime(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

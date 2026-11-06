@@ -7,7 +7,7 @@ func _initialize() -> void:
 func run() -> void:
 	root.size = Vector2i(1280, 800)
 	var catalog := Art.data()
-	assert(catalog.schema == 3 and catalog.atlases.size() == 2)
+	assert(catalog.schema == 4 and catalog.atlases.size() == 2)
 	assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/Characters/elf"))
 	assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/Characters/body/body_black 1"))
 	assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/Characters/body/body_black 2"))
@@ -18,7 +18,7 @@ func run() -> void:
 		for i in range(entry.slots.size()):
 			var slot: Dictionary = entry.slots[i]
 			assert(not slot.source.contains("__r"))
-			assert(slot.id == i + 1, "Renamed parts changed their selection order")
+			assert(i == 0 or slot.id > entry.slots[i - 1].id, "Renamed parts changed their selection order")
 			var bytes := FileAccess.get_file_as_bytes("res://art/medieval/" + slot.source)
 			var hash := HashingContext.new()
 			hash.start(HashingContext.HASH_SHA256)
@@ -31,7 +31,7 @@ func run() -> void:
 			assert(original.get_data() == Art.part_image(path, i).get_data(), "Atlas/import changed source pixels")
 			assert(Rect2i(Vector2i.ZERO, Art.atlas_image(slot.atlas).get_size()).encloses(Art.part_rect(path, i)))
 			part_count += 1
-	assert(part_count == 1113)
+	assert(part_count == 1288)
 	var config := Art.defaults()
 	assert(Art.count(config, "face") == 40)
 	assert(Art.count(config, "body") == 12)
@@ -39,9 +39,10 @@ func run() -> void:
 	assert(Art.count(config, "weapon") == 3)
 	assert(catalog.weapons[0].sheet.ends_with("/axe.png") and catalog.weapons[0].slot == 0)
 	assert(catalog.weapons[1].sheet.ends_with("/blunt.png") and catalog.weapons[1].slot == 0)
-	assert(catalog.weapons[2].sheet.ends_with("/sword.png") and catalog.weapons[2].slot == 12)
-	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].source.ends_with("sword_13.png"))
-	assert(catalog.sheets[catalog.weapons[2].sheet].slots[12].name == "sword_13")
+	assert(catalog.weapons[2].sheet.ends_with("/sword.png") and catalog.weapons[2].slot == 0)
+	assert(catalog.sheets[catalog.weapons[2].sheet].slots[0].source.ends_with("sword_01.png"))
+	assert(catalog.sheets[catalog.weapons[2].sheet].slots[0].name == "sword_01")
+	verify_equipment(catalog)
 	for skin in range(Art.count(config, "skin")):
 		config.skin = skin
 		for face in range(40):
@@ -87,7 +88,7 @@ func run() -> void:
 	for frame in range(6):
 		assert(Art.pose("attack",frame).body_frame == 0 and Art.pose("attack",frame).bob == 0)
 	assert(Art.pose("attack",5).grip.x < Art.BODY_ORIGIN.x + 8, "Follow-through hand crossed the torso")
-	var timing = catalog.attack_reference
+	var timing = catalog.attack_references.chop_attack
 	var attack_frames := Art.animations(Art.defaults())
 	assert(attack_frames.get_frame_count("attack") == timing.frames)
 	for frame in range(timing.frames):
@@ -102,7 +103,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.16")
+	assert(game.game_version == "0.0.17")
 	game.show_creation()
 	await process_frame
 	await process_frame
@@ -178,5 +179,56 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 1113 loose source parts match two atlases byte-for-byte; exact starter weapons; 8 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world continuity")
+	print("PASS: 1288 loose source parts match two atlases byte-for-byte; exact starter weapons; 8 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world continuity")
 	quit()
+
+func verify_equipment(catalog: Dictionary) -> void:
+	var config := Art.defaults()
+	var spear_count := 0
+	assert(catalog.weapon_items.has("spear_101") and not catalog.weapon_items.has("spear_09"))
+	for removed in ["throwing weapons", "ranged weapons/pistol", "ranged weapons/musket", "ranged weapons/arquebus"]:
+		assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/weapons/" + removed))
+	for id in catalog.weapon_items:
+		config.equipped_weapon = id
+		var weapon: Dictionary = Art.equipped_weapon(config)
+		var is_spear: bool = weapon.sheet.contains("/spear.png")
+		assert(weapon.attack == ("thrust_attack" if is_spear else "chop_attack"))
+		if is_spear: spear_count += 1
+		var source := Art.part_image(weapon.sheet, weapon.slot)
+		assert(source.get_pixel(weapon.grip[0], weapon.grip[1]).a > 0.0, "Grip is outside weapon pixels: " + id)
+		var frames := Art.animations(config)
+		var region := Art.preview_texture(frames.get_frame_texture("idle", 0)).region
+		for animation in Art.FRAME_COUNTS:
+			for f in range(Art.FRAME_COUNTS[animation]):
+				var pose := Art.pose(animation, f, weapon.attack)
+				var rendered := frames.get_frame_texture(animation, f)
+				assert(Art.preview_texture(rendered).region == region, "Preview crop changes between poses")
+				assert(Rect2i(region).encloses(rendered.get_image().get_used_rect()))
+				if pose.visible:
+					# Check source bounds BEFORE compositing: checking a clipped result alone misses lost pixels.
+					var rotated := source.duplicate() as Image
+					if pose.rotation != 0: rotated.rotate_90(CLOCKWISE if pose.rotation == 1 else COUNTERCLOCKWISE)
+					var occupied := rotated.get_used_rect()
+					var position := Art.weapon_position(config, animation, f)
+					occupied.position += position
+					assert(Rect2i(Vector2i.ZERO, Art.FRAME_SIZE).encloses(occupied), "Weapon clipped before composition: " + id)
+					assert(Rect2i(region).encloses(occupied), "Weapon clipped by preview crop: " + id)
+					assert(position + Art.rotated_point(Vector2i(weapon.grip[0], weapon.grip[1]), source.get_size(), pose.rotation) == pose.grip)
+				if animation == "attack":
+					var reference: Dictionary = catalog.attack_references[weapon.attack]
+					assert(is_equal_approx(frames.get_frame_duration(animation,f) / frames.get_animation_speed(animation), reference.durations_ms[f] / 1000.0))
+					if pose.effect >= 0:
+						var effect := Art.part_image(pose.effect_sheet, pose.effect)
+						if pose.effect_rotation != 0: effect.rotate_90(COUNTERCLOCKWISE)
+						for y in range(effect.get_height()):
+							for x in range(effect.get_width()):
+								if effect.get_pixel(x,y).a == 1.0:
+									assert(rendered.get_image().get_pixelv(pose.effect_origin + Vector2i(x,y)) == effect.get_pixel(x,y))
+		assert(Art.compose(config,"attack",0).get_data() == Art.compose(config,"idle",0).get_data())
+		if is_spear:
+			var ready := Art.pose("attack",1,weapon.attack)
+			var extended := Art.pose("attack",5,weapon.attack)
+			assert(ready.rotation == -1 and extended.rotation == -1)
+			assert(extended.grip.x < ready.grip.x and extended.grip.y == ready.grip.y, "Thrust must extend horizontally")
+	assert(spear_count == 17)
+	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels and grips without clipping; 17 spears thrust, other weapons chop; stable preview crops and reference timing")

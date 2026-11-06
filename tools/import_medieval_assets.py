@@ -12,10 +12,18 @@ from build_medieval_atlas import build, SOURCE, DEST
 
 
 def main():
+    weapons_only = '--weapons' in sys.argv[2:]
     with tempfile.TemporaryDirectory(prefix='medieval-import-') as temp:
         staging = Path(temp)/'source'
         generated = Path(temp)/'runtime'
-        staging.mkdir()
+        if weapons_only:
+            shutil.copytree(SOURCE, staging)
+            shutil.rmtree(staging/'sprites/weapons')
+            imported = staging/'sprites/weapons'
+            imported.mkdir()
+        else:
+            staging.mkdir()
+            imported = staging
         names = set()
         with zipfile.ZipFile(sys.argv[1]) as archive:
             for info in archive.infolist():
@@ -27,7 +35,9 @@ def main():
                         or path.suffix.lower() not in {'.png', '.gif', '.rtf'}
                         or info.filename in names):
                     raise ValueError(f'Invalid asset entry: {info.filename}')
-                target = staging/str(path)
+                if weapons_only and (path.parts[0] not in {'melee weapons', 'ranged weapons', 'projectiles & bullets'} or path.suffix.lower() != '.png'):
+                    raise ValueError(f'Invalid weapon entry: {info.filename}')
+                target = imported/str(path)
                 target.parent.mkdir(parents=True,exist_ok=True)
                 target.write_bytes(archive.read(info))
                 names.add(info.filename)
@@ -40,13 +50,14 @@ def main():
                 shutil.rmtree(directory)
             directory.parent.mkdir(parents=True,exist_ok=True)
             shutil.move(str(prepared), str(directory))
-        actual = {str(p.relative_to(SOURCE)) for p in SOURCE.rglob('*') if p.is_file() and p.name != '.gdignore'}
+        imported_root = SOURCE/'sprites/weapons' if weapons_only else SOURCE
+        actual = {str(p.relative_to(imported_root)) for p in imported_root.rglob('*') if p.is_file() and p.name != '.gdignore'}
         if actual != names:
             raise AssertionError('Imported tree differs from ZIP file list')
         with zipfile.ZipFile(sys.argv[1]) as archive:
-            if any((SOURCE/name).read_bytes() != archive.read(name) for name in names):
+            if any((imported_root/name).read_bytes() != archive.read(name) for name in names):
                 raise AssertionError('Imported bytes differ from ZIP')
-        print(f'Replaced source with exactly {len(names)} ZIP files; no previous files retained.')
+        print(f'Replaced {"weapons" if weapons_only else "source"} with exactly {len(names)} ZIP files; no previous files retained in that subtree.')
 
 if __name__ == '__main__':
     main()

@@ -2,17 +2,17 @@ class_name CharacterArt
 extends RefCounted
 ## Composite original modular sprites at integer coordinates; never resample source art.
 const ROOT := "res://assets/medieval/"
-const FRAME_SIZE := Vector2i(80, 64)
-const PREVIEW_REGION := Rect2(0, 4, 80, 56)
+const FRAME_SIZE := Vector2i(128, 96)
+const PREVIEW_REGION := Rect2(32, 20, 80, 56)
 const WORLD_SCALE := 1.0
-const FEET_Y := 56
+const FEET_Y := 72
 const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8, "attack": 6}
 # Original chop_attack_sample.gif: six fixed-body frames, exactly 100ms each.
-# Extra space on the left accommodates the longest sword without shifting its hand.
-const BODY_ORIGIN := Vector2i(32, 24)
+# Padding accommodates enlarged weapons; starter previews retain their previous scale.
+const BODY_ORIGIN := Vector2i(64, 40)
+const CANVAS_PADDING := Vector2i(32, 16)
 const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
-const ATTACK_DURATIONS := [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
-const ATTACK_EFFECT_ORIGIN := Vector2i(0, 21)
+const ATTACK_EFFECT_ORIGIN := Vector2i(32, 37)
 const BODY_LABELS := ["검정", "파랑", "갈색", "금색", "초록", "회색", "주황", "분홍", "보라", "빨강", "은색", "노랑"]
 const PARTS := [
 	["skin", "피부색"], ["face", "얼굴"], ["body", "복장 색상"],
@@ -63,19 +63,41 @@ static func description(config: Dictionary, key: String) -> String:
 		"weapon": return data().weapons[config.weapon].label
 	return ""
 
+# Equipment IDs are independent of the creator's three starter choices.
+static func equipped_weapon(config: Dictionary) -> Dictionary:
+	if config.has("equipped_weapon"):
+		return data().weapon_items[config.equipped_weapon]
+	return data().weapons[config.weapon]
+
 # Keep weapon, gripping hand and body bob in one pose calculation.
-static func pose(animation: String, frame: int) -> Dictionary:
+static func pose(animation: String, frame: int, attack_type := "chop_attack") -> Dictionary:
+	var result := local_pose(animation, frame, attack_type)
+	result.grip += CANVAS_PADDING
+	result.free_hand += CANVAS_PADDING
+	result.effect_origin += CANVAS_PADDING
+	return result
+
+static func local_pose(animation: String, frame: int, attack_type: String) -> Dictionary:
 	if animation == "attack":
-		# Relative to the guide's unchanged body origin (22,9), shifted to (32,24).
-		# Hands in the reference: guard (25,34), wind-up (31,9), follow-through (22,32).
+		if attack_type == "thrust_attack":
+			# Original thrust guide: upright guard, horizontal preparation, three
+			# straight impact trails, extended horizontal recovery. Fixed body.
+			var grip: Vector2i = [Vector2i(35,42), Vector2i(48,48), Vector2i(35,48), Vector2i(35,48), Vector2i(35,48), Vector2i(31,48)][frame]
+			return {"bob": 0, "grip": grip, "free_hand": Vector2i(46,41),
+				"rotation": 0 if frame == 0 else -1, "visible": frame not in [2,3,4],
+				"effect": frame - 2 if frame in [2,3,4] else -1, "body_frame": 0,
+				"effect_sheet": data().thrust_effect, "effect_rotation": -1,
+				"effect_origin": Vector2i(-2 if frame == 2 else -10,31)}
+		# Relative to the chop guide's fixed body origin (22,9).
 		var grip: Vector2i = [Vector2i(35,49), Vector2i(41,24), Vector2i(35,49), Vector2i(35,49), Vector2i(35,49), Vector2i(32,47)][frame]
 		return {"bob": 0, "grip": grip, "free_hand": Vector2i(46,41),
 			"rotation": [0,1,0,0,0,-1][frame], "visible": frame not in [2,3,4],
-			"effect": frame - 2 if frame in [2,3,4] else -1, "body_frame": ATTACK_BODIES[frame]}
+			"effect": frame - 2 if frame in [2,3,4] else -1, "body_frame": ATTACK_BODIES[frame],
+			"effect_sheet": data().attack_effect, "effect_rotation": 0, "effect_origin": Vector2i(0,21)}
 	var bob := int([0, 1, 2, 1][frame]) if animation == "idle" else int([0, 1, 0, -1, 0, 1, 0, -1][frame])
 	var swing := 0 if animation == "idle" else int([0, 1, 1, 0, 0, -1, -1, 0][frame])
-	return {"bob": bob, "grip": Vector2i(35, 49 + bob + swing), "free_hand": Vector2i(46, 41 + bob - swing),
-		"rotation": 0, "visible": true, "effect": -1,
+	return {"bob": bob, "grip": Vector2i(35, (42 if attack_type == "thrust_attack" else 49) + bob + swing), "free_hand": Vector2i(46, 41 + bob - swing),
+		"rotation": 0, "visible": true, "effect": -1, "effect_origin": Vector2i.ZERO,
 		"body_frame": frame + (0 if animation == "idle" else (4 if animation == "walk" else 12))}
 
 static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector2i:
@@ -84,8 +106,8 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 	return point
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
-	var weapon: Dictionary = data().weapons[config.weapon]
-	var current_pose := pose(animation, frame)
+	var weapon: Dictionary = equipped_weapon(config)
+	var current_pose := pose(animation, frame, weapon.attack)
 	var grip := Vector2i(int(weapon.grip[0]), int(weapon.grip[1]))
 	return current_pose.grip - rotated_point(grip, part_rect(weapon.sheet, weapon.slot).size, current_pose.rotation)
 
@@ -119,12 +141,12 @@ static func compose(config: Dictionary, animation := "idle", frame := 0) -> Imag
 	var img := Image.create(FRAME_SIZE.x, FRAME_SIZE.y, false, Image.FORMAT_RGBA8)
 	img.fill(Color.TRANSPARENT)
 	var base := BODY_ORIGIN
-	var current_pose := pose(animation, frame)
+	var weapon := equipped_weapon(config)
+	var current_pose := pose(animation, frame, weapon.attack)
 	var head := base + Vector2i(0, current_pose.bob)
 	var race := human_data()
 	var body_index: int = current_pose.body_frame
 	paste(img, data().bodies[config.body], body_index, base)
-	var weapon: Dictionary = data().weapons[config.weapon]
 	if current_pose.visible:
 		paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
 	paste(img, race.heads[config.skin], config.face, head)
@@ -139,24 +161,34 @@ static func compose(config: Dictionary, animation := "idle", frame := 0) -> Imag
 		paste_rotated(img, hand_path, config.skin, hand_origin, current_pose.rotation)
 	paste(img, hand_path, config.skin, current_pose.free_hand)
 	if current_pose.effect >= 0:
-		paste(img, data().attack_effect, current_pose.effect, ATTACK_EFFECT_ORIGIN)
+		paste_rotated(img, current_pose.effect_sheet, current_pose.effect, current_pose.effect_origin, current_pose.effect_rotation)
 	return img
 
 static func animations(config: Dictionary) -> SpriteFrames:
 	var frames := SpriteFrames.new()
 	frames.remove_animation("default")
+	var textures: Array[Texture2D] = []
+	var preview_region := Rect2i(PREVIEW_REGION)
+	var timing: Dictionary = data().attack_references[equipped_weapon(config).attack]
 	for animation in FRAME_COUNTS:
 		frames.add_animation(animation)
 		frames.set_animation_loop(animation, true)
 		frames.set_animation_speed(animation, 6.0 if animation == "idle" else (10.0 if animation == "attack" else 12.0))
 		for i in range(FRAME_COUNTS[animation]):
-			frames.add_frame(animation, ImageTexture.create_from_image(compose(config, animation, i)), ATTACK_DURATIONS[i] if animation == "attack" else 1.0)
+			var image := compose(config, animation, i)
+			var texture := ImageTexture.create_from_image(image)
+			textures.append(texture)
+			preview_region = preview_region.merge(image.get_used_rect())
+			frames.add_frame(animation, texture, float(timing.durations_ms[i]) / 100.0 if animation == "attack" else 1.0)
+	# Use one crop for every pose, so long equipment stays visible without camera jitter.
+	for texture in textures:
+		texture.set_meta("preview_region", Rect2(preview_region))
 	return frames
 
 static func preview_texture(source: Texture2D) -> AtlasTexture:
 	var atlas := AtlasTexture.new()
 	atlas.atlas = source
-	atlas.region = PREVIEW_REGION
+	atlas.region = source.get_meta("preview_region", PREVIEW_REGION)
 	atlas.filter_clip = true
 	return atlas
 
