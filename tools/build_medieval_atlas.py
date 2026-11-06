@@ -22,7 +22,7 @@ def weapon_grip(family, name, image):
     Sword grips sit above the pommel; poles use the lower shaft, leaving a butt
     behind the hand. Explicit anchors preserve the existing starter attachments.
     """
-    fixed = {'axe_01': [15,22], 'blunt_01': [16,23], 'sword_01': [15,25],
+    fixed = {'axe_01': [15,21], 'blunt_01': [16,23], 'sword_01': [15,26],
              'sling_01': [34,31], 'stick_sling_01': [38,41]}
     if name in fixed:
         return fixed[name]
