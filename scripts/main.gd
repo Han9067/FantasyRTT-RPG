@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.21")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.22")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -19,6 +19,7 @@ var animation_time := 0.0
 var current_screen := ""
 var battle: BattleMap
 var battle_status: Label
+var battle_hud: CanvasLayer
 var world: Node2D
 var screen: VBoxContainer
 var selected_gender := 0
@@ -105,8 +106,12 @@ func clear_screen() -> void:
 		world.queue_free()
 		world = null
 	if is_instance_valid(screen):
-		remove_child(screen)
+		screen.get_parent().remove_child(screen)
 		screen.queue_free()
+	if is_instance_valid(battle_hud):
+		remove_child(battle_hud)
+		battle_hud.queue_free()
+		battle_hud = null
 	screen = VBoxContainer.new()
 	screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	screen.offset_left = 60
@@ -381,6 +386,12 @@ func ignore_battle_overlay_input(node: Node) -> void:
 func show_battle() -> void:
 	clear_screen()
 	current_screen = "battle"
+	battle_hud = CanvasLayer.new()
+	battle_hud.layer = 10
+	add_child(battle_hud)
+	remove_child(screen)
+	battle_hud.add_child(screen)
+	screen.theme = theme
 	# Battle pixels map directly to viewport pixels; UI screens keep their responsive stretch.
 	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
 	screen.offset_left = 24
@@ -406,12 +417,13 @@ func show_battle() -> void:
 	info.add_theme_stylebox_override("panel",style)
 	screen.add_child(info)
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation",16)
+	row.add_theme_constant_override("separation",12)
 	info.add_child(row)
 	battle_status = label_text("",14)
-	battle_status.custom_minimum_size.x = 190
+	battle_status.custom_minimum_size.x = 220
+	battle_status.clip_text = true
 	row.add_child(battle_status)
-	var instructions := label_text("좌클릭 / 드래그 : 선택     우클릭 : 이동",14)
+	var instructions := label_text("클릭·드래그 : 선택   우클릭 : 이동   WASD : 카메라   휠 : 확대",13)
 	instructions.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(instructions)
 	row.add_child(label_text("버전 : " + game_version,13))
@@ -423,4 +435,5 @@ func refresh_battle_status() -> void:
 	if not is_instance_valid(battle_status) or not is_instance_valid(battle): return
 	var state := "선택되지 않음"
 	if battle.selected: state = "이동 중" if battle.moving else "선택됨 · 대기"
-	battle_status.text = battle.character_name + "  ·  " + state
+	battle_status.text = battle.character_name + " · " + state + " · %d%%" % int(battle.zoom_level*100)
+	battle_status.tooltip_text = battle_status.text

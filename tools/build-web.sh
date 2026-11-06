@@ -16,3 +16,7 @@ mkdir -p builds/web
 godot --headless --export-release Web "builds/web/game-${release_version}.html"
 mv "builds/web/game-${release_version}.html" builds/web/index.html
 touch builds/web/.nojekyll
+
+# Versioned review documents are directly downloadable alongside the game.
+cp docs/weapons/weapon-name-proposals-ko.txt "builds/web/weapon-names-${release_version}.txt"
+cp docs/weapons/weapon-name-proposals-ko.csv "builds/web/weapon-names-${release_version}.csv"
