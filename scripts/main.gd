@@ -1,29 +1,32 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.11")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.12")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
 const INK = Color("e6dfce")
 const WorldMapScene = preload("res://scripts/world_map.gd")
-var animations: Array[SpriteFrames] = []
+var character_frames: SpriteFrames
+var appearance: Dictionary = CharacterArt.defaults()
+var part_controls: Dictionary = {}
+var parts_scroll: ScrollContainer
+var top_panel: PanelContainer
+var bottom_panel: PanelContainer
+var last_preview_frame := -1
 var preview_animation := "idle"
 var animation_time := 0.0
 var current_screen := ""
 var world: Node2D
 var screen: VBoxContainer
 var selected_gender := 0
-var selected_looks := [0, 0]
 var player_name := ""
 var player_age := 20
 var portrait: TextureRect
-var choices: HBoxContainer
 var genders: Array[Button] = []
 var age_label: Label
 var name_input: LineEdit
 var age_slider: HSlider
 var create_button: Button
-var textures: Array[Texture2D] = []
 
 func _ready() -> void:
 	resized.connect(func():
@@ -46,11 +49,7 @@ func _ready() -> void:
 	t.set_color("font_color", "Button", INK)
 	t.set_color("font_color", "LineEdit", INK)
 	theme = t
-	for gender in range(2):
-		for look in range(CharacterArt.LOOK_COUNT):
-			var frames := CharacterArt.animations(gender, look)
-			animations.append(frames)
-			textures.append(CharacterArt.preview_texture(frames.get_frame_texture("idle", 0)))
+	character_frames = CharacterArt.animations(appearance)
 	show_menu()
 
 func _draw() -> void:
@@ -82,9 +81,10 @@ func button(value: String, callback: Callable) -> Button:
 func _process(delta: float) -> void:
 	animation_time += delta
 	if current_screen == "creation" and is_instance_valid(portrait):
-		var frames := animations[selected_gender * CharacterArt.LOOK_COUNT + selected_looks[selected_gender]]
-		var index := int(animation_time * frames.get_animation_speed(preview_animation)) % frames.get_frame_count(preview_animation)
-		portrait.texture = CharacterArt.preview_texture(frames.get_frame_texture(preview_animation, index))
+		var index := int(animation_time * character_frames.get_animation_speed(preview_animation)) % character_frames.get_frame_count(preview_animation)
+		if index != last_preview_frame:
+			portrait.texture = CharacterArt.preview_texture(character_frames.get_frame_texture(preview_animation, index))
+			last_preview_frame = index
 
 func clear_screen() -> void:
 	if is_instance_valid(world):
@@ -96,11 +96,11 @@ func clear_screen() -> void:
 		screen.queue_free()
 	screen = VBoxContainer.new()
 	screen.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	screen.offset_left = 100
-	screen.offset_right = -100
-	screen.offset_top = 40
-	screen.offset_bottom = -48
-	screen.add_theme_constant_override("separation", 18)
+	screen.offset_left = 60
+	screen.offset_right = -60
+	screen.offset_top = 28
+	screen.offset_bottom = -28
+	screen.add_theme_constant_override("separation", 14)
 	add_child(screen)
 
 func spacer(parent: Control) -> void:
@@ -150,132 +150,181 @@ func show_creation() -> void:
 	clear_screen()
 	current_screen = "creation"
 	preview_animation = "idle"
+	animation_time = 0.0
+	last_preview_frame = -1
 	genders.clear()
+	part_controls.clear()
 	var header := HBoxContainer.new()
 	screen.add_child(header)
-	var heading := label_text("새로운 인물", 32)
+	var heading := label_text("새로운 인물", 30)
 	heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(heading)
 	header.add_child(button("← 메인 메뉴", show_menu))
-	screen.add_child(label_text("당신의 이야기는 아직 쓰이지 않았습니다.", 16))
-	var top := panel()
-	screen.add_child(top)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 30)
-	top.add_child(row)
-	var frame := panel()
-	frame.custom_minimum_size = Vector2(180, 220)
-	row.add_child(frame)
-	portrait = TextureRect.new()
-	portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	frame.add_child(portrait)
+
+	top_panel = panel()
+	top_panel.name = "PersonalDetails"
+	screen.add_child(top_panel)
 	var fields := VBoxContainer.new()
-	fields.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	fields.add_theme_constant_override("separation", 14)
-	row.add_child(fields)
-	fields.add_child(label_text("인물 정보", 22))
+	fields.add_theme_constant_override("separation", 10)
+	top_panel.add_child(fields)
+	fields.add_child(label_text("인물 정보", 20))
 	var inputs := HBoxContainer.new()
 	inputs.add_theme_constant_override("separation", 18)
 	fields.add_child(inputs)
-	var name_box := VBoxContainer.new()
-	name_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	inputs.add_child(name_box)
-	name_box.add_child(label_text("이름", 15))
+	inputs.add_child(label_text("이름", 16))
 	name_input = LineEdit.new()
 	name_input.placeholder_text = "이름을 입력하세요"
 	name_input.text = player_name
 	name_input.max_length = 24
-	name_input.custom_minimum_size.y = 48
+	name_input.custom_minimum_size.y = 44
+	name_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_input.text_changed.connect(func(value: String): player_name = value)
-	name_box.add_child(name_input)
-	var gender_box := VBoxContainer.new()
-	inputs.add_child(gender_box)
-	gender_box.add_child(label_text("성별", 15))
-	var gender_row := HBoxContainer.new()
-	gender_box.add_child(gender_row)
+	inputs.add_child(name_input)
+	inputs.add_child(label_text("성별", 16))
 	for i in range(2):
 		var b := button(["남", "여"][i], select_gender.bind(i))
 		b.toggle_mode = true
-		gender_row.add_child(b)
+		inputs.add_child(b)
 		genders.append(b)
+	var ages := HBoxContainer.new()
+	ages.add_theme_constant_override("separation", 16)
+	fields.add_child(ages)
 	age_label = label_text("나이  ·  %d세" % player_age, 16)
-	fields.add_child(age_label)
+	age_label.custom_minimum_size.x = 112
+	ages.add_child(age_label)
+	ages.add_child(label_text("16세", 14))
 	age_slider = HSlider.new()
 	age_slider.min_value = 16
 	age_slider.max_value = 40
 	age_slider.step = 1
 	age_slider.value = player_age
+	age_slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	age_slider.custom_minimum_size.y = 28
 	age_slider.value_changed.connect(func(value: float):
 		player_age = int(value)
 		age_label.text = "나이  ·  %d세" % player_age)
-	fields.add_child(age_slider)
-	fields.add_child(label_text("16세                                                        40세", 13))
-	var bottom := panel()
-	bottom.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	screen.add_child(bottom)
-	var content := VBoxContainer.new()
-	content.add_theme_constant_override("separation", 12)
-	bottom.add_child(content)
-	content.add_child(label_text("외형 선택", 22))
-	var preview_row := HBoxContainer.new()
-	content.add_child(preview_row)
-	var hint := label_text("남녀 각 1종 · 액자에서 동작 확인", 14)
-	hint.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	preview_row.add_child(hint)
-	preview_row.add_child(button("대기 · 1프레임", func(): preview_animation = "idle"; animation_time = 0.0))
-	preview_row.add_child(button("이동 · 4프레임", func(): preview_animation = "walk"; animation_time = 0.0))
-	choices = HBoxContainer.new()
-	choices.add_theme_constant_override("separation", 16)
-	choices.alignment = BoxContainer.ALIGNMENT_CENTER
-	choices.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_child(choices)
-	create_button = Button.new()
-	create_button.text = "캐릭터 생성"
-	create_button.pressed.connect(show_world)
-	create_button.custom_minimum_size.y = 54
+	ages.add_child(age_slider)
+	ages.add_child(label_text("40세", 14))
+
+	bottom_panel = panel()
+	bottom_panel.name = "AppearanceEditor"
+	bottom_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	bottom_panel.custom_minimum_size.y = 320
+	screen.add_child(bottom_panel)
+	var content := HBoxContainer.new()
+	content.add_theme_constant_override("separation", 28)
+	bottom_panel.add_child(content)
+	var preview_column := VBoxContainer.new()
+	preview_column.custom_minimum_size.x = 258
+	preview_column.add_theme_constant_override("separation", 10)
+	content.add_child(preview_column)
+	preview_column.add_child(label_text("외형 미리보기", 20))
+	var frame := panel()
+	frame.name = "PortraitFrame"
+	frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	frame.custom_minimum_size = Vector2(258, 210)
+	preview_column.add_child(frame)
+	portrait = TextureRect.new()
+	portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	frame.add_child(portrait)
+	var previews := HBoxContainer.new()
+	previews.add_theme_constant_override("separation", 6)
+	preview_column.add_child(previews)
+	for entry in [["idle", "대기"], ["walk", "걷기"], ["run", "달리기"]]:
+		var b := button(entry[1], set_preview_animation.bind(entry[0]))
+		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		b.add_theme_font_size_override("font_size", 14)
+		previews.add_child(b)
+	var note := label_text("성별과 관계없이 파츠 조합 가능", 13)
+	note.modulate = GOLD
+	preview_column.add_child(note)
+
+	var selector_column := VBoxContainer.new()
+	selector_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	selector_column.add_theme_constant_override("separation", 10)
+	content.add_child(selector_column)
+	selector_column.add_child(label_text("외형 파츠", 20))
+	selector_column.add_child(label_text("좌우 버튼으로 선택 · 아래로 스크롤하여 장비 선택", 14))
+	parts_scroll = ScrollContainer.new()
+	parts_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	parts_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_ALWAYS
+	parts_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	parts_scroll.follow_focus = true
+	selector_column.add_child(parts_scroll)
+	var rows := VBoxContainer.new()
+	rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	rows.add_theme_constant_override("separation", 6)
+	parts_scroll.add_child(rows)
+	for entry in CharacterArt.PARTS:
+		var key: String = entry[0]
+		var row := HBoxContainer.new()
+		row.name = key
+		row.add_theme_constant_override("separation", 8)
+		rows.add_child(row)
+		var title := label_text(entry[1], 16)
+		title.custom_minimum_size.x = 156
+		row.add_child(title)
+		var left := button("◀", change_part.bind(key, -1))
+		left.accessibility_name = entry[1] + " 이전"
+		row.add_child(left)
+		var number := label_text("", 17)
+		number.custom_minimum_size.x = 70
+		number.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		row.add_child(number)
+		var right := button("▶", change_part.bind(key, 1))
+		right.accessibility_name = entry[1] + " 다음"
+		row.add_child(right)
+		var detail := label_text("", 13)
+		detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		detail.clip_text = true
+		detail.modulate = GOLD
+		row.add_child(detail)
+		part_controls[key] = {"left": left, "right": right, "number": number, "detail": detail}
+	create_button = button("캐릭터 생성", show_world)
+	create_button.custom_minimum_size.y = 50
 	screen.add_child(create_button)
 	select_gender(selected_gender)
+	refresh_part_controls()
+	_process(0.0)
+
+func set_preview_animation(value: String) -> void:
+	preview_animation = value
+	animation_time = 0.0
+	last_preview_frame = -1
+	_process(0.0)
 
 func select_gender(value: int) -> void:
 	selected_gender = value
 	for i in range(genders.size()):
 		genders[i].button_pressed = i == value
-	for child in choices.get_children():
-		choices.remove_child(child)
-		child.queue_free()
-	for i in range(CharacterArt.LOOK_COUNT):
-		var b := button("", select_look.bind(i))
-		b.toggle_mode = true
-		b.custom_minimum_size = Vector2(244, 84)
-		b.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		b.icon = textures[value * CharacterArt.LOOK_COUNT + i]
-		b.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		b.expand_icon = true
-		b.add_theme_constant_override("icon_max_width", 110)
-		b.tooltip_text = "%s 모험가 %02d" % ["남성" if value == 0 else "여성", i + 1]
-		b.accessibility_name = b.tooltip_text
-		choices.add_child(b)
-	select_look(selected_looks[value])
 
-func select_look(value: int) -> void:
-	assert(value >= 0 and value < CharacterArt.LOOK_COUNT)
-	selected_looks[selected_gender] = value
-	portrait.texture = textures[selected_gender * CharacterArt.LOOK_COUNT + value]
-	for i in range(choices.get_child_count()):
-		choices.get_child(i).button_pressed = i == value
+func change_part(key: String, direction: int) -> void:
+	appearance[key] = posmod(int(appearance[key]) + direction, CharacterArt.count(appearance, key))
+	CharacterArt.normalize(appearance)
+	character_frames = CharacterArt.animations(appearance)
+	last_preview_frame = -1
+	refresh_part_controls()
+	_process(0.0)
 
-func make_character(gender: int, look: int) -> Texture2D:
-	return CharacterArt.texture(gender, look)
+func refresh_part_controls() -> void:
+	for entry in CharacterArt.PARTS:
+		var key: String = entry[0]
+		var total := CharacterArt.count(appearance, key)
+		var controls: Dictionary = part_controls[key]
+		controls.number.text = "%d/%d" % [int(appearance[key]) + 1, total]
+		controls.detail.text = CharacterArt.description(appearance, key)
+		controls.detail.tooltip_text = controls.detail.text
+		controls.left.disabled = total <= 1
+		controls.right.disabled = total <= 1
 
 func show_world() -> void:
 	clear_screen()
 	current_screen = "world"
 	world = WorldMapScene.new()
 	world.character_name = player_name if not player_name.is_empty() else "여행자"
-	world.character_frames = animations[selected_gender * CharacterArt.LOOK_COUNT + selected_looks[selected_gender]]
+	world.character_frames = character_frames
 	world.scale = size / Vector2(640, 400)
 	add_child(world)
 	move_child(world, 0)

@@ -1,12 +1,11 @@
 # Project conventions
 
-- Main menu and project.godot must show the same release. Current: 0.0.11; next completed update: 0.0.12. Increment only the patch once per delivered request. Never change the first two components without the user asking.
+- Current release: 0.0.12; next completed update: 0.0.13. Increment only the patch once per delivered game update. Never change the first two components unless asked.
 - Validate playable changes, push editable source to main, and publish builds/web to gh-pages for the existing GitHub Pages site.
-- The new visual source of truth is the user's char.zip: assets/characters/male/01 and female/01. Read docs/character-design.md before changing characters.
-- Only one appearance per gender. Each has one idle and four walking PNGs. Preserve walking1–4 order and the 0.84-second cycle.
-- Preserve all uploaded PNG bytes and pixels. The files are 64x64 with identical used bounds (23,17,16,30), binary alpha and a 30-pixel-tall figure. No recolouring, quantizing, resampling, or separate frame fitting.
-- These new PNGs are complete characters, not separate head/body layers. Load them directly; do not artificially split them to match an older implementation.
-- Preview uses the same AtlasTexture region (20,14,22,36) for every frame. World scale is 1; feet stay at y=320. Use nearest filtering.
-- Old assets/adventurers are archival originals only and excluded from export. The previous assets/adventurers_side and procedural generator were retired; do not restore them.
+- The visual source of truth is the purchased user-supplied MedievalFantasyCharacters.zip. Read docs/character-design.md before changing characters.
+- Preserve source PNG bytes/pixels in assets/medieval. catalog.json contains original hashes and Unity sprite rectangles converted to top-left origin. Use original parts; no AI redraws, recolouring or resampling.
+- The creator has personal details only at the top, and a portrait on the lower left with vertically scrolling part selectors on the right. Gender is independent of appearance. Weapons/mounts are excluded from this editor.
+- Compose 64x64 frames at integer coordinates. Idle/walk/run have 4/8/8 frames; head/accessory offsets follow the body. Use nearest filtering. World feet remain at y=320.
+- Legacy assets/characters, assets/adventurers, tests/fixtures, and tools/references were explicitly removed by the user. Do not restore them.
 - Keep the world map non-interactive and preserve the city/terrain scale and design.
-- Smoke checks must verify uploaded file hashes, exact imported pixels, 1/4 frame counts, both gender selections, preview and world transitions, and foot alignment.
+- Run meaningful smoke checks for source integrity, selector boundaries/dependencies, layout, preview animations, and world continuity, then verify the web UI in a browser before publishing.
