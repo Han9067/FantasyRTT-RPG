@@ -58,8 +58,10 @@ func playable_rect() -> Rect2:
 
 func clamp_camera() -> void:
 	# A window wider than the map (e.g. 4K) must still never expose its outside.
+	var previous_zoom := zoom_level
 	zoom_level = maxf(zoom_level,maxf(viewport_size.x/map_size.x,viewport_size.y/map_size.y))
 	super.clamp_camera()
+	if not is_equal_approx(previous_zoom,zoom_level): status_changed.emit()
 
 func set_selected(_value: bool) -> void:
 	selected = true

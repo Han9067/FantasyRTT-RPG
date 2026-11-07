@@ -83,6 +83,7 @@ func run() -> void:
 	await process_frame
 	inside(map)
 	assert(map.zoom_level >= 1.25, "Oversized viewport exposed terrain boundary")
+	assert(game.world_status.text.ends_with("125%"), "Fit zoom must also update the HUD")
 	root.size = Vector2i(960,720)
 	await process_frame
 	await process_frame
