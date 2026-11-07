@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.23")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.24")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -22,6 +22,7 @@ var battle_status: Label
 var battle_hud: CanvasLayer
 var world: WorldMap
 var world_status: Label
+var world_overview: Control
 var battle_button: Button
 var travel_state: Dictionary = {}
 var screen: VBoxContainer
@@ -390,6 +391,7 @@ func show_world() -> void:
 	left.clip_text = true
 	battle_button = button("전투맵 이동", enter_battle_from_world)
 	header.add_child(battle_button)
+	battle_button.focus_mode = Control.FOCUS_NONE
 	battle_button.anchor_left = 0.5
 	battle_button.anchor_right = 0.5
 	battle_button.offset_left = -100
@@ -397,6 +399,7 @@ func show_world() -> void:
 	battle_button.offset_bottom = 48
 	var back := button("← 캐릭터",show_creation)
 	header.add_child(back)
+	back.focus_mode = Control.FOCUS_NONE
 	back.anchor_left = 1.0
 	back.anchor_right = 1.0
 	back.offset_left = -160
@@ -416,7 +419,7 @@ func show_world() -> void:
 	world_status.custom_minimum_size.x = 215
 	world_status.clip_text = true
 	row.add_child(world_status)
-	var instructions := label_text("우클릭 : 이동   WASD : 카메라   휠 : 확대·축소",13)
+	var instructions := label_text("우클릭 : 이동   방향키/WASD : 카메라   휠 : 확대",13)
 	instructions.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(instructions)
 	row.add_child(label_text("버전 : " + game_version,13))
@@ -424,7 +427,8 @@ func show_world() -> void:
 	refresh_world_status()
 	var overview := preload("res://scripts/world_overview.gd").new()
 	overview.world = world
-	# Kept outside container layout; a compact read-only map in the upper right.
+	world_overview = overview
+	# Kept outside container layout; a draggable camera overview in the upper right.
 	battle_hud.add_child(overview)
 	overview.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
 	overview.offset_left = -244

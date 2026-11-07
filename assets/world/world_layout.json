@@ -1,168 +1,560 @@
 {
   "size": [
-    3072,
-    2304
+    5120,
+    3840
   ],
   "spawn": [
-    1536,
-    1120
+    2560,
+    1920
+  ],
+  "chunks": [
+    {
+      "file": "chunks/world_0_0.png",
+      "position": [
+        0,
+        0
+      ],
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "file": "chunks/world_1_0.png",
+      "position": [
+        2048,
+        0
+      ],
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "file": "chunks/world_2_0.png",
+      "position": [
+        4096,
+        0
+      ],
+      "size": [
+        1024,
+        2048
+      ]
+    },
+    {
+      "file": "chunks/world_0_1.png",
+      "position": [
+        0,
+        2048
+      ],
+      "size": [
+        2048,
+        1792
+      ]
+    },
+    {
+      "file": "chunks/world_1_1.png",
+      "position": [
+        2048,
+        2048
+      ],
+      "size": [
+        2048,
+        1792
+      ]
+    },
+    {
+      "file": "chunks/world_2_1.png",
+      "position": [
+        4096,
+        2048
+      ],
+      "size": [
+        1024,
+        1792
+      ]
+    }
   ],
   "cities": [
     {
-      "id": "westmark",
-      "name": "베스트마르크",
-      "position": [
-        500,
-        880
-      ],
-      "size": [
-        128,
-        128
-      ],
-      "inspiration": "Aachen / western marches"
-    },
-    {
-      "id": "rheinhafen",
-      "name": "라인하펜",
-      "position": [
-        770,
-        650
-      ],
-      "size": [
-        128,
-        128
-      ],
-      "inspiration": "Cologne / Rhine trade"
-    },
-    {
-      "id": "nordhafen",
+      "id": "city_01",
       "name": "노르트하펜",
       "position": [
-        1500,
-        360
+        333,
+        568
       ],
       "size": [
         128,
         128
-      ],
-      "inspiration": "Hamburg / northern lowlands"
+      ]
     },
     {
-      "id": "elbenwacht",
+      "id": "city_02",
+      "name": "베르겐",
+      "position": [
+        974,
+        635
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_03",
+      "name": "프리젠",
+      "position": [
+        1531,
+        726
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_04",
       "name": "엘벤바흐트",
       "position": [
-        2030,
-        650
+        2257,
+        668
       ],
       "size": [
         128,
         128
-      ],
-      "inspiration": "Magdeburg / Elbe crossing"
+      ]
     },
     {
-      "id": "falkenfurt",
-      "name": "팔켄푸르트",
+      "id": "city_05",
+      "name": "노르트펠스",
       "position": [
-        1130,
-        1000
+        2886,
+        718
       ],
       "size": [
         128,
         128
-      ],
-      "inspiration": "Frankfurt / Main confluence"
+      ]
     },
     {
-      "id": "rabenburg",
-      "name": "라벤부르크",
+      "id": "city_06",
+      "name": "발덴하펜",
       "position": [
-        1540,
-        1220
+        3504,
+        599
       ],
       "size": [
         128,
         128
-      ],
-      "inspiration": "Nuremberg / central trade routes"
+      ]
     },
     {
-      "id": "waldheim",
-      "name": "발트하임",
+      "id": "city_07",
+      "name": "오스트하펜",
       "position": [
-        690,
-        1480
+        4107,
+        654
       ],
       "size": [
         128,
         128
-      ],
-      "inspiration": "Strasbourg / upper Rhine"
+      ]
     },
     {
-      "id": "bohenfels",
-      "name": "보헨펠스",
+      "id": "city_08",
+      "name": "그라이펜",
       "position": [
-        2370,
-        1120
+        4766,
+        703
       ],
       "size": [
         128,
         128
-      ],
-      "inspiration": "Prague / Bohemian basin"
+      ]
     },
     {
-      "id": "donauwacht",
-      "name": "도나우바흐트",
+      "id": "city_09",
+      "name": "베스트마르크",
       "position": [
-        1880,
-        1510
+        437,
+        1257
       ],
       "size": [
         128,
         128
-      ],
-      "inspiration": "Regensburg / Danube"
+      ]
     },
     {
-      "id": "ostkrone",
-      "name": "오스트크로네",
+      "id": "city_10",
+      "name": "라인하펜",
       "position": [
-        2640,
-        1640
+        1041,
+        1400
       ],
       "size": [
         128,
         128
-      ],
-      "inspiration": "Vienna / eastern Danube"
+      ]
     },
     {
-      "id": "augsfeld",
-      "name": "아우크스펠트",
-      "position": [
-        1360,
-        1700
-      ],
-      "size": [
-        128,
-        128
-      ],
-      "inspiration": "Augsburg / Alpine foreland"
-    },
-    {
-      "id": "passburg",
-      "name": "파스부르크",
+      "id": "city_11",
+      "name": "린덴부르크",
       "position": [
         1650,
-        2110
+        1378
       ],
       "size": [
         128,
         128
+      ]
+    },
+    {
+      "id": "city_12",
+      "name": "하이덴",
+      "position": [
+        2336,
+        1285
       ],
-      "inspiration": "Trento / Alpine pass"
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_13",
+      "name": "로젠펠트",
+      "position": [
+        2967,
+        1345
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_14",
+      "name": "아이헨",
+      "position": [
+        3490,
+        1314
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_15",
+      "name": "보헨펠스",
+      "position": [
+        4219,
+        1400
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_16",
+      "name": "실버크로네",
+      "position": [
+        4771,
+        1302
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_17",
+      "name": "팔켄푸르트",
+      "position": [
+        395,
+        2041
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_18",
+      "name": "슈타인하임",
+      "position": [
+        1026,
+        2002
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_19",
+      "name": "크로넨",
+      "position": [
+        1639,
+        1946
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_20",
+      "name": "라벤부르크",
+      "position": [
+        2284,
+        1990
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_21",
+      "name": "알텐부르크",
+      "position": [
+        2882,
+        1984
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_22",
+      "name": "그뤼네발트",
+      "position": [
+        3483,
+        2057
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_23",
+      "name": "로텐펠스",
+      "position": [
+        4065,
+        1889
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_24",
+      "name": "오스트마르크",
+      "position": [
+        4712,
+        2017
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_25",
+      "name": "발트하임",
+      "position": [
+        320,
+        2698
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_26",
+      "name": "아우크스펠트",
+      "position": [
+        1002,
+        2657
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_27",
+      "name": "벨렌",
+      "position": [
+        1684,
+        2607
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_28",
+      "name": "도나우바흐트",
+      "position": [
+        2361,
+        2636
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_29",
+      "name": "호헨베르크",
+      "position": [
+        2883,
+        2675
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_30",
+      "name": "아이젠",
+      "position": [
+        3522,
+        2570
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_31",
+      "name": "오스트크로네",
+      "position": [
+        4162,
+        2636
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_32",
+      "name": "발켄하임",
+      "position": [
+        4760,
+        2625
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_33",
+      "name": "쥐트마르크",
+      "position": [
+        317,
+        3364
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_34",
+      "name": "도른펠스",
+      "position": [
+        937,
+        3231
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_35",
+      "name": "파스부르크",
+      "position": [
+        1505,
+        3208
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_36",
+      "name": "아들러",
+      "position": [
+        2178,
+        3281
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_37",
+      "name": "브룬넨",
+      "position": [
+        2799,
+        3325
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_38",
+      "name": "에렌펠스",
+      "position": [
+        3486,
+        3365
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_39",
+      "name": "슈바넨",
+      "position": [
+        4069,
+        3221
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_40",
+      "name": "쥐트크로네",
+      "position": [
+        4698,
+        3253
+      ],
+      "size": [
+        128,
+        128
+      ]
     }
   ]
 }

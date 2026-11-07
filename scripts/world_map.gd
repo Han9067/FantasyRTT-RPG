@@ -1,22 +1,27 @@
 class_name WorldMap
 extends BattleMap
 ## Native-pixel campaign prototype; shared camera/movement, always-selected party.
-const WORLD_SIZE := Vector2(3072,2304)
-const SPAWN := Vector2(1536,1120)
+const WORLD_SIZE := Vector2(5120,3840)
+const SPAWN := Vector2(2560,1920)
 const TERRAIN = preload("res://assets/world/imperial_world.png")
-var terrain: Sprite2D
+const WORLD_CAMERA_SPEED := 840.0
+var terrain: Node2D
 var cities: Array = []
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	map_size = WORLD_SIZE
 	selected = true
-	terrain = Sprite2D.new()
-	terrain.texture = TERRAIN
-	terrain.centered = false
+	terrain = Node2D.new()
 	terrain.show_behind_parent = true
 	add_child(terrain)
 	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/world/world_layout.json"))
+	for chunk in layout.chunks:
+		var tile := Sprite2D.new()
+		tile.texture = load("res://assets/world/" + chunk.file)
+		tile.centered = false
+		tile.position = Vector2(chunk.position[0],chunk.position[1])
+		terrain.add_child(tile)
 	cities = layout.cities
 	for city in cities:
 		var title := Label.new()
@@ -63,11 +68,24 @@ func clamp_camera() -> void:
 	super.clamp_camera()
 	if not is_equal_approx(previous_zoom,zoom_level): status_changed.emit()
 
+func pan_camera(direction: Vector2, delta: float) -> void:
+	var arrows := Vector2(int(pan_keys.get(KEY_RIGHT,false))-int(pan_keys.get(KEY_LEFT,false)),int(pan_keys.get(KEY_DOWN,false))-int(pan_keys.get(KEY_UP,false)))
+	var combined := direction + arrows
+	if combined == Vector2.ZERO: return
+	camera.position += combined.normalized() * WORLD_CAMERA_SPEED * delta / zoom_level
+	clamp_camera()
+
 func set_selected(_value: bool) -> void:
 	selected = true
 	queue_redraw()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		if code in [KEY_LEFT,KEY_RIGHT,KEY_UP,KEY_DOWN]:
+			pan_keys[code] = event.pressed
+			get_viewport().set_input_as_handled()
+			return
 	# Left click never deselects or starts a battle-style selection rectangle.
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT: return
 	super._unhandled_input(event)

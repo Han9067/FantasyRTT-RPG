@@ -29,8 +29,11 @@ func run() -> void:
 	var map: WorldMap = game.world
 	map.set_physics_process(false)
 	assert(game.current_screen == "world" and not is_instance_valid(game.battle))
-	assert(map.map_size == Vector2(3072,2304) and map.cities.size() == 12)
-	assert(map.TERRAIN.get_size() == map.map_size)
+	assert(map.map_size == Vector2(5120,3840) and map.cities.size() == 40)
+	assert(map.TERRAIN.get_size() == Vector2(1024,768))
+	assert(map.terrain.get_child_count() == 6)
+	for tile in map.terrain.get_children():
+		assert(tile.texture.get_width() <= 2048 and tile.texture.get_height() <= 2048)
 	assert(map.world_to_screen(map.unit_position).is_equal_approx(Vector2(640,400)))
 	assert(map.character_frames == game.character_frames and map.character_name == "제국의 여행자")
 	assert(map.selected and not map.moving and map.player_sprite.scale == Vector2.ONE)
@@ -64,21 +67,21 @@ func run() -> void:
 	assert(map.destination.is_equal_approx(target))
 	advance(map,6)
 	assert(map.unit_position.is_equal_approx(target) and not map.moving)
-	var texture := map.terrain.texture
+	var texture: Texture2D = map.terrain.get_child(0).texture
 	for zoom in [1.0,1.5,3.0]:
 		map.zoom_level = zoom
 		for direction in [Vector2(-1,-1),Vector2(1,1),Vector2(-1,1),Vector2(1,-1)]:
 			map.pan_camera(direction,100)
 			inside(map)
-	assert(map.terrain.texture == texture)
+	assert(map.terrain.get_child(0).texture == texture)
 	root.size = Vector2i(960,720)
 	await process_frame
 	await process_frame
 	inside(map)
-	assert(map.terrain.texture == texture and map.map_size == WorldMap.WORLD_SIZE)
+	assert(map.terrain.get_child(0).texture == texture and map.map_size == WorldMap.WORLD_SIZE)
 	assert(absf(game.battle_button.get_global_rect().get_center().x-480)<1)
 	map.zoom_level = 1.0
-	root.size = Vector2i(3840,2160)
+	root.size = Vector2i(6400,4320)
 	await process_frame
 	await process_frame
 	inside(map)
@@ -88,6 +91,64 @@ func run() -> void:
 	await process_frame
 	await process_frame
 	inside(map)
+	# New camera controls: arrow and WASD keys are both 2x the battlefield speed.
+	map.zoom_level = 1
+	map.camera.position = map.map_size*0.5
+	map.clamp_camera()
+	for code in [KEY_RIGHT,KEY_D]:
+		var event := InputEventKey.new()
+		event.physical_keycode = code
+		event.pressed = true
+		map._unhandled_input(event)
+		var initial := map.camera.position
+		advance(map,0.5)
+		event.pressed = false
+		map._unhandled_input(event)
+		assert(is_equal_approx(map.camera.position.x-initial.x,420))
+	# Grab offset prevents a snap. Zoomed dragging maps mini pixels to world distance.
+	var mini = game.world_overview
+	for zoom in [1.0,3.0]:
+		map.zoom_level = zoom
+		map.camera.position = map.map_size*0.5
+		map.clamp_camera()
+		var party := map.unit_position
+		var destination := map.destination
+		var initial := map.camera.position
+		var start: Vector2 = mini.camera_rect().get_center()+Vector2(2,1)
+		var press := InputEventMouseButton.new()
+		press.button_index = MOUSE_BUTTON_LEFT
+		press.position = start
+		press.pressed = true
+		mini._gui_input(press)
+		assert(mini.camera_dragging and map.camera.position == initial)
+		var motion := InputEventMouseMotion.new()
+		motion.position = start+Vector2(18,12)
+		mini._gui_input(motion)
+		assert(map.camera.position.is_equal_approx(initial+Vector2(18,12)/mini.map_bounds().size*map.map_size))
+		assert(map.unit_position == party and map.destination == destination and map.selected)
+		for corner in [Vector2(-100,-100),Vector2(600,500)]:
+			motion.position = corner
+			mini._gui_input(motion)
+			inside(map)
+		press.pressed = false
+		mini._gui_input(press)
+		assert(not mini.camera_dragging)
+		initial = map.camera.position
+		motion.position = start
+		mini._gui_input(motion)
+		assert(map.camera.position == initial)
+	# Outside rectangle clicks do not move camera or character; focus loss cancels drag.
+	var press := InputEventMouseButton.new()
+	press.button_index = MOUSE_BUTTON_LEFT
+	press.pressed = true
+	press.position = Vector2(10,10)
+	mini._gui_input(press)
+	assert(not mini.camera_dragging)
+	press.position = mini.camera_rect().get_center()
+	mini._gui_input(press)
+	assert(mini.camera_dragging)
+	mini._notification(Node.NOTIFICATION_WM_WINDOW_FOCUS_OUT)
+	assert(not mini.camera_dragging)
 	var saved_position := map.unit_position
 	var saved_camera := map.camera.position
 	var saved_zoom := map.zoom_level
@@ -107,5 +168,5 @@ func run() -> void:
 	game.create_button.pressed.emit()
 	await process_frame
 	assert(game.world.unit_position == WorldMap.SPAWN and game.world.zoom_level == 1)
-	print("PASS: creation -> world, 12 native 128px cities, persistent selection, first right-click walk/idle, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
+	print("PASS: creation -> world, 40 native 128px cities, persistent selection, first right-click walk/idle, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
 	quit()
