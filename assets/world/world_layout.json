@@ -1,0 +1,168 @@
+{
+  "size": [
+    3072,
+    2304
+  ],
+  "spawn": [
+    1536,
+    1120
+  ],
+  "cities": [
+    {
+      "id": "westmark",
+      "name": "베스트마르크",
+      "position": [
+        500,
+        880
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Aachen / western marches"
+    },
+    {
+      "id": "rheinhafen",
+      "name": "라인하펜",
+      "position": [
+        770,
+        650
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Cologne / Rhine trade"
+    },
+    {
+      "id": "nordhafen",
+      "name": "노르트하펜",
+      "position": [
+        1500,
+        360
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Hamburg / northern lowlands"
+    },
+    {
+      "id": "elbenwacht",
+      "name": "엘벤바흐트",
+      "position": [
+        2030,
+        650
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Magdeburg / Elbe crossing"
+    },
+    {
+      "id": "falkenfurt",
+      "name": "팔켄푸르트",
+      "position": [
+        1130,
+        1000
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Frankfurt / Main confluence"
+    },
+    {
+      "id": "rabenburg",
+      "name": "라벤부르크",
+      "position": [
+        1540,
+        1220
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Nuremberg / central trade routes"
+    },
+    {
+      "id": "waldheim",
+      "name": "발트하임",
+      "position": [
+        690,
+        1480
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Strasbourg / upper Rhine"
+    },
+    {
+      "id": "bohenfels",
+      "name": "보헨펠스",
+      "position": [
+        2370,
+        1120
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Prague / Bohemian basin"
+    },
+    {
+      "id": "donauwacht",
+      "name": "도나우바흐트",
+      "position": [
+        1880,
+        1510
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Regensburg / Danube"
+    },
+    {
+      "id": "ostkrone",
+      "name": "오스트크로네",
+      "position": [
+        2640,
+        1640
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Vienna / eastern Danube"
+    },
+    {
+      "id": "augsfeld",
+      "name": "아우크스펠트",
+      "position": [
+        1360,
+        1700
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Augsburg / Alpine foreland"
+    },
+    {
+      "id": "passburg",
+      "name": "파스부르크",
+      "position": [
+        1650,
+        2110
+      ],
+      "size": [
+        128,
+        128
+      ],
+      "inspiration": "Trento / Alpine pass"
+    }
+  ]
+}

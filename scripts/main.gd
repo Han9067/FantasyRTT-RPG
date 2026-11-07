@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.22")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.23")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -20,7 +20,10 @@ var current_screen := ""
 var battle: BattleMap
 var battle_status: Label
 var battle_hud: CanvasLayer
-var world: Node2D
+var world: WorldMap
+var world_status: Label
+var battle_button: Button
+var travel_state: Dictionary = {}
 var screen: VBoxContainer
 var selected_gender := 0
 var player_name := ""
@@ -34,9 +37,7 @@ var create_button: Button
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	resized.connect(func():
-		queue_redraw()
-		if is_instance_valid(world): world.scale = size / Vector2(640, 400))
+	resized.connect(queue_redraw)
 	var t := Theme.new()
 	t.default_font = load("res://assets/fonts/NotoSansCJK-Regular.ttc")
 	t.default_font_size = 18
@@ -58,7 +59,7 @@ func _ready() -> void:
 	show_menu()
 
 func _draw() -> void:
-	if current_screen == "battle": return
+	if current_screen in ["battle", "world"]: return
 	draw_rect(Rect2(Vector2.ZERO, size), Color("171f22"))
 	# Quiet silhouettes of a fortified city, drawn on an integer pixel grid.
 	var base := size.y * 0.80
@@ -102,6 +103,8 @@ func clear_screen() -> void:
 		battle = null
 	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS
 	if is_instance_valid(world):
+		world.set_process_unhandled_input(false)
+		world.set_physics_process(false)
 		remove_child(world)
 		world.queue_free()
 		world = null
@@ -305,7 +308,7 @@ func show_creation() -> void:
 		detail.modulate = GOLD
 		row.add_child(detail)
 		part_controls[key] = {"left": left, "right": right, "number": number, "detail": detail}
-	create_button = button("캐릭터 생성", show_battle)
+	create_button = button("캐릭터 생성", start_journey)
 	create_button.custom_minimum_size.y = 50
 	screen.add_child(create_button)
 	select_gender(selected_gender)
@@ -351,31 +354,94 @@ func refresh_part_controls() -> void:
 		controls.left.disabled = total <= 1
 		controls.right.disabled = total <= 1
 
+func start_journey() -> void:
+	travel_state.clear()
+	show_world()
+
 func show_world() -> void:
 	clear_screen()
 	current_screen = "world"
+	battle_hud = CanvasLayer.new()
+	battle_hud.layer = 10
+	add_child(battle_hud)
+	remove_child(screen)
+	battle_hud.add_child(screen)
+	screen.theme = theme
+	get_tree().root.content_scale_mode = Window.CONTENT_SCALE_MODE_DISABLED
+	screen.offset_left = 24
+	screen.offset_right = -24
+	screen.offset_top = 18
+	screen.offset_bottom = -14
 	world = WorldMapScene.new()
 	world.character_name = player_name if not player_name.is_empty() else "여행자"
 	world.character_frames = character_frames
-	world.scale = size / Vector2(640, 400)
 	add_child(world)
-	move_child(world, 0)
-	var header := HBoxContainer.new()
+	move_child(world,0)
+	if not travel_state.is_empty():
+		world.restore_travel(travel_state.position,travel_state.camera,travel_state.zoom)
+	var header := Control.new()
+	header.custom_minimum_size.y = 50
 	screen.add_child(header)
-	var title := label_text("서부 변경  /  월드맵", 28)
-	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header.add_child(title)
-	header.add_child(button("← 캐릭터", show_creation))
-	screen.add_child(label_text("넓은 초원과 산맥 사이, 제국의 작은 요새도시", 16))
+	var left := label_text("분열된 제국  /  월드맵",20)
+	header.add_child(left)
+	left.anchor_right = 0.33
+	left.offset_top = 10
+	left.offset_bottom = 42
+	left.clip_text = true
+	battle_button = button("전투맵 이동", enter_battle_from_world)
+	header.add_child(battle_button)
+	battle_button.anchor_left = 0.5
+	battle_button.anchor_right = 0.5
+	battle_button.offset_left = -100
+	battle_button.offset_right = 100
+	battle_button.offset_bottom = 48
+	var back := button("← 캐릭터",show_creation)
+	header.add_child(back)
+	back.anchor_left = 1.0
+	back.anchor_right = 1.0
+	back.offset_left = -160
+	back.offset_right = 0
+	back.offset_bottom = 48
 	spacer(screen)
 	var info := panel()
+	var style := info.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
+	style.set_content_margin_all(10)
+	style.bg_color = Color("252e30e8")
+	info.add_theme_stylebox_override("panel",style)
 	screen.add_child(info)
 	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation",12)
 	info.add_child(row)
-	var description := label_text("그레이워치  ·  요새도시\n" + world.character_name + "의 여정이 시작되는 곳", 18)
-	description.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(description)
-	row.add_child(label_text("지형 미리보기  ·  상호작용 없음\n버전 : " + game_version, 14))
+	world_status = label_text("",14)
+	world_status.custom_minimum_size.x = 215
+	world_status.clip_text = true
+	row.add_child(world_status)
+	var instructions := label_text("우클릭 : 이동   WASD : 카메라   휠 : 확대·축소",13)
+	instructions.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(instructions)
+	row.add_child(label_text("버전 : " + game_version,13))
+	world.status_changed.connect(refresh_world_status)
+	refresh_world_status()
+	var overview := preload("res://scripts/world_overview.gd").new()
+	overview.world = world
+	# Kept outside container layout; a compact read-only map in the upper right.
+	battle_hud.add_child(overview)
+	overview.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	overview.offset_left = -244
+	overview.offset_right = -24
+	overview.offset_top = 92
+	overview.offset_bottom = 260
+	ignore_battle_overlay_input(screen)
+
+func refresh_world_status() -> void:
+	if not is_instance_valid(world_status) or not is_instance_valid(world): return
+	world_status.text = world.character_name + (" · 이동 중" if world.moving else " · 대기") + " · %d%%" % int(world.zoom_level*100)
+	world_status.tooltip_text = world_status.text
+
+func enter_battle_from_world() -> void:
+	if is_instance_valid(world):
+		travel_state = {"position":world.unit_position,"camera":world.camera.position,"zoom":world.zoom_level}
+	show_battle()
 
 
 func ignore_battle_overlay_input(node: Node) -> void:
@@ -408,7 +474,7 @@ func show_battle() -> void:
 	var title := label_text("서부 초원  /  전투 시험장", 22)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(title)
-	header.add_child(button("← 캐릭터", show_creation))
+	header.add_child(button("← 월드맵", show_world))
 	spacer(screen)
 	var info := panel()
 	var style := info.get_theme_stylebox("panel").duplicate() as StyleBoxFlat

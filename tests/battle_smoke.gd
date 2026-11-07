@@ -49,7 +49,7 @@ func run() -> void:
 	game.show_creation()
 	game.name_input.text = "전장 테스트"
 	game.name_input.text_changed.emit(game.name_input.text)
-	game.create_button.pressed.emit()
+	game.show_battle()
 	await process_frame
 	var map: BattleMap = game.battle
 	map.set_physics_process(false)
@@ -169,7 +169,7 @@ func run() -> void:
 	assert(not is_instance_valid(game.battle) and not is_instance_valid(game.battle_hud))
 	assert(root.content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS)
 	assert(game.player_name == "전장 테스트")
-	game.create_button.pressed.emit()
+	game.show_battle()
 	await process_frame
 	assert(game.battle.unit_position == game.battle.map_size*0.5)
 	assert(game.battle.zoom_level == 1 and not game.battle.selected and not game.battle.moving)
