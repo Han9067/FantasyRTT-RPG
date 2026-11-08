@@ -1,6 +1,6 @@
 # Project conventions
 
-- Current release: 0.0.25; next completed update: 0.0.26. Increment only the patch once per delivered game update. Never change the first two components unless asked.
+- Current release: 0.0.26; next completed update: 0.0.27. Increment only the patch once per delivered game update. Never change the first two components unless asked.
 - Validate playable changes, push editable source to main, and publish builds/web to gh-pages for the existing GitHub Pages site.
 - The visual source of truth is the purchased user-supplied MedievalFantasyCharacters.zip. Read docs/character-design.md before changing characters.
 - Preserve loose source PNGs in art/medieval (.gdignore). Build assets/medieval atlases/catalog with tools/build_medieval_atlas.py; do not hand-edit generated images. Runtime uses only needed parts. Preserve original RGBA; no AI redraws, recolouring or resampling.
@@ -13,3 +13,5 @@
 - Current source tree contains 4,573 files: the cleaned character ZIP with its weapons subtree replaced by the latest weapons.zip (406 PNGs); axe_01.png is overridden by the subsequently uploaded axe_01.zip. Numbered filenames replace __rNN_cNN. Full ZIP imports validate in staging and replace old trees; never merge removed files back. Guides live only in art/medieval/Animation Guide.
 
 - docs/weapons/weapon-name-proposals-ko.txt and .csv are review-only name proposals for 109 equipment appearances, excluding shield/polearm/ammunition; sling animation frames are aliases, not separate weapons. Do not apply proposed names or stats to gameplay without a request.
+
+- World town/tree source of truth: art/world/resources/city.png (128x128), tree1.png and tree2.png (48x48), byte-identical to the user 월드맵 리소스.zip. Keep native pixels, colour and alpha; no scaling, recolouring, mirroring or procedural substitutes. All 42 numbered towns share city.png. Pine-biased northern forests use tree2, with both trees mixed elsewhere. Use trunk anchor (24,45); clip placements to the planned forest with actual alpha occupancy. Generated ground/minimap/review images are rebuilt by tools/build_world_map.py. tests/world_plan_check.py checks source hashes, all town pixels and both tree variants in the baked terrain. Old generated city_0..3 files were removed.

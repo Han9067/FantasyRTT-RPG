@@ -27,56 +27,17 @@ def smooth(points):
    out.append(tuple(q.astype(int)))
  out.append(tuple(points[-1]));return out
 
-def city_sprite(index):
- im=Image.new('RGBA',(128,128));d=ImageDraw.Draw(im)
- def rect(b,c):d.rectangle(b,fill=c)
- dark='#343e39'; stone='#9fa58b';light='#c3c5a3';shadow='#727e71'
- roof=['#995b42','#765344','#875344','#666c69'][index%4]
- flag=['#aa4d3e','#536c99','#b3974b','#667b4b'][index%4]
- rect((6,10,124,126),'#354e3e');rect((4,9,119,121),'#697b54')
- rect((13,19,109,108),'#9c9874');rect((58,21,68,114),'#c0b08a');rect((17,66,109,75),'#b9ab82')
- # Tiny courtyard pavers.
- for y in range(26,109,7):
-  for x in range(22,106,9):
-   if rng.random()<.36:rect((x,y,x+2,y+1),'#b7aa82')
- def wall(x,y,w,h):
-  rect((x-1,y-1,x+w,y+h),dark);rect((x,y,x+w-1,y+h-1),shadow)
-  rect((x,y,x+w-2,y+3),light)
-  for yy in range(y+6,y+h,5):
-   for xx in range(x+1+(3 if yy%2 else 0),x+w-4,7):
-    rect((xx,yy,xx+5,yy+2),stone)
- def roof_house(x,y,w=19,h=17):
-  rect((x+3,y+4,x+w+2,y+h+2),'#777956');rect((x,y,x+w,y+h),dark)
-  rect((x+1,y+1,x+w-1,y+h-1),'#c8b791');rect((x+2,y+8,x+w-2,y+9),'#6b5945')
-  rect((x+2,y+2,x+3,y+h-1),'#6b5945');rect((x+w-5,y+5,x+w-2,y+9),'#37423e')
-  rect((x+7,y+h-7,x+10,y+h),'#5a493b')
-  d.polygon([(x-2,y+2),(x+w//2,y-9),(x+w+2,y+2)],fill=dark)
-  d.polygon([(x,y),(x+w//2,y-7),(x+w,y)],fill=roof)
-  for r in range(3):rect((x+w//2-r*3,y-5+r*2,x+w//2+r*3,y-5+r*2),'#bc8259')
-  rect((x+w-4,y-7,x+w-2,y-1),'#72776b')
- wall(16,17,95,9)
- for x,y in [(25,42),(79,45),(25,80),(80,82)]:roof_house(x,y)
- # A keep with a steep tiled roof, inside the city walls.
- wall(50,33,28,25);roof_house(49,32,29,25)
- rect((59,42,65,56),dark);rect((60,43,62,53),'#b38a59')
- wall(11,26,8,82);wall(108,26,8,82);wall(14,104,99,15)
- for x in range(16,110,8):
-  rect((x,13,x+4,19),dark);rect((x+1,13,x+4,17),light)
-  rect((x,100,x+4,106),dark);rect((x+1,100,x+4,104),light)
- for y in range(28,101,8):
-  rect((9,y,14,y+4),light);rect((107,y,112,y+4),light)
- # Four corner towers, footprint kept inside the exact 128x128 canvas.
- for x,y in [(5,11),(101,11),(5,96),(101,96)]:
-  wall(x,y,20,25)
-  for dx in (0,8,16):
-   rect((x+dx-1,y-5,x+dx+4,y+1),dark);rect((x+dx,y-5,x+dx+3,y-1),light)
-  rect((x+8,y+9,x+11,y+16),dark);rect((x+9,y+9,x+10,y+14),'#566858')
- # South gate, timber portcullis and path.
- rect((54,104,73,120),dark);rect((57,105,70,120),'#72583e')
- for x in range(58,71,4):rect((x,106,x,120),'#b19465')
- rect((55,119,72,126),'#bea375');rect((55,122,72,122),'#857250')
- rect((112,0,113,13),dark);rect((114,1,125,7),flag);rect((114,1,116,7),'#d6b878')
- return im
+RESOURCE_DIR = ROOT / 'art/world/resources'
+CITY_IMAGE = Image.open(RESOURCE_DIR/'city.png').convert('RGBA')
+TREE_IMAGES = [Image.open(RESOURCE_DIR/name).convert('RGBA') for name in ['tree1.png','tree2.png']]
+TREE_BOUNDS = [image.getchannel('A').getbbox() for image in TREE_IMAGES]
+TREE_ALPHA = [np.array(image.getchannel('A'))>0 for image in TREE_IMAGES]
+RESOURCE_MANIFEST = json.loads((RESOURCE_DIR/'manifest.json').read_text())
+assert CITY_IMAGE.size == (128,128)
+assert all(image.size == (48,48) for image in TREE_IMAGES)
+# Tree canvases share a trunk anchor at (24,45); never resize/recolour the source.
+tree_counts = [0,0]
+tree_proofs = []
 
 OUT.mkdir(parents=True,exist_ok=True)
 chunks_dir=OUT/'chunks'
@@ -178,20 +139,19 @@ def city_clear(x,y,pad=95):
  return any(abs(x-cx)<pad and abs(y-cy)<pad+18 for _,_,cx,cy in CITIES)
 
 def tree(x,y,pine=False):
- # Slender ~22x40px foliage, sharing the character palette's simple dark outlines.
- d.ellipse((x-9,y-2,x+12,y+4),fill='#354d32')
- d.rectangle((x-1,y-10,x+2,y),fill='#4c4230');d.line((x,y-8,x,y-2),fill='#9b8055')
- if pine:
-  for k in range(3):
-   yy=y-9-k*8;ww=10-k*2
-   d.polygon([(x-ww,yy),(x,yy-15),(x+ww,yy)],fill='#293f34')
-   d.polygon([(x-ww+2,yy-3),(x,yy-13),(x+ww-3,yy-3)],fill='#4b7050')
-   d.line((x-ww+3,yy-4,x-1,yy-4),fill='#77905c')
- else:
-  for dx,dy,r in [(0,-31,7),(-3,-23,9),(2,-15,8)]:
-   d.polygon([(x+dx-r,y+dy-2),(x+dx-4,y+dy-r),(x+dx+3,y+dy-r),(x+dx+r,y+dy-2),(x+dx+r-2,y+dy+5),(x+dx,y+dy+8),(x+dx-r+1,y+dy+4)],fill='#30482e')
-   d.polygon([(x+dx-r+2,y+dy-2),(x+dx-3,y+dy-r+2),(x+dx+2,y+dy-r+2),(x+dx+r-2,y+dy-2),(x+dx+2,y+dy+4),(x+dx-r+2,y+dy+3)],fill='#5d8147')
-   d.line((x+dx-3,y+dy-r+3,x+dx+1,y+dy-r+3),fill='#8ba35b',width=2)
+ index=1 if pine else 0
+ sprite=TREE_IMAGES[index]
+ left,top=x-24,y-45
+ bx0,by0,bx1,by1=TREE_BOUNDS[index]
+ if left+bx0<0 or top+by0<0 or left+bx1>W or top+by1>H:return False
+ occupied=TREE_ALPHA[index][by0:by1,bx0:bx1]
+ region=biome[top+by0:top+by1,left+bx0:left+bx1]
+ if np.any(occupied & (region!=2)):return False
+ im.paste(sprite,(left,top),sprite)
+ tree_counts[index]+=1
+ # Collect locations for independently checking exact source pixels after baking.
+ tree_proofs.append({'file':f'tree{index+1}.png','position':[left,top]})
+ return True
 
 # Jittered rows give dense stands, baked into the ground; no per-tree runtime nodes.
 forest_count=0
@@ -200,15 +160,13 @@ for yy in range(40,H-8,23):
   x=xx+rng.randint(-8,8);y=yy+rng.randint(-6,6)
   if biome[y,x]!=2 or city_clear(x,y) or rng.random()<.12:continue
   if any(biome[py,px]!=2 for px,py in [(x-11,y-18),(x+11,y-18),(x,y-39)]):continue
-  tree(x,y,y<H*.3 or rng.random()<.28);forest_count+=1
+  if tree(x,y,y<H*.3 or rng.random()<.28):forest_count+=1
 # Exact town positions from the red markers; no generated extra cities.
 for i,(_,name,x,y) in enumerate(CITIES):
  assert 64<=x<=W-64 and 64<=y<=H-64,(name,x,y)
  assert biome[y,x] in (0,1),(name,'city center is not plains/snow',int(biome[y,x]))
  for _,other,ox,oy in CITIES[:i]:assert abs(x-ox)>=128 or abs(y-oy)>=128,(name,other)
- city=city_sprite(i)
- if i<4:city.save(OUT/f'city_{i}.png')
- im.paste(city,(x-64,y-64),city)
+ im.paste(CITY_IMAGE,(x-64,y-64),CITY_IMAGE)
 chunks=[]
 for y in range(0,H,CHUNK):
  for x in range(0,W,CHUNK):
@@ -217,11 +175,13 @@ for y in range(0,H,CHUNK):
   part.save(chunks_dir/filename,optimize=True)
   chunks.append({'file':'chunks/'+filename,'position':[x,y],'size':list(part.size)})
 im.resize((1024,768),Image.Resampling.NEAREST).save(OUT/'imperial_world.png',optimize=True)
-data={'size':[W,H],'spawn':[2560,1920],'reference_size':[RW,RH],'numbering':PLAN['numbering'],'terrain_types':['plains','snow','forest','mountains','water'],'chunks':chunks,'cities':[{'id':id,'name':name,'position':[x,y],'reference_position':PLAN['cities'][i]['position'],'size':[128,128]} for i,(id,name,x,y) in enumerate(CITIES)]}
+data={'size':[W,H],'spawn':[2560,1920],'reference_size':[RW,RH],'numbering':PLAN['numbering'],'terrain_types':['plains','snow','forest','mountains','water'],'resources':RESOURCE_MANIFEST,'tree_counts':tree_counts,'chunks':chunks,'cities':[{'id':id,'name':name,'position':[x,y],'reference_position':PLAN['cities'][i]['position'],'size':[128,128]} for i,(id,name,x,y) in enumerate(CITIES)]}
 (OUT/'world_layout.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
 # Source-size biome reference and numbered review map, neither exported as runtime texture.
 review_dir=ROOT/'docs/world'
 review_dir.mkdir(parents=True,exist_ok=True)
+(ROOT/'builds').mkdir(exist_ok=True)
+(ROOT/'builds/world-tree-placements.json').write_text(json.dumps(tree_proofs,separators=(',',':'))+'\n')
 biomes.resize((RW,RH),Image.Resampling.NEAREST).save(review_dir/'plan-biomes.png')
 review=im.resize((RW,RH),Image.Resampling.NEAREST);rv=ImageDraw.Draw(review)
 from PIL import ImageFont
@@ -231,4 +191,4 @@ for i,(_,name,x,y) in enumerate(CITIES):
  label_y=sy+28 if sy+50<RH else sy-42
  rv.text((sx,label_y),name,font=font,fill='#fff0ba',stroke_width=2,stroke_fill='#25352a',anchor='mt')
 review.save(review_dir/'numbered-world-plan.png')
-print(f'World: {W}x{H}, {len(CITIES)} numbered cities from red markers; {forest_count} baked trees; {len(chunks)} chunks')
+print(f'World: {W}x{H}, {len(CITIES)} numbered cities from red markers; {forest_count} supplied trees ({tree_counts}); {len(chunks)} chunks')

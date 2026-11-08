@@ -27,3 +27,33 @@ for chunk in layout['chunks']:
  im=Image.open(ROOT/'assets/world'/chunk['file'])
  assert list(im.size)==chunk['size'] and max(im.size)<=2048
 print('PASS: 12 reference landmarks, 42 red-marker positions, numbered cities and native terrain chunks')
+
+# Resource replacement must preserve opaque source pixels at native scale in baked ground.
+import hashlib
+import numpy as np
+resource_dir=ROOT/'art/world/resources'
+manifest=json.loads((resource_dir/'manifest.json').read_text())
+for entry in manifest['assets']:
+ data=(resource_dir/entry['file']).read_bytes()
+ assert hashlib.sha256(data).hexdigest()==entry['sha256']
+ assert list(Image.open(resource_dir/entry['file']).size)==entry['size']
+terrain=Image.new('RGB',tuple(layout['size']))
+for chunk in layout['chunks']:
+ terrain.paste(Image.open(ROOT/'assets/world'/chunk['file']),tuple(chunk['position']))
+city=Image.open(resource_dir/'city.png').convert('RGBA')
+city_pixels=np.array(city);opaque=city_pixels[:,:,3]==255
+assert opaque.sum()>1000
+for entry in layout['cities']:
+ x,y=entry['position'];actual=np.array(terrain.crop((x-64,y-64,x+64,y+64)))
+ assert np.array_equal(actual[opaque],city_pixels[:,:,:3][opaque]),entry['name']+' does not use the uploaded city pixels'
+proofs=json.loads((ROOT/'builds/world-tree-placements.json').read_text())
+for name in ['tree1.png','tree2.png']:
+ source=np.array(Image.open(resource_dir/name).convert('RGBA'));opaque=source[:,:,3]==255
+ found=False
+ for entry in reversed(proofs):
+  if entry['file']!=name:continue
+  x,y=entry['position'];actual=np.array(terrain.crop((x,y,x+48,y+48)))
+  if np.array_equal(actual[opaque],source[:,:,:3][opaque]):found=True;break
+ assert found,'No unscaled copy of '+name+' in terrain'
+assert all(count>0 for count in layout['tree_counts'])
+print('PASS: original ZIP resource hashes/sizes, all 42 native city sprites and both native tree sprites in baked terrain')

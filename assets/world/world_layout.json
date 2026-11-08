@@ -19,6 +19,57 @@
     "mountains",
     "water"
   ],
+  "resources": {
+    "source_zip": "월드맵 리소스.zip",
+    "assets": [
+      {
+        "file": "city.png",
+        "size": [
+          128,
+          128
+        ],
+        "sha256": "dacecbca91e4cc037692aa34b911224969e5827986cd353033d3fff28df2ac86",
+        "alpha_bounds": [
+          10,
+          7,
+          121,
+          121
+        ]
+      },
+      {
+        "file": "tree1.png",
+        "size": [
+          48,
+          48
+        ],
+        "sha256": "42e9066ddf6c630bab3d87a9b96cf35f2e13f2401e08e5dba832ba12a4abcbf2",
+        "alpha_bounds": [
+          14,
+          3,
+          33,
+          45
+        ]
+      },
+      {
+        "file": "tree2.png",
+        "size": [
+          48,
+          48
+        ],
+        "sha256": "cacee301a072834860de4cda2e2a4b5c67fae743eb626772a7480d371c41dc20",
+        "alpha_bounds": [
+          11,
+          3,
+          37,
+          45
+        ]
+      }
+    ]
+  },
+  "tree_counts": [
+    4054,
+    2478
+  ],
   "chunks": [
     {
       "file": "chunks/world_0_0.png",

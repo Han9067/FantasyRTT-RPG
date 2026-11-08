@@ -1,4 +1,4 @@
-# 캐릭터 디자인 기준 — 개별 PNG / 0.0.25
+# 캐릭터 디자인 기준 — 개별 PNG / 0.0.26
 
 원본은 사용자 MedievalFantasyCharacters.zip이며, 무기 부분은 최신 weapons.zip으로 교체했다.
 art/medieval에 4,573개 파일(PNG 4,567장, GIF 5개, RTF 1개)을 보관한다.
