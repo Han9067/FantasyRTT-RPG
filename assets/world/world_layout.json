@@ -67,9 +67,19 @@
     ]
   },
   "tree_counts": [
-    4054,
-    2478
+    3914,
+    2544
   ],
+  "terrain_tiles": {
+    "tile_size": 32,
+    "grid_size": [
+      160,
+      120
+    ],
+    "ground_variants": 8,
+    "mountain_metatile_size": 64,
+    "mountain_count": 625
+  },
   "chunks": [
     {
       "file": "chunks/world_0_0.png",

@@ -57,3 +57,40 @@ for name in ['tree1.png','tree2.png']:
  assert found,'No unscaled copy of '+name+' in terrain'
 assert all(count>0 for count in layout['tree_counts'])
 print('PASS: original ZIP resource hashes/sizes, all 42 native city sprites and both native tree sprites in baked terrain')
+
+# Tile borders must agree independently of randomly selected texture variants.
+tiles=ROOT/'art/world/tiles'
+grid=json.loads((tiles/'tile-grid.json').read_text())
+assert grid['tile_size']==32 and grid['size']==[160,120]
+assert Image.open(tiles/'ground-tiles.png').size==(256,160)
+assert Image.open(tiles/'mountain-tiles.png').size==(256,128)
+masks=Image.open(tiles/'corner-masks.png')
+assert masks.size==(512,32) and set(np.array(masks).ravel())=={0,255}
+cells=grid['cells']
+for y,row in enumerate(cells):
+ assert len(row)==160
+ for x,cell in enumerate(row):
+  assert len(cell)==5 and 0<=cell[0]<8 and all(0<=b<16 for b in cell[1:])
+  for k,b in enumerate(cell[1:],1):
+   if x+1<160:
+    right=row[x+1][k]
+    assert ((b>>1)&1)==(right&1) and ((b>>3)&1)==((right>>2)&1),'Horizontal terrain corner gap'
+    assert np.array_equal(np.array(masks.crop((b*32,0,b*32+32,32)))[:,-1],np.array(masks.crop((right*32,0,right*32+32,32)))[:,0])
+   if y+1<120:
+    below=cells[y+1][x][k]
+    assert ((b>>2)&1)==(below&1) and ((b>>3)&1)==((below>>1)&1),'Vertical terrain corner gap'
+for cx,cy,snow,v in grid['mountains']:
+ assert 0<=cx<159 and 0<=cy<119 and snow in (0,1) and 0<=v<4
+# Final chunks actually contain native atlas pixels, rather than an unrelated visual.
+atlas=Image.open(tiles/'ground-tiles.png')
+for kind,slot in [(0,None),(1,1),(4,3)]:
+ found=False
+ for y,row in enumerate(cells):
+  for x,cell in enumerate(row):
+   if (slot is None and any(cell[1:])) or (slot is not None and cell[slot]!=15):continue
+   expected=atlas.crop((cell[0]*32,kind*32,cell[0]*32+32,kind*32+32))
+   actual=terrain.crop((x*32,y*32,x*32+32,y*32+32))
+   if np.array_equal(np.array(expected),np.array(actual)):found=True;break
+  if found:break
+ assert found,('Native ground atlas missing in baked map',kind)
+print('PASS: 32px tile grid, native atlas pixels, binary corner masks and all shared terrain edges')

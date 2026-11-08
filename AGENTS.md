@@ -1,6 +1,6 @@
 # Project conventions
 
-- Current release: 0.0.26; next completed update: 0.0.27. Increment only the patch once per delivered game update. Never change the first two components unless asked.
+- Current release: 0.0.27; next completed update: 0.0.28. Increment only the patch once per delivered game update. Never change the first two components unless asked.
 - Validate playable changes, push editable source to main, and publish builds/web to gh-pages for the existing GitHub Pages site.
 - The visual source of truth is the purchased user-supplied MedievalFantasyCharacters.zip. Read docs/character-design.md before changing characters.
 - Preserve loose source PNGs in art/medieval (.gdignore). Build assets/medieval atlases/catalog with tools/build_medieval_atlas.py; do not hand-edit generated images. Runtime uses only needed parts. Preserve original RGBA; no AI redraws, recolouring or resampling.
@@ -15,3 +15,5 @@
 - docs/weapons/weapon-name-proposals-ko.txt and .csv are review-only name proposals for 109 equipment appearances, excluding shield/polearm/ammunition; sling animation frames are aliases, not separate weapons. Do not apply proposed names or stats to gameplay without a request.
 
 - World town/tree source of truth: art/world/resources/city.png (128x128), tree1.png and tree2.png (48x48), byte-identical to the user 월드맵 리소스.zip. Keep native pixels, colour and alpha; no scaling, recolouring, mirroring or procedural substitutes. All 42 numbered towns share city.png. Pine-biased northern forests use tree2, with both trees mixed elsewhere. Use trunk anchor (24,45); clip placements to the planned forest with actual alpha occupancy. Generated ground/minimap/review images are rebuilt by tools/build_world_map.py. tests/world_plan_check.py checks source hashes, all town pixels and both tree variants in the baked terrain. Old generated city_0..3 files were removed.
+
+- Campaign ground is now authored in tools/world_tiles.py as 32x32 native-pixel tiles (160x120 cells), 16 marching-square corner masks and 64x64 rocky metatiles. Keep world and battle visual generators separate. Ground, masks, rock atlas and generated cell data live in art/world/tiles (excluded from Godot imports). Build-time composition still exports six static chunks; do not add per-tile runtime nodes. Preserve the user plan's major landmarks and exact city coordinates; corner-connected tile borders approximate terrain outlines. Mountain silhouettes can overhang land tile boundaries by up to 32px but must never be cut flat at biome edges or cover water. No blurry noise or large triangular low-poly slopes. tests/world_plan_check.py checks atlas dimensions, binary corner masks, shared-edge connectivity and exact native grass/snow/water tiles in the final bake.

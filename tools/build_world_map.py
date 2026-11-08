@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Bake the user's traced map: plains, snow, forest, ridges, water and numbered towns."""
 from pathlib import Path
-import json, math, random
+import json, random
 import numpy as np
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'assets/world'
 PLAN_PATH = ROOT / 'art/world/user_plan_2026_11_08.json'
@@ -69,71 +69,12 @@ for _,_,x,y in CITIES:cd.ellipse((x-88,y-88,x+88,y+100),fill=255)
 biome=np.array(biomes)
 biome[(biome==2)&(np.array(city_mask)>0)]=0
 biomes=Image.fromarray(biome)
-noise=np.array(Image.fromarray(np.random.default_rng(28).integers(0,256,(120,160),dtype=np.uint8)).resize((W//2,H//2),Image.Resampling.BILINEAR).resize((W,H),Image.Resampling.NEAREST))
-tone=np.clip((noise.astype(np.int16)-50)//50,0,3).astype(np.uint8)
-pal=np.array([
- [[99,126,79],[103,132,82],[108,137,86],[113,141,90]],
- [[211,220,214],[220,228,220],[229,235,226],[236,241,234]],
- [[66,92,49],[71,98,53],[76,104,57],[80,109,60]],
- [[65,77,58],[71,83,63],[78,90,69],[84,96,73]],
- [[76,141,173],[78,144,176],[80,147,179],[82,150,181]],
-],dtype=np.uint8)
-im=Image.fromarray(pal[biome,tone]);d=ImageDraw.Draw(im)
-water=Image.fromarray((biome==4).astype(np.uint8)*255)
-# A narrow shoreline, clipped to land and never cutting across the planned water.
-bank=np.array(water.filter(ImageFilter.MaxFilter(5)))>0
-edge=bank & (biome!=4) & (biome!=3)
-a=np.array(im);a[edge & (biome==1)]=[189,211,211];a[edge & (biome!=1)]=[142,153,103]
-im=Image.fromarray(a);d=ImageDraw.Draw(im)
-for i in range(210000):
- x,y=rng.randrange(W-10),rng.randrange(H-3)
- kind=int(biome[y,x])
- if kind==4:
-  if i%7==0:d.line((x,y,x+rng.randrange(2,8),y),fill='#75b0c3')
- elif kind==1:
-  if i%3==0:d.line((x,y,x+rng.randrange(1,4),y),fill=rng.choice(['#edf1e6','#c8d5cd']))
- elif kind in (0,2):
-  d.line((x,y,x+rng.randrange(1,3),y),fill=rng.choice(['#607b4c','#849d61']) if kind==0 else '#506e3d')
-# Rocky ridges viewed from ABOVE: overlapping four-sided rock masses, with
-# the summit inside each footprint. Irregular slopes distinguish mountains from roads.
-rock=Image.new('RGBA',(W,H));rd=ImageDraw.Draw(rock)
-rock_rng=random.Random(719)
-for ri,ridge in enumerate(PLAN['mountains']):
- line=smooth(scale_points(ridge['points']))
- half=ridge['width']*W/RW*.48
- stride=max(4,int(half/5))
- summits=[]
- for i in range(0,len(line),stride):
-  x,y=line[i]
-  before=np.array(line[max(0,i-2)],float);after=np.array(line[min(i+2,len(line)-1)],float)
-  tangent=after-before;length=max(1,float(np.linalg.norm(tangent)));t=tangent/length
-  n=np.array([-t[1],t[0]])
-  center=np.array([x,y],float)
-  tip=center+n*rock_rng.uniform(-.27,.27)*half+t*rock_rng.uniform(-8,8)
-  extent=half*rock_rng.uniform(.76,1.12)
-  # Four irregular feet surround the summit, so no front-facing mountain silhouette.
-  feet=[center-t*half*rock_rng.uniform(.75,1.1),center+n*extent,
-        center+t*half*rock_rng.uniform(.75,1.1),center-n*extent]
-  pts=[tuple(v.astype(int)) for v in feet];peak=tuple(tip.astype(int));summits.append(peak)
-  rd.polygon(pts,fill='#3c5141')
-  for k in range(4):
-   a=feet[k];b=feet[(k+1)%4];outward=(a+b)*.5-tip
-   light=float(np.dot(outward,np.array([-1.,-1.])))
-   color=('#b5b79e' if light>20 else '#8c9880' if light>0 else '#647661' if light>-20 else '#465c4b')
-   if ri==0:color=('#e6e9da' if light>20 else '#c3d0bf' if light>0 else '#97afa4' if light>-20 else '#6f887d')
-   rd.polygon([peak,pts[k],pts[(k+1)%4]],fill=color)
-   # Broken ledges stop short of the outer boundary, with no regular cross-hatching.
-   for fraction in [.4,.66]:
-    q=tip+(a-tip)*fraction;r=tip+(b-tip)*(fraction*.8)
-    if rock_rng.random()<.55:rd.line([tuple(q.astype(int)),tuple(((q+r)*.5).astype(int))],fill='#6f7d66' if light>0 else '#82957d',width=2)
-  # A small jagged summit highlight and one descending lit spur.
-  spur=tip+(feet[3]-tip)*.5
-  rd.line([peak,(peak[0]-3,peak[1]+2),tuple(spur.astype(int))],fill='#d4d2b5' if ri else '#f0f2e7',width=3)
- for i in range(1,len(summits)):
-  if rock_rng.random()<.7:rd.line([summits[i-1],summits[i]],fill='#c0bfa2' if ri else '#e8ece0',width=2)
-# Keep generated rock strictly inside the traced mountain polygons.
-rock.putalpha(Image.fromarray(np.minimum(np.array(rock.getchannel('A')),((biome==3)*255).astype(np.uint8))))
-im.paste(rock,(0,0),rock);d=ImageDraw.Draw(im)
+# Build native 32px campaign tiles with corner transitions, then bake for six static draws.
+from world_tiles import render_tiles
+im, biomes, tile_info = render_tiles(biomes, ROOT/'art/world/tiles')
+biome=np.array(biomes)
+# Ground generation uses its own RNG so object placements remain deterministic.
+d=ImageDraw.Draw(im)
 
 def city_clear(x,y,pad=95):
  return any(abs(x-cx)<pad and abs(y-cy)<pad+18 for _,_,cx,cy in CITIES)
@@ -175,7 +116,7 @@ for y in range(0,H,CHUNK):
   part.save(chunks_dir/filename,optimize=True)
   chunks.append({'file':'chunks/'+filename,'position':[x,y],'size':list(part.size)})
 im.resize((1024,768),Image.Resampling.NEAREST).save(OUT/'imperial_world.png',optimize=True)
-data={'size':[W,H],'spawn':[2560,1920],'reference_size':[RW,RH],'numbering':PLAN['numbering'],'terrain_types':['plains','snow','forest','mountains','water'],'resources':RESOURCE_MANIFEST,'tree_counts':tree_counts,'chunks':chunks,'cities':[{'id':id,'name':name,'position':[x,y],'reference_position':PLAN['cities'][i]['position'],'size':[128,128]} for i,(id,name,x,y) in enumerate(CITIES)]}
+data={'size':[W,H],'spawn':[2560,1920],'reference_size':[RW,RH],'numbering':PLAN['numbering'],'terrain_types':['plains','snow','forest','mountains','water'],'resources':RESOURCE_MANIFEST,'tree_counts':tree_counts,'terrain_tiles':tile_info,'chunks':chunks,'cities':[{'id':id,'name':name,'position':[x,y],'reference_position':PLAN['cities'][i]['position'],'size':[128,128]} for i,(id,name,x,y) in enumerate(CITIES)]}
 (OUT/'world_layout.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
 # Source-size biome reference and numbered review map, neither exported as runtime texture.
 review_dir=ROOT/'docs/world'
