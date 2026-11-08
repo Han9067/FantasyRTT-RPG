@@ -25,13 +25,16 @@ func _ready() -> void:
 	cities = layout.cities
 	for city in cities:
 		var title := Label.new()
+		title.name = "CityLabel_" + city.name
 		title.text = city.name
-		title.position = Vector2(city.position[0]-90,city.position[1]+67)
-		title.size = Vector2(180,25)
+		var label_y: float = city.position[1]+67
+		if label_y+24 > map_size.y: label_y = city.position[1]-90
+		title.position = Vector2(clampf(city.position[0]-32,0,map_size.x-64),label_y)
+		title.size = Vector2(64,24)
 		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		title.add_theme_font_override("font",load("res://assets/fonts/NotoSansCJK-Regular.ttc"))
-		title.add_theme_font_size_override("font_size",13)
+		title.add_theme_font_size_override("font_size",16)
 		title.add_theme_color_override("font_color",Color("f2e3ba"))
 		title.add_theme_color_override("font_outline_color",Color("283a2b"))
 		title.add_theme_constant_override("outline_size",4)

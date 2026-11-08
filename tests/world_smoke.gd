@@ -29,7 +29,7 @@ func run() -> void:
 	var map: WorldMap = game.world
 	map.set_physics_process(false)
 	assert(game.current_screen == "world" and not is_instance_valid(game.battle))
-	assert(map.map_size == Vector2(5120,3840) and map.cities.size() == 40)
+	assert(map.map_size == Vector2(5120,3840) and map.cities.size() == 42)
 	assert(map.TERRAIN.get_size() == Vector2(1024,768))
 	assert(map.terrain.get_child_count() == 6)
 	for tile in map.terrain.get_children():
@@ -43,6 +43,15 @@ func run() -> void:
 	for city in map.cities:
 		assert(city["size"] == [128.0,128.0])
 		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(Vector2(city.position[0]-64,city.position[1]-64),Vector2(128,128))))
+	for i in range(map.cities.size()):
+		var city: Dictionary = map.cities[i]
+		assert(city.name == str(i+1), "City names must be consecutive numbers")
+		var reference: Array = city.reference_position
+		var expected := Vector2(roundf(reference[0]*5120.0/1824.0),roundf(reference[1]*3840.0/1368.0))
+		assert(Vector2(city.position[0],city.position[1]) == expected)
+		var label: Label = map.get_node("CityLabel_"+city.name)
+		assert(label.text == str(i+1))
+		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(label.position,label.size)), "Edge city label clipped")
 	# No prerequisite click: first right click immediately walks, left click never deselects.
 	click(map,Vector2(800,400),MOUSE_BUTTON_RIGHT)
 	assert(map.moving and map.player_sprite.animation == "walk")
@@ -168,5 +177,5 @@ func run() -> void:
 	game.create_button.pressed.emit()
 	await process_frame
 	assert(game.world.unit_position == WorldMap.SPAWN and game.world.zoom_level == 1)
-	print("PASS: creation -> world, 40 native 128px cities, persistent selection, first right-click walk/idle, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
+	print("PASS: creation -> world, 42 numbered native 128px cities, persistent selection, first right-click walk/idle, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
 	quit()

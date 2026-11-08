@@ -7,6 +7,18 @@
     2560,
     1920
   ],
+  "reference_size": [
+    1824,
+    1368
+  ],
+  "numbering": "Rows from north to south; west to east within each visually aligned row.",
+  "terrain_types": [
+    "plains",
+    "snow",
+    "forest",
+    "mountains",
+    "water"
+  ],
   "chunks": [
     {
       "file": "chunks/world_0_0.png",
@@ -78,10 +90,14 @@
   "cities": [
     {
       "id": "city_01",
-      "name": "노르트하펜",
+      "name": "1",
       "position": [
-        333,
-        568
+        2013,
+        65
+      ],
+      "reference_position": [
+        717,
+        23
       ],
       "size": [
         128,
@@ -90,10 +106,14 @@
     },
     {
       "id": "city_02",
-      "name": "베르겐",
+      "name": "2",
       "position": [
-        974,
-        635
+        2995,
+        157
+      ],
+      "reference_position": [
+        1067,
+        56
       ],
       "size": [
         128,
@@ -102,10 +122,14 @@
     },
     {
       "id": "city_03",
-      "name": "프리젠",
+      "name": "3",
       "position": [
-        1531,
-        726
+        3747,
+        213
+      ],
+      "reference_position": [
+        1335,
+        76
       ],
       "size": [
         128,
@@ -114,10 +138,14 @@
     },
     {
       "id": "city_04",
-      "name": "엘벤바흐트",
+      "name": "4",
       "position": [
-        2257,
-        668
+        4890,
+        241
+      ],
+      "reference_position": [
+        1742,
+        86
       ],
       "size": [
         128,
@@ -126,10 +154,14 @@
     },
     {
       "id": "city_05",
-      "name": "노르트펠스",
+      "name": "5",
       "position": [
-        2886,
-        718
+        1224,
+        469
+      ],
+      "reference_position": [
+        436,
+        167
       ],
       "size": [
         128,
@@ -138,10 +170,14 @@
     },
     {
       "id": "city_06",
-      "name": "발덴하펜",
+      "name": "6",
       "position": [
-        3504,
-        599
+        2105,
+        592
+      ],
+      "reference_position": [
+        750,
+        211
       ],
       "size": [
         128,
@@ -150,10 +186,14 @@
     },
     {
       "id": "city_07",
-      "name": "오스트하펜",
+      "name": "7",
       "position": [
-        4107,
-        654
+        3119,
+        679
+      ],
+      "reference_position": [
+        1111,
+        242
       ],
       "size": [
         128,
@@ -162,10 +202,14 @@
     },
     {
       "id": "city_08",
-      "name": "그라이펜",
+      "name": "8",
       "position": [
-        4766,
-        703
+        4382,
+        547
+      ],
+      "reference_position": [
+        1561,
+        195
       ],
       "size": [
         128,
@@ -174,10 +218,14 @@
     },
     {
       "id": "city_09",
-      "name": "베스트마르크",
+      "name": "9",
       "position": [
-        437,
-        1257
+        171,
+        786
+      ],
+      "reference_position": [
+        61,
+        280
       ],
       "size": [
         128,
@@ -186,10 +234,14 @@
     },
     {
       "id": "city_10",
-      "name": "라인하펜",
+      "name": "10",
       "position": [
-        1041,
-        1400
+        769,
+        940
+      ],
+      "reference_position": [
+        274,
+        335
       ],
       "size": [
         128,
@@ -198,10 +250,14 @@
     },
     {
       "id": "city_11",
-      "name": "린덴부르크",
+      "name": "11",
       "position": [
-        1650,
-        1378
+        2585,
+        963
+      ],
+      "reference_position": [
+        921,
+        343
       ],
       "size": [
         128,
@@ -210,10 +266,14 @@
     },
     {
       "id": "city_12",
-      "name": "하이덴",
+      "name": "12",
       "position": [
-        2336,
-        1285
+        3694,
+        907
+      ],
+      "reference_position": [
+        1316,
+        323
       ],
       "size": [
         128,
@@ -222,10 +282,14 @@
     },
     {
       "id": "city_13",
-      "name": "로젠펠트",
+      "name": "13",
       "position": [
-        2967,
-        1345
+        4699,
+        940
+      ],
+      "reference_position": [
+        1674,
+        335
       ],
       "size": [
         128,
@@ -234,10 +298,14 @@
     },
     {
       "id": "city_14",
-      "name": "아이헨",
+      "name": "14",
       "position": [
-        3490,
-        1314
+        587,
+        1423
+      ],
+      "reference_position": [
+        209,
+        507
       ],
       "size": [
         128,
@@ -246,10 +314,14 @@
     },
     {
       "id": "city_15",
-      "name": "보헨펠스",
+      "name": "15",
       "position": [
-        4219,
-        1400
+        1659,
+        1409
+      ],
+      "reference_position": [
+        591,
+        502
       ],
       "size": [
         128,
@@ -258,10 +330,14 @@
     },
     {
       "id": "city_16",
-      "name": "실버크로네",
+      "name": "16",
       "position": [
-        4771,
-        1302
+        2428,
+        1415
+      ],
+      "reference_position": [
+        865,
+        504
       ],
       "size": [
         128,
@@ -270,10 +346,14 @@
     },
     {
       "id": "city_17",
-      "name": "팔켄푸르트",
+      "name": "17",
       "position": [
-        395,
-        2041
+        3295,
+        1485
+      ],
+      "reference_position": [
+        1174,
+        529
       ],
       "size": [
         128,
@@ -282,10 +362,14 @@
     },
     {
       "id": "city_18",
-      "name": "슈타인하임",
+      "name": "18",
       "position": [
-        1026,
-        2002
+        4289,
+        1434
+      ],
+      "reference_position": [
+        1528,
+        511
       ],
       "size": [
         128,
@@ -294,10 +378,14 @@
     },
     {
       "id": "city_19",
-      "name": "크로넨",
+      "name": "19",
       "position": [
-        1639,
-        1946
+        5008,
+        1412
+      ],
+      "reference_position": [
+        1784,
+        503
       ],
       "size": [
         128,
@@ -306,10 +394,14 @@
     },
     {
       "id": "city_20",
-      "name": "라벤부르크",
+      "name": "20",
       "position": [
-        2284,
-        1990
+        222,
+        1760
+      ],
+      "reference_position": [
+        79,
+        627
       ],
       "size": [
         128,
@@ -318,10 +410,14 @@
     },
     {
       "id": "city_21",
-      "name": "알텐부르크",
+      "name": "21",
       "position": [
-        2882,
-        1984
+        1575,
+        1959
+      ],
+      "reference_position": [
+        561,
+        698
       ],
       "size": [
         128,
@@ -330,10 +426,14 @@
     },
     {
       "id": "city_22",
-      "name": "그뤼네발트",
+      "name": "22",
       "position": [
-        3483,
-        2057
+        4039,
+        1959
+      ],
+      "reference_position": [
+        1439,
+        698
       ],
       "size": [
         128,
@@ -342,10 +442,14 @@
     },
     {
       "id": "city_23",
-      "name": "로텐펠스",
+      "name": "23",
       "position": [
-        4065,
-        1889
+        4851,
+        2018
+      ],
+      "reference_position": [
+        1728,
+        719
       ],
       "size": [
         128,
@@ -354,10 +458,14 @@
     },
     {
       "id": "city_24",
-      "name": "오스트마르크",
+      "name": "24",
       "position": [
-        4712,
-        2017
+        604,
+        2159
+      ],
+      "reference_position": [
+        215,
+        769
       ],
       "size": [
         128,
@@ -366,10 +474,14 @@
     },
     {
       "id": "city_25",
-      "name": "발트하임",
+      "name": "25",
       "position": [
-        320,
-        2698
+        2470,
+        2159
+      ],
+      "reference_position": [
+        880,
+        769
       ],
       "size": [
         128,
@@ -378,10 +490,14 @@
     },
     {
       "id": "city_26",
-      "name": "아우크스펠트",
+      "name": "26",
       "position": [
-        1002,
-        2657
+        373,
+        2734
+      ],
+      "reference_position": [
+        133,
+        974
       ],
       "size": [
         128,
@@ -390,10 +506,14 @@
     },
     {
       "id": "city_27",
-      "name": "벨렌",
+      "name": "27",
       "position": [
-        1684,
-        2607
+        1356,
+        2650
+      ],
+      "reference_position": [
+        483,
+        944
       ],
       "size": [
         128,
@@ -402,10 +522,14 @@
     },
     {
       "id": "city_28",
-      "name": "도나우바흐트",
+      "name": "28",
       "position": [
-        2361,
-        2636
+        2260,
+        2605
+      ],
+      "reference_position": [
+        805,
+        928
       ],
       "size": [
         128,
@@ -414,10 +538,14 @@
     },
     {
       "id": "city_29",
-      "name": "호헨베르크",
+      "name": "29",
       "position": [
-        2883,
-        2675
+        3295,
+        2509
+      ],
+      "reference_position": [
+        1174,
+        894
       ],
       "size": [
         128,
@@ -426,10 +554,14 @@
     },
     {
       "id": "city_30",
-      "name": "아이젠",
+      "name": "30",
       "position": [
-        3522,
-        2570
+        4264,
+        2585
+      ],
+      "reference_position": [
+        1519,
+        921
       ],
       "size": [
         128,
@@ -438,10 +570,14 @@
     },
     {
       "id": "city_31",
-      "name": "오스트크로네",
+      "name": "31",
       "position": [
-        4162,
-        2636
+        5008,
+        2759
+      ],
+      "reference_position": [
+        1784,
+        983
       ],
       "size": [
         128,
@@ -450,10 +586,14 @@
     },
     {
       "id": "city_32",
-      "name": "발켄하임",
+      "name": "32",
       "position": [
-        4760,
-        2625
+        2835,
+        2964
+      ],
+      "reference_position": [
+        1010,
+        1056
       ],
       "size": [
         128,
@@ -462,10 +602,14 @@
     },
     {
       "id": "city_33",
-      "name": "쥐트마르크",
+      "name": "33",
       "position": [
-        317,
-        3364
+        3789,
+        2987
+      ],
+      "reference_position": [
+        1350,
+        1064
       ],
       "size": [
         128,
@@ -474,10 +618,14 @@
     },
     {
       "id": "city_34",
-      "name": "도른펠스",
+      "name": "34",
       "position": [
-        937,
-        3231
+        836,
+        3242
+      ],
+      "reference_position": [
+        298,
+        1155
       ],
       "size": [
         128,
@@ -486,10 +634,14 @@
     },
     {
       "id": "city_35",
-      "name": "파스부르크",
+      "name": "35",
       "position": [
-        1505,
-        3208
+        1766,
+        3307
+      ],
+      "reference_position": [
+        629,
+        1178
       ],
       "size": [
         128,
@@ -498,10 +650,14 @@
     },
     {
       "id": "city_36",
-      "name": "아들러",
+      "name": "36",
       "position": [
-        2178,
-        3281
+        3747,
+        3422
+      ],
+      "reference_position": [
+        1335,
+        1219
       ],
       "size": [
         128,
@@ -510,10 +666,14 @@
     },
     {
       "id": "city_37",
-      "name": "브룬넨",
+      "name": "37",
       "position": [
-        2799,
-        3325
+        4755,
+        3444
+      ],
+      "reference_position": [
+        1694,
+        1227
       ],
       "size": [
         128,
@@ -522,10 +682,14 @@
     },
     {
       "id": "city_38",
-      "name": "에렌펠스",
+      "name": "38",
       "position": [
-        3486,
-        3365
+        328,
+        3660
+      ],
+      "reference_position": [
+        117,
+        1304
       ],
       "size": [
         128,
@@ -534,10 +698,14 @@
     },
     {
       "id": "city_39",
-      "name": "슈바넨",
+      "name": "39",
       "position": [
-        4069,
-        3221
+        1440,
+        3702
+      ],
+      "reference_position": [
+        513,
+        1319
       ],
       "size": [
         128,
@@ -546,10 +714,46 @@
     },
     {
       "id": "city_40",
-      "name": "쥐트크로네",
+      "name": "40",
       "position": [
-        4698,
-        3253
+        2880,
+        3604
+      ],
+      "reference_position": [
+        1026,
+        1284
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_41",
+      "name": "41",
+      "position": [
+        3408,
+        3773
+      ],
+      "reference_position": [
+        1214,
+        1344
+      ],
+      "size": [
+        128,
+        128
+      ]
+    },
+    {
+      "id": "city_42",
+      "name": "42",
+      "position": [
+        4230,
+        3677
+      ],
+      "reference_position": [
+        1507,
+        1310
       ],
       "size": [
         128,

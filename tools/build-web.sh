@@ -8,6 +8,7 @@ mkdir -p builds
 touch builds/.gdignore
 python tools/build_medieval_atlas.py
 python tools/build_world_map.py
+python tests/world_plan_check.py
 godot --headless --editor --import --quit
 godot --headless --script res://tests/smoke.gd
 godot --headless --script res://tests/battle_smoke.gd
@@ -24,3 +25,6 @@ touch builds/web/.nojekyll
 # Versioned review documents are directly downloadable alongside the game.
 cp docs/weapons/weapon-name-proposals-ko.txt "builds/web/weapon-names-${release_version}.txt"
 cp docs/weapons/weapon-name-proposals-ko.csv "builds/web/weapon-names-${release_version}.csv"
+
+# Visual review of the user-authored world layout and numbered cities.
+cp docs/world/numbered-world-plan.png "builds/web/world-plan-${release_version}.png"
