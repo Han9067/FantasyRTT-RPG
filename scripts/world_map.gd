@@ -27,8 +27,9 @@ func _ready() -> void:
 		var title := Label.new()
 		title.name = "CityLabel_" + city.name
 		title.text = city.name
-		var label_y: float = city.position[1]+67
-		if label_y+24 > map_size.y: label_y = city.position[1]-90
+		var half_height: float = city["size"][1] * 0.5
+		var label_y: float = city.position[1]+half_height+3
+		if label_y+24 > map_size.y: label_y = city.position[1]-half_height-26
 		title.position = Vector2(clampf(city.position[0]-32,0,map_size.x-64),label_y)
 		title.size = Vector2(64,24)
 		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

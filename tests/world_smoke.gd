@@ -41,14 +41,15 @@ func run() -> void:
 	assert(game.battle_button.get_global_rect().get_center().x == 640, "Battle link must be centered")
 	assert(game.world_status.get_theme_font("font") == game.theme.default_font)
 	for city in map.cities:
-		assert(city["size"] == [128.0,128.0])
-		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(Vector2(city.position[0]-64,city.position[1]-64),Vector2(128,128))))
+		assert(city["size"] == [96.0,96.0])
+		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(Vector2(city.position[0]-48,city.position[1]-48),Vector2(96,96))))
 	for i in range(map.cities.size()):
 		var city: Dictionary = map.cities[i]
 		assert(city.name == str(i+1), "City names must be consecutive numbers")
 		var reference: Array = city.reference_position
 		var expected := Vector2(roundf(reference[0]*5120.0/1824.0),roundf(reference[1]*3840.0/1368.0))
-		assert(Vector2(city.position[0],city.position[1]) == expected)
+		assert(absf(city.position[0]-expected.x) <= 16 and absf(city.position[1]-expected.y) <= 16, "Tiled city moved beyond nearest grid cell")
+		assert(Vector2(city.position[0],city.position[1]) == Vector2(city.tile_position[0]*32+48,city.tile_position[1]*32+48))
 		var label: Label = map.get_node("CityLabel_"+city.name)
 		assert(label.text == str(i+1))
 		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(label.position,label.size)), "Edge city label clipped")
@@ -177,5 +178,5 @@ func run() -> void:
 	game.create_button.pressed.emit()
 	await process_frame
 	assert(game.world.unit_position == WorldMap.SPAWN and game.world.zoom_level == 1)
-	print("PASS: creation -> world, 42 numbered native 128px cities, persistent selection, first right-click walk/idle, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
+	print("PASS: creation -> world, 42 numbered native 96px Tiled cities, persistent selection, first right-click walk/idle, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
 	quit()
