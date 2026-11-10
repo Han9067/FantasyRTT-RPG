@@ -1,6 +1,7 @@
 {
   "renderer": "Tiled tmxrasterizer; no smoothing; native scale 1",
-  "source_package": "MedievalMap_completed.zip",
+  "source_package": "MedievalMap.zip",
+  "render_file": "Review/WorldMap_full.png",
   "inputs": {
     "GroundTiles.tsx": "180fb00ec7682c1942937ce544d9b2d4ba8040657f92ae3d204822face85bacd",
     "LakeTiles.tsx": "c8c447532c17b22707ff4151dd8be8296599a086c59edf937e2be25c906469c2",
@@ -16,7 +17,7 @@
     "Tiles/LakeTiles.png": "d5ac74cab787c4cc8dba1b24b9ab5d736aee19154a579d8f00bc67e988c8d2e9",
     "Tiles/MountainDarkTiles.png": "0ff350422039b0ab51546f05a47f5fb5db8b9f086e22e2f1800f5fd69234dac6",
     "Tiles/MountainTiles.png": "c152631e6e7788d8029f39b091cbea0220efa19804461f5883a4896643842beb",
-    "Tiles/ObjectsTiles.png": "da7134a2c22a6b14a0aa3f3bf28c3b3f3f10ac1ae8376cbb75447f8b699bd9f7",
+    "Tiles/ObjectsTiles.png": "7c267920adfe4b4dae395588591cad80f3139ad480f6360736b96a945910b771",
     "Tiles/ParchmentTile.png": "e79e02edc3cd92adc26f3e6b942ab7d9fe8c6a02f4ce62caba2c01bdd0f706ba",
     "Tiles/RiverTiles.png": "fbde58fad6e53837c6943f0b0d8e60d7460dee06543ea9e026e82cc09eb64b15",
     "Tiles/RoadDarkTiles.png": "9e8f250922c07c28146a060e3a3d461889f0b6d6d3b1467aeade8b2a71e358ed",
@@ -24,8 +25,7 @@
     "Tiles/TreeDarkTiles.png": "8e95dc09f3abc95d77f7a13f70d5c46fd1ac44982548e364133cbf2a98636335",
     "Tiles/TreeTiles.png": "607ef6eab3bb64303ac79ad6689259d979b24f4b6fe63bb33c48a7cd31e77ce2",
     "TreeTiles.tsx": "a0b8adaf4eb40ed6e314834000fb5818c0ecb804381aa1aaab132b2563f2dbed",
-    "WorldMap.tmx": "0287989950cd7f082bc4aedce6e52a59fa103dbf2c0d51950f1720d915dd6f38"
+    "WorldMap.tmx": "2d0a10c434a319654b8f60dcb0d168a43ab6bd83a4378b6f895b9754ac33a283"
   },
-  "render_file": "Review/WorldMap_full.png",
-  "render_sha256": "f824ae462298f27e535d834a26f29eb0d768d4c63c675ec8c674372b1b3af8a1"
+  "render_sha256": "eae4adc26698f37947ba09075886c5c0a985785080ce42cbab4a3d1a96663890"
 }

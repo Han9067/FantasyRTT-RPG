@@ -31,9 +31,9 @@ func run() -> void:
 	var map: WorldMap = game.world
 	map.set_physics_process(false)
 	assert(game.current_screen == "world" and not is_instance_valid(game.battle))
-	assert(map.map_size == Vector2(5120,3840) and map.cities.size() == 42)
-	assert(map.TERRAIN.get_size() == Vector2(1024,768))
-	assert(map.terrain.get_child_count() == 6)
+	assert(map.map_size == Vector2(2560,1280) and map.cities.size() == 4)
+	assert(map.TERRAIN.get_size() == Vector2(1024,512))
+	assert(map.terrain.get_child_count() == 2)
 	for tile in map.terrain.get_children():
 		assert(tile.texture.get_width() <= 2048 and tile.texture.get_height() <= 2048)
 	assert(map.world_to_screen(map.unit_position).is_equal_approx(Vector2(640,400)))
@@ -92,9 +92,6 @@ func run() -> void:
 	for i in range(map.cities.size()):
 		var city: Dictionary = map.cities[i]
 		assert(city.name == str(i+1), "City names must be consecutive numbers")
-		var reference: Array = city.reference_position
-		var expected := Vector2(roundf(reference[0]*5120.0/1824.0),roundf(reference[1]*3840.0/1368.0))
-		assert(absf(city.position[0]-expected.x) <= 16 and absf(city.position[1]-expected.y) <= 16, "Tiled city moved beyond nearest grid cell")
 		assert(Vector2(city.position[0],city.position[1]) == Vector2(city.tile_position[0]*32+48,city.tile_position[1]*32+48))
 		var label: Label = map.get_node("CityLabel_"+city.name)
 		assert(label.text == str(i+1))
@@ -103,7 +100,7 @@ func run() -> void:
 	click(map,Vector2(800,400),MOUSE_BUTTON_RIGHT)
 	assert(map.moving and map.player_sprite.animation == "idle" and map.player_sprite.frame == 0 and not map.player_sprite.is_playing())
 	advance(map,1)
-	assert(map.unit_position.is_equal_approx(WorldMap.SPAWN+Vector2(76,0)))
+	assert(map.unit_position.is_equal_approx(map.spawn_position+Vector2(76,0)))
 	click(map,Vector2(120,200),MOUSE_BUTTON_LEFT)
 	assert(map.selected and not map.dragging)
 	advance(map,2)
@@ -145,15 +142,15 @@ func run() -> void:
 	await process_frame
 	await process_frame
 	inside(map)
-	assert(map.terrain.get_child(0).texture == texture and map.map_size == WorldMap.WORLD_SIZE)
+	assert(map.terrain.get_child(0).texture == texture and map.map_size == Vector2(2560,1280))
 	assert(absf(game.battle_button.get_global_rect().get_center().x-480)<1)
 	map.zoom_level = 1.0
 	root.size = Vector2i(6400,4320)
 	await process_frame
 	await process_frame
 	inside(map)
-	assert(map.zoom_level >= 1.25, "Oversized viewport exposed terrain boundary")
-	assert(game.world_status.text.ends_with("125%"), "Fit zoom must also update the HUD")
+	assert(is_equal_approx(map.zoom_level,3.375), "Oversized viewport exposed terrain boundary")
+	assert(game.world_status.text.ends_with("337%"), "Fit zoom must also update the HUD")
 	root.size = Vector2i(960,720)
 	await process_frame
 	await process_frame
@@ -163,6 +160,8 @@ func run() -> void:
 	map.camera.position = map.map_size*0.5
 	map.clamp_camera()
 	for code in [KEY_RIGHT,KEY_D]:
+		map.camera.position = map.map_size*0.5
+		map.clamp_camera()
 		var event := InputEventKey.new()
 		event.physical_keycode = code
 		event.pressed = true
@@ -174,6 +173,7 @@ func run() -> void:
 		assert(is_equal_approx(map.camera.position.x-initial.x,420))
 	# Grab offset prevents a snap. Zoomed dragging maps mini pixels to world distance.
 	var mini = game.world_overview
+	assert(is_equal_approx(mini.map_bounds().size.x/mini.map_bounds().size.y,2.0), "Minimap must retain the new 2:1 map ratio")
 	for zoom in [1.0,3.0]:
 		map.zoom_level = zoom
 		map.camera.position = map.map_size*0.5
@@ -237,6 +237,6 @@ func run() -> void:
 	assert(root.content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS)
 	game.create_button.pressed.emit()
 	await process_frame
-	assert(game.world.unit_position == WorldMap.SPAWN and game.world.zoom_level == 1)
-	print("PASS: creation -> world, 42 numbered native 96px Tiled cities, persistent selection, fixed idle-first-frame portrait during travel, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
+	assert(game.world.unit_position == game.world.spawn_position and game.world.zoom_level == 1)
+	print("PASS: creation -> world, 4 uploaded native 96px Tiled cities, persistent selection, fixed idle-first-frame portrait during travel, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
 	quit()

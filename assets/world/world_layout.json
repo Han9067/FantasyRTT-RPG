@@ -1,21 +1,25 @@
 {
   "size": [
-    5120,
-    3840
+    2560,
+    1280
   ],
   "spawn": [
-    2560,
-    1920
+    1408,
+    672
   ],
   "source": "art/world/tiled/WorldMap.tmx",
-  "render_sha256": "f824ae462298f27e535d834a26f29eb0d768d4c63c675ec8c674372b1b3af8a1",
+  "render_sha256": "eae4adc26698f37947ba09075886c5c0a985785080ce42cbab4a3d1a96663890",
   "tile_size": [
     32,
     32
   ],
   "grid_size": [
-    160,
-    120
+    80,
+    40
+  ],
+  "minimap_size": [
+    1024,
+    512
   ],
   "terrain_types": [
     "plains",
@@ -27,529 +31,10 @@
     {
       "id": "city_01",
       "name": "1",
+      "object_id": 43,
       "position": [
-        2000,
-        80
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        61,
-        1
-      ],
-      "reference_position": [
-        717,
-        23
-      ]
-    },
-    {
-      "id": "city_02",
-      "name": "2",
-      "position": [
-        2992,
-        144
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        92,
-        3
-      ],
-      "reference_position": [
-        1067,
-        56
-      ]
-    },
-    {
-      "id": "city_03",
-      "name": "3",
-      "position": [
-        3760,
-        208
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        116,
-        5
-      ],
-      "reference_position": [
-        1335,
-        76
-      ]
-    },
-    {
-      "id": "city_04",
-      "name": "4",
-      "position": [
-        4880,
-        240
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        151,
-        6
-      ],
-      "reference_position": [
-        1742,
-        86
-      ]
-    },
-    {
-      "id": "city_05",
-      "name": "5",
-      "position": [
-        1232,
-        464
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        37,
-        13
-      ],
-      "reference_position": [
-        436,
-        167
-      ]
-    },
-    {
-      "id": "city_06",
-      "name": "6",
-      "position": [
-        2096,
-        592
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        64,
-        17
-      ],
-      "reference_position": [
-        750,
-        211
-      ]
-    },
-    {
-      "id": "city_07",
-      "name": "7",
-      "position": [
-        3120,
-        688
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        96,
-        20
-      ],
-      "reference_position": [
-        1111,
-        242
-      ]
-    },
-    {
-      "id": "city_08",
-      "name": "8",
-      "position": [
-        4368,
-        560
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        135,
-        16
-      ],
-      "reference_position": [
-        1561,
-        195
-      ]
-    },
-    {
-      "id": "city_09",
-      "name": "9",
-      "position": [
-        176,
-        784
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        4,
-        23
-      ],
-      "reference_position": [
-        61,
-        280
-      ]
-    },
-    {
-      "id": "city_10",
-      "name": "10",
-      "position": [
-        784,
-        944
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        23,
-        28
-      ],
-      "reference_position": [
-        274,
-        335
-      ]
-    },
-    {
-      "id": "city_11",
-      "name": "11",
-      "position": [
-        2576,
-        976
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        79,
-        29
-      ],
-      "reference_position": [
-        921,
-        343
-      ]
-    },
-    {
-      "id": "city_12",
-      "name": "12",
-      "position": [
-        3696,
-        912
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        114,
-        27
-      ],
-      "reference_position": [
-        1316,
-        323
-      ]
-    },
-    {
-      "id": "city_13",
-      "name": "13",
-      "position": [
-        4688,
-        944
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        145,
-        28
-      ],
-      "reference_position": [
-        1674,
-        335
-      ]
-    },
-    {
-      "id": "city_14",
-      "name": "14",
-      "position": [
-        592,
-        1424
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        17,
-        43
-      ],
-      "reference_position": [
-        209,
-        507
-      ]
-    },
-    {
-      "id": "city_15",
-      "name": "15",
-      "position": [
-        1648,
-        1424
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        50,
-        43
-      ],
-      "reference_position": [
-        591,
-        502
-      ]
-    },
-    {
-      "id": "city_16",
-      "name": "16",
-      "position": [
-        2416,
-        1424
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        74,
-        43
-      ],
-      "reference_position": [
-        865,
-        504
-      ]
-    },
-    {
-      "id": "city_17",
-      "name": "17",
-      "position": [
-        3280,
-        1488
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        101,
-        45
-      ],
-      "reference_position": [
-        1174,
-        529
-      ]
-    },
-    {
-      "id": "city_18",
-      "name": "18",
-      "position": [
-        4304,
-        1424
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        133,
-        43
-      ],
-      "reference_position": [
-        1528,
-        511
-      ]
-    },
-    {
-      "id": "city_19",
-      "name": "19",
-      "position": [
-        5008,
-        1424
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        155,
-        43
-      ],
-      "reference_position": [
-        1784,
-        503
-      ]
-    },
-    {
-      "id": "city_20",
-      "name": "20",
-      "position": [
-        208,
-        1776
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        5,
-        54
-      ],
-      "reference_position": [
-        79,
-        627
-      ]
-    },
-    {
-      "id": "city_21",
-      "name": "21",
-      "position": [
-        1584,
-        1968
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        48,
-        60
-      ],
-      "reference_position": [
-        561,
-        698
-      ]
-    },
-    {
-      "id": "city_22",
-      "name": "22",
-      "position": [
-        4048,
-        1968
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        125,
-        60
-      ],
-      "reference_position": [
-        1439,
-        698
-      ]
-    },
-    {
-      "id": "city_23",
-      "name": "23",
-      "position": [
-        4848,
-        2032
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        150,
-        62
-      ],
-      "reference_position": [
-        1728,
-        719
-      ]
-    },
-    {
-      "id": "city_24",
-      "name": "24",
-      "position": [
-        592,
-        2160
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        17,
-        66
-      ],
-      "reference_position": [
-        215,
-        769
-      ]
-    },
-    {
-      "id": "city_25",
-      "name": "25",
-      "position": [
-        2480,
-        2160
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        76,
-        66
-      ],
-      "reference_position": [
-        880,
-        769
-      ]
-    },
-    {
-      "id": "city_26",
-      "name": "26",
-      "position": [
-        368,
-        2736
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        10,
-        84
-      ],
-      "reference_position": [
-        133,
-        974
-      ]
-    },
-    {
-      "id": "city_27",
-      "name": "27",
-      "position": [
-        1360,
-        2640
+        1360.0,
+        336.0
       ],
       "size": [
         96,
@@ -557,311 +42,58 @@
       ],
       "tile_position": [
         41,
-        81
-      ],
-      "reference_position": [
-        483,
-        944
+        9
       ]
     },
     {
-      "id": "city_28",
-      "name": "28",
+      "id": "city_02",
+      "name": "2",
+      "object_id": 44,
       "position": [
-        2256,
-        2608
+        1328.0,
+        592.0
       ],
       "size": [
         96,
         96
       ],
       "tile_position": [
-        69,
-        80
-      ],
-      "reference_position": [
-        805,
-        928
+        40,
+        17
       ]
     },
     {
-      "id": "city_29",
-      "name": "29",
+      "id": "city_03",
+      "name": "3",
+      "object_id": 45,
       "position": [
-        3280,
-        2512
+        1040.0,
+        624.0
       ],
       "size": [
         96,
         96
       ],
       "tile_position": [
-        101,
-        77
-      ],
-      "reference_position": [
-        1174,
-        894
+        31,
+        18
       ]
     },
     {
-      "id": "city_30",
-      "name": "30",
+      "id": "city_04",
+      "name": "4",
+      "object_id": 46,
       "position": [
-        4272,
-        2576
+        1680.0,
+        624.0
       ],
       "size": [
         96,
         96
       ],
       "tile_position": [
-        132,
-        79
-      ],
-      "reference_position": [
-        1519,
-        921
-      ]
-    },
-    {
-      "id": "city_31",
-      "name": "31",
-      "position": [
-        5008,
-        2768
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        155,
-        85
-      ],
-      "reference_position": [
-        1784,
-        983
-      ]
-    },
-    {
-      "id": "city_32",
-      "name": "32",
-      "position": [
-        2832,
-        2960
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        87,
-        91
-      ],
-      "reference_position": [
-        1010,
-        1056
-      ]
-    },
-    {
-      "id": "city_33",
-      "name": "33",
-      "position": [
-        3792,
-        2992
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        117,
-        92
-      ],
-      "reference_position": [
-        1350,
-        1064
-      ]
-    },
-    {
-      "id": "city_34",
-      "name": "34",
-      "position": [
-        848,
-        3248
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        25,
-        100
-      ],
-      "reference_position": [
-        298,
-        1155
-      ]
-    },
-    {
-      "id": "city_35",
-      "name": "35",
-      "position": [
-        1776,
-        3312
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        54,
-        102
-      ],
-      "reference_position": [
-        629,
-        1178
-      ]
-    },
-    {
-      "id": "city_36",
-      "name": "36",
-      "position": [
-        3760,
-        3408
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        116,
-        105
-      ],
-      "reference_position": [
-        1335,
-        1219
-      ]
-    },
-    {
-      "id": "city_37",
-      "name": "37",
-      "position": [
-        4752,
-        3440
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        147,
-        106
-      ],
-      "reference_position": [
-        1694,
-        1227
-      ]
-    },
-    {
-      "id": "city_38",
-      "name": "38",
-      "position": [
-        336,
-        3664
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        9,
-        113
-      ],
-      "reference_position": [
-        117,
-        1304
-      ]
-    },
-    {
-      "id": "city_39",
-      "name": "39",
-      "position": [
-        1456,
-        3696
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        44,
-        114
-      ],
-      "reference_position": [
-        513,
-        1319
-      ]
-    },
-    {
-      "id": "city_40",
-      "name": "40",
-      "position": [
-        2864,
-        3600
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        88,
-        111
-      ],
-      "reference_position": [
-        1026,
-        1284
-      ]
-    },
-    {
-      "id": "city_41",
-      "name": "41",
-      "position": [
-        3408,
-        3760
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        105,
-        116
-      ],
-      "reference_position": [
-        1214,
-        1344
-      ]
-    },
-    {
-      "id": "city_42",
-      "name": "42",
-      "position": [
-        4240,
-        3664
-      ],
-      "size": [
-        96,
-        96
-      ],
-      "tile_position": [
-        131,
-        113
-      ],
-      "reference_position": [
-        1507,
-        1310
+        51,
+        18
       ]
     }
   ],
@@ -874,7 +106,7 @@
       ],
       "size": [
         2048,
-        2048
+        1280
       ]
     },
     {
@@ -884,52 +116,8 @@
         0
       ],
       "size": [
-        2048,
-        2048
-      ]
-    },
-    {
-      "file": "chunks/world_2_0.png",
-      "position": [
-        4096,
-        0
-      ],
-      "size": [
-        1024,
-        2048
-      ]
-    },
-    {
-      "file": "chunks/world_0_1.png",
-      "position": [
-        0,
-        2048
-      ],
-      "size": [
-        2048,
-        1792
-      ]
-    },
-    {
-      "file": "chunks/world_1_1.png",
-      "position": [
-        2048,
-        2048
-      ],
-      "size": [
-        2048,
-        1792
-      ]
-    },
-    {
-      "file": "chunks/world_2_1.png",
-      "position": [
-        4096,
-        2048
-      ],
-      "size": [
-        1024,
-        1792
+        512,
+        1280
       ]
     }
   ]

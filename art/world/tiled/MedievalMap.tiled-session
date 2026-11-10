@@ -1,14 +1,48 @@
 {
-  "activeFile": "WorldMap.tmx",
-  "expandedProjectPaths": [
-    "."
-  ],
-  "openFiles": [
-    "WorldMap.tmx"
-  ],
-  "fileStates": {
-    "WorldMap.tmx": {
-      "scale": 0.25
-    }
-  }
+    "activeFile": "WorldMap.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "GroundTiles.tsx": {
+            "scaleInDock": 1
+        },
+        "LakeTiles.tsx": {
+            "scaleInDock": 1
+        },
+        "MountainTiles.tsx": {
+            "scaleInDock": 1
+        },
+        "ObjectsTiles.tsx": {
+            "scaleInDock": 1
+        },
+        "RiverTiles.tsx": {
+            "scaleInDock": 1
+        },
+        "RoadTiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TreeTiles.tsx": {
+            "scaleInDock": 1
+        },
+        "WorldMap.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1519,
+                "y": 1186
+            }
+        }
+    },
+    "openFiles": [
+        "RoadTiles.tsx",
+        "WorldMap.tmx"
+    ],
+    "project": "MedievalMap.tiled-project",
+    "recentFiles": [
+        "RoadTiles.tsx",
+        "WorldMap.tmx"
+    ]
 }

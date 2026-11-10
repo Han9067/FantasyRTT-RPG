@@ -1,8 +1,6 @@
 class_name WorldMap
 extends BattleMap
 ## Native-pixel campaign prototype; shared camera/movement, always-selected party.
-const WORLD_SIZE := Vector2(5120,3840)
-const SPAWN := Vector2(2560,1920)
 const TERRAIN = preload("res://assets/world/imperial_world.png")
 const WORLD_CAMERA_SPEED := 840.0
 const PartyMarker = preload("res://scripts/world_party_marker.gd")
@@ -10,15 +8,17 @@ var party_marker: WorldPartyMarker
 var character_appearance: Dictionary = CharacterArt.defaults()
 var terrain: Node2D
 var cities: Array = []
+var spawn_position := Vector2.ZERO
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	map_size = WORLD_SIZE
+	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/world/world_layout.json"))
+	map_size = Vector2(layout.size[0],layout.size[1])
+	spawn_position = Vector2(layout.spawn[0],layout.spawn[1])
 	selected = true
 	terrain = Node2D.new()
 	terrain.show_behind_parent = true
 	add_child(terrain)
-	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/world/world_layout.json"))
 	for chunk in layout.chunks:
 		var tile := Sprite2D.new()
 		tile.texture = load("res://assets/world/" + chunk.file)
@@ -55,11 +55,11 @@ func _ready() -> void:
 	camera.limit_bottom = int(map_size.y)
 	camera.limit_left = 0
 	camera.limit_top = 0
-	camera.position = SPAWN
+	camera.position = spawn_position
 	add_child(camera)
 	camera.make_current()
 	resize_map()
-	unit_position = SPAWN
+	unit_position = spawn_position
 	destination = unit_position
 	update_sprite()
 	get_viewport().size_changed.connect(resize_map)

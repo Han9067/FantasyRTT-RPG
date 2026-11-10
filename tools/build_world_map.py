@@ -35,33 +35,47 @@ def build(refresh=False):
     tw,th=int(tmx.get('tilewidth')),int(tmx.get('tileheight'))
     cols,rows=int(tmx.get('width')),int(tmx.get('height'))
     w,h=cols*tw,rows*th
-    assert (w,h,tw,th)==(5120,3840,32,32), 'Update campaign camera bounds deliberately when changing map size'
+    assert w > 0 and h > 0 and tw > 0 and th > 0
     im=Image.open(render).convert('RGB');assert im.size==(w,h)
-    original=json.loads((SOURCE/'Review/cities.json').read_text())
-    reference={c['name']:c['reference_position'] for c in original}
-    markers=tmx.find("objectgroup[@name='CityPoints']").findall('object')
+    objects=tmx.find("objectgroup[@name='GameObjects']")
+    assert objects is not None and objects.get('visible')=='0'
+    markers=[o for o in objects.findall('object') if o.get('type')=='City']
     cities=[]
     for marker in sorted(markers,key=lambda m:int(m.get('name'))):
-        name=marker.get('name');x,y=round(float(marker.get('x'))),round(float(marker.get('y')))
-        assert 48<=x<=w-48 and 48<=y<=h-48
-        cities.append({'id':f'city_{int(name):02}','name':name,'position':[x,y],'size':[96,96],'tile_position':[(x-48)//32,(y-48)//32],'reference_position':reference[name]})
-    assert len(cities)==42 and [c['name'] for c in cities]==list(map(str,range(1,43)))
+        name=marker.get('name')
+        x,y,cw,ch=[int(float(marker.get(key))) for key in ('x','y','width','height')]
+        assert 0<=x<x+cw<=w and 0<=y<y+ch<=h
+        assert x%tw==y%th==cw%tw==ch%th==0
+        cities.append({'id':f'city_{int(name):02}','name':name,'object_id':int(marker.get('id')),'position':[x+cw/2,y+ch/2],'size':[cw,ch],'tile_position':[x//tw,y//th]})
+    assert cities and [c['name'] for c in cities]==list(map(str,range(1,len(cities)+1)))
+    spawns=[o for o in objects.findall('object') if o.get('type')=='PlayerSpawn']
+    assert len(spawns)==1
+    spawn=[int(float(spawns[0].get(key))) for key in ('x','y')]
+    assert 18<=spawn[0]<=w-18 and 32<=spawn[1]<=h-18
     chunks_dir=OUT/'chunks';chunks_dir.mkdir(parents=True,exist_ok=True);chunks=[]
     for y in range(0,h,2048):
         for x in range(0,w,2048):
             name=f'world_{x//2048}_{y//2048}.png';part=im.crop((x,y,min(x+2048,w),min(y+2048,h)))
             part.save(chunks_dir/name,optimize=True)
             chunks.append({'file':'chunks/'+name,'position':[x,y],'size':list(part.size)})
-    im.resize((1024,768),Image.Resampling.NEAREST).save(OUT/'imperial_world.png',optimize=True)
-    layout={'size':[w,h],'spawn':[2560,1920],'source':'art/world/tiled/WorldMap.tmx','render_sha256':sha(render),'tile_size':[tw,th],'grid_size':[cols,rows],'terrain_types':['plains','forest','mountains','water'],'cities':cities,'chunks':chunks}
+    wanted={Path(chunk['file']).name for chunk in chunks}
+    for stale in chunks_dir.glob('world_*.png'):
+        if stale.name not in wanted:
+            stale.unlink()
+            stale.with_suffix('.png.import').unlink(missing_ok=True)
+    mini_size=(min(1024,w),max(1,round(h*min(1024,w)/w)))
+    im.resize(mini_size,Image.Resampling.NEAREST).save(OUT/'imperial_world.png',optimize=True)
+    layout={'size':[w,h],'spawn':spawn,'source':'art/world/tiled/WorldMap.tmx','render_sha256':sha(render),'tile_size':[tw,th],'grid_size':[cols,rows],'minimap_size':list(mini_size),'terrain_types':['plains','forest','mountains','water'],'cities':cities,'chunks':chunks}
     (OUT/'world_layout.json').write_text(json.dumps(layout,ensure_ascii=False,indent=2)+'\n')
-    review=im.resize((1600,1200),Image.Resampling.NEAREST);d=ImageDraw.Draw(review)
+    review_width=min(1600,w);review_height=round(h*review_width/w)
+    review=im.resize((review_width,review_height),Image.Resampling.NEAREST);d=ImageDraw.Draw(review)
     font=ImageFont.truetype(str(ROOT/'assets/fonts/NotoSansCJK-Regular.ttc'),15)
     for city in cities:
-        x,y=[v*1600/w for v in city['position']];dy=19 if y<1170 else -22
+        x,y=[v*review_width/w for v in city['position']];dy=city['size'][1]*0.5*review_width/w+4
+        if y+dy+20>review_height:dy=-dy-20
         d.text((x,y+dy),city['name'],font=font,anchor='mt',fill='#ffe6aa',stroke_width=2,stroke_fill='#263025')
     review.save(ROOT/'docs/world/numbered-world-plan.png')
-    print(f'Imported approved Tiled world {w}x{h}; {len(cities)} native 96px cities; {len(chunks)} unchanged-pixel chunks')
+    print(f'Imported approved Tiled world {w}x{h}; {len(cities)} cities from hidden GameObjects; {len(chunks)} unchanged-pixel chunks')
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--refresh-render',action='store_true')

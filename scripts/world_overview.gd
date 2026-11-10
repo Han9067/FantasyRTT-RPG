@@ -10,7 +10,12 @@ func _ready() -> void:
 	tooltip_text = "사각형 내부를 잡아 끌면 카메라가 이동합니다."
 
 func map_bounds() -> Rect2:
-	return Rect2(Vector2(6,6),size-Vector2(12,12))
+	var available := (size-Vector2(12,12)).max(Vector2.ONE)
+	if not is_instance_valid(world): return Rect2(Vector2(6,6),available)
+	# Preserve the uploaded map's aspect ratio instead of stretching it to the panel.
+	var factor := minf(available.x/world.map_size.x,available.y/world.map_size.y)
+	var fitted := world.map_size*factor
+	return Rect2((size-fitted)*0.5,fitted)
 
 func camera_rect() -> Rect2:
 	var bounds := map_bounds()

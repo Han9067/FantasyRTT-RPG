@@ -103,7 +103,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.32")
+	assert(game.game_version == "0.0.33")
 	game.show_creation()
 	await process_frame
 	await process_frame
@@ -172,7 +172,7 @@ func run() -> void:
 		game.create_button.pressed.emit()
 		await process_frame
 		assert(game.world.character_frames == frame_set)
-		assert(game.world.unit_position == WorldMap.SPAWN)
+		assert(game.world.unit_position == game.world.spawn_position)
 		assert(game.world.scale == Vector2.ONE and game.world.player_sprite.scale == Vector2.ONE)
 		assert(game.world.character_name == "파츠 테스트")
 		game.show_creation()
