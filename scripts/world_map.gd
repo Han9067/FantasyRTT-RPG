@@ -21,6 +21,7 @@ func _ready() -> void:
 	map_size = Vector2(layout.size[0],layout.size[1])
 	spawn_position = Vector2(layout.spawn[0],layout.spawn[1])
 	navigation.configure(layout.navigation)
+	zoom_level = 3.0
 	selected = true
 	terrain = Node2D.new()
 	terrain.show_behind_parent = true

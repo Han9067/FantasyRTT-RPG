@@ -39,7 +39,8 @@ func run() -> void:
 	assert(map.world_to_screen(map.unit_position).is_equal_approx(Vector2(640,400)))
 	assert(map.character_frames == game.character_frames and map.character_name == "제국의 여행자")
 	assert(map.selected and not map.moving and map.player_sprite.scale == Vector2.ONE)
-	assert(map.player_sprite.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2.ONE))
+	assert(map.player_sprite.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2(3,3)))
+	assert(map.zoom_level == 3 and "300%" in game.world_status.text)
 	# One world-only token: fixed original layers, clipped selected character, native pixels.
 	var marker: WorldPartyMarker = map.party_marker
 	assert(marker.get_child_count() == 3)
@@ -101,6 +102,8 @@ func run() -> void:
 	var bridge := Vector2(1296,688)
 	assert(map.cursor_blocked_at(map.world_to_screen(river)))
 	assert(not map.cursor_blocked_at(map.world_to_screen(bridge)))
+	for water_point in [Vector2(1296,677),Vector2(1296,699)]:
+		assert(map.cursor_blocked_at(map.world_to_screen(water_point)))
 	assert(not map.cursor_blocked_at(Vector2(640,42)))
 	var old_destination := map.destination
 	map.issue_move(river)
@@ -117,7 +120,7 @@ func run() -> void:
 		map._physics_process(1.0/60.0)
 		assert(map.navigation.open_cell(map.navigation.cell_at(map.unit_position)))
 		assert(map.navigation.segment_clear(previous,map.unit_position))
-		if map.navigation.cell_at(map.unit_position)==Vector2i(40,21): crossed_bridge = true
+		if Vector2i((map.unit_position/32).floor())==Vector2i(40,21): crossed_bridge = true
 	assert(crossed_bridge and not map.moving and map.unit_position==Vector2(1040,624))
 	# A new command mid-route replaces the old waypoints without jumping into an obstacle.
 	map.issue_move(map.spawn_position)
@@ -275,6 +278,6 @@ func run() -> void:
 	assert(root.content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS)
 	game.create_button.pressed.emit()
 	await process_frame
-	assert(game.world.unit_position == game.world.spawn_position and game.world.zoom_level == 1)
+	assert(game.world.unit_position == game.world.spawn_position and game.world.zoom_level == 3)
 	print("PASS: creation -> world, 4 uploaded native 96px Tiled cities, persistent selection, fixed idle-first-frame portrait during travel, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
 	quit()

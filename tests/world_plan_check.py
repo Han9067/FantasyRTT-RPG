@@ -74,31 +74,47 @@ assert len(spawns)==1 and layout['spawn']==[int(float(spawns[0].get(k))) for k i
 assert layout['spawn']==[1408,672]
 print('PASS: four exact replacement city sprites/anchors, hidden city rectangles and player spawn')
 
-# Navigation is derived without editing the supplied map. Both visible bridges stay open.
-nav=layout['navigation']
-blocked={tuple(p) for p in nav['blocked']};bridges={tuple(p) for p in nav['bridges']}
-assert nav['cell_size']==[32,32] and nav['grid_size']==[80,40]
-assert bridges=={(39,15),(40,21)} and len(blocked)==162
-assert len(nav['mountains'])==56 and len(nav['water'])==119
-assert all(tuple(p) in blocked for p in nav['mountains'])
-assert all(tuple(p) in blocked or tuple(p) in bridges for p in nav['water'])
-assert not bridges & blocked
-bridge_layer=root.find("layer[@name='Ect']/data")
-bridge_tiles=[int(v) for v in bridge_layer.text.replace('\n','').split(',') if v.strip()]
-assert {(i%cols,i//cols) for i,gid in enumerate(bridge_tiles) if gid==317}==bridges
-# Small stacked-layer fixtures verify tile identity, source-relative IDs and road priority.
+# Shape-derived navigation must preserve all visual inputs above.
 import sys
 sys.path.insert(0,str(ROOT/'tools'))
-from world_navigation import navigation_data
+from world_navigation import navigation_data, terrain_masks, transform
+nav=layout['navigation'];blocked={tuple(p) for p in nav['blocked']}
+assert nav['cell_size']==[4,4] and nav['grid_size']==[640,320]
+assert nav['bridge_tiles']==[[39,15],[40,21]]
+pixels,mountains,water,_=terrain_masks(root,SOURCE)
+coarse=np.zeros((320,640),dtype=bool)
+for x,y in blocked:coarse[y,x]=True
+expanded=coarse.repeat(4,0).repeat(4,1)
+assert expanded[pixels].all(),'A source obstacle pixel was made walkable'
+assert np.array_equal(coarse,pixels.reshape(320,4,640,4).any(axis=(1,3)))
+def closed(x,y):return (x//4,y//4) in blocked
+# Both bridges: actual deck open; water above and below remains closed.
+for x,y in [(1264,480),(1296,672)]:
+ assert not closed(x,y+16)
+ assert closed(x,y+5) and closed(x,y+27)
+ assert water[y+16,x] and water[y+5,x] and water[y+27,x]
+# Same mountain tile: rock blocked, adjacent transparent grass usable.
+assert closed(1180,512) and not closed(1184,512)
+assert mountains[512:516,1180:1184].any() and not mountains[512:516,1184:1188].any()
+assert not closed(*layout['spawn'])
+# Source-relative tile identity, flips, and layer order using original source tiles.
 fixture=ET.Element('map',width='2',height='2',tilewidth='32',tileheight='32')
 for ref in root.findall('tileset'):fixture.append(copy.deepcopy(ref))
 terrain=ET.SubElement(fixture,'layer',name='MisleadingName',width='2',height='2')
-ET.SubElement(terrain,'data',encoding='csv').text='579,599,201,1'
+ET.SubElement(terrain,'data',encoding='csv').text='589,599,201,1'
 road=ET.SubElement(fixture,'layer',name='Overlay',width='2',height='2')
-ET.SubElement(road,'data',encoding='csv').text='2147484597,949,949,0' # flipped road GID 949
-sample=navigation_data(fixture,SOURCE)
-assert sample['blocked']==[[1,0]] and sample['bridges']==[[0,0],[0,1]]
+ET.SubElement(road,'data',encoding='csv').text='997,997,997,0'
+a,ma,wa,_=terrain_masks(fixture,SOURCE)
+assert not a[16,16] and wa[16,16] # dirt on water opens just the path
+assert a[3,16] # water beside the road stays blocked
+assert a[ma].all() # no road can clear rock
 fixture.remove(road);fixture.insert(0,road)
-sample=navigation_data(fixture,SOURCE)
-assert sample['bridges']==[] and sample['blocked']==[[0,0],[1,0],[0,1]]
-print('PASS: actual water/mountain tile identities, both bridge overrides, flipped tiles and layer-order priority')
+b,_,_,_=terrain_masks(fixture,SOURCE)
+assert b[16,16] and np.count_nonzero(b)>np.count_nonzero(a)
+fixture.remove(road)
+terrain.find('data').text='579,0,0,0'
+a,_,_,_=terrain_masks(fixture,SOURCE)
+terrain.find('data').text=str(579|0x80000000)+',0,0,0'
+b,_,_,_=terrain_masks(fixture,SOURCE)
+assert np.array_equal(b[:32,:32],a[:32,:32][:,::-1])
+print('PASS: silhouette obstacles, bridge deck/water separation, mountain margins, original palette masks and tile transforms/order')

@@ -68,7 +68,7 @@ def build(refresh=False):
     im.resize(mini_size,Image.Resampling.NEAREST).save(OUT/'imperial_world.png',optimize=True)
     layout={'size':[w,h],'spawn':spawn,'source':'art/world/tiled/WorldMap.tmx','render_sha256':sha(render),'tile_size':[tw,th],'grid_size':[cols,rows],'minimap_size':list(mini_size),'terrain_types':['plains','forest','mountains','water'],'cities':cities,'chunks':chunks}
     layout['navigation']=navigation_data(tmx,SOURCE)
-    assert [spawn[0]//tw,spawn[1]//th] not in layout['navigation']['blocked'], 'PlayerSpawn must be on walkable land'
+    assert [spawn[0]//layout['navigation']['cell_size'][0],spawn[1]//layout['navigation']['cell_size'][1]] not in layout['navigation']['blocked'], 'PlayerSpawn must be on walkable land'
     (OUT/'world_layout.json').write_text(json.dumps(layout,ensure_ascii=False,indent=2)+'\n')
     review_width=min(1600,w);review_height=round(h*review_width/w)
     review=im.resize((review_width,review_height),Image.Resampling.NEAREST);d=ImageDraw.Draw(review)

@@ -1,34 +1,98 @@
-"""Derive passability from actual Tiled tilesets, without modifying visual layers."""
+"""Bake terrain silhouettes to conservative 4px navigation cells; never edit art.
+
+Water colours are from the supplied palettes (transparent pixels are ignored).
+Rock silhouettes exclude green foothill decoration. Roads open only their dirt
+surface; bridge objects replace that opening with the actual opaque deck.
+"""
 import xml.etree.ElementTree as ET
+import numpy as np
+from PIL import Image
 
-# GroundTiles local (zero-based) water/shore atlas cells. Green terrain variants
-# beside them are deliberately excluded. RiverTiles and LakeTiles are all water.
-GROUND_WATER = set(range(185,189)) | {194,195} | set(range(199,203)) | {208,209} | set(range(213,259))
+CELL_SIZE = 4
+WATER_COLOURS = {(69,100,114), (66,93,114), (57,83,106)}
+ROAD_COLOURS = {(147,132,89), (145,125,83), (139,119,85), (126,104,67), (128,107,70)}
+# ObjectsTiles local 10: horizontal stone bridge. Its translucent shadow and
+# transparent margins are not walking surface. Tile flags rotate/flip this too.
+BRIDGE_IDS = {10}
 
-def navigation_data(tmx, source):
+def colour_mask(pixels, colours):
+    result = np.zeros(pixels.shape[:2], dtype=bool)
+    for colour in colours:
+        result |= np.all(pixels[:,:,:3] == colour, axis=2)
+    return result & (pixels[:,:,3] >= 128)
+
+def transform(mask, flags):
+    if flags & 0x20000000: mask = mask.T
+    if flags & 0x80000000: mask = mask[:,::-1]
+    if flags & 0x40000000: mask = mask[::-1,:]
+    return mask
+
+def terrain_masks(tmx, source):
     cols, rows = int(tmx.get('width')), int(tmx.get('height'))
+    tw, th = int(tmx.get('tilewidth')), int(tmx.get('tileheight'))
     tilesets = []
     for ref in tmx.findall('tileset'):
         ts = ET.parse(source / ref.get('source')).getroot()
-        tilesets.append((int(ref.get('firstgid')), int(ts.get('tilecount')), ts.get('name')))
-    mountain, water, road = set(), {}, {}
-    for order, layer in enumerate(tmx.findall('layer')):
-        if layer.get('visible', '1') == '0': continue
+        pixels = np.array(Image.open(source / ts.find('image').get('source')).convert('RGBA'))
+        tilesets.append((int(ref.get('firstgid')), int(ts.get('tilecount')), ts, pixels))
+    water = np.zeros((rows*th,cols*tw), dtype=bool)
+    mountain = np.zeros_like(water)
+    opening = np.zeros_like(water)
+    bridges = []
+    cache = {}
+    for layer in tmx.findall('layer'):
+        if layer.get('visible','1') == '0': continue
         assert int(layer.get('width')) == cols and int(layer.get('height')) == rows
         assert not float(layer.get('offsetx','0')) and not float(layer.get('offsety','0'))
         data = layer.find('data'); assert data.get('encoding') == 'csv'
-        cells = [int(v) & 0x0fffffff for v in data.text.replace('\n','').split(',') if v.strip()]
+        cells = [int(v) for v in data.text.replace('\n','').split(',') if v.strip()]
         assert len(cells) == cols*rows
-        for index, gid in enumerate(cells):
-            if not gid: continue
-            first, count, name = next(ts for ts in tilesets if ts[0] <= gid < ts[0]+ts[1])
-            cell = (index % cols, index // cols)
-            if name in ('MountainTiles', 'MountainDarkTiles'): mountain.add(cell)
-            if name in ('RiverTiles','LakeTiles') or (name == 'GroundTiles' and gid-first in GROUND_WATER): water[cell] = order
-            if name in ('RoadTiles','RoadDarkTiles'): road[cell] = order
-    bridges = {cell for cell in water if road.get(cell,-1) > water[cell] and cell not in mountain}
-    blocked = mountain | (set(water) - bridges)
-    ordered = lambda cells: [list(c) for c in sorted(cells,key=lambda c:(c[1],c[0]))]
-    return {'cell_size':[int(tmx.get('tilewidth')),int(tmx.get('tileheight'))],
-            'grid_size':[cols,rows], 'blocked':ordered(blocked), 'bridges':ordered(bridges),
-            'mountains':ordered(mountain), 'water':ordered(water), 'roads':ordered(road)}
+        for index, raw in enumerate(cells):
+            if not raw: continue
+            gid, flags = raw & 0x0fffffff, raw & 0xf0000000
+            if raw not in cache:
+                first, count, ts, pixels = next(ts for ts in tilesets if ts[0] <= gid < ts[0]+ts[1])
+                name, local, tc = ts.get('name'), gid-first, int(ts.get('columns'))
+                x,y = local%tc*tw, local//tc*th
+                tile = pixels[y:y+th,x:x+tw]
+                opaque = tile[:,:,3] >= 128
+                if name in ('GroundTiles','RiverTiles','LakeTiles'):
+                    kind, mask = 'water', colour_mask(tile,WATER_COLOURS)
+                elif name in ('MountainTiles','MountainDarkTiles'):
+                    # Keep grey/brown rock, omit grassy skirt pixels around its foot.
+                    green = (tile[:,:,1].astype(int) > tile[:,:,2]*1.3) & (tile[:,:,0].astype(int) > tile[:,:,2]*1.2) & (tile[:,:,2]<80)
+                    kind, mask = 'mountain', opaque & ~green
+                elif name in ('RoadTiles','RoadDarkTiles'):
+                    kind, mask = 'road', colour_mask(tile,ROAD_COLOURS)
+                elif name == 'ObjectsTiles' and local in BRIDGE_IDS:
+                    kind, mask = 'bridge', opaque
+                else: continue
+                cache[raw] = kind, transform(mask,flags), transform(opaque,flags), name
+            kind, mask, opaque, name = cache[raw]
+            x,y = index%cols*tw, index//cols*th
+            region = np.s_[y:y+th,x:x+tw]
+            if kind == 'mountain': mountain[region] |= mask
+            elif kind == 'water':
+                if name == 'GroundTiles': water[region][opaque] = False
+                water[region] |= mask
+                opening[region][mask] = False  # Later water covers earlier roads.
+            elif kind == 'road': opening[region] |= mask
+            elif kind == 'bridge':
+                # A bridge replaces the underlying road's entire tile opening,
+                # so neither road fringe nor bridge shadow can open nearby water.
+                opening[region] = mask
+                bridges.append([index%cols,index//cols])
+    blocked = mountain | (water & ~opening)
+    return blocked, mountain, water, bridges
+
+def navigation_data(tmx, source):
+    pixels, mountain, water, bridges = terrain_masks(tmx,source)
+    h,w = pixels.shape
+    assert w % CELL_SIZE == h % CELL_SIZE == 0
+    # ANY blocked source pixel blocks its 4x4 cell: water is never made walkable
+    # by averaging. Maximum outward edge approximation is three native pixels.
+    blocked = pixels.reshape(h//CELL_SIZE,CELL_SIZE,w//CELL_SIZE,CELL_SIZE).any(axis=(1,3))
+    ys,xs = np.nonzero(blocked)
+    return {'cell_size':[CELL_SIZE,CELL_SIZE], 'grid_size':[w//CELL_SIZE,h//CELL_SIZE],
+            'blocked':np.column_stack((xs,ys)).tolist(), 'bridge_tiles':bridges,
+            'source_pixel_size':[w,h], 'max_edge_padding':CELL_SIZE-1}

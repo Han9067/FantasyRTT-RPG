@@ -1,6 +1,6 @@
 class_name WorldNavigation
 extends RefCounted
-## Static tile navigation. Build once; only query A* when a move order is issued.
+## Static 4px silhouette navigation. Build once; only query A* when a move order is issued.
 var grid := AStarGrid2D.new()
 var grid_size := Vector2i.ZERO
 var cell_size := Vector2(32,32)
@@ -55,7 +55,7 @@ func reachable(from: Vector2, target: Vector2) -> bool:
 	return open_cell(a) and open_cell(b) and components[index(a)] == components[index(b)]
 
 func segment_clear(from: Vector2, target: Vector2) -> bool:
-	# Grid DDA visits every crossed tile; simultaneous boundary crossings also check
+	# Grid DDA visits every crossed cell; simultaneous boundary crossings also check
 	# both adjacent tiles. Shortcuts cannot cut through blocked corners or thin cells.
 	var cell := cell_at(from)
 	var end := cell_at(target)

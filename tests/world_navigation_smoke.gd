@@ -42,9 +42,14 @@ func _initialize() -> void:
 	assert(not nav.segment_clear(Vector2(31,31),Vector2(65,33)))
 	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/world/world_layout.json"))
 	nav.configure(layout.navigation)
-	assert(layout.navigation.bridges==[[39.0,15.0],[40.0,21.0]])
+	assert(layout.navigation.bridge_tiles==[[39.0,15.0],[40.0,21.0]])
 	for entry in layout.navigation.blocked: assert(not nav.open_cell(Vector2i(entry[0],entry[1])))
-	for entry in layout.navigation.bridges: assert(nav.open_cell(Vector2i(entry[0],entry[1])))
+	for x_y in [Vector2(1264,480),Vector2(1296,672)]:
+		assert(nav.reachable(Vector2(1408,672),x_y+Vector2(0,16)))
+		assert(not nav.open_cell(nav.cell_at(x_y+Vector2(0,5))))
+		assert(not nav.open_cell(nav.cell_at(x_y+Vector2(0,27))))
+	assert(not nav.open_cell(nav.cell_at(Vector2(1180,512))))
+	assert(nav.reachable(Vector2(1408,672),Vector2(1184,512)))
 	# Cross the real southern river from either side, around mountain and river tiles.
 	for endpoints in [[Vector2(1408,672),Vector2(1200,688)],[Vector2(1200,688),Vector2(1408,672)], [Vector2(1408,672),Vector2(1040,624)]]:
 		assert_route(nav,endpoints[0],endpoints[1],nav.route(endpoints[0],endpoints[1]))
