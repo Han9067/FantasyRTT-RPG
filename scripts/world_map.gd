@@ -61,7 +61,6 @@ func _ready() -> void:
 	unit_position = SPAWN
 	destination = unit_position
 	update_sprite()
-	player_sprite.play("idle")
 	get_viewport().size_changed.connect(resize_map)
 
 func playable_rect() -> Rect2:
@@ -69,6 +68,11 @@ func playable_rect() -> Rect2:
 
 func update_sprite() -> void:
 	party_marker.place(unit_position)
+
+func set_moving(value: bool) -> void:
+	moving = value
+	party_marker.freeze_portrait()
+	status_changed.emit()
 
 func _draw() -> void:
 	# The portrait token replaces the battlefield body, ground shadow and selection ring.

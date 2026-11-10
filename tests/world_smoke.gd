@@ -45,20 +45,28 @@ func run() -> void:
 	assert(marker.get_child(0).texture.get_size() == Vector2(32,32))
 	assert(map.player_sprite.get_parent() == marker.portrait_mask)
 	assert(marker.portrait_mask.clip_children == CanvasItem.CLIP_CHILDREN_ONLY)
-	assert(map.player_sprite.sprite_frames == game.character_frames)
+	assert(map.player_sprite.sprite_frames != game.character_frames)
+	assert(map.player_sprite.sprite_frames.get_animation_names() == PackedStringArray(["idle"]))
+	assert(map.player_sprite.sprite_frames.get_frame_count("idle") == 1)
+	assert(map.player_sprite.sprite_frames.get_frame_texture("idle",0) == game.character_frames.get_frame_texture("idle",0))
+	assert(game.character_frames.get_frame_count("idle") == 4 and game.character_frames.get_frame_count("walk") == 8)
+	assert(marker.get_child(0).self_modulate == WorldPartyMarker.BACKGROUND_COLOR)
 	var mask := marker.portrait_mask.texture.get_image()
 	var border := WorldPartyMarker.FRAME.get_image()
 	assert(mask.get_pixel(16,16).a == 1)
 	for y in range(32):
 		for x in range(32):
-			if x == 0 or x == 31 or y == 0 or y == 31 or border.get_pixel(x,y).a > 0:
+			if x == 0 or x == 31 or y == 0 or y == 31:
 				assert(mask.get_pixel(x,y).a == 0, "Portrait mask escaped its enclosed border")
+			if border.get_pixel(x,y).a > 0:
+				assert(is_equal_approx(mask.get_pixel(x,y).a,border.get_pixel(x,y).a), "Mask must extend under border without exceeding its alpha")
 	for flipped in [false,true]:
 		map.player_sprite.flip_h = flipped
 		map.update_sprite()
 		assert(marker.position+WorldPartyMarker.CENTER == map.unit_position.round())
 		assert(not marker.get_child(0).flip_h and not marker.get_child(2).flip_h)
-		var anchor_x := Art.FRAME_SIZE.x-BattleMap.BODY_CENTER_X if flipped else BattleMap.BODY_CENTER_X
+		assert(not map.player_sprite.flip_h and not map.player_sprite.is_playing() and map.player_sprite.frame == 0)
+		var anchor_x := BattleMap.BODY_CENTER_X
 		assert(map.player_sprite.position+Vector2(anchor_x,Art.FEET_Y) == WorldPartyMarker.PORTRAIT_FEET)
 	map.player_sprite.flip_h = false
 	map.update_sprite()
@@ -79,13 +87,24 @@ func run() -> void:
 		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(label.position,label.size)), "Edge city label clipped")
 	# No prerequisite click: first right click immediately walks, left click never deselects.
 	click(map,Vector2(800,400),MOUSE_BUTTON_RIGHT)
-	assert(map.moving and map.player_sprite.animation == "walk")
+	assert(map.moving and map.player_sprite.animation == "idle" and map.player_sprite.frame == 0 and not map.player_sprite.is_playing())
 	advance(map,1)
 	assert(map.unit_position.is_equal_approx(WorldMap.SPAWN+Vector2(76,0)))
 	click(map,Vector2(120,200),MOUSE_BUTTON_LEFT)
 	assert(map.selected and not map.dragging)
 	advance(map,2)
 	assert(not map.moving and map.player_sprite.animation == "idle")
+	# Both travel directions, elapsed time and arrival keep the identical still texture.
+	var still_texture := map.player_sprite.sprite_frames.get_frame_texture("idle",0)
+	for offset in [Vector2(-80,0),Vector2(80,0)]:
+		map.issue_move(map.unit_position+offset)
+		advance(map,0.5)
+		assert(map.moving and not map.player_sprite.flip_h)
+		assert(map.player_sprite.frame == 0 and not map.player_sprite.is_playing())
+		advance(map,2)
+		assert(not map.moving and not map.player_sprite.flip_h)
+		assert(map.player_sprite.animation == "idle" and map.player_sprite.frame == 0 and not map.player_sprite.is_playing())
+		assert(map.player_sprite.sprite_frames.get_frame_texture("idle",0) == still_texture)
 	var point := map.unit_position
 	click(map,Vector2(640,42),MOUSE_BUTTON_RIGHT)
 	assert(not map.moving)
@@ -203,5 +222,5 @@ func run() -> void:
 	game.create_button.pressed.emit()
 	await process_frame
 	assert(game.world.unit_position == WorldMap.SPAWN and game.world.zoom_level == 1)
-	print("PASS: creation -> world, 42 numbered native 96px Tiled cities, persistent selection, first right-click walk/idle, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
+	print("PASS: creation -> world, 42 numbered native 96px Tiled cities, persistent selection, fixed idle-first-frame portrait during travel, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
 	quit()
