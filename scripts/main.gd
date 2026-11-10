@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.31")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.32")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -376,6 +376,7 @@ func show_world() -> void:
 	world = WorldMapScene.new()
 	world.character_name = player_name if not player_name.is_empty() else "여행자"
 	world.character_frames = character_frames
+	world.character_appearance = appearance.duplicate(true)
 	add_child(world)
 	move_child(world,0)
 	if not travel_state.is_empty():

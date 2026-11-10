@@ -7,6 +7,7 @@ const TERRAIN = preload("res://assets/world/imperial_world.png")
 const WORLD_CAMERA_SPEED := 840.0
 const PartyMarker = preload("res://scripts/world_party_marker.gd")
 var party_marker: WorldPartyMarker
+var character_appearance: Dictionary = CharacterArt.defaults()
 var terrain: Node2D
 var cities: Array = []
 
@@ -44,7 +45,7 @@ func _ready() -> void:
 		add_child(title)
 	party_marker = PartyMarker.new()
 	party_marker.name = "PartyMarker"
-	party_marker.setup(character_frames)
+	party_marker.setup(character_appearance)
 	add_child(party_marker)
 	player_sprite = party_marker.portrait
 	camera = Camera2D.new()

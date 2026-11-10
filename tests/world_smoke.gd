@@ -21,6 +21,8 @@ func run() -> void:
 	root.add_child(game)
 	await process_frame
 	game.show_creation()
+	game.change_part("hair",1)
+	game.change_part("weapon",2)
 	game.name_input.text = "제국의 여행자"
 	game.name_input.text_changed.emit(game.name_input.text)
 	game.create_button.pressed.emit()
@@ -48,7 +50,17 @@ func run() -> void:
 	assert(map.player_sprite.sprite_frames != game.character_frames)
 	assert(map.player_sprite.sprite_frames.get_animation_names() == PackedStringArray(["idle"]))
 	assert(map.player_sprite.sprite_frames.get_frame_count("idle") == 1)
-	assert(map.player_sprite.sprite_frames.get_frame_texture("idle",0) == game.character_frames.get_frame_texture("idle",0))
+	var unarmed := map.player_sprite.sprite_frames.get_frame_texture("idle",0).get_image().get_data()
+	assert(unarmed == Art.compose(game.appearance,"idle",0,false).get_data())
+	assert(unarmed != game.character_frames.get_frame_texture("idle",0).get_image().get_data())
+	assert(map.character_appearance == game.appearance and game.appearance.weapon == 2 and game.appearance.hair == 2)
+	# Every equipment type, including thrust weapons, produces the same unarmed portrait.
+	for weapon_id in Art.data().weapon_items:
+		var config: Dictionary = game.appearance.duplicate(true)
+		config.equipped_weapon = weapon_id
+		var saved: Dictionary = config.duplicate(true)
+		assert(Art.compose(config,"idle",0,false).get_data() == unarmed)
+		assert(config == saved, "World rendering must not unequip the saved weapon")
 	assert(game.character_frames.get_frame_count("idle") == 4 and game.character_frames.get_frame_count("walk") == 8)
 	# Original border/fill transforms and colours; full white-background alpha is the mask.
 	for layer in [marker.get_child(0),marker.get_child(2)]:
@@ -213,6 +225,8 @@ func run() -> void:
 	assert(game.battle.character_frames == game.character_frames and game.battle.character_name == "제국의 여행자")
 	assert(not game.battle.selected and game.battle.map_size == BattleMap.MAP_SIZE)
 	assert(game.battle.player_sprite.get_parent() == game.battle, "World clipping must not affect battle")
+	assert(game.appearance.weapon == 2)
+	assert(game.battle.player_sprite.sprite_frames.get_frame_texture("idle",0).get_image().get_data() == Art.compose(game.appearance).get_data())
 	game.show_world()
 	await process_frame
 	assert(game.world.unit_position == saved_position and game.world.camera.position == saved_camera and game.world.zoom_level == saved_zoom)

@@ -136,18 +136,20 @@ static func paste_rotated(target: Image, path: String, index: int, position: Vec
 	part.rotate_90(CLOCKWISE if turns == 1 else COUNTERCLOCKWISE)
 	target.blend_rect(part, Rect2i(Vector2i.ZERO, part.get_size()), position)
 
-static func compose(config: Dictionary, animation := "idle", frame := 0) -> Image:
+static func compose(config: Dictionary, animation := "idle", frame := 0, include_weapon := true) -> Image:
 	assert(FRAME_COUNTS.has(animation) and frame >= 0 and frame < FRAME_COUNTS[animation])
 	var img := Image.create(FRAME_SIZE.x, FRAME_SIZE.y, false, Image.FORMAT_RGBA8)
 	img.fill(Color.TRANSPARENT)
 	var base := BODY_ORIGIN
-	var weapon := equipped_weapon(config)
-	var current_pose := pose(animation, frame, weapon.attack)
+	# World portraits omit equipment without changing the saved loadout or body parts.
+	var attack_type: String = equipped_weapon(config).attack if include_weapon else "chop_attack"
+	var current_pose := pose(animation, frame, attack_type)
 	var head := base + Vector2i(0, current_pose.bob)
 	var race := human_data()
 	var body_index: int = current_pose.body_frame
 	paste(img, data().bodies[config.body], body_index, base)
-	if current_pose.visible:
+	if include_weapon and current_pose.visible:
+		var weapon := equipped_weapon(config)
 		paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
 	paste(img, race.heads[config.skin], config.face, head)
 	if config.hair > 0:
@@ -160,7 +162,7 @@ static func compose(config: Dictionary, animation := "idle", frame := 0) -> Imag
 		var hand_origin: Vector2i = current_pose.grip - rotated_point(Vector2i(8, 8), Vector2i(16, 16), current_pose.rotation)
 		paste_rotated(img, hand_path, config.skin, hand_origin, current_pose.rotation)
 	paste(img, hand_path, config.skin, current_pose.free_hand)
-	if current_pose.effect >= 0:
+	if include_weapon and current_pose.effect >= 0:
 		paste_rotated(img, current_pose.effect_sheet, current_pose.effect, current_pose.effect_origin, current_pose.effect_rotation)
 	return img
 

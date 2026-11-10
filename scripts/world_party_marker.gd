@@ -9,7 +9,7 @@ const PORTRAIT_FEET := Vector2(16,32)
 var portrait: AnimatedSprite2D
 var portrait_mask: Sprite2D
 
-func setup(frames: SpriteFrames) -> void:
+func setup(appearance: Dictionary) -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var background := Sprite2D.new()
 	background.name = "wObj2"
@@ -31,7 +31,7 @@ func setup(frames: SpriteFrames) -> void:
 	still.remove_animation("default")
 	still.add_animation("idle")
 	still.set_animation_loop("idle",false)
-	still.add_frame("idle",frames.get_frame_texture("idle",0))
+	still.add_frame("idle",ImageTexture.create_from_image(CharacterArt.compose(appearance,"idle",0,false)))
 	portrait.sprite_frames = still
 	portrait.animation = "idle"
 	portrait.centered = false
