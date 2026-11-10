@@ -96,6 +96,44 @@ func run() -> void:
 		var label: Label = map.get_node("CityLabel_"+city.name)
 		assert(label.text == str(i+1))
 		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(label.position,label.size)), "Edge city label clipped")
+	# Cursor and orders share the exact same blocked/reachable predicate.
+	var river := Vector2(1264,624)
+	var bridge := Vector2(1296,688)
+	assert(map.cursor_blocked_at(map.world_to_screen(river)))
+	assert(not map.cursor_blocked_at(map.world_to_screen(bridge)))
+	assert(not map.cursor_blocked_at(Vector2(640,42)))
+	var old_destination := map.destination
+	map.issue_move(river)
+	assert(not map.moving and map.destination==old_destination)
+	map.issue_move(Vector2(1040,624))
+	assert(map.moving)
+	old_destination = map.destination
+	var old_route := map.route_points.duplicate()
+	map.issue_move(river)
+	assert(map.destination==old_destination and map.route_points==old_route)
+	var crossed_bridge := false
+	for _i in range(1200):
+		var previous := map.unit_position
+		map._physics_process(1.0/60.0)
+		assert(map.navigation.open_cell(map.navigation.cell_at(map.unit_position)))
+		assert(map.navigation.segment_clear(previous,map.unit_position))
+		if map.navigation.cell_at(map.unit_position)==Vector2i(40,21): crossed_bridge = true
+	assert(crossed_bridge and not map.moving and map.unit_position==Vector2(1040,624))
+	# A new command mid-route replaces the old waypoints without jumping into an obstacle.
+	map.issue_move(map.spawn_position)
+	advance(map,1)
+	map.issue_move(Vector2(1040,624))
+	advance(map,10)
+	assert(not map.moving and map.unit_position==Vector2(1040,624))
+	map.restore_travel(map.spawn_position,map.spawn_position,1)
+	assert(not map.moving and map.route_points.is_empty())
+	for zoom in [1.0,2.0,3.0]:
+		map.zoom_level = zoom
+		map.camera.position = river
+		map.clamp_camera()
+		assert(map.cursor_blocked_at(map.world_to_screen(river)))
+		assert(not map.cursor_blocked_at(map.world_to_screen(bridge)))
+	map.restore_travel(map.spawn_position,map.spawn_position,1)
 	# No prerequisite click: first right click immediately walks, left click never deselects.
 	click(map,Vector2(800,400),MOUSE_BUTTON_RIGHT)
 	assert(map.moving and map.player_sprite.animation == "idle" and map.player_sprite.frame == 0 and not map.player_sprite.is_playing())

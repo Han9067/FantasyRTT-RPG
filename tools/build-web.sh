@@ -12,6 +12,7 @@ python tests/world_plan_check.py
 godot --headless --editor --import --quit
 godot --headless --script res://tests/smoke.gd
 godot --headless --script res://tests/battle_smoke.gd
+godot --headless --script res://tests/world_navigation_smoke.gd
 godot --headless --script res://tests/world_smoke.gd
 release_version=$(sed -n 's/^config\/version="\(.*\)"/\1/p' project.godot)
 [[ "$release_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]

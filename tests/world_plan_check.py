@@ -73,3 +73,32 @@ spawns=[o for o in objects.findall('object') if o.get('type')=='PlayerSpawn']
 assert len(spawns)==1 and layout['spawn']==[int(float(spawns[0].get(k))) for k in ['x','y']]
 assert layout['spawn']==[1408,672]
 print('PASS: four exact replacement city sprites/anchors, hidden city rectangles and player spawn')
+
+# Navigation is derived without editing the supplied map. Both visible bridges stay open.
+nav=layout['navigation']
+blocked={tuple(p) for p in nav['blocked']};bridges={tuple(p) for p in nav['bridges']}
+assert nav['cell_size']==[32,32] and nav['grid_size']==[80,40]
+assert bridges=={(39,15),(40,21)} and len(blocked)==162
+assert len(nav['mountains'])==56 and len(nav['water'])==119
+assert all(tuple(p) in blocked for p in nav['mountains'])
+assert all(tuple(p) in blocked or tuple(p) in bridges for p in nav['water'])
+assert not bridges & blocked
+bridge_layer=root.find("layer[@name='Ect']/data")
+bridge_tiles=[int(v) for v in bridge_layer.text.replace('\n','').split(',') if v.strip()]
+assert {(i%cols,i//cols) for i,gid in enumerate(bridge_tiles) if gid==317}==bridges
+# Small stacked-layer fixtures verify tile identity, source-relative IDs and road priority.
+import sys
+sys.path.insert(0,str(ROOT/'tools'))
+from world_navigation import navigation_data
+fixture=ET.Element('map',width='2',height='2',tilewidth='32',tileheight='32')
+for ref in root.findall('tileset'):fixture.append(copy.deepcopy(ref))
+terrain=ET.SubElement(fixture,'layer',name='MisleadingName',width='2',height='2')
+ET.SubElement(terrain,'data',encoding='csv').text='579,599,201,1'
+road=ET.SubElement(fixture,'layer',name='Overlay',width='2',height='2')
+ET.SubElement(road,'data',encoding='csv').text='2147484597,949,949,0' # flipped road GID 949
+sample=navigation_data(fixture,SOURCE)
+assert sample['blocked']==[[1,0]] and sample['bridges']==[[0,0],[0,1]]
+fixture.remove(road);fixture.insert(0,road)
+sample=navigation_data(fixture,SOURCE)
+assert sample['bridges']==[] and sample['blocked']==[[0,0],[1,0],[0,1]]
+print('PASS: actual water/mountain tile identities, both bridge overrides, flipped tiles and layer-order priority')
