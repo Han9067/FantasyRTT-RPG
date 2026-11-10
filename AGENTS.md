@@ -1,6 +1,6 @@
 # Project conventions
 
-- Current release: 0.0.28; next completed update: 0.0.29. Increment only the patch once per delivered game update. Never change the first two components unless asked.
+- Current release: 0.0.29; next completed update: 0.0.30. Increment only the patch once per delivered game update. Never change the first two components unless asked.
 - Validate playable changes, push editable source to main, and publish builds/web to gh-pages for the existing GitHub Pages site.
 - The visual source of truth is the purchased user-supplied MedievalFantasyCharacters.zip. Read docs/character-design.md before changing characters.
 - Preserve loose source PNGs in art/medieval (.gdignore). Build assets/medieval atlases/catalog with tools/build_medieval_atlas.py; do not hand-edit generated images. Runtime uses only needed parts. Preserve original RGBA; no AI redraws, recolouring or resampling.
@@ -17,3 +17,5 @@
 - Active campaign source: art/world/tiled is the exact approved MedievalMap_completed.zip project, using PixelMapCreator PNGs. The City layer uses only the user's original 3x3 (96px) sample at 42 positions; CityPoints provides centers/numbers. The northern snow area is now grass. Preserve the existing GroundTiles-based wide rivers in this approved iteration; RiverTiles changes require a new request. Original PNGs must remain unmodified.
 - tools/build_world_map.py validates render-manifest.json source hashes, crops the approved full-size Tiled render into six native chunks, derives city metadata from CityPoints and updates the minimap/review image. Normal builds need Pillow; after deliberate TMX/TSX/PNG edits run tools/build_world_map.py --refresh-render with tmxrasterizer on PATH or TILED_RASTERIZER set (and its normal library environment). This prevents silently exporting stale maps. tests/world_plan_check.py checks every terrain pixel against the Tiled delivery, all 42 exact city pixels/anchors and the minimap. Runtime does not regenerate terrain on camera changes.
 - art/world/resources, art/world/tiles, the older traced plan and tools/world_tiles.py are historical references only, excluded from runtime by art/world/.gdignore. Do not restore their old procedural terrain or 128px city sprites to the live map.
+
+- World party presentation (0.0.29): WorldPartyMarker is a native 32x32 token centered at unit_position. Preserve supplied assets/world/party/wObj1.png and wObj2.png. Draw wObj2, the selected character clipped to the enclosed transparent interior of wObj1, then wObj1. Only the character flips/animates, never the border/background. Keep original character frames and 1x pixels; battle/creation remain unchanged. The marker replaces world ground shadow/selection ellipse.

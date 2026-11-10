@@ -38,6 +38,30 @@ func run() -> void:
 	assert(map.character_frames == game.character_frames and map.character_name == "제국의 여행자")
 	assert(map.selected and not map.moving and map.player_sprite.scale == Vector2.ONE)
 	assert(map.player_sprite.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2.ONE))
+	# One world-only token: fixed original layers, clipped selected character, native pixels.
+	var marker: WorldPartyMarker = map.party_marker
+	assert(marker.get_child_count() == 3)
+	assert(marker.get_child(0).name == "wObj2" and marker.get_child(2).name == "wObj1")
+	assert(marker.get_child(0).texture.get_size() == Vector2(32,32))
+	assert(map.player_sprite.get_parent() == marker.portrait_mask)
+	assert(marker.portrait_mask.clip_children == CanvasItem.CLIP_CHILDREN_ONLY)
+	assert(map.player_sprite.sprite_frames == game.character_frames)
+	var mask := marker.portrait_mask.texture.get_image()
+	var border := WorldPartyMarker.FRAME.get_image()
+	assert(mask.get_pixel(16,16).a == 1)
+	for y in range(32):
+		for x in range(32):
+			if x == 0 or x == 31 or y == 0 or y == 31 or border.get_pixel(x,y).a > 0:
+				assert(mask.get_pixel(x,y).a == 0, "Portrait mask escaped its enclosed border")
+	for flipped in [false,true]:
+		map.player_sprite.flip_h = flipped
+		map.update_sprite()
+		assert(marker.position+WorldPartyMarker.CENTER == map.unit_position.round())
+		assert(not marker.get_child(0).flip_h and not marker.get_child(2).flip_h)
+		var anchor_x := Art.FRAME_SIZE.x-BattleMap.BODY_CENTER_X if flipped else BattleMap.BODY_CENTER_X
+		assert(map.player_sprite.position+Vector2(anchor_x,Art.FEET_Y) == WorldPartyMarker.PORTRAIT_FEET)
+	map.player_sprite.flip_h = false
+	map.update_sprite()
 	assert(game.battle_button.get_global_rect().get_center().x == 640, "Battle link must be centered")
 	assert(game.world_status.get_theme_font("font") == game.theme.default_font)
 	for city in map.cities:
@@ -167,6 +191,7 @@ func run() -> void:
 	assert(game.current_screen == "battle" and not is_instance_valid(game.world))
 	assert(game.battle.character_frames == game.character_frames and game.battle.character_name == "제국의 여행자")
 	assert(not game.battle.selected and game.battle.map_size == BattleMap.MAP_SIZE)
+	assert(game.battle.player_sprite.get_parent() == game.battle, "World clipping must not affect battle")
 	game.show_world()
 	await process_frame
 	assert(game.world.unit_position == saved_position and game.world.camera.position == saved_camera and game.world.zoom_level == saved_zoom)

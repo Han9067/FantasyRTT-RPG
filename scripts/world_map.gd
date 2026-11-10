@@ -5,6 +5,8 @@ const WORLD_SIZE := Vector2(5120,3840)
 const SPAWN := Vector2(2560,1920)
 const TERRAIN = preload("res://assets/world/imperial_world.png")
 const WORLD_CAMERA_SPEED := 840.0
+const PartyMarker = preload("res://scripts/world_party_marker.gd")
+var party_marker: WorldPartyMarker
 var terrain: Node2D
 var cities: Array = []
 
@@ -40,11 +42,11 @@ func _ready() -> void:
 		title.add_theme_color_override("font_outline_color",Color("283a2b"))
 		title.add_theme_constant_override("outline_size",4)
 		add_child(title)
-	player_sprite = AnimatedSprite2D.new()
-	player_sprite.sprite_frames = character_frames
-	player_sprite.centered = false
-	player_sprite.scale = Vector2.ONE
-	add_child(player_sprite)
+	party_marker = PartyMarker.new()
+	party_marker.name = "PartyMarker"
+	party_marker.setup(character_frames)
+	add_child(party_marker)
+	player_sprite = party_marker.portrait
 	camera = Camera2D.new()
 	camera.position_smoothing_enabled = false
 	camera.limit_smoothed = false
@@ -64,6 +66,18 @@ func _ready() -> void:
 
 func playable_rect() -> Rect2:
 	return Rect2(Vector2(18,32),map_size-Vector2(36,50))
+
+func update_sprite() -> void:
+	party_marker.place(unit_position)
+
+func _draw() -> void:
+	# The portrait token replaces the battlefield body, ground shadow and selection ring.
+	if marker_time > 0:
+		var color := Color("f0dfaa")
+		color.a = minf(1,marker_time*3)
+		var point := destination.round()
+		for direction in [Vector2.LEFT,Vector2.RIGHT,Vector2.UP,Vector2.DOWN]:
+			draw_line(point+direction*3,point+direction*8,color,1,false)
 
 func clamp_camera() -> void:
 	# A window wider than the map (e.g. 4K) must still never expose its outside.
