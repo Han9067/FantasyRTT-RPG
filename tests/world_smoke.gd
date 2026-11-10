@@ -50,16 +50,18 @@ func run() -> void:
 	assert(map.player_sprite.sprite_frames.get_frame_count("idle") == 1)
 	assert(map.player_sprite.sprite_frames.get_frame_texture("idle",0) == game.character_frames.get_frame_texture("idle",0))
 	assert(game.character_frames.get_frame_count("idle") == 4 and game.character_frames.get_frame_count("walk") == 8)
-	assert(marker.get_child(0).self_modulate == WorldPartyMarker.BACKGROUND_COLOR)
+	# Original border/fill transforms and colours; full white-background alpha is the mask.
+	for layer in [marker.get_child(0),marker.get_child(2)]:
+		assert(layer.self_modulate == Color.WHITE and layer.modulate == Color.WHITE)
+		assert(layer.scale == Vector2.ONE and layer.position == Vector2.ZERO and layer.rotation == 0)
+	assert(marker.get_child(0).texture == WorldPartyMarker.BACKGROUND)
+	assert(marker.get_child(2).texture == WorldPartyMarker.FRAME)
 	var mask := marker.portrait_mask.texture.get_image()
-	var border := WorldPartyMarker.FRAME.get_image()
+	var white_area := WorldPartyMarker.BACKGROUND.get_image()
 	assert(mask.get_pixel(16,16).a == 1)
 	for y in range(32):
 		for x in range(32):
-			if x == 0 or x == 31 or y == 0 or y == 31:
-				assert(mask.get_pixel(x,y).a == 0, "Portrait mask escaped its enclosed border")
-			if border.get_pixel(x,y).a > 0:
-				assert(is_equal_approx(mask.get_pixel(x,y).a,border.get_pixel(x,y).a), "Mask must extend under border without exceeding its alpha")
+			assert(is_equal_approx(mask.get_pixel(x,y).a,white_area.get_pixel(x,y).a), "Mask must cover exactly the original white area, with its edge alpha")
 	for flipped in [false,true]:
 		map.player_sprite.flip_h = flipped
 		map.update_sprite()
