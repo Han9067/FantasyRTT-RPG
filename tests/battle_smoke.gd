@@ -83,6 +83,8 @@ func check_group_orders(map: BattleMap) -> void:
 	assert(map.standard.sprite_frames.get_animation_loop("default"))
 	var flag_offset := map.standard.position - start
 	var center: Vector2 = (start + map.infantry.back().position) * 0.5
+	assert(map.standard.centered and map.standard.offset == Vector2.ZERO)
+	assert(map.standard.position.is_equal_approx(center + Battle.BODY_CENTER_FROM_FEET))
 	map.issue_move(center + Vector2(-40,0))
 	advance(map, 0.2)
 	assert(unit.position.x < start.x and unit.animation == "walk" and map.unit_position == hero)
@@ -118,7 +120,7 @@ func check_group_orders(map: BattleMap) -> void:
 	map.issue_move(map.unit_position + Vector2(-200,0))
 	advance(map, 0.25)
 	assert(map.unit_position.x < stopped.x)
-	assert(map.get_node("Units").y_sort_enabled and map.standard.get_parent() == unit.get_parent())
+	assert(map.get_node("Units").y_sort_enabled)
 
 func run() -> void:
 	root.size = Vector2i(1280,800)
@@ -131,6 +133,8 @@ func run() -> void:
 	game.show_battle()
 	await process_frame
 	var map: BattleMap = game.battle
+	var overlay := map.standard.get_parent() as CanvasLayer
+	assert(overlay.layer > game.battle_hud.layer and overlay.follow_viewport_enabled)
 	map.set_physics_process(false)
 	assert(game.current_screen == "battle" and not is_instance_valid(game.world))
 	assert(map.unit_position.x < Battle.MAP_SIZE.x * 0.5)
@@ -202,6 +206,7 @@ func run() -> void:
 	assert(map.screen_to_world(anchor).is_equal_approx(anchor_world))
 	for i in range(20): click(map,Vector2(640,400),MOUSE_BUTTON_WHEEL_UP)
 	assert(map.zoom_level == 3.0)
+	assert(map.standard.get_global_transform_with_canvas().origin.is_equal_approx(map.world_to_screen(map.standard.position)))
 	assert(map.player_sprite.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2(3,3)))
 	assert(icons.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2.ONE))
 	assert(icons.get_global_transform_with_canvas().origin == hud_position)

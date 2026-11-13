@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.7")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.8")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -468,7 +468,7 @@ func show_battle() -> void:
 	clear_screen()
 	current_screen = "battle"
 	battle_hud = CanvasLayer.new()
-	battle_hud.layer = 10
+	battle_hud.layer = BattleMapScene.HUD_LAYER
 	add_child(battle_hud)
 	remove_child(screen)
 	battle_hud.add_child(screen)

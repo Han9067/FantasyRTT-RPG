@@ -16,6 +16,7 @@ const FORMATION_SPACING := Vector2(22, 15)
 const DEPLOYMENT_OFFSET := 440.0
 const CONTACT_SIZE := Vector2(5, 5)
 const BODY_CENTER_FROM_FEET := Vector2(0, -13)
+const HUD_LAYER := 10
 
 class BattleUnit extends AnimatedSprite2D:
 	var target := Vector2.ZERO
@@ -68,7 +69,7 @@ func _ready() -> void:
 	hero_group.append(hero)
 	deploy_infantry(units, true)
 	deploy_infantry(units, false)
-	create_standard(units)
+	create_standard()
 	ground.generate(Vector2i(map_size))
 	camera = Camera2D.new()
 	camera.position_smoothing_enabled = false
@@ -116,26 +117,30 @@ func deploy_infantry(units: Node2D, allied: bool) -> void:
 			sprite.play("idle")
 			sprite.frame = (row + column) % CharacterArt.FRAME_COUNTS.idle
 
-func create_standard(units: Node2D) -> void:
+func create_standard() -> void:
+	var overlay := CanvasLayer.new()
+	overlay.layer = HUD_LAYER + 1
+	overlay.follow_viewport_enabled = true
+	add_child(overlay)
 	standard = AnimatedSprite2D.new()
+	standard.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var frames := SpriteFrames.new()
 	for i in range(1, 9):
 		frames.add_frame(&"default", load("res://assets/battle/flag/flag_%02d.png" % i))
 	frames.set_animation_speed(&"default", 8.0)
 	frames.set_animation_loop(&"default", true)
 	standard.sprite_frames = frames
-	standard.centered = false
-	standard.offset = Vector2(-23, -55)
 	standard.hide()
-	units.add_child(standard)
+	overlay.add_child(standard)
 
 func place_standard() -> void:
 	if standard.visible:
 		if selection.has(infantry[0]):
-			standard.position = (infantry[0].position + infantry[INFANTRY_COLUMNS - 1].position) * 0.5
+			var first := infantry[0].contact_box().get_center()
+			var last := infantry[-1].contact_box().get_center()
+			standard.position = first.lerp(last, 0.5)
 		else:
-			standard.position = player_sprite.position
-		standard.position += Vector2(-10, -5)
+			standard.position = hero_group[0].contact_box().get_center()
 
 func playable_rect() -> Rect2:
 	return Rect2(Vector2(18,96), Vector2(maxf(1,map_size.x-36),maxf(1,map_size.y-168)))
