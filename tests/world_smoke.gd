@@ -265,12 +265,14 @@ func run() -> void:
 	assert(game.current_screen == "battle" and not is_instance_valid(game.world))
 	assert(game.battle.character_frames == game.character_frames and game.battle.character_name == "제국의 여행자")
 	assert(not game.battle.selected and game.battle.map_size == BattleMap.MAP_SIZE)
-	assert(game.battle.player_sprite.get_parent() == game.battle, "World clipping must not affect battle")
+	var units: Node2D = game.battle.get_node("Units")
+	assert(game.battle.player_sprite.get_parent() == units and units.clip_children == CanvasItem.CLIP_CHILDREN_DISABLED)
 	assert(game.appearance.weapon == 2)
 	assert(game.battle.player_sprite.sprite_frames.get_frame_texture("idle",0).get_image().get_data() == Art.compose(game.appearance).get_data())
 	game.show_world()
 	await process_frame
 	assert(game.world.unit_position == saved_position and game.world.camera.position == saved_camera and game.world.zoom_level == saved_zoom)
+	assert(get_nodes_in_group("allied_infantry").is_empty() and get_nodes_in_group("enemy_infantry").is_empty())
 	assert(game.world.selected and not game.world.moving)
 	game.show_creation()
 	await process_frame

@@ -45,12 +45,12 @@ def weapon_grip(family, name, image):
 def build(source=SOURCE, dest=DEST):
     catalog = {'schema': 5, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'primary_types': [], 'secondary_types': [], 'melee_groups': {}, 'weapon_items': {}}
     pending = []
-    def add(group, filename_prefix=None):
+    def add(group, filename_prefix=None, only_file=None):
         key = group + '.png'
         if key in catalog['sheets']:
             return key
         folder = source / group
-        files = list(folder.glob('*.png'))
+        files = [folder/only_file] if only_file else list(folder.glob('*.png'))
         if not files:
             raise ValueError(f'No loose PNGs in {folder}')
         slots = []
@@ -116,6 +116,7 @@ def build(source=SOURCE, dest=DEST):
                     'grip': grip, 'attack': 'thrust_attack' if family == 'spear' else 'chop_attack'}
     catalog['attack_effect'] = add('sprites/VFX/weapon/weaponfx03')
     catalog['thrust_effect'] = add('sprites/VFX/weapon/weaponfx02')
+    catalog['infantry_helmet'] = add('sprites/wardrobe/metal/metal', only_file='metal_20.png')
     catalog['attack_references'] = {}
     for attack in ['chop_attack', 'thrust_attack']:
         guide = source / f'Animation Guide/{attack}_sample.gif'

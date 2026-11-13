@@ -10,6 +10,8 @@ const MIN_ZOOM := 1.0
 const MAX_ZOOM := 3.0
 const ZOOM_STEP := 0.25
 const BODY_CENTER_X := CharacterArt.BODY_ORIGIN.x + 16
+const INFANTRY_COLUMNS := 4
+const INFANTRY_ROWS := 5
 var character_frames: SpriteFrames
 var character_name := "여행자"
 var player_sprite: AnimatedSprite2D
@@ -33,11 +35,17 @@ func _ready() -> void:
 	ground = Ground.new()
 	ground.show_behind_parent = true
 	add_child(ground)
+	var units := Node2D.new()
+	units.name = "Units"
+	units.y_sort_enabled = true
+	add_child(units)
 	player_sprite = AnimatedSprite2D.new()
 	player_sprite.sprite_frames = character_frames
 	player_sprite.centered = false
 	player_sprite.scale = Vector2.ONE
-	add_child(player_sprite)
+	units.add_child(player_sprite)
+	deploy_infantry(units, true)
+	deploy_infantry(units, false)
 	ground.generate(Vector2i(map_size))
 	camera = Camera2D.new()
 	camera.position_smoothing_enabled = false
@@ -55,6 +63,25 @@ func _ready() -> void:
 	update_sprite()
 	player_sprite.play("idle")
 	get_viewport().size_changed.connect(resize_map)
+
+func deploy_infantry(units: Node2D, allied: bool) -> void:
+	var group: StringName = &"allied_infantry" if allied else &"enemy_infantry"
+	var variants: Array[SpriteFrames] = []
+	for i in range(5):
+		variants.append(CharacterArt.infantry_idle_frames(CharacterArt.infantry_appearance(allied, i)))
+	for row in range(INFANTRY_ROWS):
+		for column in range(INFANTRY_COLUMNS):
+			var sprite := AnimatedSprite2D.new()
+			sprite.centered = false
+			sprite.flip_h = allied
+			sprite.sprite_frames = variants[(row + 2 * column) % variants.size()]
+			var x := 96 + 42 * column
+			var feet := map_size * 0.5 + Vector2(-x if allied else x, (row - 2) * 38)
+			sprite.position = feet - sprite_anchor(sprite.flip_h)
+			units.add_child(sprite)
+			sprite.add_to_group(group)
+			sprite.play("idle")
+			sprite.frame = (row + column) % CharacterArt.FRAME_COUNTS.idle
 
 func playable_rect() -> Rect2:
 	return Rect2(Vector2(18,96), Vector2(maxf(1,map_size.x-36),maxf(1,map_size.y-168)))
@@ -181,8 +208,11 @@ func _physics_process(delta: float) -> void:
 
 func update_sprite() -> void:
 	# Flipping a padded image needs an anchor correction, not scaling the unit.
-	var anchor_x := CharacterArt.FRAME_SIZE.x - BODY_CENTER_X if player_sprite.flip_h else BODY_CENTER_X
-	player_sprite.position = unit_position.round() - Vector2(anchor_x,CharacterArt.FEET_Y)
+	player_sprite.position = unit_position.round() - sprite_anchor(player_sprite.flip_h)
+
+static func sprite_anchor(facing_right: bool) -> Vector2:
+	var x := CharacterArt.FRAME_SIZE.x - BODY_CENTER_X if facing_right else BODY_CENTER_X
+	return Vector2(x, CharacterArt.FEET_Y)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:

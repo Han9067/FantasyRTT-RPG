@@ -21209,6 +21209,27 @@
           ]
         }
       ]
+    },
+    "sprites/wardrobe/metal/metal.png": {
+      "slots": [
+        {
+          "name": "metal_20",
+          "source": "sprites/wardrobe/metal/metal/metal_20.png",
+          "sha256": "e6f6970bbd514eec3bc4c50a9b323a2e71c49b6834ef2277ec79a6b1abc7d9b5",
+          "size": [
+            32,
+            32
+          ],
+          "id": 20,
+          "atlas": "atlas_01.png",
+          "rect": [
+            639,
+            439,
+            32,
+            32
+          ]
+        }
+      ]
     }
   },
   "atlases": [
@@ -23574,6 +23595,7 @@
   },
   "attack_effect": "sprites/VFX/weapon/weaponfx03.png",
   "thrust_effect": "sprites/VFX/weapon/weaponfx02.png",
+  "infantry_helmet": "sprites/wardrobe/metal/metal.png",
   "attack_references": {
     "chop_attack": {
       "source": "Animation Guide/chop_attack_sample.gif",

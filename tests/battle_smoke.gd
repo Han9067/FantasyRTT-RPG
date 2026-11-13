@@ -41,6 +41,33 @@ func assert_camera_inside(map: BattleMap) -> void:
 	assert(a.x >= -0.01 and a.y >= -0.01, "Camera escaped top/left boundary")
 	assert(b.x <= map.map_size.x+0.01 and b.y <= map.map_size.y+0.01, "Camera escaped bottom/right boundary")
 
+func check_infantry(map: BattleMap) -> void:
+	for allied in [true, false]:
+		var soldiers := get_nodes_in_group("allied_infantry" if allied else "enemy_infantry")
+		assert(soldiers.size() == 20)
+		var columns := {}
+		var rows := {}
+		for soldier: AnimatedSprite2D in soldiers:
+			assert(map.is_ancestor_of(soldier) and soldier != map.player_sprite)
+			assert(soldier.flip_h == allied and soldier.animation == &"idle" and soldier.is_playing())
+			var feet := soldier.position + Battle.sprite_anchor(soldier.flip_h)
+			assert((feet.x < map.unit_position.x) == allied)
+			columns[feet.x] = columns.get(feet.x, 0) + 1
+			rows[feet.y] = rows.get(feet.y, 0) + 1
+		assert(columns.size() == 4 and rows.size() == 5)
+		for total in columns.values(): assert(total == 5)
+		for total in rows.values(): assert(total == 4)
+		var config := Art.infantry_appearance(allied, 0)
+		assert(Art.BODY_LABELS[config.body] == ("파랑" if allied else "빨강"))
+		assert(Art.data().sheets[config.helmet].slots[0].name == "metal_20")
+		assert(config.hair == 0 and Art.equipped_weapon(config).id == "sword_01")
+		assert(Art.equipped_offhand(config).id == "shield_31")
+		var helmeted := Art.compose(config)
+		config.hair = 7
+		assert(Art.compose(config).get_data() == helmeted.get_data())
+		config.erase("helmet")
+		assert(Art.compose(config).get_data() != helmeted.get_data())
+
 func run() -> void:
 	root.size = Vector2i(1280,800)
 	var game = load("res://main.tscn").instantiate()
@@ -61,6 +88,7 @@ func run() -> void:
 	assert(map.player_sprite.scale == Vector2.ONE and map.scale == Vector2.ONE)
 	assert(map.player_sprite.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2.ONE))
 	assert(map.player_sprite.animation == "idle" and not map.selected)
+	check_infantry(map)
 	assert(map.ground.ground.get_size() == Battle.MAP_SIZE)
 	var terrain := map.ground.ground
 	var original_position := map.unit_position
@@ -173,5 +201,6 @@ func run() -> void:
 	await process_frame
 	assert(game.battle.unit_position == game.battle.map_size*0.5)
 	assert(game.battle.zoom_level == 1 and not game.battle.selected and not game.battle.moving)
+	check_infantry(game.battle)
 	print("PASS: fixed terrain, camera WASD/diagonal speed, cursor zoom 1x..3x, every map edge, fixed HUD, zoomed selection/orders, original movement, resize without rebaking, focus loss, creation return")
 	quit()

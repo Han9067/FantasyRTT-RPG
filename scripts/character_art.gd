@@ -39,6 +39,27 @@ static func defaults() -> Dictionary:
 static func human_data() -> Dictionary:
 	return data().races.human
 
+static func infantry_appearance(allied: bool, variant: int) -> Dictionary:
+	var config := defaults()
+	config.body = BODY_LABELS.find("파랑" if allied else "빨강")
+	config.skin = [1, 3, 0, 5, 2][variant]
+	config.face = [2, 17, 26, 9, 34][variant]
+	config.hair = 0
+	config.helmet = data().infantry_helmet
+	config.equipped_weapon = "sword_01"
+	config.offhand = data().secondary_types.find("one_shield")
+	config.offhand_item = data().melee_groups.one_shield.find("shield_31")
+	return config
+
+static func infantry_idle_frames(config: Dictionary) -> SpriteFrames:
+	var frames := SpriteFrames.new()
+	frames.remove_animation("default")
+	frames.add_animation("idle")
+	frames.set_animation_speed("idle", 6.0)
+	for i in range(FRAME_COUNTS.idle):
+		frames.add_frame("idle", ImageTexture.create_from_image(compose(config, "idle", i)))
+	return frames
+
 static func count(config: Dictionary, key: String) -> int:
 	var human := human_data()
 	match key:
@@ -172,7 +193,9 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 		var weapon := equipped_weapon(config)
 		paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
 	paste(img, race.heads[config.skin], config.face, head)
-	if config.hair > 0:
+	if config.has("helmet"):
+		paste(img, config.helmet, 0, head + Vector2i(0, -2))
+	elif config.hair > 0:
 		paste(img, race.hair[config.hair_color], config.hair - 1, head)
 	if config.beard > 0:
 		paste(img, race.beard[config.beard_color], config.beard - 1, head)
