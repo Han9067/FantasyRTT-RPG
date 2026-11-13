@@ -83,7 +83,12 @@ func check_group_orders(map: BattleMap) -> void:
 	assert(map.standard.sprite_frames.get_animation_loop("default"))
 	var flag_offset := map.standard.position - start
 	var center: Vector2 = (start + map.infantry.back().position) * 0.5
-	assert(map.standard.centered and map.standard.offset == Vector2.ZERO)
+	assert(not map.standard.centered)
+	for frame in range(8):
+		var texture := map.standard.sprite_frames.get_frame_texture(&"default", frame)
+		var visible := texture.get_image().get_used_rect()
+		var lower_left := Vector2(visible.position.x, visible.end.y)
+		assert(map.standard.offset + lower_left == Vector2.ZERO)
 	assert(map.standard.position.is_equal_approx(center + Battle.BODY_CENTER_FROM_FEET))
 	map.issue_move(center + Vector2(-40,0))
 	advance(map, 0.2)

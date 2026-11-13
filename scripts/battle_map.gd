@@ -130,6 +130,9 @@ func create_standard() -> void:
 	frames.set_animation_speed(&"default", 8.0)
 	frames.set_animation_loop(&"default", true)
 	standard.sprite_frames = frames
+	standard.centered = false
+	# Bottom-left corner of the visible artwork in all eight padded 64x64 frames.
+	standard.offset = -Vector2(18, 56)
 	standard.hide()
 	overlay.add_child(standard)
 
