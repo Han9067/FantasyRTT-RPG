@@ -51,13 +51,14 @@ func run() -> void:
 		for weapon_index in range(3):
 			config.weapon = weapon_index
 			var weapon: Dictionary = Art.equipped_weapon(config)
+			var preview := Art.preview_texture(Art.animations(config).get_frame_texture("idle", 0))
 			for animation in Art.FRAME_COUNTS:
 				for frame in range(Art.FRAME_COUNTS[animation]):
 					var pose := Art.pose(animation, frame)
 					var position := Art.weapon_position(config, animation, frame)
 					assert(position + Art.rotated_point(Vector2i(weapon.grip[0], weapon.grip[1]), Vector2i(32,32), pose.rotation) == pose.grip, "Weapon detached from hand")
 					var art := Art.compose(config, animation, frame)
-					assert(Rect2i(Art.PREVIEW_REGION).encloses(art.get_used_rect()), "Weapon clipped in preview")
+					assert(Rect2i(preview.region).encloses(art.get_used_rect()), "Weapon clipped in preview")
 					# Verify both visible hands use exactly the selected skin, overlaid above the weapon.
 					var hand_path: String = Art.human_data().hand
 					var hand := Art.part_image(hand_path, skin)
@@ -103,11 +104,14 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.3")
+	assert(game.game_version == "0.0.4")
 	game.show_creation()
 	await process_frame
 	await process_frame
 	assert(game.bottom_panel.is_ancestor_of(game.portrait))
+	assert(game.portrait.get_global_rect().get_center().is_equal_approx(game.portrait.get_parent().get_global_rect().get_center()))
+	for label in game.bottom_panel.find_children("*", "Label", true, false):
+		assert(label.text not in ["외형 미리보기", "외형 파츠", "좌우 버튼으로 외형과 무기 선택", "성별과 관계없이 파츠 조합 가능"])
 	assert(not game.top_panel.is_ancestor_of(game.portrait))
 	assert(game.top_panel.is_ancestor_of(game.name_input))
 	assert(game.part_controls.size() == 11)
@@ -237,7 +241,12 @@ func verify_equipment(catalog: Dictionary) -> void:
 		var source := Art.part_image(weapon.sheet, weapon.slot)
 		assert(source.get_pixel(weapon.grip[0], weapon.grip[1]).a > 0.0, "Grip is outside weapon pixels: " + id)
 		var frames := Art.animations(config)
-		var region := Art.preview_texture(frames.get_frame_texture("idle", 0)).region
+		var preview := Art.preview_texture(frames.get_frame_texture("idle", 0))
+		var region := preview.region
+		var body := Art.part_image(catalog.bodies[config.body], 0).get_used_rect()
+		var face := Art.part_image(Art.human_data().heads[config.skin], config.face).get_used_rect()
+		var center := Vector2(Art.BODY_ORIGIN) + Rect2(body.merge(face)).get_center()
+		assert(center - region.position + preview.margin.position == preview.get_size() * 0.5)
 		for animation in Art.FRAME_COUNTS:
 			for f in range(Art.FRAME_COUNTS[animation]):
 				var pose := Art.pose(animation, f, weapon.attack)

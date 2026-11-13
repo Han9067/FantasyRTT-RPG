@@ -3,7 +3,7 @@ extends RefCounted
 ## Composite original modular sprites at integer coordinates; never resample source art.
 const ROOT := "res://assets/medieval/"
 const FRAME_SIZE := Vector2i(128, 96)
-const PREVIEW_REGION := Rect2(32, 20, 80, 56)
+const PREVIEW_MIN_SIZE := Vector2i(80, 56)
 const WORLD_SCALE := 1.0
 const FEET_Y := 72
 const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8, "attack": 6}
@@ -198,7 +198,11 @@ static func animations(config: Dictionary) -> SpriteFrames:
 	var frames := SpriteFrames.new()
 	frames.remove_animation("default")
 	var textures: Array[Texture2D] = []
-	var preview_region := Rect2i(PREVIEW_REGION)
+	var body := part_image(data().bodies[config.body], 0).get_used_rect()
+	var face := part_image(human_data().heads[config.skin], config.face).get_used_rect()
+	var center := Vector2(BODY_ORIGIN) + Rect2(body.merge(face)).get_center()
+	var top_left := Vector2i((center - Vector2(PREVIEW_MIN_SIZE) / 2.0).floor())
+	var twice_center := Vector2i(center * 2.0)
 	var timing: Dictionary = data().attack_references[equipped_weapon(config).attack]
 	for animation in FRAME_COUNTS:
 		frames.add_animation(animation)
@@ -208,9 +212,11 @@ static func animations(config: Dictionary) -> SpriteFrames:
 			var image := compose(config, animation, i)
 			var texture := ImageTexture.create_from_image(image)
 			textures.append(texture)
-			preview_region = preview_region.merge(image.get_used_rect())
+			var used := image.get_used_rect()
+			top_left = top_left.min(used.position).min(twice_center - used.end)
 			frames.add_frame(animation, texture, float(timing.durations_ms[i]) / 100.0 if animation == "attack" else 1.0)
 	# Use one crop for every pose, so long equipment stays visible without camera jitter.
+	var preview_region := Rect2i(top_left, twice_center - 2 * top_left)
 	for texture in textures:
 		texture.set_meta("preview_region", Rect2(preview_region))
 	return frames
@@ -218,7 +224,11 @@ static func animations(config: Dictionary) -> SpriteFrames:
 static func preview_texture(source: Texture2D) -> AtlasTexture:
 	var atlas := AtlasTexture.new()
 	atlas.atlas = source
-	atlas.region = source.get_meta("preview_region", PREVIEW_REGION)
+	var canvas := Rect2(Vector2.ZERO, source.get_size())
+	var crop: Rect2 = source.get_meta("preview_region", canvas)
+	atlas.region = crop.intersection(canvas)
+	# Long equipment can require symmetric transparent space outside the frame.
+	atlas.margin = Rect2(atlas.region.position - crop.position, crop.size - atlas.region.size)
 	atlas.filter_clip = true
 	return atlas
 

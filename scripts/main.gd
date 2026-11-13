@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.3")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.4")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -241,7 +241,6 @@ func show_creation() -> void:
 	preview_column.custom_minimum_size.x = 330
 	preview_column.add_theme_constant_override("separation", 10)
 	content.add_child(preview_column)
-	preview_column.add_child(label_text("외형 미리보기", 20))
 	var frame := panel()
 	frame.name = "PortraitFrame"
 	frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -260,21 +259,11 @@ func show_creation() -> void:
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.add_theme_font_size_override("font_size", 14)
 		previews.add_child(b)
-	var note := label_text("성별과 관계없이 파츠 조합 가능", 13)
-	note.modulate = GOLD
-	preview_column.add_child(note)
-
-	var selector_column := VBoxContainer.new()
-	selector_column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	selector_column.add_theme_constant_override("separation", 10)
-	content.add_child(selector_column)
-	selector_column.add_child(label_text("외형 파츠", 20))
-	selector_column.add_child(label_text("좌우 버튼으로 외형과 무기 선택", 14))
 	var columns := HBoxContainer.new()
 	columns.name = "PartColumns"
 	columns.add_theme_constant_override("separation", 20)
-	columns.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	selector_column.add_child(columns)
+	columns.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content.add_child(columns)
 	for i in range(2):
 		var rows := VBoxContainer.new()
 		rows.name = "BodyParts" if i == 0 else "BeardAndWeapon"
