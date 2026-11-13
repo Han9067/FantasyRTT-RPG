@@ -51,13 +51,14 @@ static func infantry_appearance(allied: bool, variant: int) -> Dictionary:
 	config.offhand_item = data().melee_groups.one_shield.find("shield_31")
 	return config
 
-static func infantry_idle_frames(config: Dictionary) -> SpriteFrames:
+static func infantry_frames(config: Dictionary, can_walk: bool) -> SpriteFrames:
 	var frames := SpriteFrames.new()
 	frames.remove_animation("default")
-	frames.add_animation("idle")
-	frames.set_animation_speed("idle", 6.0)
-	for i in range(FRAME_COUNTS.idle):
-		frames.add_frame("idle", ImageTexture.create_from_image(compose(config, "idle", i)))
+	for animation in (["idle", "walk"] if can_walk else ["idle"]):
+		frames.add_animation(animation)
+		frames.set_animation_speed(animation, 6.0 if animation == "idle" else 12.0)
+		for i in range(FRAME_COUNTS[animation]):
+			frames.add_frame(animation, ImageTexture.create_from_image(compose(config, animation, i)))
 	return frames
 
 static func count(config: Dictionary, key: String) -> int:

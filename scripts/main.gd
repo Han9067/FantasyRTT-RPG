@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.5")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.6")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -18,7 +18,6 @@ var preview_animation := "idle"
 var animation_time := 0.0
 var current_screen := ""
 var battle: BattleMap
-var battle_status: Label
 var battle_hud: CanvasLayer
 var world: WorldMap
 var world_status: Label
@@ -492,30 +491,21 @@ func show_battle() -> void:
 	header.add_child(title)
 	header.add_child(button("← 월드맵", show_world))
 	spacer(screen)
-	var info := panel()
-	var style := info.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
-	style.set_content_margin_all(10)
-	style.bg_color = Color("252e30e8")
-	info.add_theme_stylebox_override("panel",style)
-	screen.add_child(info)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation",12)
-	info.add_child(row)
-	battle_status = label_text("",14)
-	battle_status.custom_minimum_size.x = 220
-	battle_status.clip_text = true
-	row.add_child(battle_status)
-	var instructions := label_text("클릭·드래그 : 선택   우클릭 : 이동   WASD : 카메라   휠 : 확대",13)
-	instructions.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(instructions)
-	row.add_child(label_text("버전 : " + game_version,13))
-	battle.status_changed.connect(refresh_battle_status)
-	refresh_battle_status()
+	var commands := HBoxContainer.new()
+	commands.name = "CommandIcons"
+	commands.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	commands.add_theme_constant_override("separation", 6)
+	screen.add_child(commands)
+	for entry in [
+		["정지", preload("res://assets/ui/commands/stop.png")],
+		["사수", preload("res://assets/ui/commands/hold.png")],
+		["공격", preload("res://assets/ui/commands/attack.png")]
+	]:
+		var icon := TextureRect.new()
+		icon.texture = entry[1]
+		icon.accessibility_name = entry[0]
+		icon.custom_minimum_size = Vector2(56, 56)
+		icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		commands.add_child(icon)
 	ignore_battle_overlay_input(screen)
-
-func refresh_battle_status() -> void:
-	if not is_instance_valid(battle_status) or not is_instance_valid(battle): return
-	var state := "선택되지 않음"
-	if battle.selected: state = "이동 중" if battle.moving else "선택됨 · 대기"
-	battle_status.text = battle.character_name + " · " + state + " · %d%%" % int(battle.zoom_level*100)
-	battle_status.tooltip_text = battle_status.text

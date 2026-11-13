@@ -68,6 +68,36 @@ func check_infantry(map: BattleMap) -> void:
 		config.erase("helmet")
 		assert(Art.compose(config).get_data() != helmeted.get_data())
 
+func check_group_orders(map: BattleMap) -> void:
+	var unit := map.friendlies[1]
+	var hero := map.unit_position
+	var start := unit.feet
+	var click_at := map.world_to_screen(start - Vector2(0,12))
+	select_click(map, click_at)
+	assert(map.selection == [unit] and not map.selected)
+	click(map, click_at + Vector2(-40,12), MOUSE_BUTTON_RIGHT)
+	advance(map, 0.2)
+	assert(unit.feet.x < start.x and unit.animation == "walk" and map.unit_position == hero)
+	select_click(map, Vector2(900,600))
+	advance(map, 1.0)
+	assert(unit.feet == start - Vector2(40,0) and unit.animation == "idle")
+	var enemy: AnimatedSprite2D = get_first_node_in_group("enemy_infantry")
+	var enemy_position := enemy.position
+	select_click(map, map.world_to_screen(enemy.position + Battle.sprite_anchor(false) - Vector2(0,12)))
+	assert(map.selection.is_empty())
+	for corner in [Vector2(360,270),Vector2(910,270),Vector2(360,500),Vector2(910,500)]:
+		drag(map, corner, Vector2(1270,770) - corner)
+		assert(map.selection.size() == 21 and map.selected)
+	var gap := unit.feet - hero
+	click(map, Vector2(600,770), MOUSE_BUTTON_RIGHT)
+	assert(unit.target - map.destination == gap)
+	advance(map, 12)
+	assert(unit.feet - map.unit_position == gap and enemy.position == enemy_position)
+	map.issue_move(Vector2(-5000,-5000))
+	for member in map.selection:
+		assert(map.clamp_point(member.target) == member.target)
+	assert(unit.target - map.destination == gap)
+
 func run() -> void:
 	root.size = Vector2i(1280,800)
 	var game = load("res://main.tscn").instantiate()
@@ -113,8 +143,8 @@ func run() -> void:
 	assert(map.unit_position.is_equal_approx(original_position+Vector2(76,0)))
 	assert(map.player_sprite.flip_h)
 	assert(map.player_sprite.position.x + Art.FRAME_SIZE.x - Battle.BODY_CENTER_X == roundf(map.unit_position.x))
-	var target := map.screen_to_world(Vector2(500,450))
-	click(map,Vector2(500,450),MOUSE_BUTTON_RIGHT)
+	var target := map.screen_to_world(Vector2(660,520))
+	click(map,Vector2(660,520),MOUSE_BUTTON_RIGHT)
 	advance(map,4)
 	assert(map.unit_position == target and not map.moving)
 	assert(map.player_sprite.animation == "idle" and not map.player_sprite.flip_h)
@@ -134,8 +164,13 @@ func run() -> void:
 	key(map,KEY_A,false)
 	key(map,KEY_W,false)
 	assert(is_equal_approx(center.distance_to(map.camera.position),210))
-	assert(game.battle_status.get_theme_font("font") == game.theme.default_font, "HUD lost Korean font across CanvasLayer")
-	var hud_position: Vector2 = game.battle_status.get_global_transform_with_canvas().origin
+	var icons: HBoxContainer = game.screen.get_node("CommandIcons")
+	assert(icons.get_child_count() == 3)
+	for i in range(3):
+		var icon := icons.get_child(i) as TextureRect
+		assert(icon.texture != null and icon.accessibility_name == ["정지","사수","공격"][i])
+		assert(icon.mouse_filter == Control.MOUSE_FILTER_IGNORE)
+	var hud_position: Vector2 = icons.get_global_transform_with_canvas().origin
 	# Zoom about the cursor, with absolute 1x and 3x bounds.
 	var anchor := Vector2(700,420)
 	var anchor_world := map.screen_to_world(anchor)
@@ -145,8 +180,8 @@ func run() -> void:
 	for i in range(20): click(map,Vector2(640,400),MOUSE_BUTTON_WHEEL_UP)
 	assert(map.zoom_level == 3.0)
 	assert(map.player_sprite.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2(3,3)))
-	assert(game.battle_status.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2.ONE))
-	assert(game.battle_status.get_global_transform_with_canvas().origin == hud_position)
+	assert(icons.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2.ONE))
+	assert(icons.get_global_transform_with_canvas().origin == hud_position)
 	# At maximum zoom and a panned camera, click, drag and move still use world coordinates.
 	map.camera.position = map.unit_position
 	map.clamp_camera()
@@ -202,5 +237,10 @@ func run() -> void:
 	assert(game.battle.unit_position == game.battle.map_size*0.5)
 	assert(game.battle.zoom_level == 1 and not game.battle.selected and not game.battle.moving)
 	check_infantry(game.battle)
+	root.size = Vector2i(1280,800)
+	await process_frame
+	await process_frame
+	game.battle.set_physics_process(false)
+	check_group_orders(game.battle)
 	print("PASS: fixed terrain, camera WASD/diagonal speed, cursor zoom 1x..3x, every map edge, fixed HUD, zoomed selection/orders, original movement, resize without rebaking, focus loss, creation return")
 	quit()

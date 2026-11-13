@@ -75,6 +75,9 @@ func _ready() -> void:
 func playable_rect() -> Rect2:
 	return Rect2(Vector2(18,32),map_size-Vector2(36,50))
 
+func screen_playable_rect() -> Rect2:
+	return Rect2(Vector2(0,96),Vector2(viewport_size.x,maxf(1,viewport_size.y-168)))
+
 func update_sprite() -> void:
 	party_marker.place(unit_position)
 
@@ -174,10 +177,6 @@ func pan_camera(direction: Vector2, delta: float) -> void:
 	if combined == Vector2.ZERO: return
 	camera.position += combined.normalized() * WORLD_CAMERA_SPEED * delta / zoom_level
 	clamp_camera()
-
-func set_selected(_value: bool) -> void:
-	selected = true
-	queue_redraw()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
