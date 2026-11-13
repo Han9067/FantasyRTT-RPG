@@ -13,7 +13,7 @@ from build_medieval_atlas import build, SOURCE, DEST
 
 def main():
     weapons_only = '--weapons' in sys.argv[2:]
-    with tempfile.TemporaryDirectory(prefix='medieval-import-') as temp:
+    with tempfile.TemporaryDirectory(prefix='medieval-import-', dir=SOURCE.parent) as temp:
         staging = Path(temp)/'source'
         generated = Path(temp)/'runtime'
         if weapons_only:
@@ -30,7 +30,7 @@ def main():
                 if info.is_dir():
                     continue
                 path = PurePosixPath(info.filename)
-                if (path.is_absolute() or '..' in path.parts or '\\' in info.filename
+                if (path.is_absolute() or '..' in path.parts or '\\' in info.filename or ':' in info.filename
                         or stat.S_ISLNK(info.external_attr >> 16)
                         or path.suffix.lower() not in {'.png', '.gif', '.rtf'}
                         or info.filename in names):
@@ -45,18 +45,33 @@ def main():
         # Resolve all renamed active parts, parse the guide and verify atlas pixels
         # before touching the existing project source or runtime output.
         build(staging, generated)
-        for directory, prepared in [(SOURCE,staging),(DEST,generated)]:
-            if directory.exists():
-                shutil.rmtree(directory)
-            directory.parent.mkdir(parents=True,exist_ok=True)
-            shutil.move(str(prepared), str(directory))
-        imported_root = SOURCE/'sprites/weapons' if weapons_only else SOURCE
-        actual = {str(p.relative_to(imported_root)) for p in imported_root.rglob('*') if p.is_file() and p.name != '.gdignore'}
+        actual = {p.relative_to(imported).as_posix() for p in imported.rglob('*') if p.is_file() and p.name != '.gdignore'}
         if actual != names:
             raise AssertionError('Imported tree differs from ZIP file list')
         with zipfile.ZipFile(sys.argv[1]) as archive:
-            if any((imported_root/name).read_bytes() != archive.read(name) for name in names):
+            if any((imported/name).read_bytes() != archive.read(name) for name in names):
                 raise AssertionError('Imported bytes differ from ZIP')
+        for page in generated.glob('*.png'):
+            metadata = DEST/(page.name+'.import')
+            if metadata.is_file():
+                shutil.copy2(metadata, generated/metadata.name)
+        target = SOURCE/'sprites/weapons' if weapons_only else SOURCE
+        backups, installed = [], []
+        try:
+            for directory, prepared in [(target, imported), (DEST, generated)]:
+                directory.parent.mkdir(parents=True, exist_ok=True)
+                if directory.exists():
+                    backup = Path(temp)/f'previous-{len(backups)}'
+                    directory.rename(backup)
+                    backups.append((directory, backup))
+                prepared.rename(directory)
+                installed.append(directory)
+        except OSError:
+            for directory in reversed(installed):
+                shutil.rmtree(directory)
+            for directory, backup in reversed(backups):
+                backup.rename(directory)
+            raise
         print(f'Replaced {"weapons" if weapons_only else "source"} with exactly {len(names)} ZIP files; no previous files retained in that subtree.')
 
 if __name__ == '__main__':

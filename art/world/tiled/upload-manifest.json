@@ -18,7 +18,7 @@
     "Tiles/LakeTiles.png": "d5ac74cab787c4cc8dba1b24b9ab5d736aee19154a579d8f00bc67e988c8d2e9",
     "Tiles/MountainDarkTiles.png": "0ff350422039b0ab51546f05a47f5fb5db8b9f086e22e2f1800f5fd69234dac6",
     "Tiles/MountainTiles.png": "c152631e6e7788d8029f39b091cbea0220efa19804461f5883a4896643842beb",
-    "Tiles/ObjectsTiles.png": "7c267920adfe4b4dae395588591cad80f3139ad480f6360736b96a945910b771",
+    "Tiles/ObjectsTiles.png": "59f0ae5a7b43456efdeaa23d41d277a1092ff36e76fb0c2903187b59b00cb499",
     "Tiles/ParchmentTile.png": "e79e02edc3cd92adc26f3e6b942ab7d9fe8c6a02f4ce62caba2c01bdd0f706ba",
     "Tiles/RiverTiles.png": "fbde58fad6e53837c6943f0b0d8e60d7460dee06543ea9e026e82cc09eb64b15",
     "Tiles/RoadDarkTiles.png": "9e8f250922c07c28146a060e3a3d461889f0b6d6d3b1467aeade8b2a71e358ed",
@@ -30,5 +30,6 @@
   },
   "original_tmx": "Review/WorldMap_uploaded.tmx",
   "original_render": "Review/WorldMap_uploaded.png",
-  "original_render_sha256": "eae4adc26698f37947ba09075886c5c0a985785080ce42cbab4a3d1a96663890"
+  "original_render_sha256": "b20017f0a9ed0d2511bece1998e9ab3d8cabc47437fbd57734aa70e4eab3988e",
+  "local_update": "Desktop/MedievalMap/Tiles/ObjectsTiles.png (Windows 0.0.2)"
 }

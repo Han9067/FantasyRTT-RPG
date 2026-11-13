@@ -23,7 +23,9 @@ def build(refresh=False):
     if refresh:
         rasterizer=os.environ.get('TILED_RASTERIZER') or shutil.which('tmxrasterizer')
         if not rasterizer:raise RuntimeError('Install Tiled or set TILED_RASTERIZER for --refresh-render')
-        env=dict(os.environ);env.setdefault('QT_QPA_PLATFORM','offscreen')
+        env=dict(os.environ)
+        if os.name != 'nt':
+            env.setdefault('QT_QPA_PLATFORM','offscreen')
         subprocess.run([rasterizer,'--no-smoothing',str(SOURCE/'WorldMap.tmx'),str(render)],env=env,check=True)
         manifest['inputs']={p.relative_to(SOURCE).as_posix():sha(p) for p in inputs()}
         manifest['render_sha256']=sha(render)

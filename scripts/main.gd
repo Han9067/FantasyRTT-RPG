@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.35")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.3")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -288,7 +288,7 @@ func show_creation() -> void:
 		var row := HBoxContainer.new()
 		row.name = key
 		row.add_theme_constant_override("separation", 6)
-		parts_columns[1 if key in ["beard", "beard_color", "weapon"] else 0].add_child(row)
+		parts_columns[1 if key in ["beard", "beard_color", "weapon", "weapon_item", "offhand", "offhand_item"] else 0].add_child(row)
 		var title := label_text(entry[1], 16)
 		title.custom_minimum_size.x = 88
 		row.add_child(title)
@@ -297,6 +297,8 @@ func show_creation() -> void:
 		row.add_child(left)
 		var number := label_text("", 17)
 		number.custom_minimum_size.x = 52
+		if key in ["weapon", "offhand"]:
+			number.custom_minimum_size.x = 104
 		number.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		row.add_child(number)
 		var right := part_button("▶", change_part.bind(key, 1))
@@ -307,6 +309,7 @@ func show_creation() -> void:
 		detail.clip_text = true
 		detail.custom_minimum_size.x = 64
 		detail.modulate = GOLD
+		detail.visible = key not in ["weapon", "offhand"]
 		row.add_child(detail)
 		part_controls[key] = {"left": left, "right": right, "number": number, "detail": detail}
 	create_button = button("캐릭터 생성", start_journey)
@@ -337,7 +340,14 @@ func select_gender(value: int) -> void:
 		genders[i].button_pressed = i == value
 
 func change_part(key: String, direction: int) -> void:
-	appearance[key] = posmod(int(appearance[key]) + direction, CharacterArt.count(appearance, key))
+	var total := CharacterArt.count(appearance, key)
+	if total <= 1: return
+	appearance[key] = posmod(int(appearance[key]) + direction, total)
+	if key == "weapon":
+		appearance.erase("equipped_weapon")
+		appearance.weapon_item = 0
+	elif key == "offhand":
+		appearance.offhand_item = 0
 	CharacterArt.normalize(appearance)
 	character_frames = CharacterArt.animations(appearance)
 	last_preview_frame = -1
@@ -349,8 +359,20 @@ func refresh_part_controls() -> void:
 		var key: String = entry[0]
 		var total := CharacterArt.count(appearance, key)
 		var controls: Dictionary = part_controls[key]
-		controls.number.text = "%d/%d" % [int(appearance[key]) + 1, total]
-		controls.detail.text = CharacterArt.description(appearance, key)
+		var counter := "%d/%d" % [int(appearance[key]) + 1, total]
+		controls.number.text = counter
+		controls.detail.text = ""
+		if total == 0:
+			controls.number.text = "미장착"
+		elif key in ["weapon", "offhand"]:
+			controls.number.text = CharacterArt.description(appearance, key)
+		elif key in ["weapon_item", "offhand_item"]:
+			var item := CharacterArt.equipped_weapon(appearance) if key == "weapon_item" else CharacterArt.equipped_offhand(appearance)
+			controls.number.text = "%02d" % int(item.number)
+			controls.detail.text = counter
+		else:
+			controls.detail.text = CharacterArt.description(appearance, key)
+		controls.left.get_parent().modulate.a = 0.55 if total == 0 else 1.0
 		controls.detail.tooltip_text = controls.detail.text
 		controls.left.disabled = total <= 1
 		controls.right.disabled = total <= 1

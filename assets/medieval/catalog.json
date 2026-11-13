@@ -1,5 +1,5 @@
 {
-  "schema": 4,
+  "schema": 5,
   "source_root": "art/medieval/",
   "sheets": {
     "sprites/Characters/human/head/human_head_skin_1.png": {
@@ -17945,11 +17945,11 @@
         }
       ]
     },
-    "sprites/weapons/melee weapons/axe.png": {
+    "sprites/weapons/melee weapons/one_axe.png": {
       "slots": [
         {
           "name": "axe_01",
-          "source": "sprites/weapons/melee weapons/axe/axe_01.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_01.png",
           "sha256": "cff75f50a9758e2e9f870709145a45ea38230a15b9cac90a29ddf98cbd7757f4",
           "size": [
             32,
@@ -17966,7 +17966,7 @@
         },
         {
           "name": "axe_02",
-          "source": "sprites/weapons/melee weapons/axe/axe_02.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_02.png",
           "sha256": "de332a49524040d1a02b9bf42ef4bec36dd9a63f92406de0f4461f5726c169dd",
           "size": [
             32,
@@ -17983,7 +17983,7 @@
         },
         {
           "name": "axe_03",
-          "source": "sprites/weapons/melee weapons/axe/axe_03.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_03.png",
           "sha256": "abc354ce08d0aadbcea8a9cae2feb9408260db271a4d822cc0362aa27905d7ed",
           "size": [
             32,
@@ -18000,7 +18000,7 @@
         },
         {
           "name": "axe_04",
-          "source": "sprites/weapons/melee weapons/axe/axe_04.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_04.png",
           "sha256": "0a9c904fd564cda5d2f65f398c97102ece0da5639e99ff8ff9fab18173b89dcc",
           "size": [
             32,
@@ -18017,7 +18017,7 @@
         },
         {
           "name": "axe_05",
-          "source": "sprites/weapons/melee weapons/axe/axe_05.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_05.png",
           "sha256": "cc9a4b4fa176cba81b1452a89c5212b8fefe1e8f7e3cfdc1fba9da11719d7073",
           "size": [
             32,
@@ -18034,7 +18034,7 @@
         },
         {
           "name": "axe_06",
-          "source": "sprites/weapons/melee weapons/axe/axe_06.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_06.png",
           "sha256": "c4a076904704ef9d11ea94b89f24abd06511e67b725204431d1fba8acbde1f18",
           "size": [
             32,
@@ -18051,7 +18051,7 @@
         },
         {
           "name": "axe_07",
-          "source": "sprites/weapons/melee weapons/axe/axe_07.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_07.png",
           "sha256": "ed55727083533c37dcc00c42dac1080d4046fbe5188c8c5de0db04322303c3e3",
           "size": [
             32,
@@ -18068,7 +18068,7 @@
         },
         {
           "name": "axe_08",
-          "source": "sprites/weapons/melee weapons/axe/axe_08.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_08.png",
           "sha256": "948b0d59c13b4e0d323a618e9cc579eae92f37d34da6d72fcaff6ce872ec827c",
           "size": [
             32,
@@ -18085,7 +18085,7 @@
         },
         {
           "name": "axe_09",
-          "source": "sprites/weapons/melee weapons/axe/axe_09.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_09.png",
           "sha256": "cafa76a2baa43cc127f07a578c7c0a17f5b4047e43dc2fdee0f84c1b509beb6f",
           "size": [
             32,
@@ -18102,7 +18102,7 @@
         },
         {
           "name": "axe_10",
-          "source": "sprites/weapons/melee weapons/axe/axe_10.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_10.png",
           "sha256": "5230d51ec1ae85fcba14a389159a6192ffdb6866e72b6ee426fbb163eb8d7d13",
           "size": [
             32,
@@ -18119,7 +18119,7 @@
         },
         {
           "name": "axe_11",
-          "source": "sprites/weapons/melee weapons/axe/axe_11.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_11.png",
           "sha256": "c7a62596681628f3afb27f2bef2592793568940c166055a0b4f6f3edd822cc2c",
           "size": [
             32,
@@ -18136,7 +18136,7 @@
         },
         {
           "name": "axe_12",
-          "source": "sprites/weapons/melee weapons/axe/axe_12.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_12.png",
           "sha256": "4b91da83832f4f251174d72a3ed5fbb4554e2f98419232224c90128b9fbeafdb",
           "size": [
             32,
@@ -18153,7 +18153,7 @@
         },
         {
           "name": "axe_13",
-          "source": "sprites/weapons/melee weapons/axe/axe_13.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_13.png",
           "sha256": "7ff9128eb93cb9ac851f8b649d2093b9d9c80c784d56ccf8698a3fe282f9722b",
           "size": [
             32,
@@ -18170,7 +18170,7 @@
         },
         {
           "name": "axe_14",
-          "source": "sprites/weapons/melee weapons/axe/axe_14.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_14.png",
           "sha256": "4f2e65ea09fd18306338c369124a59b900a64e69e735d8cf10f88e569c60dda8",
           "size": [
             32,
@@ -18187,7 +18187,7 @@
         },
         {
           "name": "axe_15",
-          "source": "sprites/weapons/melee weapons/axe/axe_15.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_15.png",
           "sha256": "d415db4e6c26e322bcc1ee5ea8bfaf075fadef92ad21ad46c5926f6d53c512f9",
           "size": [
             32,
@@ -18204,7 +18204,7 @@
         },
         {
           "name": "axe_16",
-          "source": "sprites/weapons/melee weapons/axe/axe_16.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_16.png",
           "sha256": "e47d3b8cb50f898f9f09ccc751eddb26d4b1576c9e6274b676d67e39144a9703",
           "size": [
             32,
@@ -18221,7 +18221,7 @@
         },
         {
           "name": "axe_17",
-          "source": "sprites/weapons/melee weapons/axe/axe_17.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_17.png",
           "sha256": "5e9c7d0c300f4abda5def5da7a8a3d33067403d2d03017e2143674226cc38df2",
           "size": [
             32,
@@ -18238,7 +18238,7 @@
         },
         {
           "name": "axe_18",
-          "source": "sprites/weapons/melee weapons/axe/axe_18.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_18.png",
           "sha256": "a18310bb4c9e14184d526dc440ad28985a0d7ca9510dfb5c73ab3d2ea018e690",
           "size": [
             32,
@@ -18255,7 +18255,7 @@
         },
         {
           "name": "axe_19",
-          "source": "sprites/weapons/melee weapons/axe/axe_19.png",
+          "source": "sprites/weapons/melee weapons/one_axe/axe_19.png",
           "sha256": "156fd94bb5d66b6b0af151bbad0ff47eb9385bad64a1e196d04e590dfdfb8755",
           "size": [
             32,
@@ -18272,100 +18272,11 @@
         }
       ]
     },
-    "sprites/weapons/melee weapons/axe_big.png": {
-      "slots": [
-        {
-          "name": "axe_big_01",
-          "source": "sprites/weapons/melee weapons/axe_big/axe_big_01.png",
-          "sha256": "a16ff583fe393c678279d5ec6588e800e8e466bbdb89121a1ef02e3bbaa69190",
-          "size": [
-            32,
-            48
-          ],
-          "id": 1,
-          "atlas": "atlas_01.png",
-          "rect": [
-            443,
-            171,
-            32,
-            48
-          ]
-        },
-        {
-          "name": "axe_big_02",
-          "source": "sprites/weapons/melee weapons/axe_big/axe_big_02.png",
-          "sha256": "2d9bb75c5d500844702fa5b6381befc3d18080507d5ed62edb48f2d31ed2b02a",
-          "size": [
-            32,
-            48
-          ],
-          "id": 2,
-          "atlas": "atlas_01.png",
-          "rect": [
-            477,
-            171,
-            32,
-            48
-          ]
-        },
-        {
-          "name": "axe_big_03",
-          "source": "sprites/weapons/melee weapons/axe_big/axe_big_03.png",
-          "sha256": "d97efd3ed63d0ccd09155b773e984948f170052c78c82bece5be53b2fb706c67",
-          "size": [
-            32,
-            48
-          ],
-          "id": 3,
-          "atlas": "atlas_01.png",
-          "rect": [
-            511,
-            171,
-            32,
-            48
-          ]
-        },
-        {
-          "name": "axe_big_04",
-          "source": "sprites/weapons/melee weapons/axe_big/axe_big_04.png",
-          "sha256": "b41bf0e89efa26a9cff2abce2d31f8774f4a160c2cdd94fccd3c87dd7474280b",
-          "size": [
-            32,
-            48
-          ],
-          "id": 4,
-          "atlas": "atlas_01.png",
-          "rect": [
-            545,
-            171,
-            32,
-            48
-          ]
-        },
-        {
-          "name": "axe_big_05",
-          "source": "sprites/weapons/melee weapons/axe_big/axe_big_05.png",
-          "sha256": "ca3d312fd131f90948badf037bde5ed7680b15efad427c066cc3c5efe25eb8f6",
-          "size": [
-            32,
-            48
-          ],
-          "id": 5,
-          "atlas": "atlas_01.png",
-          "rect": [
-            579,
-            171,
-            32,
-            48
-          ]
-        }
-      ]
-    },
-    "sprites/weapons/melee weapons/blunt.png": {
+    "sprites/weapons/melee weapons/one_blunt.png": {
       "slots": [
         {
           "name": "blunt_01",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_01.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_01.png",
           "sha256": "23c4c7aa0898873aff323dcd48de7298df8a5e3f35275ea0b6122e6bc22e7315",
           "size": [
             32,
@@ -18374,7 +18285,7 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            613,
+            443,
             171,
             32,
             32
@@ -18382,7 +18293,7 @@
         },
         {
           "name": "blunt_02",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_02.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_02.png",
           "sha256": "07b008cd1f75876b70568527b16c53ee163a387c02b826bd82e6954d1ce0bc79",
           "size": [
             32,
@@ -18391,7 +18302,7 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            647,
+            477,
             171,
             32,
             32
@@ -18399,7 +18310,7 @@
         },
         {
           "name": "blunt_03",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_03.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_03.png",
           "sha256": "bdc5fae07b90e088e592fbdfe13b7d1e8632d248b24adcdca0dbc3578064fbbb",
           "size": [
             32,
@@ -18408,7 +18319,7 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            681,
+            511,
             171,
             32,
             32
@@ -18416,7 +18327,7 @@
         },
         {
           "name": "blunt_04",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_04.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_04.png",
           "sha256": "792af5b600c24600498de8c0a21a438b0154038f6832a0c2cb7fb2e464640dfe",
           "size": [
             32,
@@ -18425,7 +18336,7 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            715,
+            545,
             171,
             32,
             32
@@ -18433,7 +18344,7 @@
         },
         {
           "name": "blunt_05",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_05.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_05.png",
           "sha256": "b48fa2cab6f41db8ea1da86cdbd1e18c8e8a35293d9995b1cf1d51a532a653d2",
           "size": [
             32,
@@ -18442,7 +18353,7 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            749,
+            579,
             171,
             32,
             32
@@ -18450,7 +18361,7 @@
         },
         {
           "name": "blunt_06",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_06.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_06.png",
           "sha256": "4ba5a91aeb0ec3dd90568d1bbb04427ec16fb62a3143dadb4903d308e35facee",
           "size": [
             32,
@@ -18459,7 +18370,7 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            783,
+            613,
             171,
             32,
             32
@@ -18467,7 +18378,7 @@
         },
         {
           "name": "blunt_07",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_07.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_07.png",
           "sha256": "b5b48dcf92b266bedbf9cd9f2f093b0b57e31ef4cd242dd87f6a6d701d58d394",
           "size": [
             32,
@@ -18476,7 +18387,7 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            817,
+            647,
             171,
             32,
             32
@@ -18484,7 +18395,7 @@
         },
         {
           "name": "blunt_08",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_08.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_08.png",
           "sha256": "09551a355a35b689f9eb60c01de7ba074d2fb0aaf2fda8a38bb5238329de8c05",
           "size": [
             32,
@@ -18493,7 +18404,7 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            851,
+            681,
             171,
             32,
             32
@@ -18501,7 +18412,7 @@
         },
         {
           "name": "blunt_09",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_09.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_09.png",
           "sha256": "f7a86e0c0ed31748a7421355b6939303435a31696b0a8bd67245879cd32eae80",
           "size": [
             32,
@@ -18510,7 +18421,7 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
+            715,
             171,
             32,
             32
@@ -18518,7 +18429,7 @@
         },
         {
           "name": "blunt_10",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_10.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_10.png",
           "sha256": "08a9d199dde8245c7556b4f1acb231fc88eb46cda5cf1af4b58a1650ba639f57",
           "size": [
             32,
@@ -18527,7 +18438,7 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
+            749,
             171,
             32,
             32
@@ -18535,7 +18446,7 @@
         },
         {
           "name": "blunt_11",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_11.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_11.png",
           "sha256": "2cc03ef2fcf4679167bc57c4800d49d5639f8839dc2343c96ceeb0f671dfd97a",
           "size": [
             32,
@@ -18544,7 +18455,7 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            953,
+            783,
             171,
             32,
             32
@@ -18552,7 +18463,7 @@
         },
         {
           "name": "blunt_12",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_12.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_12.png",
           "sha256": "bab8f804baf3130db98ce3a5e473c9b669ec886b65fca17b11ff16d569bd617e",
           "size": [
             32,
@@ -18561,7 +18472,7 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            987,
+            817,
             171,
             32,
             32
@@ -18569,7 +18480,7 @@
         },
         {
           "name": "blunt_13",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_13.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_13.png",
           "sha256": "b0d0b2ce488c28f9596a6079d667fb0a2b8fd82551efca609d0d579c349b2917",
           "size": [
             32,
@@ -18578,15 +18489,15 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            221,
+            851,
+            171,
             32,
             32
           ]
         },
         {
           "name": "blunt_14",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_14.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_14.png",
           "sha256": "69244514ba0b0e67edd9f1b060189f6d599fbb4e2c268e20e102bd7a784fb147",
           "size": [
             32,
@@ -18595,15 +18506,15 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            35,
-            221,
+            885,
+            171,
             32,
             32
           ]
         },
         {
           "name": "blunt_15",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_15.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_15.png",
           "sha256": "f1d6b607c99879a1d9e7fe2681158fb9a7022a35e86279adcb03a6f0ac29dd23",
           "size": [
             32,
@@ -18612,15 +18523,15 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            69,
-            221,
+            919,
+            171,
             32,
             32
           ]
         },
         {
           "name": "blunt_16",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_16.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_16.png",
           "sha256": "5bd98b781c8a96e3f2a6cafa725f9244b400364f59ac9a667a6fe3897c0d25b0",
           "size": [
             32,
@@ -18629,15 +18540,15 @@
           "id": 16,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            221,
+            953,
+            171,
             32,
             32
           ]
         },
         {
           "name": "blunt_17",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_17.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_17.png",
           "sha256": "d672bae8879d06bb4e1aa8c2887a2878246c26e314964d700e6b9d573a23172d",
           "size": [
             32,
@@ -18646,15 +18557,15 @@
           "id": 17,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            221,
+            987,
+            171,
             32,
             32
           ]
         },
         {
           "name": "blunt_18",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_18.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_18.png",
           "sha256": "3bcb17177a4253b3dfb9bbcc4cb961388793ae9d8e9d5c724073219d64205440",
           "size": [
             32,
@@ -18663,15 +18574,15 @@
           "id": 18,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            221,
+            1,
+            205,
             32,
             32
           ]
         },
         {
           "name": "blunt_19",
-          "source": "sprites/weapons/melee weapons/blunt/blunt_19.png",
+          "source": "sprites/weapons/melee weapons/one_blunt/blunt_19.png",
           "sha256": "02bda437b86bcf204c4cf604675c77b321989917d0450789b7683f5edc49f49b",
           "size": [
             32,
@@ -18680,248 +18591,19 @@
           "id": 19,
           "atlas": "atlas_01.png",
           "rect": [
+            35,
             205,
-            221,
             32,
             32
           ]
         }
       ]
     },
-    "sprites/weapons/melee weapons/blunt_big.png": {
-      "slots": [
-        {
-          "name": "blunt_big_01",
-          "source": "sprites/weapons/melee weapons/blunt_big/blunt_big_01.png",
-          "sha256": "743c9b69d5d01dfc1fa567218fd2cdd1320c4cc81f1bb08934eceb13164aee7b",
-          "size": [
-            32,
-            48
-          ],
-          "id": 1,
-          "atlas": "atlas_01.png",
-          "rect": [
-            239,
-            221,
-            32,
-            48
-          ]
-        },
-        {
-          "name": "blunt_big_02",
-          "source": "sprites/weapons/melee weapons/blunt_big/blunt_big_02.png",
-          "sha256": "ec90dfaf387ffea152c6a86478845bf819c80239740c83399e172b20421ad543",
-          "size": [
-            32,
-            48
-          ],
-          "id": 2,
-          "atlas": "atlas_01.png",
-          "rect": [
-            273,
-            221,
-            32,
-            48
-          ]
-        }
-      ]
-    },
-    "sprites/weapons/melee weapons/polearm.png": {
-      "slots": [
-        {
-          "name": "polearm_01",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_01.png",
-          "sha256": "cfed117a3b871f52f8b953f5f0813f58995dfd6838056f4624ee679f5ce0514f",
-          "size": [
-            32,
-            64
-          ],
-          "id": 1,
-          "atlas": "atlas_01.png",
-          "rect": [
-            307,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_02",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_02.png",
-          "sha256": "1803d28301f3b72a6a9be0cf86fa4148a2a93e379b9192ac616c6dcba906ef6a",
-          "size": [
-            32,
-            64
-          ],
-          "id": 2,
-          "atlas": "atlas_01.png",
-          "rect": [
-            341,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_03",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_03.png",
-          "sha256": "5fdcf892faa249ffabd1d27cb9ccb40d70282723c77bd2c0ebca2a7f2e881b90",
-          "size": [
-            32,
-            64
-          ],
-          "id": 3,
-          "atlas": "atlas_01.png",
-          "rect": [
-            375,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_04",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_04.png",
-          "sha256": "05700192fdbdcb138763298730ebb682ce3329839b023e1a411f499a57246dd1",
-          "size": [
-            32,
-            64
-          ],
-          "id": 4,
-          "atlas": "atlas_01.png",
-          "rect": [
-            409,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_05",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_05.png",
-          "sha256": "0f97e5a31f27b4bf3108515eb9e23d88efdc31474f73ca1ed50dafa256bbdf57",
-          "size": [
-            32,
-            64
-          ],
-          "id": 5,
-          "atlas": "atlas_01.png",
-          "rect": [
-            443,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_06",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_06.png",
-          "sha256": "e7574fb1cfedf584f2b6fb6e2d6a198c2dd76db537de65c01d5b1972e1d09bb4",
-          "size": [
-            32,
-            64
-          ],
-          "id": 6,
-          "atlas": "atlas_01.png",
-          "rect": [
-            477,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_07",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_07.png",
-          "sha256": "56745d9f0f2b2665725f8d972a72ac06a5e39be0aa3e02ec92d465544e4a2669",
-          "size": [
-            32,
-            64
-          ],
-          "id": 7,
-          "atlas": "atlas_01.png",
-          "rect": [
-            511,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_08",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_08.png",
-          "sha256": "f9c3c0ac2e7e3fc883bfe9084e59dab65837af5d225e5ffaef654fb8d9080c78",
-          "size": [
-            32,
-            64
-          ],
-          "id": 8,
-          "atlas": "atlas_01.png",
-          "rect": [
-            545,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_09",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_09.png",
-          "sha256": "a7cbf19a588a3daa5c6e42fd885d74d61a0f6b163e9dc11887242c8adb890c06",
-          "size": [
-            32,
-            64
-          ],
-          "id": 9,
-          "atlas": "atlas_01.png",
-          "rect": [
-            579,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_10",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_10.png",
-          "sha256": "57eb8dfcc382e95c29574ddf208b218461d61b5855626493e7f02f61a94a51b5",
-          "size": [
-            32,
-            64
-          ],
-          "id": 10,
-          "atlas": "atlas_01.png",
-          "rect": [
-            613,
-            221,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "polearm_11",
-          "source": "sprites/weapons/melee weapons/polearm/polearm_11.png",
-          "sha256": "2ba739338fd236d0eef28d8379d4ba9b2bc1186002793bca9d2fe316558f0cba",
-          "size": [
-            32,
-            64
-          ],
-          "id": 11,
-          "atlas": "atlas_01.png",
-          "rect": [
-            647,
-            221,
-            32,
-            64
-          ]
-        }
-      ]
-    },
-    "sprites/weapons/melee weapons/shield.png": {
+    "sprites/weapons/melee weapons/one_shield.png": {
       "slots": [
         {
           "name": "shield_01",
-          "source": "sprites/weapons/melee weapons/shield/shield_01.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_01.png",
           "sha256": "3297e071abf1d436f94b2a43f7096d25a56d0e4b9544215f15f02fe6d2ef66b8",
           "size": [
             32,
@@ -18930,15 +18612,15 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            681,
-            221,
+            69,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_02",
-          "source": "sprites/weapons/melee weapons/shield/shield_02.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_02.png",
           "sha256": "ffe6fd0e4ed756bf7cc8db612ee790dbc62f4a3b180295044c08094bbbf48092",
           "size": [
             32,
@@ -18947,15 +18629,15 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            715,
-            221,
+            103,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_03",
-          "source": "sprites/weapons/melee weapons/shield/shield_03.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_03.png",
           "sha256": "a6ed866845a27c01b6c001783df9b3924ed20b41dc03fd10db3152cd6f3d6531",
           "size": [
             32,
@@ -18964,15 +18646,15 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            749,
-            221,
+            137,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_04",
-          "source": "sprites/weapons/melee weapons/shield/shield_04.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_04.png",
           "sha256": "2fb19a0dbedf7807bbcd4e9d553aa60e77d26677d24954ab43836979e970b449",
           "size": [
             32,
@@ -18981,15 +18663,15 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            783,
-            221,
+            171,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_05",
-          "source": "sprites/weapons/melee weapons/shield/shield_05.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_05.png",
           "sha256": "dc86ef0e93d7bdf81f358c7aced67a6bc8756d731abb34b17b18c8b4188fa220",
           "size": [
             32,
@@ -18998,15 +18680,15 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            817,
-            221,
+            205,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_06",
-          "source": "sprites/weapons/melee weapons/shield/shield_06.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_06.png",
           "sha256": "e4ac6ed9e578416742a240c7e476a35e062bac634fa6d27aeaecc2382eaf9cbe",
           "size": [
             32,
@@ -19015,15 +18697,15 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            851,
-            221,
+            239,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_07",
-          "source": "sprites/weapons/melee weapons/shield/shield_07.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_07.png",
           "sha256": "50d8d808f1b37e2a76e81b0fe38bab21579257cf9948a2cb54509c4c4296f645",
           "size": [
             32,
@@ -19032,15 +18714,15 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
-            221,
+            273,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_08",
-          "source": "sprites/weapons/melee weapons/shield/shield_08.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_08.png",
           "sha256": "381c54a49616eb4bf696c6cbef0c295e5a5bddb13a7f258910569b2c9da81244",
           "size": [
             32,
@@ -19049,49 +18731,15 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
-            221,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "shield_09",
-          "source": "sprites/weapons/melee weapons/shield/shield_09.png",
-          "sha256": "31cb9d4a2dfef958d95ed8c6f9d471c55e865313f66382d08c8d089839d57c0d",
-          "size": [
-            32,
-            32
-          ],
-          "id": 9,
-          "atlas": "atlas_01.png",
-          "rect": [
-            953,
-            221,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "shield_10",
-          "source": "sprites/weapons/melee weapons/shield/shield_10.png",
-          "sha256": "152956aa1d96e5e00c54396e4ddd458f1573a58dcb6036dfdf5f1890d0cd4e4d",
-          "size": [
-            32,
-            32
-          ],
-          "id": 10,
-          "atlas": "atlas_01.png",
-          "rect": [
-            987,
-            221,
+            307,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_11",
-          "source": "sprites/weapons/melee weapons/shield/shield_11.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_11.png",
           "sha256": "2c9ac1d4a5e433b7405179c6b591d05d4169fc5741e21cbbade08a263636be18",
           "size": [
             32,
@@ -19100,15 +18748,15 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            287,
+            341,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_12",
-          "source": "sprites/weapons/melee weapons/shield/shield_12.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_12.png",
           "sha256": "69a56913f6a7952c5a3020ad63845719503aa264f617d88a6c2f5a107bead537",
           "size": [
             32,
@@ -19117,15 +18765,15 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            35,
-            287,
+            375,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_13",
-          "source": "sprites/weapons/melee weapons/shield/shield_13.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_13.png",
           "sha256": "5742f42b8322819c82991c733d79324ea19d747a80ff8be67ba2498dc1180893",
           "size": [
             32,
@@ -19134,15 +18782,15 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            69,
-            287,
+            409,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_14",
-          "source": "sprites/weapons/melee weapons/shield/shield_14.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_14.png",
           "sha256": "1460956f501ae947ff766ab1fa4790226ae37893955ed512fabba895674cc8a9",
           "size": [
             32,
@@ -19151,15 +18799,15 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            287,
+            443,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_15",
-          "source": "sprites/weapons/melee weapons/shield/shield_15.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_15.png",
           "sha256": "2c5b296c519f11d14bf946ab42b17d64b4b032e3a1c6bea98f92730885ef24ae",
           "size": [
             32,
@@ -19168,15 +18816,15 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            287,
+            477,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_16",
-          "source": "sprites/weapons/melee weapons/shield/shield_16.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_16.png",
           "sha256": "77b49a3c4f4eee7e45ead76a0377edd002ec6db5d8e5b6d345e5303aa888e31b",
           "size": [
             32,
@@ -19185,15 +18833,15 @@
           "id": 16,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            287,
+            511,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_17",
-          "source": "sprites/weapons/melee weapons/shield/shield_17.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_17.png",
           "sha256": "83b61921032a8df78be636ef113850c9281fcc308bbde19bd1a2270c3f86a4c3",
           "size": [
             32,
@@ -19202,15 +18850,15 @@
           "id": 17,
           "atlas": "atlas_01.png",
           "rect": [
+            545,
             205,
-            287,
             32,
             32
           ]
         },
         {
           "name": "shield_18",
-          "source": "sprites/weapons/melee weapons/shield/shield_18.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_18.png",
           "sha256": "bbe399e94502d9c6fd03659314fe365f9a6873baee66176d4ed1cb32f9bbbed1",
           "size": [
             32,
@@ -19219,15 +18867,15 @@
           "id": 18,
           "atlas": "atlas_01.png",
           "rect": [
-            239,
-            287,
+            579,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_19",
-          "source": "sprites/weapons/melee weapons/shield/shield_19.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_19.png",
           "sha256": "09a8261b18d2ccfa6bb14524887dbff4e0bee175bda4f8cfad290cbc5090936d",
           "size": [
             32,
@@ -19236,15 +18884,15 @@
           "id": 19,
           "atlas": "atlas_01.png",
           "rect": [
-            273,
-            287,
+            613,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_20",
-          "source": "sprites/weapons/melee weapons/shield/shield_20.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_20.png",
           "sha256": "ada1f90b7487be0549203a583d618fc30650a9bfdc56445f0d1ee54808ecb674",
           "size": [
             32,
@@ -19253,15 +18901,15 @@
           "id": 20,
           "atlas": "atlas_01.png",
           "rect": [
-            307,
-            287,
+            647,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_21",
-          "source": "sprites/weapons/melee weapons/shield/shield_21.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_21.png",
           "sha256": "3e3ac70723a9483e393bc7d3b4be7095d9cdedbcb9809dd77ff1e6daf1f87ecb",
           "size": [
             32,
@@ -19270,49 +18918,15 @@
           "id": 21,
           "atlas": "atlas_01.png",
           "rect": [
-            341,
-            287,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "shield_22",
-          "source": "sprites/weapons/melee weapons/shield/shield_22.png",
-          "sha256": "8c275792d6cf22ec3be58bb660533946eaba7d3a709bd9007cdc15480279f932",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_01.png",
-          "rect": [
-            375,
-            287,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "shield_23",
-          "source": "sprites/weapons/melee weapons/shield/shield_23.png",
-          "sha256": "f97041bd04474bc18a451d1d0cdd7a0133b1c807e462a491beeb9fd9a44dd4e0",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_01.png",
-          "rect": [
-            409,
-            287,
+            681,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_24",
-          "source": "sprites/weapons/melee weapons/shield/shield_24.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_24.png",
           "sha256": "af06de397c6442098be8faffe38d2d85ab2bbb31e47dd675d573c9c0eaa759e9",
           "size": [
             32,
@@ -19321,15 +18935,15 @@
           "id": 24,
           "atlas": "atlas_01.png",
           "rect": [
-            443,
-            287,
+            715,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_25",
-          "source": "sprites/weapons/melee weapons/shield/shield_25.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_25.png",
           "sha256": "351577a83e1eaa738548a8efce1e03d51e8be4d2477c447f5993575d9b8ae3dc",
           "size": [
             32,
@@ -19338,15 +18952,15 @@
           "id": 25,
           "atlas": "atlas_01.png",
           "rect": [
-            477,
-            287,
+            749,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_26",
-          "source": "sprites/weapons/melee weapons/shield/shield_26.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_26.png",
           "sha256": "ded79b3e54fc41249991698c5bd7952beac71ee02d711e00d9c87d55df284ef7",
           "size": [
             32,
@@ -19355,15 +18969,15 @@
           "id": 26,
           "atlas": "atlas_01.png",
           "rect": [
-            511,
-            287,
+            783,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_27",
-          "source": "sprites/weapons/melee weapons/shield/shield_27.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_27.png",
           "sha256": "9e997fd20c91f9d2c4fd0f3f773b9e439fa5a55038b44012f66f1fe7e2533028",
           "size": [
             32,
@@ -19372,15 +18986,15 @@
           "id": 27,
           "atlas": "atlas_01.png",
           "rect": [
-            545,
-            287,
+            817,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_28",
-          "source": "sprites/weapons/melee weapons/shield/shield_28.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_28.png",
           "sha256": "ffe28b0522070393accd15bd8f0021cd84b1021d524196b272ab3f4ccce220bc",
           "size": [
             32,
@@ -19389,15 +19003,15 @@
           "id": 28,
           "atlas": "atlas_01.png",
           "rect": [
-            579,
-            287,
+            851,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_29",
-          "source": "sprites/weapons/melee weapons/shield/shield_29.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_29.png",
           "sha256": "48a58438a0f5b3ffbd28f24eb5ea088073bd7eb19152e84f989e452aaca2fd57",
           "size": [
             32,
@@ -19406,15 +19020,15 @@
           "id": 29,
           "atlas": "atlas_01.png",
           "rect": [
-            613,
-            287,
+            885,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_30",
-          "source": "sprites/weapons/melee weapons/shield/shield_30.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_30.png",
           "sha256": "b9166338e71191f26bdd67a2ffbd23aa43e3f7b80bb092d11f14dcb77d7d66a5",
           "size": [
             32,
@@ -19423,15 +19037,15 @@
           "id": 30,
           "atlas": "atlas_01.png",
           "rect": [
-            647,
-            287,
+            919,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_31",
-          "source": "sprites/weapons/melee weapons/shield/shield_31.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_31.png",
           "sha256": "8d8ca711cba7cefb74282735a2b0a434b0846a514fc79bad10828f1457ed2eec",
           "size": [
             32,
@@ -19440,15 +19054,15 @@
           "id": 31,
           "atlas": "atlas_01.png",
           "rect": [
-            681,
-            287,
+            953,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_32",
-          "source": "sprites/weapons/melee weapons/shield/shield_32.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_32.png",
           "sha256": "da15d1af0c8b5242c77e324e3c2cc1e1d457cf957b6aa7139e8595feec7f1c2d",
           "size": [
             32,
@@ -19457,15 +19071,15 @@
           "id": 32,
           "atlas": "atlas_01.png",
           "rect": [
-            715,
-            287,
+            987,
+            205,
             32,
             32
           ]
         },
         {
           "name": "shield_33",
-          "source": "sprites/weapons/melee weapons/shield/shield_33.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_33.png",
           "sha256": "9bceac36b2a6a4a8ca2c80f8e6833e90e8bd96ba3fb4c620dc7b604c11b39a34",
           "size": [
             32,
@@ -19474,15 +19088,15 @@
           "id": 33,
           "atlas": "atlas_01.png",
           "rect": [
-            749,
-            287,
+            1,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_34",
-          "source": "sprites/weapons/melee weapons/shield/shield_34.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_34.png",
           "sha256": "cf20cf28e474db60c089cf59057b3366acad78cb88c7476b2ac76a7b07bb0da4",
           "size": [
             32,
@@ -19491,49 +19105,15 @@
           "id": 34,
           "atlas": "atlas_01.png",
           "rect": [
-            783,
-            287,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "shield_35",
-          "source": "sprites/weapons/melee weapons/shield/shield_35.png",
-          "sha256": "eb34dada1f714f7e7f6aa56b68ca15293117dabf4b9dcffa7cb2a59de26ef374",
-          "size": [
-            32,
-            32
-          ],
-          "id": 35,
-          "atlas": "atlas_01.png",
-          "rect": [
-            817,
-            287,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "shield_36",
-          "source": "sprites/weapons/melee weapons/shield/shield_36.png",
-          "sha256": "cc637e07ad97f0d1ed09bf9a2fc1350d426ab1c75a7f02b1ce2e8274e107a162",
-          "size": [
-            32,
-            32
-          ],
-          "id": 36,
-          "atlas": "atlas_01.png",
-          "rect": [
-            851,
-            287,
+            35,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_37",
-          "source": "sprites/weapons/melee weapons/shield/shield_37.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_37.png",
           "sha256": "257a7b0a4d0937b91be4de1c4d77f84b03c1fcc30ff404bdd00d2fa1603cabe9",
           "size": [
             32,
@@ -19542,15 +19122,15 @@
           "id": 37,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
-            287,
+            69,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_38",
-          "source": "sprites/weapons/melee weapons/shield/shield_38.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_38.png",
           "sha256": "58a82b212d4a4e8356ff9d6b87ff3aabce0594c9a819a3525317cee84454a64b",
           "size": [
             32,
@@ -19559,15 +19139,15 @@
           "id": 38,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
-            287,
+            103,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_39",
-          "source": "sprites/weapons/melee weapons/shield/shield_39.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_39.png",
           "sha256": "b813a76a7db4b1909b6783a679a4cab2d6358bd5ac611abfd38c5c4c306faabc",
           "size": [
             32,
@@ -19576,15 +19156,15 @@
           "id": 39,
           "atlas": "atlas_01.png",
           "rect": [
-            953,
-            287,
+            137,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_40",
-          "source": "sprites/weapons/melee weapons/shield/shield_40.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_40.png",
           "sha256": "a456a84bca1a8a677e20482adce1b851125381020bf12c94cdab44acb892d23d",
           "size": [
             32,
@@ -19593,15 +19173,15 @@
           "id": 40,
           "atlas": "atlas_01.png",
           "rect": [
-            987,
-            287,
+            171,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_41",
-          "source": "sprites/weapons/melee weapons/shield/shield_41.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_41.png",
           "sha256": "c9dc51090dea3e4d258749055b8d979c7c0f69c33d3ec854bdd8cfc7518ba2ae",
           "size": [
             32,
@@ -19610,15 +19190,15 @@
           "id": 41,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            321,
+            205,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_42",
-          "source": "sprites/weapons/melee weapons/shield/shield_42.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_42.png",
           "sha256": "178289bb4b81820aeba97cebc3dccedf136332600c35887c73fcc9f8ad409640",
           "size": [
             32,
@@ -19627,15 +19207,15 @@
           "id": 42,
           "atlas": "atlas_01.png",
           "rect": [
-            35,
-            321,
+            239,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_43",
-          "source": "sprites/weapons/melee weapons/shield/shield_43.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_43.png",
           "sha256": "f71e7985a30022bbe19993f52d2716b4c0104cf365ca1f265fb6eede6f9d2c2b",
           "size": [
             32,
@@ -19644,15 +19224,15 @@
           "id": 43,
           "atlas": "atlas_01.png",
           "rect": [
-            69,
-            321,
+            273,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_44",
-          "source": "sprites/weapons/melee weapons/shield/shield_44.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_44.png",
           "sha256": "ab6ff5b54341cf4047781584f1ee0f72efbecefb1b0fa92e40cbcc97c7bcd85b",
           "size": [
             32,
@@ -19661,15 +19241,15 @@
           "id": 44,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            321,
+            307,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_45",
-          "source": "sprites/weapons/melee weapons/shield/shield_45.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_45.png",
           "sha256": "85a9a1942e0e8a4c47ea5f7c3d59153aad8014d27b0dc3c37536510b6493da35",
           "size": [
             32,
@@ -19678,15 +19258,15 @@
           "id": 45,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            321,
+            341,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_46",
-          "source": "sprites/weapons/melee weapons/shield/shield_46.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_46.png",
           "sha256": "c5d5f60a5864b5e986671f94446df7fa4a8a80e449ee76070ce18dafb45bd1b2",
           "size": [
             32,
@@ -19695,15 +19275,15 @@
           "id": 46,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            321,
+            375,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_47",
-          "source": "sprites/weapons/melee weapons/shield/shield_47.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_47.png",
           "sha256": "da357ae145540af7aea56121b7d693794795d9c121278cf0f3773cb89c5728fc",
           "size": [
             32,
@@ -19712,49 +19292,15 @@
           "id": 47,
           "atlas": "atlas_01.png",
           "rect": [
-            205,
-            321,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "shield_48",
-          "source": "sprites/weapons/melee weapons/shield/shield_48.png",
-          "sha256": "ed418a5f9146a0f643e4e388aed09094e4f4fc80c6802013dbb7d56ac1cd2249",
-          "size": [
-            32,
-            32
-          ],
-          "id": 48,
-          "atlas": "atlas_01.png",
-          "rect": [
+            409,
             239,
-            321,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "shield_49",
-          "source": "sprites/weapons/melee weapons/shield/shield_49.png",
-          "sha256": "e69a78f04dbf3a3927f634fef866116d06f60cbc0d9683ef1598de2c00605a24",
-          "size": [
-            32,
-            32
-          ],
-          "id": 49,
-          "atlas": "atlas_01.png",
-          "rect": [
-            273,
-            321,
             32,
             32
           ]
         },
         {
           "name": "shield_50",
-          "source": "sprites/weapons/melee weapons/shield/shield_50.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_50.png",
           "sha256": "539f308747f013407b514a4d192262335c880e79113fd05e46daa77688b1d0e2",
           "size": [
             32,
@@ -19763,15 +19309,15 @@
           "id": 50,
           "atlas": "atlas_01.png",
           "rect": [
-            307,
-            321,
+            443,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_51",
-          "source": "sprites/weapons/melee weapons/shield/shield_51.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_51.png",
           "sha256": "859200c4fee7c6e0276f567e8452fa7b2f53091b01ee5e6a6d4d06a26f4e42c4",
           "size": [
             32,
@@ -19780,15 +19326,15 @@
           "id": 51,
           "atlas": "atlas_01.png",
           "rect": [
-            341,
-            321,
+            477,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_52",
-          "source": "sprites/weapons/melee weapons/shield/shield_52.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_52.png",
           "sha256": "9ad3c7340b2913d5370bc863d4f1715b3cae533d50ba7583575424d764140490",
           "size": [
             32,
@@ -19797,15 +19343,15 @@
           "id": 52,
           "atlas": "atlas_01.png",
           "rect": [
-            375,
-            321,
+            511,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_53",
-          "source": "sprites/weapons/melee weapons/shield/shield_53.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_53.png",
           "sha256": "282f50d0a4465fe0d4e7ba930b47ab91e1ed90fb1b2590b0c9fd7ab9897a7685",
           "size": [
             32,
@@ -19814,15 +19360,15 @@
           "id": 53,
           "atlas": "atlas_01.png",
           "rect": [
-            409,
-            321,
+            545,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_54",
-          "source": "sprites/weapons/melee weapons/shield/shield_54.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_54.png",
           "sha256": "8d798a5f4be665fa2a4adfa0e824a110ccaeef3c8d9b91f2e1d2fb5c4502f7e5",
           "size": [
             32,
@@ -19831,15 +19377,15 @@
           "id": 54,
           "atlas": "atlas_01.png",
           "rect": [
-            443,
-            321,
+            579,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_55",
-          "source": "sprites/weapons/melee weapons/shield/shield_55.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_55.png",
           "sha256": "214eeffe23bbf6d1b2ec088897f4d28e770999e190e0a9c98ac828e10a1818fb",
           "size": [
             32,
@@ -19848,15 +19394,15 @@
           "id": 55,
           "atlas": "atlas_01.png",
           "rect": [
-            477,
-            321,
+            613,
+            239,
             32,
             32
           ]
         },
         {
           "name": "shield_56",
-          "source": "sprites/weapons/melee weapons/shield/shield_56.png",
+          "source": "sprites/weapons/melee weapons/one_shield/shield_56.png",
           "sha256": "d3627a536cec88850b825df7fb2652148a0415406e1eadb58529f184318f33c7",
           "size": [
             32,
@@ -19865,312 +19411,19 @@
           "id": 56,
           "atlas": "atlas_01.png",
           "rect": [
-            511,
-            321,
+            647,
+            239,
             32,
             32
           ]
         }
       ]
     },
-    "sprites/weapons/melee weapons/spear.png": {
-      "slots": [
-        {
-          "name": "spear_01",
-          "source": "sprites/weapons/melee weapons/spear/spear_01.png",
-          "sha256": "c3b26be431da193cbf60bb4cd3d2ba25ed7504e8b7faf979941b92b40b293938",
-          "size": [
-            32,
-            64
-          ],
-          "id": 1,
-          "atlas": "atlas_01.png",
-          "rect": [
-            545,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_02",
-          "source": "sprites/weapons/melee weapons/spear/spear_02.png",
-          "sha256": "03648ca7176c9c02cb840aeae3c0673b596eff3afc689aba2939eedf0e125dff",
-          "size": [
-            32,
-            64
-          ],
-          "id": 2,
-          "atlas": "atlas_01.png",
-          "rect": [
-            579,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_03",
-          "source": "sprites/weapons/melee weapons/spear/spear_03.png",
-          "sha256": "ccfa3d0e0e6435e5cb842b07c8c74b0ec826db63cd1d38d904e484e18aa1cc7e",
-          "size": [
-            32,
-            64
-          ],
-          "id": 3,
-          "atlas": "atlas_01.png",
-          "rect": [
-            613,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_04",
-          "source": "sprites/weapons/melee weapons/spear/spear_04.png",
-          "sha256": "11eb063450feaa427c23874c615569af489a01dc40aebf580e5a15970900077b",
-          "size": [
-            32,
-            64
-          ],
-          "id": 4,
-          "atlas": "atlas_01.png",
-          "rect": [
-            647,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_05",
-          "source": "sprites/weapons/melee weapons/spear/spear_05.png",
-          "sha256": "8c24c24a9e4cade3d4203c376bb5797906c4218bdf4a77b084636f2bd86bec9b",
-          "size": [
-            32,
-            64
-          ],
-          "id": 5,
-          "atlas": "atlas_01.png",
-          "rect": [
-            681,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_06",
-          "source": "sprites/weapons/melee weapons/spear/spear_06.png",
-          "sha256": "22aeb7c9687c2b9f4c447518ad6722515687c28cdcb89bd53ebfb998aae2ddd7",
-          "size": [
-            32,
-            64
-          ],
-          "id": 6,
-          "atlas": "atlas_01.png",
-          "rect": [
-            715,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_07",
-          "source": "sprites/weapons/melee weapons/spear/spear_07.png",
-          "sha256": "daa1479bcb70159dd02c476a78f2f11cf0a1e473406aae82a2165bc67ba08457",
-          "size": [
-            32,
-            64
-          ],
-          "id": 7,
-          "atlas": "atlas_01.png",
-          "rect": [
-            749,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_08",
-          "source": "sprites/weapons/melee weapons/spear/spear_08.png",
-          "sha256": "e0ab04e665938c7872ce7cb6f956c7b55528c7939a0fc6ce6ec0a116a5ca62b6",
-          "size": [
-            32,
-            64
-          ],
-          "id": 8,
-          "atlas": "atlas_01.png",
-          "rect": [
-            783,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_10",
-          "source": "sprites/weapons/melee weapons/spear/spear_10.png",
-          "sha256": "3b4de360971c497332de2ef565f3d95962f03ab43224ef18b73bfcb7fbdcef9e",
-          "size": [
-            32,
-            64
-          ],
-          "id": 10,
-          "atlas": "atlas_01.png",
-          "rect": [
-            817,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_11",
-          "source": "sprites/weapons/melee weapons/spear/spear_11.png",
-          "sha256": "5f5901fbb71109508cf67a8a4ed5f1a7967f1d25e079b3cba849fb41400b7c3f",
-          "size": [
-            32,
-            64
-          ],
-          "id": 11,
-          "atlas": "atlas_01.png",
-          "rect": [
-            851,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_12",
-          "source": "sprites/weapons/melee weapons/spear/spear_12.png",
-          "sha256": "4092aaad80a9e9beb35fb80effe7b8e8bb8624d57dcce49aa20fec9dce611334",
-          "size": [
-            32,
-            64
-          ],
-          "id": 12,
-          "atlas": "atlas_01.png",
-          "rect": [
-            885,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_13",
-          "source": "sprites/weapons/melee weapons/spear/spear_13.png",
-          "sha256": "bcd345be70b70f1d61bb0cbe759643d908737d320ef47158306e75581183ed59",
-          "size": [
-            32,
-            64
-          ],
-          "id": 13,
-          "atlas": "atlas_01.png",
-          "rect": [
-            919,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_14",
-          "source": "sprites/weapons/melee weapons/spear/spear_14.png",
-          "sha256": "cd3e3b6306e15276257e170e0a6df5d7cf058dee398fda86937b2b29437572ea",
-          "size": [
-            32,
-            64
-          ],
-          "id": 14,
-          "atlas": "atlas_01.png",
-          "rect": [
-            953,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_101",
-          "source": "sprites/weapons/melee weapons/spear/spear_101.png",
-          "sha256": "b2a5c3986b8f750c32384b16561407ed75f2c4ecbe37a23061fa1c2d46d9056c",
-          "size": [
-            32,
-            64
-          ],
-          "id": 101,
-          "atlas": "atlas_01.png",
-          "rect": [
-            987,
-            321,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_102",
-          "source": "sprites/weapons/melee weapons/spear/spear_102.png",
-          "sha256": "74c078c1c29e6f66869cd936a3dff24dc76230846802614148dc86f77fed02f6",
-          "size": [
-            32,
-            64
-          ],
-          "id": 102,
-          "atlas": "atlas_01.png",
-          "rect": [
-            1,
-            387,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_103",
-          "source": "sprites/weapons/melee weapons/spear/spear_103.png",
-          "sha256": "706130501792c33592d6ecd77b7104d8c404b5254452c068aaf0a99760386559",
-          "size": [
-            32,
-            64
-          ],
-          "id": 103,
-          "atlas": "atlas_01.png",
-          "rect": [
-            35,
-            387,
-            32,
-            64
-          ]
-        },
-        {
-          "name": "spear_104",
-          "source": "sprites/weapons/melee weapons/spear/spear_104.png",
-          "sha256": "c5d94f6ef94201e79df8ba99963ec04199cd9ed270f7764f65f9af41da4caac4",
-          "size": [
-            32,
-            64
-          ],
-          "id": 104,
-          "atlas": "atlas_01.png",
-          "rect": [
-            69,
-            387,
-            32,
-            64
-          ]
-        }
-      ]
-    },
-    "sprites/weapons/melee weapons/sword.png": {
+    "sprites/weapons/melee weapons/one_sword.png": {
       "slots": [
         {
           "name": "sword_01",
-          "source": "sprites/weapons/melee weapons/sword/sword_01.png",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_01.png",
           "sha256": "1de94a0de8d648ce12adf7faf633736b1a186979ddeda39560db7ba6ad6e526f",
           "size": [
             32,
@@ -20179,15 +19432,15 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            387,
+            681,
+            239,
             32,
             32
           ]
         },
         {
           "name": "sword_02",
-          "source": "sprites/weapons/melee weapons/sword/sword_02.png",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_02.png",
           "sha256": "12d2f6ba2f0748ccfa1541d304a098236a9ab31c8ab48d95b13eaef5319e8e48",
           "size": [
             32,
@@ -20196,15 +19449,15 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            387,
+            715,
+            239,
             32,
             32
           ]
         },
         {
           "name": "sword_03",
-          "source": "sprites/weapons/melee weapons/sword/sword_03.png",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_03.png",
           "sha256": "6291727b0f2bc99afbf8215924d100556b47403de17437e2e3a01fb892418a22",
           "size": [
             32,
@@ -20213,66 +19466,15 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            387,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "sword_04",
-          "source": "sprites/weapons/melee weapons/sword/sword_04.png",
-          "sha256": "231806bb5db04d8fda6c144cd2ba2a7b4b0a56ed11ca58f1c37edcce83357730",
-          "size": [
-            32,
-            32
-          ],
-          "id": 4,
-          "atlas": "atlas_01.png",
-          "rect": [
-            205,
-            387,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "sword_05",
-          "source": "sprites/weapons/melee weapons/sword/sword_05.png",
-          "sha256": "1e2c11f3d1973d541b81146c7bba1cf566711b6c0ce1bee2d7cd4d6b5678e43d",
-          "size": [
-            32,
-            32
-          ],
-          "id": 5,
-          "atlas": "atlas_01.png",
-          "rect": [
+            749,
             239,
-            387,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "sword_06",
-          "source": "sprites/weapons/melee weapons/sword/sword_06.png",
-          "sha256": "22401320fe210b62dd048a8715c21022542b377552af37e44ee091a49bbd2d27",
-          "size": [
-            32,
-            32
-          ],
-          "id": 6,
-          "atlas": "atlas_01.png",
-          "rect": [
-            273,
-            387,
             32,
             32
           ]
         },
         {
           "name": "sword_07",
-          "source": "sprites/weapons/melee weapons/sword/sword_07.png",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_07.png",
           "sha256": "3746acf6df015afaeec2ce47d57eb42f2cbbfb33a409a2a97d447e20f6af4919",
           "size": [
             32,
@@ -20281,15 +19483,15 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            307,
-            387,
+            783,
+            239,
             32,
             32
           ]
         },
         {
           "name": "sword_08",
-          "source": "sprites/weapons/melee weapons/sword/sword_08.png",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_08.png",
           "sha256": "bb8637e72bb3506db7721af427a88f5ff80b6cbe7c337f9a11a4e8c136e98690",
           "size": [
             32,
@@ -20298,15 +19500,15 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            341,
-            387,
+            817,
+            239,
             32,
             32
           ]
         },
         {
           "name": "sword_09",
-          "source": "sprites/weapons/melee weapons/sword/sword_09.png",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_09.png",
           "sha256": "28199ac66d0fdff275ef409f5a1189e60d82aa8623aae9a255e299163b404a70",
           "size": [
             32,
@@ -20315,15 +19517,15 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            375,
-            387,
+            851,
+            239,
             32,
             32
           ]
         },
         {
           "name": "sword_10",
-          "source": "sprites/weapons/melee weapons/sword/sword_10.png",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_10.png",
           "sha256": "ec1dab193bb59c2622c6cefcfb70f419ce61919577ee7dcd1e0aa04ab028c43f",
           "size": [
             32,
@@ -20332,16 +19534,16 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            409,
-            387,
+            885,
+            239,
             32,
             32
           ]
         },
         {
           "name": "sword_11",
-          "source": "sprites/weapons/melee weapons/sword/sword_11.png",
-          "sha256": "143a0e425ccf400a6b41a79bb10f3636200830bd2286b8489e18026b21971910",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_11.png",
+          "sha256": "07ac6596323ef7d4c30bedcfc7692497756423dd17af4ee8383e25e2b85cf7c7",
           "size": [
             32,
             32
@@ -20349,15 +19551,15 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            443,
-            387,
+            919,
+            239,
             32,
             32
           ]
         },
         {
           "name": "sword_12",
-          "source": "sprites/weapons/melee weapons/sword/sword_12.png",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_12.png",
           "sha256": "bfd8e08136224fb498e75474c0706b377b4cf032781d721385978ecf319ddb20",
           "size": [
             32,
@@ -20366,16 +19568,16 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            477,
-            387,
+            953,
+            239,
             32,
             32
           ]
         },
         {
           "name": "sword_13",
-          "source": "sprites/weapons/melee weapons/sword/sword_13.png",
-          "sha256": "7fb00fb71f5936942bed2d8d67bc202cbefe767e39260e0df61234edd5a6025a",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_13.png",
+          "sha256": "75a0deeee76c2d7cffd0bc8c98577c7de0025e8a88437ccbe656d53304d65ccf",
           "size": [
             32,
             32
@@ -20383,15 +19585,15 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            511,
-            387,
+            987,
+            239,
             32,
             32
           ]
         },
         {
           "name": "sword_14",
-          "source": "sprites/weapons/melee weapons/sword/sword_14.png",
+          "source": "sprites/weapons/melee weapons/one_sword/sword_14.png",
           "sha256": "e9bd7c7ad2f1444a4d112b818e4bbc51bd369f758242509cdf79d636b976617e",
           "size": [
             32,
@@ -20400,19 +19602,630 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            545,
-            387,
+            1,
+            273,
             32,
             32
           ]
         }
       ]
     },
-    "sprites/weapons/melee weapons/sword_big.png": {
+    "sprites/weapons/melee weapons/two_axe.png": {
+      "slots": [
+        {
+          "name": "axe_big_01",
+          "source": "sprites/weapons/melee weapons/two_axe/axe_big_01.png",
+          "sha256": "a16ff583fe393c678279d5ec6588e800e8e466bbdb89121a1ef02e3bbaa69190",
+          "size": [
+            32,
+            48
+          ],
+          "id": 1,
+          "atlas": "atlas_01.png",
+          "rect": [
+            35,
+            273,
+            32,
+            48
+          ]
+        },
+        {
+          "name": "axe_big_02",
+          "source": "sprites/weapons/melee weapons/two_axe/axe_big_02.png",
+          "sha256": "2d9bb75c5d500844702fa5b6381befc3d18080507d5ed62edb48f2d31ed2b02a",
+          "size": [
+            32,
+            48
+          ],
+          "id": 2,
+          "atlas": "atlas_01.png",
+          "rect": [
+            69,
+            273,
+            32,
+            48
+          ]
+        },
+        {
+          "name": "axe_big_03",
+          "source": "sprites/weapons/melee weapons/two_axe/axe_big_03.png",
+          "sha256": "d97efd3ed63d0ccd09155b773e984948f170052c78c82bece5be53b2fb706c67",
+          "size": [
+            32,
+            48
+          ],
+          "id": 3,
+          "atlas": "atlas_01.png",
+          "rect": [
+            103,
+            273,
+            32,
+            48
+          ]
+        },
+        {
+          "name": "axe_big_04",
+          "source": "sprites/weapons/melee weapons/two_axe/axe_big_04.png",
+          "sha256": "b41bf0e89efa26a9cff2abce2d31f8774f4a160c2cdd94fccd3c87dd7474280b",
+          "size": [
+            32,
+            48
+          ],
+          "id": 4,
+          "atlas": "atlas_01.png",
+          "rect": [
+            137,
+            273,
+            32,
+            48
+          ]
+        },
+        {
+          "name": "axe_big_05",
+          "source": "sprites/weapons/melee weapons/two_axe/axe_big_05.png",
+          "sha256": "ca3d312fd131f90948badf037bde5ed7680b15efad427c066cc3c5efe25eb8f6",
+          "size": [
+            32,
+            48
+          ],
+          "id": 5,
+          "atlas": "atlas_01.png",
+          "rect": [
+            171,
+            273,
+            32,
+            48
+          ]
+        }
+      ]
+    },
+    "sprites/weapons/melee weapons/two_blunt.png": {
+      "slots": [
+        {
+          "name": "blunt_big_01",
+          "source": "sprites/weapons/melee weapons/two_blunt/blunt_big_01.png",
+          "sha256": "743c9b69d5d01dfc1fa567218fd2cdd1320c4cc81f1bb08934eceb13164aee7b",
+          "size": [
+            32,
+            48
+          ],
+          "id": 1,
+          "atlas": "atlas_01.png",
+          "rect": [
+            205,
+            273,
+            32,
+            48
+          ]
+        },
+        {
+          "name": "blunt_big_02",
+          "source": "sprites/weapons/melee weapons/two_blunt/blunt_big_02.png",
+          "sha256": "ec90dfaf387ffea152c6a86478845bf819c80239740c83399e172b20421ad543",
+          "size": [
+            32,
+            48
+          ],
+          "id": 2,
+          "atlas": "atlas_01.png",
+          "rect": [
+            239,
+            273,
+            32,
+            48
+          ]
+        }
+      ]
+    },
+    "sprites/weapons/melee weapons/two_polearm.png": {
+      "slots": [
+        {
+          "name": "polearm_01",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_01.png",
+          "sha256": "cfed117a3b871f52f8b953f5f0813f58995dfd6838056f4624ee679f5ce0514f",
+          "size": [
+            32,
+            64
+          ],
+          "id": 1,
+          "atlas": "atlas_01.png",
+          "rect": [
+            273,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_02",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_02.png",
+          "sha256": "1803d28301f3b72a6a9be0cf86fa4148a2a93e379b9192ac616c6dcba906ef6a",
+          "size": [
+            32,
+            64
+          ],
+          "id": 2,
+          "atlas": "atlas_01.png",
+          "rect": [
+            307,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_03",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_03.png",
+          "sha256": "5fdcf892faa249ffabd1d27cb9ccb40d70282723c77bd2c0ebca2a7f2e881b90",
+          "size": [
+            32,
+            64
+          ],
+          "id": 3,
+          "atlas": "atlas_01.png",
+          "rect": [
+            341,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_04",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_04.png",
+          "sha256": "05700192fdbdcb138763298730ebb682ce3329839b023e1a411f499a57246dd1",
+          "size": [
+            32,
+            64
+          ],
+          "id": 4,
+          "atlas": "atlas_01.png",
+          "rect": [
+            375,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_05",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_05.png",
+          "sha256": "0f97e5a31f27b4bf3108515eb9e23d88efdc31474f73ca1ed50dafa256bbdf57",
+          "size": [
+            32,
+            64
+          ],
+          "id": 5,
+          "atlas": "atlas_01.png",
+          "rect": [
+            409,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_06",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_06.png",
+          "sha256": "e7574fb1cfedf584f2b6fb6e2d6a198c2dd76db537de65c01d5b1972e1d09bb4",
+          "size": [
+            32,
+            64
+          ],
+          "id": 6,
+          "atlas": "atlas_01.png",
+          "rect": [
+            443,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_07",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_07.png",
+          "sha256": "56745d9f0f2b2665725f8d972a72ac06a5e39be0aa3e02ec92d465544e4a2669",
+          "size": [
+            32,
+            64
+          ],
+          "id": 7,
+          "atlas": "atlas_01.png",
+          "rect": [
+            477,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_08",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_08.png",
+          "sha256": "f9c3c0ac2e7e3fc883bfe9084e59dab65837af5d225e5ffaef654fb8d9080c78",
+          "size": [
+            32,
+            64
+          ],
+          "id": 8,
+          "atlas": "atlas_01.png",
+          "rect": [
+            511,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_09",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_09.png",
+          "sha256": "a7cbf19a588a3daa5c6e42fd885d74d61a0f6b163e9dc11887242c8adb890c06",
+          "size": [
+            32,
+            64
+          ],
+          "id": 9,
+          "atlas": "atlas_01.png",
+          "rect": [
+            545,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_10",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_10.png",
+          "sha256": "57eb8dfcc382e95c29574ddf208b218461d61b5855626493e7f02f61a94a51b5",
+          "size": [
+            32,
+            64
+          ],
+          "id": 10,
+          "atlas": "atlas_01.png",
+          "rect": [
+            579,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "polearm_11",
+          "source": "sprites/weapons/melee weapons/two_polearm/polearm_11.png",
+          "sha256": "2ba739338fd236d0eef28d8379d4ba9b2bc1186002793bca9d2fe316558f0cba",
+          "size": [
+            32,
+            64
+          ],
+          "id": 11,
+          "atlas": "atlas_01.png",
+          "rect": [
+            613,
+            273,
+            32,
+            64
+          ]
+        }
+      ]
+    },
+    "sprites/weapons/melee weapons/two_spear.png": {
+      "slots": [
+        {
+          "name": "spear_01",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_01.png",
+          "sha256": "c3b26be431da193cbf60bb4cd3d2ba25ed7504e8b7faf979941b92b40b293938",
+          "size": [
+            32,
+            64
+          ],
+          "id": 1,
+          "atlas": "atlas_01.png",
+          "rect": [
+            647,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_02",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_02.png",
+          "sha256": "03648ca7176c9c02cb840aeae3c0673b596eff3afc689aba2939eedf0e125dff",
+          "size": [
+            32,
+            64
+          ],
+          "id": 2,
+          "atlas": "atlas_01.png",
+          "rect": [
+            681,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_03",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_03.png",
+          "sha256": "ccfa3d0e0e6435e5cb842b07c8c74b0ec826db63cd1d38d904e484e18aa1cc7e",
+          "size": [
+            32,
+            64
+          ],
+          "id": 3,
+          "atlas": "atlas_01.png",
+          "rect": [
+            715,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_04",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_04.png",
+          "sha256": "11eb063450feaa427c23874c615569af489a01dc40aebf580e5a15970900077b",
+          "size": [
+            32,
+            64
+          ],
+          "id": 4,
+          "atlas": "atlas_01.png",
+          "rect": [
+            749,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_05",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_05.png",
+          "sha256": "8c24c24a9e4cade3d4203c376bb5797906c4218bdf4a77b084636f2bd86bec9b",
+          "size": [
+            32,
+            64
+          ],
+          "id": 5,
+          "atlas": "atlas_01.png",
+          "rect": [
+            783,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_06",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_06.png",
+          "sha256": "22aeb7c9687c2b9f4c447518ad6722515687c28cdcb89bd53ebfb998aae2ddd7",
+          "size": [
+            32,
+            64
+          ],
+          "id": 6,
+          "atlas": "atlas_01.png",
+          "rect": [
+            817,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_07",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_07.png",
+          "sha256": "daa1479bcb70159dd02c476a78f2f11cf0a1e473406aae82a2165bc67ba08457",
+          "size": [
+            32,
+            64
+          ],
+          "id": 7,
+          "atlas": "atlas_01.png",
+          "rect": [
+            851,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_08",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_08.png",
+          "sha256": "e0ab04e665938c7872ce7cb6f956c7b55528c7939a0fc6ce6ec0a116a5ca62b6",
+          "size": [
+            32,
+            64
+          ],
+          "id": 8,
+          "atlas": "atlas_01.png",
+          "rect": [
+            885,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_10",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_10.png",
+          "sha256": "3b4de360971c497332de2ef565f3d95962f03ab43224ef18b73bfcb7fbdcef9e",
+          "size": [
+            32,
+            64
+          ],
+          "id": 10,
+          "atlas": "atlas_01.png",
+          "rect": [
+            919,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_11",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_11.png",
+          "sha256": "5f5901fbb71109508cf67a8a4ed5f1a7967f1d25e079b3cba849fb41400b7c3f",
+          "size": [
+            32,
+            64
+          ],
+          "id": 11,
+          "atlas": "atlas_01.png",
+          "rect": [
+            953,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_12",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_12.png",
+          "sha256": "4092aaad80a9e9beb35fb80effe7b8e8bb8624d57dcce49aa20fec9dce611334",
+          "size": [
+            32,
+            64
+          ],
+          "id": 12,
+          "atlas": "atlas_01.png",
+          "rect": [
+            987,
+            273,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_13",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_13.png",
+          "sha256": "bcd345be70b70f1d61bb0cbe759643d908737d320ef47158306e75581183ed59",
+          "size": [
+            32,
+            64
+          ],
+          "id": 13,
+          "atlas": "atlas_01.png",
+          "rect": [
+            1,
+            339,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_14",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_14.png",
+          "sha256": "cd3e3b6306e15276257e170e0a6df5d7cf058dee398fda86937b2b29437572ea",
+          "size": [
+            32,
+            64
+          ],
+          "id": 14,
+          "atlas": "atlas_01.png",
+          "rect": [
+            35,
+            339,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_101",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_101.png",
+          "sha256": "b2a5c3986b8f750c32384b16561407ed75f2c4ecbe37a23061fa1c2d46d9056c",
+          "size": [
+            32,
+            64
+          ],
+          "id": 101,
+          "atlas": "atlas_01.png",
+          "rect": [
+            69,
+            339,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_102",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_102.png",
+          "sha256": "74c078c1c29e6f66869cd936a3dff24dc76230846802614148dc86f77fed02f6",
+          "size": [
+            32,
+            64
+          ],
+          "id": 102,
+          "atlas": "atlas_01.png",
+          "rect": [
+            103,
+            339,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_103",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_103.png",
+          "sha256": "706130501792c33592d6ecd77b7104d8c404b5254452c068aaf0a99760386559",
+          "size": [
+            32,
+            64
+          ],
+          "id": 103,
+          "atlas": "atlas_01.png",
+          "rect": [
+            137,
+            339,
+            32,
+            64
+          ]
+        },
+        {
+          "name": "spear_104",
+          "source": "sprites/weapons/melee weapons/two_spear/spear_104.png",
+          "sha256": "c5d94f6ef94201e79df8ba99963ec04199cd9ed270f7764f65f9af41da4caac4",
+          "size": [
+            32,
+            64
+          ],
+          "id": 104,
+          "atlas": "atlas_01.png",
+          "rect": [
+            171,
+            339,
+            32,
+            64
+          ]
+        }
+      ]
+    },
+    "sprites/weapons/melee weapons/two_sword.png": {
       "slots": [
         {
           "name": "sword_big_01",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_01.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_01.png",
           "sha256": "d4ac52c6c84cbd381c8089750771bed482c47af22359a769eb7d55f05a0096b5",
           "size": [
             32,
@@ -20421,15 +20234,15 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            579,
-            387,
+            205,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_02",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_02.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_02.png",
           "sha256": "5a7e4908c9be403bb219c40f4590e99f0bc540195aae14443ec25933ddf5ab03",
           "size": [
             32,
@@ -20438,15 +20251,15 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            613,
-            387,
+            239,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_03",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_03.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_03.png",
           "sha256": "cb2db91381eb4934fb4628b132735897d29a416f71982eb14f690acf33c1c6e0",
           "size": [
             32,
@@ -20455,15 +20268,15 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            647,
-            387,
+            273,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_04",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_04.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_04.png",
           "sha256": "694274c2b8b2f65b5a21346ce421d830a01559e135adcc17f4a0f19c6875f8dd",
           "size": [
             32,
@@ -20472,15 +20285,15 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            681,
-            387,
+            307,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_05",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_05.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_05.png",
           "sha256": "56855213fe744171e8d0b980a7443bb24a9a3587726c6566b94105dff8a16335",
           "size": [
             32,
@@ -20489,15 +20302,15 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            715,
-            387,
+            341,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_06",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_06.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_06.png",
           "sha256": "052d92250af029b91391827a3123ff449ed8b242c72cac630c07a180de210649",
           "size": [
             32,
@@ -20506,15 +20319,15 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            749,
-            387,
+            375,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_07",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_07.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_07.png",
           "sha256": "6bb9a2d801ae1a3a4f43342ae040001a1c17061c6f629514d922e7bf845ccb9d",
           "size": [
             32,
@@ -20523,15 +20336,15 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            783,
-            387,
+            409,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_08",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_08.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_08.png",
           "sha256": "1b9dee369063376c65ffda6a843302758d7644f2fb41e0aa2f1b52f653ab1782",
           "size": [
             32,
@@ -20540,15 +20353,15 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            817,
-            387,
+            443,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_09",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_09.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_09.png",
           "sha256": "ba3ad5c52f0c60af5fc8a96193f47ec69bcb1313f17ad1c40a302fb3aa21452b",
           "size": [
             32,
@@ -20557,15 +20370,15 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            851,
-            387,
+            477,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_10",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_10.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_10.png",
           "sha256": "614373b25c5062621bd1dbed1f272942d70166b1b259cd8e9c17954b5cea76e3",
           "size": [
             32,
@@ -20574,15 +20387,15 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
-            387,
+            511,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_11",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_11.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_11.png",
           "sha256": "6c41cd8ce80c7b715882cd7c993dcfd25128df33d0908e3869fcb32602958861",
           "size": [
             32,
@@ -20591,15 +20404,15 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
-            387,
+            545,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_12",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_12.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_12.png",
           "sha256": "e7c95e29dc34638ee8af16b9ca3117ad845286a1dedc01c53facd956c402136f",
           "size": [
             32,
@@ -20608,15 +20421,15 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            953,
-            387,
+            579,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_13",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_13.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_13.png",
           "sha256": "2da35cec01cb702fcbb10d69db74214fa69384600e307d611d60fb8b33df9100",
           "size": [
             32,
@@ -20625,15 +20438,15 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            987,
-            387,
+            613,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_14",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_14.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_14.png",
           "sha256": "fd6bf20a69c59de64811c9cff22a0a1e9404fa60eb219177d938652fb73f48fc",
           "size": [
             32,
@@ -20642,15 +20455,15 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            453,
+            647,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_15",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_15.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_15.png",
           "sha256": "824386c68dbe9c010fa56a4c9aa832519367285c4e10ae061e72d554ac00ce64",
           "size": [
             32,
@@ -20659,15 +20472,15 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            35,
-            453,
+            681,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_16",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_16.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_16.png",
           "sha256": "f12fe4287a7582884d65ec98c883106fa533432809cbd5d3fb27c93d91fe3d91",
           "size": [
             32,
@@ -20676,15 +20489,15 @@
           "id": 16,
           "atlas": "atlas_01.png",
           "rect": [
-            69,
-            453,
+            715,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_17",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_17.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_17.png",
           "sha256": "ed20bc1670cd823036bca1acb1686333762683e5b77a61c2a1432eb3daf2947a",
           "size": [
             32,
@@ -20693,15 +20506,15 @@
           "id": 17,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            453,
+            749,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_18",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_18.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_18.png",
           "sha256": "1ca750b55f928ede5d668ec848c08387913d40cfa525460b761234f7e9dd5e65",
           "size": [
             32,
@@ -20710,15 +20523,15 @@
           "id": 18,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            453,
+            783,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_19",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_19.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_19.png",
           "sha256": "971f0eecbf04f20741b5afb1621f56dc290e7ed2856f1967fb7d2ae0c30fef1d",
           "size": [
             32,
@@ -20727,15 +20540,15 @@
           "id": 19,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            453,
+            817,
+            339,
             32,
             48
           ]
         },
         {
           "name": "sword_big_20",
-          "source": "sprites/weapons/melee weapons/sword_big/sword_big_20.png",
+          "source": "sprites/weapons/melee weapons/two_sword/sword_big_20.png",
           "sha256": "db52b86daed307ba28f59c79a635d58ac8b5864b2a3c1dc08554c406a9f23df4",
           "size": [
             32,
@@ -20744,8 +20557,8 @@
           "id": 20,
           "atlas": "atlas_01.png",
           "rect": [
-            205,
-            453,
+            851,
+            339,
             32,
             48
           ]
@@ -20765,8 +20578,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            239,
-            453,
+            885,
+            339,
             32,
             32
           ]
@@ -20782,8 +20595,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            273,
-            453,
+            919,
+            339,
             32,
             32
           ]
@@ -20799,8 +20612,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            307,
-            453,
+            953,
+            339,
             32,
             32
           ]
@@ -20816,8 +20629,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            341,
-            453,
+            987,
+            339,
             32,
             32
           ]
@@ -20833,8 +20646,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            375,
-            453,
+            1,
+            405,
             32,
             32
           ]
@@ -20850,8 +20663,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            409,
-            453,
+            35,
+            405,
             32,
             32
           ]
@@ -20867,8 +20680,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            443,
-            453,
+            69,
+            405,
             32,
             32
           ]
@@ -20888,8 +20701,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            477,
-            453,
+            103,
+            405,
             32,
             32
           ]
@@ -20905,8 +20718,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            511,
-            453,
+            137,
+            405,
             32,
             32
           ]
@@ -20922,8 +20735,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            545,
-            453,
+            171,
+            405,
             32,
             32
           ]
@@ -20939,715 +20752,10 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            579,
-            453,
+            205,
+            405,
             32,
             32
-          ]
-        }
-      ]
-    },
-    "sprites/weapons/ranged weapons/sling.png": {
-      "slots": [
-        {
-          "name": "sling_01",
-          "source": "sprites/weapons/ranged weapons/sling/sling_01.png",
-          "sha256": "32d7150fdb63c7af9bbdcf6231ad69aabcb191cd80357b6db87ffd312e75ba3d",
-          "size": [
-            64,
-            64
-          ],
-          "id": 1,
-          "atlas": "atlas_01.png",
-          "rect": [
-            613,
-            453,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_02",
-          "source": "sprites/weapons/ranged weapons/sling/sling_02.png",
-          "sha256": "c965b2347bfc35a26986bcdecaf81af7b3b31cb203d42935e4f5804251497f05",
-          "size": [
-            64,
-            64
-          ],
-          "id": 2,
-          "atlas": "atlas_01.png",
-          "rect": [
-            679,
-            453,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_03",
-          "source": "sprites/weapons/ranged weapons/sling/sling_03.png",
-          "sha256": "fccd4ebab439e9c3561098760673d296f5307385c3445a9c7baf0da917ad09e3",
-          "size": [
-            64,
-            64
-          ],
-          "id": 3,
-          "atlas": "atlas_01.png",
-          "rect": [
-            745,
-            453,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_04",
-          "source": "sprites/weapons/ranged weapons/sling/sling_04.png",
-          "sha256": "e3fe8e3e86c57935c71cc3fcab0d6be4d16a6919d852996b1cfdd444cf9960ad",
-          "size": [
-            64,
-            64
-          ],
-          "id": 4,
-          "atlas": "atlas_01.png",
-          "rect": [
-            811,
-            453,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_05",
-          "source": "sprites/weapons/ranged weapons/sling/sling_05.png",
-          "sha256": "0a1d6f3d2761057de02960eeae915471987144ef9b3bd72c43f48516717a9079",
-          "size": [
-            64,
-            64
-          ],
-          "id": 5,
-          "atlas": "atlas_01.png",
-          "rect": [
-            877,
-            453,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_06",
-          "source": "sprites/weapons/ranged weapons/sling/sling_06.png",
-          "sha256": "d6f2905aecf37245f3e02a977814b861cbf64ecc898bdabe6833039088f3319f",
-          "size": [
-            64,
-            64
-          ],
-          "id": 6,
-          "atlas": "atlas_01.png",
-          "rect": [
-            943,
-            453,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_07",
-          "source": "sprites/weapons/ranged weapons/sling/sling_07.png",
-          "sha256": "8ae4a577941514b9d8abde173175c3fad7ecb1da37d6dabe1d27f6dec011dd44",
-          "size": [
-            64,
-            64
-          ],
-          "id": 7,
-          "atlas": "atlas_01.png",
-          "rect": [
-            1,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_08",
-          "source": "sprites/weapons/ranged weapons/sling/sling_08.png",
-          "sha256": "36d90e864e3ee5d03cba5104025d47e69ebbacba558902942d946744ae5c14ae",
-          "size": [
-            64,
-            64
-          ],
-          "id": 8,
-          "atlas": "atlas_01.png",
-          "rect": [
-            67,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_09",
-          "source": "sprites/weapons/ranged weapons/sling/sling_09.png",
-          "sha256": "40eb27059610ac63b77387486cd10acdb1d32088e1cc5576090f17c3727b91af",
-          "size": [
-            64,
-            64
-          ],
-          "id": 9,
-          "atlas": "atlas_01.png",
-          "rect": [
-            133,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_10",
-          "source": "sprites/weapons/ranged weapons/sling/sling_10.png",
-          "sha256": "2cb9be7d512e100b24485f3be142f3f657f295c485b08816044fb6e0202d712e",
-          "size": [
-            64,
-            64
-          ],
-          "id": 10,
-          "atlas": "atlas_01.png",
-          "rect": [
-            199,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_11",
-          "source": "sprites/weapons/ranged weapons/sling/sling_11.png",
-          "sha256": "f7e94a4c651c37a18683f27fd8e9de9ae4531fadb9c8798172a5edc98ca2847f",
-          "size": [
-            64,
-            64
-          ],
-          "id": 11,
-          "atlas": "atlas_01.png",
-          "rect": [
-            265,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_12",
-          "source": "sprites/weapons/ranged weapons/sling/sling_12.png",
-          "sha256": "161577bcada5bbca4014706072b72a41b9209c5028120474f0f630a4929bcec4",
-          "size": [
-            64,
-            64
-          ],
-          "id": 12,
-          "atlas": "atlas_01.png",
-          "rect": [
-            331,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_13",
-          "source": "sprites/weapons/ranged weapons/sling/sling_13.png",
-          "sha256": "3cc3e073bf8f46db0efa6ff4e51cfdadc9f6d8a7992e83c133a70c690e3f2c08",
-          "size": [
-            64,
-            64
-          ],
-          "id": 13,
-          "atlas": "atlas_01.png",
-          "rect": [
-            397,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_14",
-          "source": "sprites/weapons/ranged weapons/sling/sling_14.png",
-          "sha256": "73794bceda9cf6a1429c5a69da11626dd0696bb9bf8e80be265cc3ec69ca1382",
-          "size": [
-            64,
-            64
-          ],
-          "id": 14,
-          "atlas": "atlas_01.png",
-          "rect": [
-            463,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_15",
-          "source": "sprites/weapons/ranged weapons/sling/sling_15.png",
-          "sha256": "4a2ec6aede79bffd57aa405d88afffb355891ceafdae5313db5d1f1a2de01c43",
-          "size": [
-            64,
-            64
-          ],
-          "id": 15,
-          "atlas": "atlas_01.png",
-          "rect": [
-            529,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_16",
-          "source": "sprites/weapons/ranged weapons/sling/sling_16.png",
-          "sha256": "ffe51d80d47a8873a5e6f7c9c2988e67c934ddb0f46df5b2fa05e1d6f08e88ed",
-          "size": [
-            64,
-            64
-          ],
-          "id": 16,
-          "atlas": "atlas_01.png",
-          "rect": [
-            595,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_17",
-          "source": "sprites/weapons/ranged weapons/sling/sling_17.png",
-          "sha256": "69201b0528648ea63f9922a6840071bf9f4df951a358225a50c257979d0d8faa",
-          "size": [
-            64,
-            64
-          ],
-          "id": 17,
-          "atlas": "atlas_01.png",
-          "rect": [
-            661,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_18",
-          "source": "sprites/weapons/ranged weapons/sling/sling_18.png",
-          "sha256": "32d7150fdb63c7af9bbdcf6231ad69aabcb191cd80357b6db87ffd312e75ba3d",
-          "size": [
-            64,
-            64
-          ],
-          "id": 18,
-          "atlas": "atlas_01.png",
-          "rect": [
-            727,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_19",
-          "source": "sprites/weapons/ranged weapons/sling/sling_19.png",
-          "sha256": "fe7e2b49ce040b4f84a3b63d7c124211a89f1d25e746bdf9bdfdae8be7d86ad4",
-          "size": [
-            64,
-            64
-          ],
-          "id": 19,
-          "atlas": "atlas_01.png",
-          "rect": [
-            793,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "sling_20",
-          "source": "sprites/weapons/ranged weapons/sling/sling_20.png",
-          "sha256": "7ba6616cdd488dca32f246c758e7d8e41a45c6c28bb7a9cae11f5a965319c902",
-          "size": [
-            64,
-            64
-          ],
-          "id": 20,
-          "atlas": "atlas_01.png",
-          "rect": [
-            859,
-            519,
-            64,
-            64
-          ]
-        }
-      ]
-    },
-    "sprites/weapons/ranged weapons/stick_sling.png": {
-      "slots": [
-        {
-          "name": "stick_sling_01",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_01.png",
-          "sha256": "9956ed273260364249a6b131a9c757e6fbed9e39178f81fb279c53490f8f7880",
-          "size": [
-            64,
-            64
-          ],
-          "id": 1,
-          "atlas": "atlas_01.png",
-          "rect": [
-            925,
-            519,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_02",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_02.png",
-          "sha256": "58ddd0ae770295291156b36cd2440ccbde38615b1001b49a2306d88ed5d0fc5e",
-          "size": [
-            64,
-            64
-          ],
-          "id": 2,
-          "atlas": "atlas_01.png",
-          "rect": [
-            1,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_03",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_03.png",
-          "sha256": "9956ed273260364249a6b131a9c757e6fbed9e39178f81fb279c53490f8f7880",
-          "size": [
-            64,
-            64
-          ],
-          "id": 3,
-          "atlas": "atlas_01.png",
-          "rect": [
-            67,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_04",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_04.png",
-          "sha256": "adbbcefd158aceee46116c51dc012a3c5d7cdd6b7b6100aa6f80d5b193e3d43d",
-          "size": [
-            64,
-            64
-          ],
-          "id": 4,
-          "atlas": "atlas_01.png",
-          "rect": [
-            133,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_05",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_05.png",
-          "sha256": "9956ed273260364249a6b131a9c757e6fbed9e39178f81fb279c53490f8f7880",
-          "size": [
-            64,
-            64
-          ],
-          "id": 5,
-          "atlas": "atlas_01.png",
-          "rect": [
-            199,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_06",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_06.png",
-          "sha256": "f310a6dadd6895256d34984038edbd907415b181e473dc148cc19d95f4510110",
-          "size": [
-            64,
-            64
-          ],
-          "id": 6,
-          "atlas": "atlas_01.png",
-          "rect": [
-            265,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_07",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_07.png",
-          "sha256": "10c9296e6d3a768aae26927380205bfcfa0ff0eb740cbfc8b0e1f531046274cc",
-          "size": [
-            64,
-            64
-          ],
-          "id": 7,
-          "atlas": "atlas_01.png",
-          "rect": [
-            331,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_08",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_08.png",
-          "sha256": "60c29ea2da7ce7078b92689c6ff3cd3b6b36592bf74671456aa7060087f78b6c",
-          "size": [
-            64,
-            64
-          ],
-          "id": 8,
-          "atlas": "atlas_01.png",
-          "rect": [
-            397,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_09",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_09.png",
-          "sha256": "51196b641415363b47a8f959976dcf3dcdc0561516da6499b704858093e677b3",
-          "size": [
-            64,
-            64
-          ],
-          "id": 9,
-          "atlas": "atlas_01.png",
-          "rect": [
-            463,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_10",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_10.png",
-          "sha256": "50b710d8c68d1fcd54c302f674b8001b0854b3d04c41fa63d74e094485d9365d",
-          "size": [
-            64,
-            64
-          ],
-          "id": 10,
-          "atlas": "atlas_01.png",
-          "rect": [
-            529,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_11",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_11.png",
-          "sha256": "52cea980d77e9a8b8a58167c0726d20e3247f95b6a257c4bf30d65fdb7197f93",
-          "size": [
-            64,
-            64
-          ],
-          "id": 11,
-          "atlas": "atlas_01.png",
-          "rect": [
-            595,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_12",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_12.png",
-          "sha256": "3c942a90e1e0bc700cd20eb493b4f6934b781fd07b8ff85932097e620d45a6b8",
-          "size": [
-            64,
-            64
-          ],
-          "id": 12,
-          "atlas": "atlas_01.png",
-          "rect": [
-            661,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_13",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_13.png",
-          "sha256": "55e7353c9c5e7432476eb311dce68a4463660fff9824e8e418c61fbf86ccab63",
-          "size": [
-            64,
-            64
-          ],
-          "id": 13,
-          "atlas": "atlas_01.png",
-          "rect": [
-            727,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_14",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_14.png",
-          "sha256": "813d2bf951b6e25e3a9a38529c99f22ec0437260200e2b85a8ddde21bcc5deb0",
-          "size": [
-            64,
-            64
-          ],
-          "id": 14,
-          "atlas": "atlas_01.png",
-          "rect": [
-            793,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_15",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_15.png",
-          "sha256": "3b9522439a2f2fb550274cd8aba5634cd9a84c7a5248caa66a1ec990aeaa40c2",
-          "size": [
-            64,
-            64
-          ],
-          "id": 15,
-          "atlas": "atlas_01.png",
-          "rect": [
-            859,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_16",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_16.png",
-          "sha256": "85b918dfa95c7acdc4e83d86f784c55f62175d2258839078fa9a1a0f560be9f9",
-          "size": [
-            64,
-            64
-          ],
-          "id": 16,
-          "atlas": "atlas_01.png",
-          "rect": [
-            925,
-            585,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_17",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_17.png",
-          "sha256": "c955a21919b6d6c2c0842bd6198d3a9def8f791e7bd6cca2808e79867c4467e0",
-          "size": [
-            64,
-            64
-          ],
-          "id": 17,
-          "atlas": "atlas_01.png",
-          "rect": [
-            1,
-            651,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_18",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_18.png",
-          "sha256": "8edad151028157d54dd350450e4ba610cf1d71c33ff512fdb22887548064e232",
-          "size": [
-            64,
-            64
-          ],
-          "id": 18,
-          "atlas": "atlas_01.png",
-          "rect": [
-            67,
-            651,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_19",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_19.png",
-          "sha256": "bf39e60e68abd1b5bf9d7dda3a2f8b9b55312a6d7326e901be1c42ef882b167a",
-          "size": [
-            64,
-            64
-          ],
-          "id": 19,
-          "atlas": "atlas_01.png",
-          "rect": [
-            133,
-            651,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_20",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_20.png",
-          "sha256": "53876ad5608f483d9e73b4348b3f36142efd45dcaf3f4d07aff5a534b7eb071e",
-          "size": [
-            64,
-            64
-          ],
-          "id": 20,
-          "atlas": "atlas_01.png",
-          "rect": [
-            199,
-            651,
-            64,
-            64
-          ]
-        },
-        {
-          "name": "stick_sling_21",
-          "source": "sprites/weapons/ranged weapons/stick_sling/stick_sling_21.png",
-          "sha256": "188c5f460518657e7c31c6c15b030cd3485578f0d208e635e704b6ddf2deacc7",
-          "size": [
-            64,
-            64
-          ],
-          "id": 21,
-          "atlas": "atlas_01.png",
-          "rect": [
-            265,
-            651,
-            64,
-            64
           ]
         }
       ]
@@ -21665,8 +20773,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            331,
-            651,
+            239,
+            405,
             64,
             32
           ]
@@ -21682,8 +20790,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            397,
-            651,
+            305,
+            405,
             64,
             32
           ]
@@ -21699,8 +20807,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            463,
-            651,
+            371,
+            405,
             64,
             32
           ]
@@ -21716,8 +20824,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            529,
-            651,
+            437,
+            405,
             64,
             32
           ]
@@ -21733,8 +20841,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            595,
-            651,
+            503,
+            405,
             64,
             32
           ]
@@ -21750,8 +20858,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            661,
-            651,
+            569,
+            405,
             64,
             32
           ]
@@ -21767,8 +20875,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            727,
-            651,
+            635,
+            405,
             64,
             32
           ]
@@ -21784,8 +20892,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            793,
-            651,
+            701,
+            405,
             64,
             32
           ]
@@ -21801,8 +20909,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            859,
-            651,
+            767,
+            405,
             64,
             32
           ]
@@ -21818,8 +20926,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            925,
-            651,
+            833,
+            405,
             64,
             32
           ]
@@ -21835,8 +20943,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            717,
+            899,
+            405,
             64,
             32
           ]
@@ -21852,8 +20960,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            67,
-            717,
+            1,
+            439,
             64,
             32
           ]
@@ -21869,8 +20977,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            133,
-            717,
+            67,
+            439,
             64,
             32
           ]
@@ -21886,8 +20994,8 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            199,
-            717,
+            133,
+            439,
             64,
             32
           ]
@@ -21903,8 +21011,8 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            265,
-            717,
+            199,
+            439,
             64,
             32
           ]
@@ -21924,8 +21032,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            331,
-            717,
+            265,
+            439,
             32,
             32
           ]
@@ -21941,8 +21049,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            365,
-            717,
+            299,
+            439,
             32,
             32
           ]
@@ -21958,8 +21066,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            399,
-            717,
+            333,
+            439,
             32,
             32
           ]
@@ -21975,8 +21083,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            433,
-            717,
+            367,
+            439,
             32,
             32
           ]
@@ -21992,8 +21100,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            467,
-            717,
+            401,
+            439,
             32,
             32
           ]
@@ -22009,8 +21117,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            501,
-            717,
+            435,
+            439,
             32,
             32
           ]
@@ -22026,8 +21134,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            535,
-            717,
+            469,
+            439,
             32,
             32
           ]
@@ -22043,8 +21151,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            569,
-            717,
+            503,
+            439,
             32,
             32
           ]
@@ -22060,8 +21168,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            603,
-            717,
+            537,
+            439,
             32,
             32
           ]
@@ -22077,8 +21185,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            637,
-            717,
+            571,
+            439,
             32,
             32
           ]
@@ -22094,8 +21202,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            671,
-            717,
+            605,
+            439,
             32,
             32
           ]
@@ -22155,50 +21263,202 @@
     "sprites/Characters/body/body_silver.png",
     "sprites/Characters/body/body_yellow.png"
   ],
-  "weapons": [
-    {
-      "id": "axe_01",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
-      "slot": 0,
-      "grip": [
-        15,
-        21
-      ],
-      "attack": "chop_attack",
-      "label": "한손 도끼"
-    },
-    {
-      "id": "blunt_01",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
-      "slot": 0,
-      "grip": [
-        16,
-        23
-      ],
-      "attack": "chop_attack",
-      "label": "한손 둔기"
-    },
-    {
-      "id": "sword_01",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 0,
-      "grip": [
-        15,
-        26
-      ],
-      "attack": "chop_attack",
-      "label": "한손 검"
-    }
+  "primary_types": [
+    "one_axe",
+    "one_blunt",
+    "one_sword",
+    "two_axe",
+    "two_blunt",
+    "two_polearm",
+    "two_spear",
+    "two_sword"
   ],
+  "secondary_types": [
+    "one_axe",
+    "one_blunt",
+    "one_shield",
+    "one_sword"
+  ],
+  "melee_groups": {
+    "one_axe": [
+      "axe_01",
+      "axe_02",
+      "axe_03",
+      "axe_04",
+      "axe_05",
+      "axe_06",
+      "axe_07",
+      "axe_08",
+      "axe_09",
+      "axe_10",
+      "axe_11",
+      "axe_12",
+      "axe_13",
+      "axe_14",
+      "axe_15",
+      "axe_16",
+      "axe_17",
+      "axe_18",
+      "axe_19"
+    ],
+    "one_blunt": [
+      "blunt_01",
+      "blunt_02",
+      "blunt_03",
+      "blunt_04",
+      "blunt_05",
+      "blunt_06",
+      "blunt_07",
+      "blunt_08",
+      "blunt_09",
+      "blunt_10",
+      "blunt_11",
+      "blunt_12",
+      "blunt_13",
+      "blunt_14",
+      "blunt_15",
+      "blunt_16",
+      "blunt_17",
+      "blunt_18",
+      "blunt_19"
+    ],
+    "one_shield": [
+      "shield_01",
+      "shield_02",
+      "shield_03",
+      "shield_04",
+      "shield_05",
+      "shield_06",
+      "shield_07",
+      "shield_08",
+      "shield_11",
+      "shield_12",
+      "shield_13",
+      "shield_14",
+      "shield_15",
+      "shield_16",
+      "shield_17",
+      "shield_18",
+      "shield_19",
+      "shield_20",
+      "shield_21",
+      "shield_24",
+      "shield_25",
+      "shield_26",
+      "shield_27",
+      "shield_28",
+      "shield_29",
+      "shield_30",
+      "shield_31",
+      "shield_32",
+      "shield_33",
+      "shield_34",
+      "shield_37",
+      "shield_38",
+      "shield_39",
+      "shield_40",
+      "shield_41",
+      "shield_42",
+      "shield_43",
+      "shield_44",
+      "shield_45",
+      "shield_46",
+      "shield_47",
+      "shield_50",
+      "shield_51",
+      "shield_52",
+      "shield_53",
+      "shield_54",
+      "shield_55",
+      "shield_56"
+    ],
+    "one_sword": [
+      "sword_01",
+      "sword_02",
+      "sword_03",
+      "sword_07",
+      "sword_08",
+      "sword_09",
+      "sword_10",
+      "sword_11",
+      "sword_12",
+      "sword_13",
+      "sword_14"
+    ],
+    "two_axe": [
+      "axe_big_01",
+      "axe_big_02",
+      "axe_big_03",
+      "axe_big_04",
+      "axe_big_05"
+    ],
+    "two_blunt": [
+      "blunt_big_01",
+      "blunt_big_02"
+    ],
+    "two_polearm": [
+      "polearm_01",
+      "polearm_02",
+      "polearm_03",
+      "polearm_04",
+      "polearm_05",
+      "polearm_06",
+      "polearm_07",
+      "polearm_08",
+      "polearm_09",
+      "polearm_10",
+      "polearm_11"
+    ],
+    "two_spear": [
+      "spear_01",
+      "spear_02",
+      "spear_03",
+      "spear_04",
+      "spear_05",
+      "spear_06",
+      "spear_07",
+      "spear_08",
+      "spear_10",
+      "spear_11",
+      "spear_12",
+      "spear_13",
+      "spear_14",
+      "spear_101",
+      "spear_102",
+      "spear_103",
+      "spear_104"
+    ],
+    "two_sword": [
+      "sword_big_01",
+      "sword_big_02",
+      "sword_big_03",
+      "sword_big_04",
+      "sword_big_05",
+      "sword_big_06",
+      "sword_big_07",
+      "sword_big_08",
+      "sword_big_09",
+      "sword_big_10",
+      "sword_big_11",
+      "sword_big_12",
+      "sword_big_13",
+      "sword_big_14",
+      "sword_big_15",
+      "sword_big_16",
+      "sword_big_17",
+      "sword_big_18",
+      "sword_big_19",
+      "sword_big_20"
+    ]
+  },
   "weapon_items": {
     "axe_01": {
       "id": "axe_01",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 0,
+      "two_handed": false,
+      "number": 1,
       "grip": [
         15,
         21
@@ -22207,9 +21467,11 @@
     },
     "axe_02": {
       "id": "axe_02",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 1,
+      "two_handed": false,
+      "number": 2,
       "grip": [
         16,
         24
@@ -22218,9 +21480,11 @@
     },
     "axe_03": {
       "id": "axe_03",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 2,
+      "two_handed": false,
+      "number": 3,
       "grip": [
         15,
         25
@@ -22229,9 +21493,11 @@
     },
     "axe_04": {
       "id": "axe_04",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 3,
+      "two_handed": false,
+      "number": 4,
       "grip": [
         16,
         25
@@ -22240,9 +21506,11 @@
     },
     "axe_05": {
       "id": "axe_05",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 4,
+      "two_handed": false,
+      "number": 5,
       "grip": [
         15,
         23
@@ -22251,9 +21519,11 @@
     },
     "axe_06": {
       "id": "axe_06",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 5,
+      "two_handed": false,
+      "number": 6,
       "grip": [
         16,
         24
@@ -22262,9 +21532,11 @@
     },
     "axe_07": {
       "id": "axe_07",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 6,
+      "two_handed": false,
+      "number": 7,
       "grip": [
         15,
         25
@@ -22273,9 +21545,11 @@
     },
     "axe_08": {
       "id": "axe_08",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 7,
+      "two_handed": false,
+      "number": 8,
       "grip": [
         15,
         23
@@ -22284,9 +21558,11 @@
     },
     "axe_09": {
       "id": "axe_09",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 8,
+      "two_handed": false,
+      "number": 9,
       "grip": [
         16,
         23
@@ -22295,9 +21571,11 @@
     },
     "axe_10": {
       "id": "axe_10",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 9,
+      "two_handed": false,
+      "number": 10,
       "grip": [
         16,
         24
@@ -22306,9 +21584,11 @@
     },
     "axe_11": {
       "id": "axe_11",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 10,
+      "two_handed": false,
+      "number": 11,
       "grip": [
         15,
         24
@@ -22317,9 +21597,11 @@
     },
     "axe_12": {
       "id": "axe_12",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 11,
+      "two_handed": false,
+      "number": 12,
       "grip": [
         16,
         23
@@ -22328,9 +21610,11 @@
     },
     "axe_13": {
       "id": "axe_13",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 12,
+      "two_handed": false,
+      "number": 13,
       "grip": [
         16,
         26
@@ -22339,9 +21623,11 @@
     },
     "axe_14": {
       "id": "axe_14",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 13,
+      "two_handed": false,
+      "number": 14,
       "grip": [
         17,
         22
@@ -22350,9 +21636,11 @@
     },
     "axe_15": {
       "id": "axe_15",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 14,
+      "two_handed": false,
+      "number": 15,
       "grip": [
         17,
         24
@@ -22361,9 +21649,11 @@
     },
     "axe_16": {
       "id": "axe_16",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 15,
+      "two_handed": false,
+      "number": 16,
       "grip": [
         15,
         26
@@ -22372,9 +21662,11 @@
     },
     "axe_17": {
       "id": "axe_17",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 16,
+      "two_handed": false,
+      "number": 17,
       "grip": [
         17,
         26
@@ -22383,9 +21675,11 @@
     },
     "axe_18": {
       "id": "axe_18",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 17,
+      "two_handed": false,
+      "number": 18,
       "grip": [
         16,
         26
@@ -22394,75 +21688,24 @@
     },
     "axe_19": {
       "id": "axe_19",
-      "family": "axe",
-      "sheet": "sprites/weapons/melee weapons/axe.png",
+      "family": "one_axe",
+      "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 18,
+      "two_handed": false,
+      "number": 19,
       "grip": [
         17,
         23
       ],
       "attack": "chop_attack"
     },
-    "axe_big_01": {
-      "id": "axe_big_01",
-      "family": "axe_big",
-      "sheet": "sprites/weapons/melee weapons/axe_big.png",
-      "slot": 0,
-      "grip": [
-        15,
-        36
-      ],
-      "attack": "chop_attack"
-    },
-    "axe_big_02": {
-      "id": "axe_big_02",
-      "family": "axe_big",
-      "sheet": "sprites/weapons/melee weapons/axe_big.png",
-      "slot": 1,
-      "grip": [
-        16,
-        36
-      ],
-      "attack": "chop_attack"
-    },
-    "axe_big_03": {
-      "id": "axe_big_03",
-      "family": "axe_big",
-      "sheet": "sprites/weapons/melee weapons/axe_big.png",
-      "slot": 2,
-      "grip": [
-        16,
-        36
-      ],
-      "attack": "chop_attack"
-    },
-    "axe_big_04": {
-      "id": "axe_big_04",
-      "family": "axe_big",
-      "sheet": "sprites/weapons/melee weapons/axe_big.png",
-      "slot": 3,
-      "grip": [
-        16,
-        37
-      ],
-      "attack": "chop_attack"
-    },
-    "axe_big_05": {
-      "id": "axe_big_05",
-      "family": "axe_big",
-      "sheet": "sprites/weapons/melee weapons/axe_big.png",
-      "slot": 4,
-      "grip": [
-        17,
-        37
-      ],
-      "attack": "chop_attack"
-    },
     "blunt_01": {
       "id": "blunt_01",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 0,
+      "two_handed": false,
+      "number": 1,
       "grip": [
         16,
         23
@@ -22471,9 +21714,11 @@
     },
     "blunt_02": {
       "id": "blunt_02",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 1,
+      "two_handed": false,
+      "number": 2,
       "grip": [
         15,
         24
@@ -22482,9 +21727,11 @@
     },
     "blunt_03": {
       "id": "blunt_03",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 2,
+      "two_handed": false,
+      "number": 3,
       "grip": [
         12,
         22
@@ -22493,9 +21740,11 @@
     },
     "blunt_04": {
       "id": "blunt_04",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 3,
+      "two_handed": false,
+      "number": 4,
       "grip": [
         13,
         23
@@ -22504,9 +21753,11 @@
     },
     "blunt_05": {
       "id": "blunt_05",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 4,
+      "two_handed": false,
+      "number": 5,
       "grip": [
         14,
         24
@@ -22515,9 +21766,11 @@
     },
     "blunt_06": {
       "id": "blunt_06",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 5,
+      "two_handed": false,
+      "number": 6,
       "grip": [
         14,
         23
@@ -22526,9 +21779,11 @@
     },
     "blunt_07": {
       "id": "blunt_07",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 6,
+      "two_handed": false,
+      "number": 7,
       "grip": [
         16,
         24
@@ -22537,9 +21792,11 @@
     },
     "blunt_08": {
       "id": "blunt_08",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 7,
+      "two_handed": false,
+      "number": 8,
       "grip": [
         16,
         24
@@ -22548,9 +21805,11 @@
     },
     "blunt_09": {
       "id": "blunt_09",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 8,
+      "two_handed": false,
+      "number": 9,
       "grip": [
         15,
         26
@@ -22559,9 +21818,11 @@
     },
     "blunt_10": {
       "id": "blunt_10",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 9,
+      "two_handed": false,
+      "number": 10,
       "grip": [
         15,
         26
@@ -22570,9 +21831,11 @@
     },
     "blunt_11": {
       "id": "blunt_11",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 10,
+      "two_handed": false,
+      "number": 11,
       "grip": [
         16,
         25
@@ -22581,9 +21844,11 @@
     },
     "blunt_12": {
       "id": "blunt_12",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 11,
+      "two_handed": false,
+      "number": 12,
       "grip": [
         15,
         26
@@ -22592,9 +21857,11 @@
     },
     "blunt_13": {
       "id": "blunt_13",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 12,
+      "two_handed": false,
+      "number": 13,
       "grip": [
         15,
         25
@@ -22603,9 +21870,11 @@
     },
     "blunt_14": {
       "id": "blunt_14",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 13,
+      "two_handed": false,
+      "number": 14,
       "grip": [
         15,
         25
@@ -22614,9 +21883,11 @@
     },
     "blunt_15": {
       "id": "blunt_15",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 14,
+      "two_handed": false,
+      "number": 15,
       "grip": [
         15,
         26
@@ -22625,9 +21896,11 @@
     },
     "blunt_16": {
       "id": "blunt_16",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 15,
+      "two_handed": false,
+      "number": 16,
       "grip": [
         15,
         25
@@ -22636,9 +21909,11 @@
     },
     "blunt_17": {
       "id": "blunt_17",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 16,
+      "two_handed": false,
+      "number": 17,
       "grip": [
         15,
         25
@@ -22647,9 +21922,11 @@
     },
     "blunt_18": {
       "id": "blunt_18",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 17,
+      "two_handed": false,
+      "number": 18,
       "grip": [
         15,
         25
@@ -22658,163 +21935,24 @@
     },
     "blunt_19": {
       "id": "blunt_19",
-      "family": "blunt",
-      "sheet": "sprites/weapons/melee weapons/blunt.png",
+      "family": "one_blunt",
+      "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 18,
+      "two_handed": false,
+      "number": 19,
       "grip": [
         15,
         26
       ],
       "attack": "chop_attack"
     },
-    "blunt_big_01": {
-      "id": "blunt_big_01",
-      "family": "blunt_big",
-      "sheet": "sprites/weapons/melee weapons/blunt_big.png",
-      "slot": 0,
-      "grip": [
-        16,
-        34
-      ],
-      "attack": "chop_attack"
-    },
-    "blunt_big_02": {
-      "id": "blunt_big_02",
-      "family": "blunt_big",
-      "sheet": "sprites/weapons/melee weapons/blunt_big.png",
-      "slot": 1,
-      "grip": [
-        16,
-        35
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_01": {
-      "id": "polearm_01",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 0,
-      "grip": [
-        16,
-        45
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_02": {
-      "id": "polearm_02",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 1,
-      "grip": [
-        15,
-        44
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_03": {
-      "id": "polearm_03",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 2,
-      "grip": [
-        15,
-        44
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_04": {
-      "id": "polearm_04",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 3,
-      "grip": [
-        16,
-        45
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_05": {
-      "id": "polearm_05",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 4,
-      "grip": [
-        16,
-        44
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_06": {
-      "id": "polearm_06",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 5,
-      "grip": [
-        15,
-        44
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_07": {
-      "id": "polearm_07",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 6,
-      "grip": [
-        16,
-        44
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_08": {
-      "id": "polearm_08",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 7,
-      "grip": [
-        15,
-        42
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_09": {
-      "id": "polearm_09",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 8,
-      "grip": [
-        15,
-        46
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_10": {
-      "id": "polearm_10",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 9,
-      "grip": [
-        15,
-        44
-      ],
-      "attack": "chop_attack"
-    },
-    "polearm_11": {
-      "id": "polearm_11",
-      "family": "polearm",
-      "sheet": "sprites/weapons/melee weapons/polearm.png",
-      "slot": 10,
-      "grip": [
-        16,
-        40
-      ],
-      "attack": "chop_attack"
-    },
     "shield_01": {
       "id": "shield_01",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 0,
+      "two_handed": false,
+      "number": 1,
       "grip": [
         16,
         18
@@ -22823,9 +21961,11 @@
     },
     "shield_02": {
       "id": "shield_02",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 1,
+      "two_handed": false,
+      "number": 2,
       "grip": [
         16,
         17
@@ -22834,9 +21974,11 @@
     },
     "shield_03": {
       "id": "shield_03",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 2,
+      "two_handed": false,
+      "number": 3,
       "grip": [
         15,
         16
@@ -22845,9 +21987,11 @@
     },
     "shield_04": {
       "id": "shield_04",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 3,
+      "two_handed": false,
+      "number": 4,
       "grip": [
         15,
         15
@@ -22856,9 +22000,11 @@
     },
     "shield_05": {
       "id": "shield_05",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 4,
+      "two_handed": false,
+      "number": 5,
       "grip": [
         16,
         15
@@ -22867,9 +22013,11 @@
     },
     "shield_06": {
       "id": "shield_06",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 5,
+      "two_handed": false,
+      "number": 6,
       "grip": [
         16,
         16
@@ -22878,9 +22026,11 @@
     },
     "shield_07": {
       "id": "shield_07",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 6,
+      "two_handed": false,
+      "number": 7,
       "grip": [
         15,
         16
@@ -22889,31 +22039,11 @@
     },
     "shield_08": {
       "id": "shield_08",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 7,
-      "grip": [
-        15,
-        16
-      ],
-      "attack": "chop_attack"
-    },
-    "shield_09": {
-      "id": "shield_09",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 8,
-      "grip": [
-        15,
-        15
-      ],
-      "attack": "chop_attack"
-    },
-    "shield_10": {
-      "id": "shield_10",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 9,
+      "two_handed": false,
+      "number": 8,
       "grip": [
         15,
         16
@@ -22922,9 +22052,11 @@
     },
     "shield_11": {
       "id": "shield_11",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 10,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 8,
+      "two_handed": false,
+      "number": 11,
       "grip": [
         15,
         15
@@ -22933,9 +22065,11 @@
     },
     "shield_12": {
       "id": "shield_12",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 11,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 9,
+      "two_handed": false,
+      "number": 12,
       "grip": [
         15,
         15
@@ -22944,9 +22078,11 @@
     },
     "shield_13": {
       "id": "shield_13",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 12,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 10,
+      "two_handed": false,
+      "number": 13,
       "grip": [
         16,
         15
@@ -22955,9 +22091,11 @@
     },
     "shield_14": {
       "id": "shield_14",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 13,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 11,
+      "two_handed": false,
+      "number": 14,
       "grip": [
         16,
         18
@@ -22966,9 +22104,11 @@
     },
     "shield_15": {
       "id": "shield_15",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 14,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 12,
+      "two_handed": false,
+      "number": 15,
       "grip": [
         16,
         17
@@ -22977,9 +22117,11 @@
     },
     "shield_16": {
       "id": "shield_16",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 15,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 13,
+      "two_handed": false,
+      "number": 16,
       "grip": [
         15,
         16
@@ -22988,9 +22130,11 @@
     },
     "shield_17": {
       "id": "shield_17",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 16,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 14,
+      "two_handed": false,
+      "number": 17,
       "grip": [
         15,
         16
@@ -22999,9 +22143,11 @@
     },
     "shield_18": {
       "id": "shield_18",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 17,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 15,
+      "two_handed": false,
+      "number": 18,
       "grip": [
         16,
         15
@@ -23010,9 +22156,11 @@
     },
     "shield_19": {
       "id": "shield_19",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 18,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 16,
+      "two_handed": false,
+      "number": 19,
       "grip": [
         16,
         16
@@ -23021,9 +22169,11 @@
     },
     "shield_20": {
       "id": "shield_20",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 19,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 17,
+      "two_handed": false,
+      "number": 20,
       "grip": [
         15,
         16
@@ -23032,31 +22182,11 @@
     },
     "shield_21": {
       "id": "shield_21",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 20,
-      "grip": [
-        15,
-        17
-      ],
-      "attack": "chop_attack"
-    },
-    "shield_22": {
-      "id": "shield_22",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 21,
-      "grip": [
-        15,
-        17
-      ],
-      "attack": "chop_attack"
-    },
-    "shield_23": {
-      "id": "shield_23",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 22,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 18,
+      "two_handed": false,
+      "number": 21,
       "grip": [
         15,
         17
@@ -23065,9 +22195,11 @@
     },
     "shield_24": {
       "id": "shield_24",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 23,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 19,
+      "two_handed": false,
+      "number": 24,
       "grip": [
         15,
         16
@@ -23076,9 +22208,11 @@
     },
     "shield_25": {
       "id": "shield_25",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 24,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 20,
+      "two_handed": false,
+      "number": 25,
       "grip": [
         16,
         15
@@ -23087,9 +22221,11 @@
     },
     "shield_26": {
       "id": "shield_26",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 25,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 21,
+      "two_handed": false,
+      "number": 26,
       "grip": [
         15,
         15
@@ -23098,9 +22234,11 @@
     },
     "shield_27": {
       "id": "shield_27",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 26,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 22,
+      "two_handed": false,
+      "number": 27,
       "grip": [
         16,
         18
@@ -23109,9 +22247,11 @@
     },
     "shield_28": {
       "id": "shield_28",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 27,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 23,
+      "two_handed": false,
+      "number": 28,
       "grip": [
         16,
         17
@@ -23120,9 +22260,11 @@
     },
     "shield_29": {
       "id": "shield_29",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 28,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 24,
+      "two_handed": false,
+      "number": 29,
       "grip": [
         15,
         17
@@ -23131,9 +22273,11 @@
     },
     "shield_30": {
       "id": "shield_30",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 29,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 25,
+      "two_handed": false,
+      "number": 30,
       "grip": [
         15,
         17
@@ -23142,9 +22286,11 @@
     },
     "shield_31": {
       "id": "shield_31",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 30,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 26,
+      "two_handed": false,
+      "number": 31,
       "grip": [
         16,
         17
@@ -23153,9 +22299,11 @@
     },
     "shield_32": {
       "id": "shield_32",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 31,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 27,
+      "two_handed": false,
+      "number": 32,
       "grip": [
         16,
         17
@@ -23164,9 +22312,11 @@
     },
     "shield_33": {
       "id": "shield_33",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 32,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 28,
+      "two_handed": false,
+      "number": 33,
       "grip": [
         15,
         17
@@ -23175,42 +22325,24 @@
     },
     "shield_34": {
       "id": "shield_34",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 33,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 29,
+      "two_handed": false,
+      "number": 34,
       "grip": [
         15,
         16
-      ],
-      "attack": "chop_attack"
-    },
-    "shield_35": {
-      "id": "shield_35",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 34,
-      "grip": [
-        15,
-        16
-      ],
-      "attack": "chop_attack"
-    },
-    "shield_36": {
-      "id": "shield_36",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 35,
-      "grip": [
-        15,
-        17
       ],
       "attack": "chop_attack"
     },
     "shield_37": {
       "id": "shield_37",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 36,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 30,
+      "two_handed": false,
+      "number": 37,
       "grip": [
         15,
         16
@@ -23219,9 +22351,11 @@
     },
     "shield_38": {
       "id": "shield_38",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 37,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 31,
+      "two_handed": false,
+      "number": 38,
       "grip": [
         15,
         16
@@ -23230,9 +22364,11 @@
     },
     "shield_39": {
       "id": "shield_39",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 38,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 32,
+      "two_handed": false,
+      "number": 39,
       "grip": [
         16,
         17
@@ -23241,9 +22377,11 @@
     },
     "shield_40": {
       "id": "shield_40",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 39,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 33,
+      "two_handed": false,
+      "number": 40,
       "grip": [
         16,
         18
@@ -23252,9 +22390,11 @@
     },
     "shield_41": {
       "id": "shield_41",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 40,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 34,
+      "two_handed": false,
+      "number": 41,
       "grip": [
         16,
         18
@@ -23263,9 +22403,11 @@
     },
     "shield_42": {
       "id": "shield_42",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 41,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 35,
+      "two_handed": false,
+      "number": 42,
       "grip": [
         15,
         16
@@ -23274,9 +22416,11 @@
     },
     "shield_43": {
       "id": "shield_43",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 42,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 36,
+      "two_handed": false,
+      "number": 43,
       "grip": [
         15,
         17
@@ -23285,9 +22429,11 @@
     },
     "shield_44": {
       "id": "shield_44",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 43,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 37,
+      "two_handed": false,
+      "number": 44,
       "grip": [
         16,
         17
@@ -23296,9 +22442,11 @@
     },
     "shield_45": {
       "id": "shield_45",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 44,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 38,
+      "two_handed": false,
+      "number": 45,
       "grip": [
         15,
         17
@@ -23307,9 +22455,11 @@
     },
     "shield_46": {
       "id": "shield_46",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 45,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 39,
+      "two_handed": false,
+      "number": 46,
       "grip": [
         15,
         16
@@ -23318,31 +22468,11 @@
     },
     "shield_47": {
       "id": "shield_47",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 46,
-      "grip": [
-        15,
-        16
-      ],
-      "attack": "chop_attack"
-    },
-    "shield_48": {
-      "id": "shield_48",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 47,
-      "grip": [
-        15,
-        16
-      ],
-      "attack": "chop_attack"
-    },
-    "shield_49": {
-      "id": "shield_49",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 48,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 40,
+      "two_handed": false,
+      "number": 47,
       "grip": [
         15,
         16
@@ -23351,9 +22481,11 @@
     },
     "shield_50": {
       "id": "shield_50",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 49,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 41,
+      "two_handed": false,
+      "number": 50,
       "grip": [
         15,
         14
@@ -23362,9 +22494,11 @@
     },
     "shield_51": {
       "id": "shield_51",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 50,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 42,
+      "two_handed": false,
+      "number": 51,
       "grip": [
         15,
         15
@@ -23373,9 +22507,11 @@
     },
     "shield_52": {
       "id": "shield_52",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 51,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 43,
+      "two_handed": false,
+      "number": 52,
       "grip": [
         15,
         16
@@ -23384,9 +22520,11 @@
     },
     "shield_53": {
       "id": "shield_53",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 52,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 44,
+      "two_handed": false,
+      "number": 53,
       "grip": [
         15,
         17
@@ -23395,9 +22533,11 @@
     },
     "shield_54": {
       "id": "shield_54",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 53,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 45,
+      "two_handed": false,
+      "number": 54,
       "grip": [
         15,
         17
@@ -23406,9 +22546,11 @@
     },
     "shield_55": {
       "id": "shield_55",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 54,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 46,
+      "two_handed": false,
+      "number": 55,
       "grip": [
         15,
         17
@@ -23417,207 +22559,24 @@
     },
     "shield_56": {
       "id": "shield_56",
-      "family": "shield",
-      "sheet": "sprites/weapons/melee weapons/shield.png",
-      "slot": 55,
+      "family": "one_shield",
+      "sheet": "sprites/weapons/melee weapons/one_shield.png",
+      "slot": 47,
+      "two_handed": false,
+      "number": 56,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack"
     },
-    "spear_01": {
-      "id": "spear_01",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 0,
-      "grip": [
-        15,
-        46
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_02": {
-      "id": "spear_02",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 1,
-      "grip": [
-        16,
-        46
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_03": {
-      "id": "spear_03",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 2,
-      "grip": [
-        15,
-        45
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_04": {
-      "id": "spear_04",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 3,
-      "grip": [
-        16,
-        45
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_05": {
-      "id": "spear_05",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 4,
-      "grip": [
-        15,
-        41
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_06": {
-      "id": "spear_06",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 5,
-      "grip": [
-        15,
-        41
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_07": {
-      "id": "spear_07",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 6,
-      "grip": [
-        16,
-        45
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_08": {
-      "id": "spear_08",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 7,
-      "grip": [
-        15,
-        46
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_10": {
-      "id": "spear_10",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 8,
-      "grip": [
-        15,
-        44
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_11": {
-      "id": "spear_11",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 9,
-      "grip": [
-        16,
-        40
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_12": {
-      "id": "spear_12",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 10,
-      "grip": [
-        15,
-        45
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_13": {
-      "id": "spear_13",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 11,
-      "grip": [
-        15,
-        41
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_14": {
-      "id": "spear_14",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 12,
-      "grip": [
-        15,
-        43
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_101": {
-      "id": "spear_101",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 13,
-      "grip": [
-        15,
-        45
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_102": {
-      "id": "spear_102",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 14,
-      "grip": [
-        15,
-        46
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_103": {
-      "id": "spear_103",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 15,
-      "grip": [
-        16,
-        45
-      ],
-      "attack": "thrust_attack"
-    },
-    "spear_104": {
-      "id": "spear_104",
-      "family": "spear",
-      "sheet": "sprites/weapons/melee weapons/spear.png",
-      "slot": 16,
-      "grip": [
-        15,
-        45
-      ],
-      "attack": "thrust_attack"
-    },
     "sword_01": {
       "id": "sword_01",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 0,
+      "two_handed": false,
+      "number": 1,
       "grip": [
         15,
         26
@@ -23626,9 +22585,11 @@
     },
     "sword_02": {
       "id": "sword_02",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 1,
+      "two_handed": false,
+      "number": 2,
       "grip": [
         15,
         28
@@ -23637,53 +22598,24 @@
     },
     "sword_03": {
       "id": "sword_03",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 2,
+      "two_handed": false,
+      "number": 3,
       "grip": [
         15,
-        28
-      ],
-      "attack": "chop_attack"
-    },
-    "sword_04": {
-      "id": "sword_04",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 3,
-      "grip": [
-        15,
-        28
-      ],
-      "attack": "chop_attack"
-    },
-    "sword_05": {
-      "id": "sword_05",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 4,
-      "grip": [
-        14,
-        28
-      ],
-      "attack": "chop_attack"
-    },
-    "sword_06": {
-      "id": "sword_06",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 5,
-      "grip": [
-        14,
         28
       ],
       "attack": "chop_attack"
     },
     "sword_07": {
       "id": "sword_07",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 6,
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
+      "slot": 3,
+      "two_handed": false,
+      "number": 7,
       "grip": [
         15,
         28
@@ -23692,9 +22624,11 @@
     },
     "sword_08": {
       "id": "sword_08",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 7,
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
+      "slot": 4,
+      "two_handed": false,
+      "number": 8,
       "grip": [
         15,
         28
@@ -23703,9 +22637,11 @@
     },
     "sword_09": {
       "id": "sword_09",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 8,
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
+      "slot": 5,
+      "two_handed": false,
+      "number": 9,
       "grip": [
         15,
         28
@@ -23714,9 +22650,11 @@
     },
     "sword_10": {
       "id": "sword_10",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 9,
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
+      "slot": 6,
+      "two_handed": false,
+      "number": 10,
       "grip": [
         17,
         27
@@ -23725,9 +22663,11 @@
     },
     "sword_11": {
       "id": "sword_11",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 10,
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
+      "slot": 7,
+      "two_handed": false,
+      "number": 11,
       "grip": [
         15,
         27
@@ -23736,9 +22676,11 @@
     },
     "sword_12": {
       "id": "sword_12",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 11,
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
+      "slot": 8,
+      "two_handed": false,
+      "number": 12,
       "grip": [
         15,
         28
@@ -23747,9 +22689,11 @@
     },
     "sword_13": {
       "id": "sword_13",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 12,
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
+      "slot": 9,
+      "two_handed": false,
+      "number": 13,
       "grip": [
         15,
         28
@@ -23758,20 +22702,479 @@
     },
     "sword_14": {
       "id": "sword_14",
-      "family": "sword",
-      "sheet": "sprites/weapons/melee weapons/sword.png",
-      "slot": 13,
+      "family": "one_sword",
+      "sheet": "sprites/weapons/melee weapons/one_sword.png",
+      "slot": 10,
+      "two_handed": false,
+      "number": 14,
       "grip": [
         15,
         28
       ],
       "attack": "chop_attack"
     },
+    "axe_big_01": {
+      "id": "axe_big_01",
+      "family": "two_axe",
+      "sheet": "sprites/weapons/melee weapons/two_axe.png",
+      "slot": 0,
+      "two_handed": true,
+      "number": 1,
+      "grip": [
+        15,
+        36
+      ],
+      "attack": "chop_attack"
+    },
+    "axe_big_02": {
+      "id": "axe_big_02",
+      "family": "two_axe",
+      "sheet": "sprites/weapons/melee weapons/two_axe.png",
+      "slot": 1,
+      "two_handed": true,
+      "number": 2,
+      "grip": [
+        16,
+        36
+      ],
+      "attack": "chop_attack"
+    },
+    "axe_big_03": {
+      "id": "axe_big_03",
+      "family": "two_axe",
+      "sheet": "sprites/weapons/melee weapons/two_axe.png",
+      "slot": 2,
+      "two_handed": true,
+      "number": 3,
+      "grip": [
+        16,
+        36
+      ],
+      "attack": "chop_attack"
+    },
+    "axe_big_04": {
+      "id": "axe_big_04",
+      "family": "two_axe",
+      "sheet": "sprites/weapons/melee weapons/two_axe.png",
+      "slot": 3,
+      "two_handed": true,
+      "number": 4,
+      "grip": [
+        16,
+        37
+      ],
+      "attack": "chop_attack"
+    },
+    "axe_big_05": {
+      "id": "axe_big_05",
+      "family": "two_axe",
+      "sheet": "sprites/weapons/melee weapons/two_axe.png",
+      "slot": 4,
+      "two_handed": true,
+      "number": 5,
+      "grip": [
+        17,
+        37
+      ],
+      "attack": "chop_attack"
+    },
+    "blunt_big_01": {
+      "id": "blunt_big_01",
+      "family": "two_blunt",
+      "sheet": "sprites/weapons/melee weapons/two_blunt.png",
+      "slot": 0,
+      "two_handed": true,
+      "number": 1,
+      "grip": [
+        16,
+        34
+      ],
+      "attack": "chop_attack"
+    },
+    "blunt_big_02": {
+      "id": "blunt_big_02",
+      "family": "two_blunt",
+      "sheet": "sprites/weapons/melee weapons/two_blunt.png",
+      "slot": 1,
+      "two_handed": true,
+      "number": 2,
+      "grip": [
+        16,
+        35
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_01": {
+      "id": "polearm_01",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 0,
+      "two_handed": true,
+      "number": 1,
+      "grip": [
+        16,
+        45
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_02": {
+      "id": "polearm_02",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 1,
+      "two_handed": true,
+      "number": 2,
+      "grip": [
+        15,
+        44
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_03": {
+      "id": "polearm_03",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 2,
+      "two_handed": true,
+      "number": 3,
+      "grip": [
+        15,
+        44
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_04": {
+      "id": "polearm_04",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 3,
+      "two_handed": true,
+      "number": 4,
+      "grip": [
+        16,
+        45
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_05": {
+      "id": "polearm_05",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 4,
+      "two_handed": true,
+      "number": 5,
+      "grip": [
+        16,
+        44
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_06": {
+      "id": "polearm_06",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 5,
+      "two_handed": true,
+      "number": 6,
+      "grip": [
+        15,
+        44
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_07": {
+      "id": "polearm_07",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 6,
+      "two_handed": true,
+      "number": 7,
+      "grip": [
+        16,
+        44
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_08": {
+      "id": "polearm_08",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 7,
+      "two_handed": true,
+      "number": 8,
+      "grip": [
+        15,
+        42
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_09": {
+      "id": "polearm_09",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 8,
+      "two_handed": true,
+      "number": 9,
+      "grip": [
+        15,
+        46
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_10": {
+      "id": "polearm_10",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 9,
+      "two_handed": true,
+      "number": 10,
+      "grip": [
+        15,
+        44
+      ],
+      "attack": "chop_attack"
+    },
+    "polearm_11": {
+      "id": "polearm_11",
+      "family": "two_polearm",
+      "sheet": "sprites/weapons/melee weapons/two_polearm.png",
+      "slot": 10,
+      "two_handed": true,
+      "number": 11,
+      "grip": [
+        16,
+        40
+      ],
+      "attack": "chop_attack"
+    },
+    "spear_01": {
+      "id": "spear_01",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 0,
+      "two_handed": true,
+      "number": 1,
+      "grip": [
+        15,
+        46
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_02": {
+      "id": "spear_02",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 1,
+      "two_handed": true,
+      "number": 2,
+      "grip": [
+        16,
+        46
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_03": {
+      "id": "spear_03",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 2,
+      "two_handed": true,
+      "number": 3,
+      "grip": [
+        15,
+        45
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_04": {
+      "id": "spear_04",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 3,
+      "two_handed": true,
+      "number": 4,
+      "grip": [
+        16,
+        45
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_05": {
+      "id": "spear_05",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 4,
+      "two_handed": true,
+      "number": 5,
+      "grip": [
+        15,
+        41
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_06": {
+      "id": "spear_06",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 5,
+      "two_handed": true,
+      "number": 6,
+      "grip": [
+        15,
+        41
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_07": {
+      "id": "spear_07",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 6,
+      "two_handed": true,
+      "number": 7,
+      "grip": [
+        16,
+        45
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_08": {
+      "id": "spear_08",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 7,
+      "two_handed": true,
+      "number": 8,
+      "grip": [
+        15,
+        46
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_10": {
+      "id": "spear_10",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 8,
+      "two_handed": true,
+      "number": 10,
+      "grip": [
+        15,
+        44
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_11": {
+      "id": "spear_11",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 9,
+      "two_handed": true,
+      "number": 11,
+      "grip": [
+        16,
+        40
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_12": {
+      "id": "spear_12",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 10,
+      "two_handed": true,
+      "number": 12,
+      "grip": [
+        15,
+        45
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_13": {
+      "id": "spear_13",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 11,
+      "two_handed": true,
+      "number": 13,
+      "grip": [
+        15,
+        41
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_14": {
+      "id": "spear_14",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 12,
+      "two_handed": true,
+      "number": 14,
+      "grip": [
+        15,
+        43
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_101": {
+      "id": "spear_101",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 13,
+      "two_handed": true,
+      "number": 101,
+      "grip": [
+        15,
+        45
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_102": {
+      "id": "spear_102",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 14,
+      "two_handed": true,
+      "number": 102,
+      "grip": [
+        15,
+        46
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_103": {
+      "id": "spear_103",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 15,
+      "two_handed": true,
+      "number": 103,
+      "grip": [
+        16,
+        45
+      ],
+      "attack": "thrust_attack"
+    },
+    "spear_104": {
+      "id": "spear_104",
+      "family": "two_spear",
+      "sheet": "sprites/weapons/melee weapons/two_spear.png",
+      "slot": 16,
+      "two_handed": true,
+      "number": 104,
+      "grip": [
+        15,
+        45
+      ],
+      "attack": "thrust_attack"
+    },
     "sword_big_01": {
       "id": "sword_big_01",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 0,
+      "two_handed": true,
+      "number": 1,
       "grip": [
         15,
         39
@@ -23780,9 +23183,11 @@
     },
     "sword_big_02": {
       "id": "sword_big_02",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 1,
+      "two_handed": true,
+      "number": 2,
       "grip": [
         15,
         40
@@ -23791,9 +23196,11 @@
     },
     "sword_big_03": {
       "id": "sword_big_03",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 2,
+      "two_handed": true,
+      "number": 3,
       "grip": [
         15,
         41
@@ -23802,9 +23209,11 @@
     },
     "sword_big_04": {
       "id": "sword_big_04",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 3,
+      "two_handed": true,
+      "number": 4,
       "grip": [
         15,
         40
@@ -23813,9 +23222,11 @@
     },
     "sword_big_05": {
       "id": "sword_big_05",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 4,
+      "two_handed": true,
+      "number": 5,
       "grip": [
         15,
         41
@@ -23824,9 +23235,11 @@
     },
     "sword_big_06": {
       "id": "sword_big_06",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 5,
+      "two_handed": true,
+      "number": 6,
       "grip": [
         15,
         40
@@ -23835,9 +23248,11 @@
     },
     "sword_big_07": {
       "id": "sword_big_07",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 6,
+      "two_handed": true,
+      "number": 7,
       "grip": [
         15,
         41
@@ -23846,9 +23261,11 @@
     },
     "sword_big_08": {
       "id": "sword_big_08",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 7,
+      "two_handed": true,
+      "number": 8,
       "grip": [
         15,
         41
@@ -23857,9 +23274,11 @@
     },
     "sword_big_09": {
       "id": "sword_big_09",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 8,
+      "two_handed": true,
+      "number": 9,
       "grip": [
         15,
         40
@@ -23868,9 +23287,11 @@
     },
     "sword_big_10": {
       "id": "sword_big_10",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 9,
+      "two_handed": true,
+      "number": 10,
       "grip": [
         15,
         41
@@ -23879,9 +23300,11 @@
     },
     "sword_big_11": {
       "id": "sword_big_11",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 10,
+      "two_handed": true,
+      "number": 11,
       "grip": [
         18,
         38
@@ -23890,9 +23313,11 @@
     },
     "sword_big_12": {
       "id": "sword_big_12",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 11,
+      "two_handed": true,
+      "number": 12,
       "grip": [
         15,
         39
@@ -23901,9 +23326,11 @@
     },
     "sword_big_13": {
       "id": "sword_big_13",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 12,
+      "two_handed": true,
+      "number": 13,
       "grip": [
         15,
         41
@@ -23912,9 +23339,11 @@
     },
     "sword_big_14": {
       "id": "sword_big_14",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 13,
+      "two_handed": true,
+      "number": 14,
       "grip": [
         15,
         42
@@ -23923,9 +23352,11 @@
     },
     "sword_big_15": {
       "id": "sword_big_15",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 14,
+      "two_handed": true,
+      "number": 15,
       "grip": [
         15,
         42
@@ -23934,9 +23365,11 @@
     },
     "sword_big_16": {
       "id": "sword_big_16",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 15,
+      "two_handed": true,
+      "number": 16,
       "grip": [
         15,
         41
@@ -23945,9 +23378,11 @@
     },
     "sword_big_17": {
       "id": "sword_big_17",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 16,
+      "two_handed": true,
+      "number": 17,
       "grip": [
         15,
         41
@@ -23956,9 +23391,11 @@
     },
     "sword_big_18": {
       "id": "sword_big_18",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 17,
+      "two_handed": true,
+      "number": 18,
       "grip": [
         15,
         42
@@ -23967,9 +23404,11 @@
     },
     "sword_big_19": {
       "id": "sword_big_19",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 18,
+      "two_handed": true,
+      "number": 19,
       "grip": [
         15,
         43
@@ -23978,9 +23417,11 @@
     },
     "sword_big_20": {
       "id": "sword_big_20",
-      "family": "sword_big",
-      "sheet": "sprites/weapons/melee weapons/sword_big.png",
+      "family": "two_sword",
+      "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 19,
+      "two_handed": true,
+      "number": 20,
       "grip": [
         16,
         41
@@ -23992,6 +23433,8 @@
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 0,
+      "two_handed": true,
+      "number": 1,
       "grip": [
         15,
         16
@@ -24003,6 +23446,8 @@
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 1,
+      "two_handed": true,
+      "number": 2,
       "grip": [
         15,
         16
@@ -24014,6 +23459,8 @@
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 2,
+      "two_handed": true,
+      "number": 3,
       "grip": [
         16,
         16
@@ -24025,6 +23472,8 @@
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 3,
+      "two_handed": true,
+      "number": 4,
       "grip": [
         15,
         16
@@ -24036,6 +23485,8 @@
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 4,
+      "two_handed": true,
+      "number": 5,
       "grip": [
         15,
         16
@@ -24047,6 +23498,8 @@
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 5,
+      "two_handed": true,
+      "number": 6,
       "grip": [
         15,
         16
@@ -24058,6 +23511,8 @@
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 6,
+      "two_handed": true,
+      "number": 7,
       "grip": [
         15,
         16
@@ -24069,6 +23524,8 @@
       "family": "crossbow",
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 0,
+      "two_handed": true,
+      "number": 1,
       "grip": [
         16,
         16
@@ -24080,6 +23537,8 @@
       "family": "crossbow",
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 1,
+      "two_handed": true,
+      "number": 2,
       "grip": [
         16,
         16
@@ -24091,6 +23550,8 @@
       "family": "crossbow",
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 2,
+      "two_handed": true,
+      "number": 3,
       "grip": [
         16,
         16
@@ -24102,31 +23563,11 @@
       "family": "crossbow",
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 3,
+      "two_handed": true,
+      "number": 4,
       "grip": [
         15,
         16
-      ],
-      "attack": "chop_attack"
-    },
-    "sling_01": {
-      "id": "sling_01",
-      "family": "sling",
-      "sheet": "sprites/weapons/ranged weapons/sling.png",
-      "slot": 0,
-      "grip": [
-        34,
-        31
-      ],
-      "attack": "chop_attack"
-    },
-    "stick_sling_01": {
-      "id": "stick_sling_01",
-      "family": "stick_sling",
-      "sheet": "sprites/weapons/ranged weapons/stick_sling.png",
-      "slot": 0,
-      "grip": [
-        38,
-        41
       ],
       "attack": "chop_attack"
     }

@@ -49,7 +49,8 @@ func _initialize() -> void:
 		assert(not nav.open_cell(nav.cell_at(x_y+Vector2(0,5))))
 		assert(not nav.open_cell(nav.cell_at(x_y+Vector2(0,27))))
 	assert(not nav.open_cell(nav.cell_at(Vector2(1180,512))))
-	assert(nav.reachable(Vector2(1408,672),Vector2(1184,512)))
+	assert(not nav.open_cell(nav.cell_at(Vector2(1184,512))))
+	assert(nav.reachable(Vector2(1408,672),Vector2(1248,512)))
 	# Cross the real southern river from either side, around mountain and river tiles.
 	for endpoints in [[Vector2(1408,672),Vector2(1200,688)],[Vector2(1200,688),Vector2(1408,672)], [Vector2(1408,672),Vector2(1040,624)]]:
 		assert_route(nav,endpoints[0],endpoints[1],nav.route(endpoints[0],endpoints[1]))

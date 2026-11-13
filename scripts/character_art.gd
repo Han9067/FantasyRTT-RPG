@@ -17,8 +17,12 @@ const BODY_LABELS := ["검정", "파랑", "갈색", "금색", "초록", "회색"
 const PARTS := [
 	["skin", "피부색"], ["face", "얼굴"], ["body", "복장 색상"],
 	["hair", "머리 모양"], ["hair_color", "머리 색상"],
-	["beard", "수염 모양"], ["beard_color", "수염 색상"], ["weapon", "무기"]
+	["beard", "수염 모양"], ["beard_color", "수염 색상"], ["weapon", "무기1 종류"],
+	["weapon_item", "무기1 번호"], ["offhand", "무기2 종류"], ["offhand_item", "무기2 형태"]
 ]
+const TYPE_LABELS := {"one_axe":"한손 도끼", "one_blunt":"한손 둔기", "one_sword":"한손 검",
+	"one_shield":"방패", "two_axe":"양손 도끼", "two_blunt":"양손 둔기", "two_sword":"양손 검",
+	"two_polearm":"양손 장병기", "two_spear":"양손 창"}
 static var catalog: Dictionary = {}
 static var images: Dictionary = {}
 
@@ -29,7 +33,8 @@ static func data() -> Dictionary:
 
 static func defaults() -> Dictionary:
 	return {"skin": 0, "face": 0, "body": 4, "hair": 1, "hair_color": 1,
-		"beard": 0, "beard_color": 1, "weapon": 0}
+		"beard": 0, "beard_color": 1, "weapon": 0, "weapon_item": 0,
+		"offhand": maxi(0, data().secondary_types.find("one_shield")), "offhand_item": 0}
 
 static func human_data() -> Dictionary:
 	return data().races.human
@@ -44,7 +49,12 @@ static func count(config: Dictionary, key: String) -> int:
 		"hair_color": return human.hair.size()
 		"beard": return 1 + data().sheets[human.beard[config.beard_color]].slots.size()
 		"beard_color": return human.beard.size()
-		"weapon": return data().weapons.size()
+		"weapon": return data().primary_types.size()
+		"weapon_item": return data().melee_groups[data().primary_types[config.weapon]].size()
+		"offhand": return data().secondary_types.size() if not equipped_weapon(config).two_handed else 0
+		"offhand_item":
+			if count(config, "offhand") == 0: return 0
+			return data().melee_groups[data().secondary_types[config.offhand]].size()
 	return 1
 
 static func normalize(config: Dictionary) -> void:
@@ -52,22 +62,32 @@ static func normalize(config: Dictionary) -> void:
 	# cannot leak into a new character if a previous in-memory config is supplied.
 	for key in ["race", "hands", "hat_family", "hat", "hat_color"]:
 		config.erase(key)
-	for key in ["skin", "face", "body", "hair_color", "hair", "beard_color", "beard", "weapon"]:
-		config[key] = clampi(int(config.get(key, 0)), 0, count(config, key) - 1)
+	for key in ["skin", "face", "body", "hair_color", "hair", "beard_color", "beard", "weapon", "weapon_item", "offhand", "offhand_item"]:
+		var total := count(config, key)
+		config[key] = clampi(int(config.get(key, 0)), 0, total - 1) if total > 0 else -1
 
 static func description(config: Dictionary, key: String) -> String:
 	match key:
 		"body": return BODY_LABELS[config.body]
 		"hair": return "없음" if config.hair == 0 else ""
 		"beard": return "없음" if config.beard == 0 else ""
-		"weapon": return data().weapons[config.weapon].label
+		"weapon": return TYPE_LABELS.get(data().primary_types[config.weapon], data().primary_types[config.weapon])
+		"offhand":
+			var family: String = data().secondary_types[config.offhand]
+			return TYPE_LABELS.get(family, family)
 	return ""
 
-# Equipment IDs are independent of the creator's three starter choices.
 static func equipped_weapon(config: Dictionary) -> Dictionary:
-	if config.has("equipped_weapon"):
+	if data().weapon_items.has(config.get("equipped_weapon", "")):
 		return data().weapon_items[config.equipped_weapon]
-	return data().weapons[config.weapon]
+	var ids: Array = data().melee_groups[data().primary_types[config.weapon]]
+	return data().weapon_items[ids[config.get("weapon_item", 0)]]
+
+static func equipped_offhand(config: Dictionary) -> Dictionary:
+	if config.get("offhand", -1) < 0 or equipped_weapon(config).two_handed:
+		return {}
+	var ids: Array = data().melee_groups[data().secondary_types[config.offhand]]
+	return data().weapon_items[ids[config.get("offhand_item", 0)]]
 
 # Keep weapon, gripping hand and body bob in one pose calculation.
 static func pose(animation: String, frame: int, attack_type := "chop_attack") -> Dictionary:
@@ -161,7 +181,15 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	if current_pose.visible:
 		var hand_origin: Vector2i = current_pose.grip - rotated_point(Vector2i(8, 8), Vector2i(16, 16), current_pose.rotation)
 		paste_rotated(img, hand_path, config.skin, hand_origin, current_pose.rotation)
-	paste(img, hand_path, config.skin, current_pose.free_hand)
+	var secondary := equipped_offhand(config) if include_weapon else {}
+	var has_shield: bool = secondary.get("family", "") == "one_shield"
+	if has_shield:
+		paste(img, hand_path, config.skin, current_pose.free_hand)
+	if not secondary.is_empty():
+		var grip := Vector2i(secondary.grip[0], secondary.grip[1])
+		paste(img, secondary.sheet, secondary.slot, current_pose.free_hand + Vector2i(8, 8) - grip)
+	if not has_shield:
+		paste(img, hand_path, config.skin, current_pose.free_hand)
 	if include_weapon and current_pose.effect >= 0:
 		paste_rotated(img, current_pose.effect_sheet, current_pose.effect, current_pose.effect_origin, current_pose.effect_rotation)
 	return img

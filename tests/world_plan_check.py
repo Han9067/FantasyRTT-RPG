@@ -81,12 +81,17 @@ from world_navigation import navigation_data, terrain_masks, transform
 nav=layout['navigation'];blocked={tuple(p) for p in nav['blocked']}
 assert nav['cell_size']==[4,4] and nav['grid_size']==[640,320]
 assert nav['bridge_tiles']==[[39,15],[40,21]]
-pixels,mountains,water,_=terrain_masks(root,SOURCE)
+pixels,mountains,water,_,deck=terrain_masks(root,SOURCE)
 coarse=np.zeros((320,640),dtype=bool)
 for x,y in blocked:coarse[y,x]=True
 expanded=coarse.repeat(4,0).repeat(4,1)
 assert expanded[pixels].all(),'A source obstacle pixel was made walkable'
-assert np.array_equal(coarse,pixels.reshape(320,4,640,4).any(axis=(1,3)))
+assert nav['water_cell_size']==8 and nav['mountain_cell_size']==16
+def expanded_cells(mask, size):
+ return mask.reshape(h//size,size,w//size,size).any(axis=(1,3)).repeat(size,0).repeat(size,1)
+dry_deck=~expanded_cells(~deck | pixels,4)
+expected=expanded_cells(mountains,16) | (expanded_cells(pixels & ~mountains,8) & ~dry_deck)
+assert np.array_equal(expanded,expected)
 def closed(x,y):return (x//4,y//4) in blocked
 # Both bridges: actual deck open; water above and below remains closed.
 for x,y in [(1264,480),(1296,672)]:
@@ -94,7 +99,7 @@ for x,y in [(1264,480),(1296,672)]:
  assert closed(x,y+5) and closed(x,y+27)
  assert water[y+16,x] and water[y+5,x] and water[y+27,x]
 # Same mountain tile: rock blocked, adjacent transparent grass usable.
-assert closed(1180,512) and not closed(1184,512)
+assert closed(1180,512) and closed(1184,512) and not closed(1248,512)
 assert mountains[512:516,1180:1184].any() and not mountains[512:516,1184:1188].any()
 assert not closed(*layout['spawn'])
 # Source-relative tile identity, flips, and layer order using original source tiles.
@@ -104,17 +109,17 @@ terrain=ET.SubElement(fixture,'layer',name='MisleadingName',width='2',height='2'
 ET.SubElement(terrain,'data',encoding='csv').text='589,599,201,1'
 road=ET.SubElement(fixture,'layer',name='Overlay',width='2',height='2')
 ET.SubElement(road,'data',encoding='csv').text='997,997,997,0'
-a,ma,wa,_=terrain_masks(fixture,SOURCE)
+a,ma,wa,_,_=terrain_masks(fixture,SOURCE)
 assert not a[16,16] and wa[16,16] # dirt on water opens just the path
 assert a[3,16] # water beside the road stays blocked
 assert a[ma].all() # no road can clear rock
 fixture.remove(road);fixture.insert(0,road)
-b,_,_,_=terrain_masks(fixture,SOURCE)
+b,_,_,_,_=terrain_masks(fixture,SOURCE)
 assert b[16,16] and np.count_nonzero(b)>np.count_nonzero(a)
 fixture.remove(road)
 terrain.find('data').text='579,0,0,0'
-a,_,_,_=terrain_masks(fixture,SOURCE)
+a,_,_,_,_=terrain_masks(fixture,SOURCE)
 terrain.find('data').text=str(579|0x80000000)+',0,0,0'
-b,_,_,_=terrain_masks(fixture,SOURCE)
+b,_,_,_,_=terrain_masks(fixture,SOURCE)
 assert np.array_equal(b[:32,:32],a[:32,:32][:,::-1])
 print('PASS: silhouette obstacles, bridge deck/water separation, mountain margins, original palette masks and tile transforms/order')

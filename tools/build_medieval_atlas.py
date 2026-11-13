@@ -43,9 +43,9 @@ def weapon_grip(family, name, image):
 
 
 def build(source=SOURCE, dest=DEST):
-    catalog = {'schema': 4, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'weapons': [], 'weapon_items': {}}
+    catalog = {'schema': 5, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'primary_types': [], 'secondary_types': [], 'melee_groups': {}, 'weapon_items': {}}
     pending = []
-    def add(group):
+    def add(group, filename_prefix=None):
         key = group + '.png'
         if key in catalog['sheets']:
             return key
@@ -55,7 +55,7 @@ def build(source=SOURCE, dest=DEST):
             raise ValueError(f'No loose PNGs in {folder}')
         slots = []
         def number(path):
-            match = re.fullmatch(re.escape(folder.name) + r'_(\d+)', path.stem)
+            match = re.fullmatch(re.escape(filename_prefix or folder.name) + r'_(\d+)', path.stem)
             if not match:
                 raise ValueError(f'Expected {folder.name}_NN.png: {path}')
             return int(match[1])
@@ -69,7 +69,7 @@ def build(source=SOURCE, dest=DEST):
                 image = image.convert('RGBA')
                 if image.width + 2*GUTTER > PAGE_SIZE or image.height + 2*GUTTER > PAGE_SIZE:
                     raise ValueError(f'Part is larger than atlas page: {path}')
-                slot = {'name':path.stem, 'source':str(path.relative_to(source)),
+                slot = {'name':path.stem, 'source':path.relative_to(source).as_posix(),
                         'sha256':hashlib.sha256(raw).hexdigest(), 'size':list(image.size),
                         'id':number(path)}
                 slots.append(slot)
@@ -90,17 +90,30 @@ def build(source=SOURCE, dest=DEST):
         for folder in sorted((source / 'sprites/weapons' / category).iterdir()):
             if not folder.is_dir() or folder.name.endswith('_shot'):
                 continue
-            key = add(str(folder.relative_to(source)))
+            melee = category == 'melee weapons'
+            family = folder.name
+            if melee:
+                hands, family = folder.name.split('_', 1)
+                if hands not in ('one', 'two'):
+                    raise ValueError(f'Expected one_ or two_ in {folder}')
+            prefix = family + '_big' if melee and hands == 'two' and family in ('axe', 'blunt', 'sword') else family
+            key = add(folder.relative_to(source).as_posix(), prefix)
             slots = catalog['sheets'][key]['slots']
-            equipped_slots = slots[:1] if folder.name in ['sling', 'stick_sling'] else slots
-            for index, slot in enumerate(equipped_slots):
+            if melee:
+                catalog['melee_groups'][folder.name] = [slot['name'] for slot in slots]
+                if family != 'shield':
+                    catalog['primary_types'].append(folder.name)
+                if hands == 'one':
+                    catalog['secondary_types'].append(folder.name)
+            for index, slot in enumerate(slots):
                 with Image.open(source / slot['source']) as image:
-                    grip = weapon_grip(folder.name, slot['name'], image.convert('RGBA'))
+                    grip = weapon_grip(family, slot['name'], image.convert('RGBA'))
+                if slot['name'] in catalog['weapon_items']:
+                    raise ValueError(f"Duplicate equipment ID: {slot['name']}")
                 catalog['weapon_items'][slot['name']] = {
                     'id': slot['name'], 'family': folder.name, 'sheet': key, 'slot': index,
-                    'grip': grip, 'attack': 'thrust_attack' if folder.name == 'spear' else 'chop_attack'}
-    for item_id, label in [('axe_01','한손 도끼'), ('blunt_01','한손 둔기'), ('sword_01','한손 검')]:
-        catalog['weapons'].append(dict(catalog['weapon_items'][item_id], label=label))
+                    'two_handed': not melee or hands == 'two', 'number': slot['id'],
+                    'grip': grip, 'attack': 'thrust_attack' if family == 'spear' else 'chop_attack'}
     catalog['attack_effect'] = add('sprites/VFX/weapon/weaponfx03')
     catalog['thrust_effect'] = add('sprites/VFX/weapon/weaponfx02')
     catalog['attack_references'] = {}
@@ -113,7 +126,7 @@ def build(source=SOURCE, dest=DEST):
                 durations.append(gif.info['duration'])
         if len(durations) != 6:
             raise ValueError(f'Expected six reference poses: {guide}')
-        catalog['attack_references'][attack] = {'source':str(guide.relative_to(source)),
+        catalog['attack_references'][attack] = {'source':guide.relative_to(source).as_posix(),
             'sha256':hashlib.sha256(guide.read_bytes()).hexdigest(),
             'frames':len(durations), 'durations_ms':durations}
 
@@ -145,7 +158,7 @@ def build(source=SOURCE, dest=DEST):
         if path.name not in catalog['atlases']:
             path.unlink()
             Path(str(path)+'.import').unlink(missing_ok=True)
-    (dest/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2)+'\n')
+    (dest/'catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2)+'\n', encoding='utf-8', newline='\n')
     # Verify packing, including gutters/rectangles, against editable source pixels.
     for slot,source_image in pending:
         page=pages[catalog['atlases'].index(slot['atlas'])]

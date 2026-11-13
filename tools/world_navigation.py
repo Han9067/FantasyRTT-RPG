@@ -1,4 +1,4 @@
-"""Bake terrain silhouettes to conservative 4px navigation cells; never edit art.
+"""Bake the 8px water and 16px mountain masks on a shared grid.
 
 Water colours are from the supplied palettes (transparent pixels are ignored).
 Rock silhouettes exclude green foothill decoration. Roads open only their dirt
@@ -9,6 +9,8 @@ import numpy as np
 from PIL import Image
 
 CELL_SIZE = 4
+WATER_SIZE = 8
+MOUNTAIN_SIZE = 16
 WATER_COLOURS = {(69,100,114), (66,93,114), (57,83,106)}
 ROAD_COLOURS = {(147,132,89), (145,125,83), (139,119,85), (126,104,67), (128,107,70)}
 # ObjectsTiles local 10: horizontal stone bridge. Its translucent shadow and
@@ -38,6 +40,7 @@ def terrain_masks(tmx, source):
     water = np.zeros((rows*th,cols*tw), dtype=bool)
     mountain = np.zeros_like(water)
     opening = np.zeros_like(water)
+    bridge_surface = np.zeros_like(water)
     bridges = []
     cache = {}
     for layer in tmx.findall('layer'):
@@ -81,18 +84,29 @@ def terrain_masks(tmx, source):
                 # A bridge replaces the underlying road's entire tile opening,
                 # so neither road fringe nor bridge shadow can open nearby water.
                 opening[region] = mask
+                bridge_surface[region] = mask
                 bridges.append([index%cols,index//cols])
     blocked = mountain | (water & ~opening)
-    return blocked, mountain, water, bridges
+    return blocked, mountain, water, bridges, bridge_surface
 
 def navigation_data(tmx, source):
-    pixels, mountain, water, bridges = terrain_masks(tmx,source)
+    pixels, mountain, water, bridges, bridge_surface = terrain_masks(tmx,source)
     h,w = pixels.shape
     assert w % CELL_SIZE == h % CELL_SIZE == 0
-    # ANY blocked source pixel blocks its 4x4 cell: water is never made walkable
-    # by averaging. Maximum outward edge approximation is three native pixels.
-    blocked = pixels.reshape(h//CELL_SIZE,CELL_SIZE,w//CELL_SIZE,CELL_SIZE).any(axis=(1,3))
+    def cells(mask, size):
+        return mask.reshape(h//size,size,w//size,size).any(axis=(1,3))
+
+    def expand(mask, size):
+        factor = size // CELL_SIZE
+        return mask.repeat(factor,axis=0).repeat(factor,axis=1)
+
+    blocked = expand(cells(pixels & ~mountain, WATER_SIZE), WATER_SIZE)
+    # The ten-pixel-wide deck straddles the 8px grid. Retain its original
+    # conservative 4px silhouette inside bridge tiles so only dry cells open.
+    deck = ~cells(~bridge_surface, CELL_SIZE) & ~cells(pixels, CELL_SIZE)
+    blocked[deck] = False
+    blocked |= expand(cells(mountain, MOUNTAIN_SIZE), MOUNTAIN_SIZE)
     ys,xs = np.nonzero(blocked)
     return {'cell_size':[CELL_SIZE,CELL_SIZE], 'grid_size':[w//CELL_SIZE,h//CELL_SIZE],
             'blocked':np.column_stack((xs,ys)).tolist(), 'bridge_tiles':bridges,
-            'source_pixel_size':[w,h], 'max_edge_padding':CELL_SIZE-1}
+            'source_pixel_size':[w,h], 'water_cell_size':WATER_SIZE, 'mountain_cell_size':MOUNTAIN_SIZE}

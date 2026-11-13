@@ -1,3 +1,7 @@
+# Windows 0.0.3 캐릭터 생성
+
+무기 원본은 PNG 330개다. 바탕화면의 MedievalFantasyCharacters/sprites/weapons/melee weapons/one_shield 폴더에 있는 방패 48개를 원래 파일 번호로 선택한다. 근접 9개 폴더에서 방패를 제외한 8종을 무기1에, 한손무기와 방패 4종을 무기2에 표시한다. 번호는 파일명의 숫자를 따르며 결번을 건너뛴다. 양손무기를 선택하면 무기2가 해제된다. 편집 원본과 아틀라스 2장의 1,236개 파츠를 대조한다. 아래 내용은 이전 웹 버전의 이력이다.
+
 # 캐릭터 디자인 기준 — 개별 PNG / 0.0.26
 
 원본은 사용자 MedievalFantasyCharacters.zip이며, 무기 부분은 최신 weapons.zip으로 교체했다.

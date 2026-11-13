@@ -23,14 +23,14 @@ class AssetImportTest(unittest.TestCase):
             runtime.mkdir()
             weapons = source/'sprites/weapons'
             archive = root/'weapons.zip'
-            inputs = {str(p.relative_to(weapons)): p.read_bytes() for p in weapons.rglob('*.png')}
-            untouched = {str(p.relative_to(source)): p.read_bytes() for p in source.rglob('*') if p.is_file() and not p.is_relative_to(weapons)}
+            inputs = {p.relative_to(weapons).as_posix(): p.read_bytes() for p in weapons.rglob('*.png')}
+            untouched = {p.relative_to(source).as_posix(): p.read_bytes() for p in source.rglob('*') if p.is_file() and not p.is_relative_to(weapons)}
             (weapons/'removed_weapon.png').write_bytes(b'stale')
             with zipfile.ZipFile(archive,'w') as z:
                 for name, data in inputs.items(): z.writestr(name, data)
             with patch.object(importer,'SOURCE',source), patch.object(importer,'DEST',runtime), patch.object(sys,'argv',['import',str(archive),'--weapons']), contextlib.redirect_stdout(io.StringIO()):
                 importer.main()
-            self.assertEqual({str(p.relative_to(weapons)):p.read_bytes() for p in weapons.rglob('*') if p.is_file()}, inputs)
+            self.assertEqual({p.relative_to(weapons).as_posix():p.read_bytes() for p in weapons.rglob('*') if p.is_file()}, inputs)
             for name, data in untouched.items(): self.assertEqual((source/name).read_bytes(), data)
             # Invalid scoped imports must preserve both source and runtime.
             catalog = (runtime/'catalog.json').read_bytes()
@@ -65,12 +65,12 @@ class AssetImportTest(unittest.TestCase):
             (source/'removed_folder/old.png').write_bytes(b'stale')
             (runtime/'obsolete.png').write_bytes(b'stale')
             archive=root/'new.zip'
-            inputs={str(p.relative_to(ROOT/'art/medieval')):p for p in (ROOT/'art/medieval').rglob('*') if p.is_file() and p.name!='.gdignore'}
+            inputs={p.relative_to(ROOT/'art/medieval').as_posix():p for p in (ROOT/'art/medieval').rglob('*') if p.is_file() and p.name!='.gdignore'}
             with zipfile.ZipFile(archive,'w') as z:
                 for name,path in inputs.items():z.write(path,name)
             with patch.object(importer,'SOURCE',source), patch.object(importer,'DEST',runtime), patch.object(sys,'argv',['import',str(archive)]), contextlib.redirect_stdout(io.StringIO()):
                 importer.main()
-            actual={str(p.relative_to(source)) for p in source.rglob('*') if p.is_file() and p.name!='.gdignore'}
+            actual={p.relative_to(source).as_posix() for p in source.rglob('*') if p.is_file() and p.name!='.gdignore'}
             self.assertEqual(actual,set(inputs))
             self.assertFalse((source/'removed_folder').exists())
             self.assertFalse((runtime/'obsolete.png').exists())
