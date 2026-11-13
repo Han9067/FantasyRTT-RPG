@@ -12,12 +12,24 @@ const ZOOM_STEP := 0.25
 const BODY_CENTER_X := CharacterArt.BODY_ORIGIN.x + 16
 const INFANTRY_COLUMNS := 4
 const INFANTRY_ROWS := 5
-class FriendlyUnit extends AnimatedSprite2D:
-	var feet := Vector2.ZERO
+const FORMATION_SPACING := Vector2(22, 15)
+const DEPLOYMENT_OFFSET := 440.0
+const CONTACT_SIZE := Vector2(5, 5)
+const BODY_CENTER_FROM_FEET := Vector2(0, -13)
+
+class BattleUnit extends AnimatedSprite2D:
 	var target := Vector2.ZERO
 
-var friendlies: Array[FriendlyUnit] = []
-var selection: Array[FriendlyUnit] = []
+	func contact_box() -> Rect2:
+		return Rect2(position + BODY_CENTER_FROM_FEET - CONTACT_SIZE * 0.5, CONTACT_SIZE)
+
+var friendlies: Array[BattleUnit] = []
+var infantry: Array[BattleUnit] = []
+var enemies: Array[BattleUnit] = []
+var hero_group: Array[BattleUnit] = []
+var selection: Array[BattleUnit] = []
+var joint_order := false
+var standard: AnimatedSprite2D
 var order_marker := Vector2.ZERO
 var character_frames: SpriteFrames
 var character_name := "여행자"
@@ -46,15 +58,17 @@ func _ready() -> void:
 	units.name = "Units"
 	units.y_sort_enabled = true
 	add_child(units)
-	var hero := FriendlyUnit.new()
+	var hero := BattleUnit.new()
 	player_sprite = hero
 	player_sprite.sprite_frames = character_frames
 	player_sprite.centered = false
 	player_sprite.scale = Vector2.ONE
 	units.add_child(player_sprite)
 	friendlies.append(hero)
+	hero_group.append(hero)
 	deploy_infantry(units, true)
 	deploy_infantry(units, false)
+	create_standard(units)
 	ground.generate(Vector2i(map_size))
 	camera = Camera2D.new()
 	camera.position_smoothing_enabled = false
@@ -67,11 +81,12 @@ func _ready() -> void:
 	add_child(camera)
 	camera.make_current()
 	resize_map()
-	unit_position = map_size * 0.5
+	unit_position = map_size * 0.5 + Vector2(-DEPLOYMENT_OFFSET + 84, 0)
 	destination = unit_position
-	hero.feet = unit_position
+	hero.position = unit_position
 	hero.target = unit_position
-	hero.position = unit_position - sprite_anchor(false)
+	hero.flip_h = true
+	hero.offset = -sprite_anchor(true)
 	player_sprite.play("idle")
 	get_viewport().size_changed.connect(resize_map)
 
@@ -82,22 +97,45 @@ func deploy_infantry(units: Node2D, allied: bool) -> void:
 		variants.append(CharacterArt.infantry_frames(CharacterArt.infantry_appearance(allied, i), allied))
 	for row in range(INFANTRY_ROWS):
 		for column in range(INFANTRY_COLUMNS):
-			var sprite := FriendlyUnit.new() if allied else AnimatedSprite2D.new()
+			var sprite := BattleUnit.new()
 			sprite.centered = false
 			sprite.flip_h = allied
 			sprite.sprite_frames = variants[(row + 2 * column) % variants.size()]
-			var x := 96 + 42 * column
-			var feet := map_size * 0.5 + Vector2(-x if allied else x, (row - 2) * 38)
+			var side := -1 if allied else 1
+			var slot := Vector2(column - (INFANTRY_COLUMNS - 1) * 0.5, row - (INFANTRY_ROWS - 1) * 0.5)
+			sprite.position = map_size * 0.5 + Vector2(side * DEPLOYMENT_OFFSET, 0) + slot * FORMATION_SPACING
+			sprite.target = sprite.position
+			sprite.offset = -sprite_anchor(sprite.flip_h)
 			if allied:
-				var soldier := sprite as FriendlyUnit
-				soldier.feet = feet
-				soldier.target = feet
-				friendlies.append(soldier)
-			sprite.position = feet - sprite_anchor(sprite.flip_h)
+				infantry.append(sprite)
+				friendlies.append(sprite)
+			else:
+				enemies.append(sprite)
 			units.add_child(sprite)
 			sprite.add_to_group(group)
 			sprite.play("idle")
 			sprite.frame = (row + column) % CharacterArt.FRAME_COUNTS.idle
+
+func create_standard(units: Node2D) -> void:
+	standard = AnimatedSprite2D.new()
+	var frames := SpriteFrames.new()
+	for i in range(1, 9):
+		frames.add_frame(&"default", load("res://assets/battle/flag/flag_%02d.png" % i))
+	frames.set_animation_speed(&"default", 8.0)
+	frames.set_animation_loop(&"default", true)
+	standard.sprite_frames = frames
+	standard.centered = false
+	standard.offset = Vector2(-23, -55)
+	standard.hide()
+	units.add_child(standard)
+
+func place_standard() -> void:
+	if standard.visible:
+		if selection.has(infantry[0]):
+			standard.position = (infantry[0].position + infantry[INFANTRY_COLUMNS - 1].position) * 0.5
+		else:
+			standard.position = player_sprite.position
+		standard.position += Vector2(-10, -5)
 
 func playable_rect() -> Rect2:
 	return Rect2(Vector2(18,96), Vector2(maxf(1,map_size.x-36),maxf(1,map_size.y-168)))
@@ -156,15 +194,24 @@ func finish_selection(screen_point: Vector2) -> void:
 	var box := selection_rect()
 	var is_box := drag_origin.distance_to(screen_point) >= DRAG_THRESHOLD
 	var point := screen_to_world(screen_point)
-	var front: FriendlyUnit
+	var front: BattleUnit
 	for unit in friendlies:
-		var bounds := Rect2(unit.feet + Vector2(-14,-29), Vector2(28,32))
+		var bounds := Rect2(unit.position + Vector2(-14,-29), Vector2(28,32))
 		if is_box and box.intersects(bounds):
 			selection.append(unit)
-		elif not is_box and bounds.has_point(point) and (front == null or unit.feet.y >= front.feet.y):
+		elif not is_box and bounds.has_point(point) and (front == null or unit.position.y >= front.position.y):
 			front = unit
 	if front != null: selection.append(front)
 	selected = selection.has(player_sprite)
+	if selection.size() > int(selected):
+		selection.assign(infantry)
+		if selected: selection.append(hero_group[0])
+	standard.visible = not selection.is_empty()
+	if standard.visible:
+		place_standard()
+		standard.play()
+	else:
+		standard.stop()
 	status_changed.emit()
 	queue_redraw()
 
@@ -210,20 +257,21 @@ func _unhandled_input(event: InputEvent) -> void:
 func issue_move(point: Vector2) -> void:
 	if selection.is_empty(): return
 	var center := Vector2.ZERO
-	var formation := Rect2(selection[0].feet, Vector2.ZERO)
+	var formation := Rect2(selection[0].position, Vector2.ZERO)
 	for unit in selection:
-		center += unit.feet
-		formation = formation.expand(unit.feet)
+		center += unit.position
+		formation = formation.expand(unit.position)
 	center /= selection.size()
 	var bounds := playable_rect()
 	var offset := (point - center).clamp(bounds.position - formation.position, bounds.end - formation.end)
 	for unit in selection:
-		unit.target = unit.feet + offset
-		unit.play("idle" if unit.feet.is_equal_approx(unit.target) else "walk")
+		unit.target = unit.position + offset
+		unit.play("idle" if unit.position.is_equal_approx(unit.target) else "walk")
 	order_marker = center + offset
-	var hero := player_sprite as FriendlyUnit
+	joint_order = selection.size() == friendlies.size()
+	var hero := hero_group[0]
 	destination = hero.target
-	moving = not hero.feet.is_equal_approx(destination)
+	moving = not hero.position.is_equal_approx(destination)
 	marker_time = 0.8
 	status_changed.emit()
 	queue_redraw()
@@ -231,21 +279,64 @@ func issue_move(point: Vector2) -> void:
 func _physics_process(delta: float) -> void:
 	var direction := Vector2(int(pan_keys.get(KEY_D,false))-int(pan_keys.get(KEY_A,false)),int(pan_keys.get(KEY_S,false))-int(pan_keys.get(KEY_W,false)))
 	pan_camera(direction,delta)
-	for unit in friendlies:
-		if unit.feet == unit.target: continue
-		var difference := unit.target - unit.feet
-		if absf(difference.x) > 0.1: unit.flip_h = difference.x > 0
-		unit.feet = unit.feet.move_toward(unit.target, MOVE_SPEED * delta)
-		unit.position = unit.feet.round() - sprite_anchor(unit.flip_h)
-		if unit == player_sprite:
-			unit_position = unit.feet
-			moving = unit.feet != unit.target
-		if unit.feet == unit.target:
-			unit.play("idle")
-		queue_redraw()
+	if joint_order:
+		advance_formation(friendlies, enemies, delta)
+	else:
+		advance_formation(hero_group, enemies, delta, infantry)
+		advance_formation(infantry, enemies, delta, hero_group)
+	unit_position = player_sprite.position
+	destination = hero_group[0].target
+	moving = unit_position != destination
+	place_standard()
 	if marker_time > 0:
 		marker_time = maxf(0,marker_time-delta)
 		queue_redraw()
+
+# All members translate by the same amount. The first contact limits the
+# whole formation, so the front rank cannot pass through a unit or bunch up.
+func advance_formation(members: Array[BattleUnit], blockers: Array[BattleUnit], delta: float, others: Array[BattleUnit] = []) -> void:
+	var leader := members[0]
+	var distance := leader.target - leader.position
+	if distance == Vector2.ZERO: return
+	var step := distance.limit_length(MOVE_SPEED * delta)
+	var fraction := 1.0
+	for unit in members:
+		var box := unit.contact_box()
+		for obstacle in blockers:
+			fraction = minf(fraction, contact_fraction(box, step, obstacle.contact_box()))
+		for obstacle in others:
+			fraction = minf(fraction, contact_fraction(box, step, obstacle.contact_box()))
+	var arrived := distance.length() <= MOVE_SPEED * delta
+	for unit in members:
+		if absf(step.x) > 0.001:
+			unit.flip_h = step.x > 0
+			unit.offset = -sprite_anchor(unit.flip_h)
+		if fraction < 1.0:
+			unit.position += step * maxf(0.0, fraction - 0.0001)
+			unit.target = unit.position
+		elif arrived:
+			unit.position = unit.target
+		else:
+			unit.position += step
+		if fraction < 1.0 or arrived: unit.play("idle")
+	queue_redraw()
+
+# Swept AABB on both axes, including fast movement in a long physics tick.
+static func contact_fraction(box: Rect2, motion: Vector2, obstacle: Rect2) -> float:
+	var enter := -INF
+	var leave := INF
+	for axis in range(2):
+		var gap := obstacle.position[axis] - box.end[axis]
+		var far_gap := obstacle.end[axis] - box.position[axis]
+		if is_zero_approx(motion[axis]):
+			if gap >= 0 or far_gap <= 0: return 1.0
+		else:
+			var a := gap / motion[axis]
+			var b := far_gap / motion[axis]
+			enter = maxf(enter, minf(a, b))
+			leave = minf(leave, maxf(a, b))
+	if enter >= leave or leave <= 0.0: return 1.0
+	return clampf(enter, 0.0, 1.0)
 
 static func sprite_anchor(facing_right: bool) -> Vector2:
 	var x := CharacterArt.FRAME_SIZE.x - BODY_CENTER_X if facing_right else BODY_CENTER_X
@@ -267,9 +358,6 @@ func ellipse_points(center: Vector2, radius: float) -> PackedVector2Array:
 func _draw() -> void:
 	# Ground shadow and selection feedback remain at native resolution.
 	draw_colored_polygon(ellipse_points(unit_position+Vector2(1,1),10),Color(0.25,0.27,0.18,0.30))
-	for unit in selection:
-		draw_polyline(ellipse_points(unit.feet+Vector2(0,1),13),Color("def1a5"),1,false)
-		draw_line(unit.feet+Vector2(-9,5),unit.feet+Vector2(9,5),Color("a9c573"),1,false)
 	if marker_time > 0:
 		var color := Color("f0dfaa")
 		color.a = minf(1,marker_time*3)

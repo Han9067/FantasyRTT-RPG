@@ -50,7 +50,7 @@ func check_infantry(map: BattleMap) -> void:
 		for soldier: AnimatedSprite2D in soldiers:
 			assert(map.is_ancestor_of(soldier) and soldier != map.player_sprite)
 			assert(soldier.flip_h == allied and soldier.animation == &"idle" and soldier.is_playing())
-			var feet := soldier.position + Battle.sprite_anchor(soldier.flip_h)
+			var feet := soldier.position
 			assert((feet.x < map.unit_position.x) == allied)
 			columns[feet.x] = columns.get(feet.x, 0) + 1
 			rows[feet.y] = rows.get(feet.y, 0) + 1
@@ -69,34 +69,56 @@ func check_infantry(map: BattleMap) -> void:
 		assert(Art.compose(config).get_data() != helmeted.get_data())
 
 func check_group_orders(map: BattleMap) -> void:
-	var unit := map.friendlies[1]
+	var unit := map.infantry[0]
 	var hero := map.unit_position
-	var start := unit.feet
-	var click_at := map.world_to_screen(start - Vector2(0,12))
-	select_click(map, click_at)
-	assert(map.selection == [unit] and not map.selected)
-	click(map, click_at + Vector2(-40,12), MOUSE_BUTTON_RIGHT)
+	var start := unit.position
+	var offsets := PackedVector2Array()
+	assert(not map.standard.visible)
+	for member in map.infantry:
+		offsets.append(member.position - start)
+		select_click(map, map.world_to_screen(member.position + Battle.BODY_CENTER_FROM_FEET))
+		assert(map.selection == map.infantry and not map.selected)
+	assert(map.standard.visible and map.standard.is_playing())
+	assert(map.standard.sprite_frames.get_frame_count("default") == 8)
+	assert(map.standard.sprite_frames.get_animation_loop("default"))
+	var flag_offset := map.standard.position - start
+	var center: Vector2 = (start + map.infantry.back().position) * 0.5
+	map.issue_move(center + Vector2(-40,0))
 	advance(map, 0.2)
-	assert(unit.feet.x < start.x and unit.animation == "walk" and map.unit_position == hero)
-	select_click(map, Vector2(900,600))
+	assert(unit.position.x < start.x and unit.animation == "walk" and map.unit_position == hero)
+	assert((map.standard.position - unit.position).is_equal_approx(flag_offset))
+	select_click(map, Vector2(600,200))
+	assert(not map.standard.visible)
 	advance(map, 1.0)
-	assert(unit.feet == start - Vector2(40,0) and unit.animation == "idle")
-	var enemy: AnimatedSprite2D = get_first_node_in_group("enemy_infantry")
-	var enemy_position := enemy.position
-	select_click(map, map.world_to_screen(enemy.position + Battle.sprite_anchor(false) - Vector2(0,12)))
-	assert(map.selection.is_empty())
-	for corner in [Vector2(360,270),Vector2(910,270),Vector2(360,500),Vector2(910,500)]:
-		drag(map, corner, Vector2(1270,770) - corner)
+	assert(unit.position.is_equal_approx(start - Vector2(40,0)) and unit.animation == "idle")
+	# March through the hero: the whole group should stop at the first 5px contact.
+	select_click(map, map.world_to_screen(unit.position))
+	map.issue_move(hero + Vector2(100,0))
+	map._physics_process(8.0)
+	var front_rank := map.infantry[11]
+	assert(absf(hero.x - front_rank.position.x - 5.0) < 0.1)
+	for i in range(map.infantry.size()):
+		var member := map.infantry[i]
+		assert((member.position - unit.position).is_equal_approx(offsets[i]))
+		assert(member.animation == "idle" and not member.contact_box().intersects(map.hero_group[0].contact_box()))
+	# Select hero and infantry together, pass the original hero position and meet the enemy.
+	var left := map.world_to_screen(unit.position) - Vector2(20,40)
+	var right := map.world_to_screen(hero) + Vector2(20,50)
+	for corner in [left, right, Vector2(left.x,right.y), Vector2(right.x,left.y)]:
+		drag(map, corner, left + right - corner)
 		assert(map.selection.size() == 21 and map.selected)
-	var gap := unit.feet - hero
-	click(map, Vector2(600,770), MOUSE_BUTTON_RIGHT)
-	assert(unit.target - map.destination == gap)
-	advance(map, 12)
-	assert(unit.feet - map.unit_position == gap and enemy.position == enemy_position)
-	map.issue_move(Vector2(-5000,-5000))
-	for member in map.selection:
-		assert(map.clamp_point(member.target) == member.target)
-	assert(unit.target - map.destination == gap)
+	map.issue_move(map.enemies[0].position + Vector2(400,30))
+	map._physics_process(30.0)
+	assert(map.unit_position.x > map.map_size.x * 0.5 and not map.moving)
+	for member in map.friendlies:
+		assert(member.contact_box().size == Vector2(5,5))
+		assert(member.contact_box().get_center() == member.position + Battle.BODY_CENTER_FROM_FEET)
+		for enemy in map.enemies: assert(not member.contact_box().intersects(enemy.contact_box()))
+	var stopped := map.unit_position
+	map.issue_move(map.unit_position + Vector2(-200,0))
+	advance(map, 0.25)
+	assert(map.unit_position.x < stopped.x)
+	assert(map.get_node("Units").y_sort_enabled and map.standard.get_parent() == unit.get_parent())
 
 func run() -> void:
 	root.size = Vector2i(1280,800)
@@ -111,8 +133,9 @@ func run() -> void:
 	var map: BattleMap = game.battle
 	map.set_physics_process(false)
 	assert(game.current_screen == "battle" and not is_instance_valid(game.world))
-	assert(map.unit_position == Battle.MAP_SIZE*0.5)
-	assert(map.world_to_screen(map.unit_position).is_equal_approx(Vector2(640,400)))
+	assert(map.unit_position.x < Battle.MAP_SIZE.x * 0.5)
+	var hero_screen := map.world_to_screen(map.unit_position)
+	assert(hero_screen.x < 400 and hero_screen.y == 400)
 	assert(map.character_frames == game.character_frames and map.character_name == "전장 테스트")
 	assert(root.content_scale_mode == Window.CONTENT_SCALE_MODE_DISABLED)
 	assert(map.player_sprite.scale == Vector2.ONE and map.scale == Vector2.ONE)
@@ -125,31 +148,31 @@ func run() -> void:
 	click(map,Vector2(900,500),MOUSE_BUTTON_RIGHT)
 	advance(map,1)
 	assert(map.unit_position == original_position)
-	select_click(map,Vector2(640,385))
+	select_click(map,hero_screen + Vector2(0,-15))
 	assert(map.selected)
 	select_click(map,Vector2(120,200))
 	assert(not map.selected)
 	for start in [Vector2(610,355),Vector2(670,355),Vector2(610,425),Vector2(670,425)]:
-		drag(map,start,Vector2(1280,780)-start)
+		drag(map,hero_screen + start - Vector2(640,400),hero_screen + Vector2(640,380)-start)
 		assert(map.selected)
 		drag(map,Vector2(180,180),Vector2(230,230))
 		assert(not map.selected)
 	select_click(map,map.world_to_screen(map.unit_position+Vector2(-65,-60)))
 	assert(not map.selected, "Transparent padding is not a selectable unit")
-	select_click(map,Vector2(640,385))
+	select_click(map,hero_screen + Vector2(0,-15))
 	click(map,Vector2(800,400),MOUSE_BUTTON_RIGHT)
 	assert(map.moving and map.player_sprite.animation == "walk")
 	advance(map,1)
 	assert(map.unit_position.is_equal_approx(original_position+Vector2(76,0)))
 	assert(map.player_sprite.flip_h)
-	assert(map.player_sprite.position.x + Art.FRAME_SIZE.x - Battle.BODY_CENTER_X == roundf(map.unit_position.x))
-	var target := map.screen_to_world(Vector2(660,520))
-	click(map,Vector2(660,520),MOUSE_BUTTON_RIGHT)
+	assert(map.player_sprite.position == map.unit_position and map.player_sprite.offset == -Battle.sprite_anchor(true))
+	var target := map.screen_to_world(hero_screen + Vector2(20,120))
+	click(map,hero_screen + Vector2(20,120),MOUSE_BUTTON_RIGHT)
 	advance(map,4)
 	assert(map.unit_position == target and not map.moving)
 	assert(map.player_sprite.animation == "idle" and not map.player_sprite.flip_h)
-	assert(map.player_sprite.position.x + Battle.BODY_CENTER_X == map.unit_position.x)
-	assert(map.player_sprite.position.y + Art.FEET_Y == map.unit_position.y)
+	assert(map.player_sprite.position == map.unit_position)
+	assert(map.player_sprite.offset == -Battle.sprite_anchor(false))
 	# Real WASD key events pan the camera, never the unit; diagonal speed is normalized.
 	var center := map.camera.position
 	key(map,KEY_D,true)
@@ -234,7 +257,7 @@ func run() -> void:
 	assert(game.player_name == "전장 테스트")
 	game.show_battle()
 	await process_frame
-	assert(game.battle.unit_position == game.battle.map_size*0.5)
+	assert(game.battle.unit_position == original_position)
 	assert(game.battle.zoom_level == 1 and not game.battle.selected and not game.battle.moving)
 	check_infantry(game.battle)
 	root.size = Vector2i(1280,800)
