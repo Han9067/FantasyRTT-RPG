@@ -69,6 +69,7 @@ func check_infantry(map: BattleMap) -> void:
 		assert(Art.compose(config).get_data() != helmeted.get_data())
 
 func check_group_orders(map: BattleMap) -> void:
+	seed(10010)
 	var unit := map.infantry[0]
 	var hero := map.unit_position
 	var start := unit.position
@@ -98,6 +99,7 @@ func check_group_orders(map: BattleMap) -> void:
 	assert(not map.standard.visible)
 	advance(map, 1.0)
 	assert(unit.position.is_equal_approx(start - Vector2(40,0)) and unit.animation == "idle")
+	check_idle_phases(map)
 	# March through the hero: the whole group should stop at the first 5px contact.
 	select_click(map, map.world_to_screen(unit.position))
 	map.issue_move(hero + Vector2(100,0))
@@ -108,6 +110,7 @@ func check_group_orders(map: BattleMap) -> void:
 		var member := map.infantry[i]
 		assert((member.position - unit.position).is_equal_approx(offsets[i]))
 		assert(member.animation == "idle" and not member.contact_box().intersects(map.hero_group[0].contact_box()))
+	check_idle_phases(map)
 	# Select hero and infantry together, pass the original hero position and meet the enemy.
 	var left := map.world_to_screen(unit.position) - Vector2(20,40)
 	var right := map.world_to_screen(hero) + Vector2(20,50)
@@ -126,6 +129,26 @@ func check_group_orders(map: BattleMap) -> void:
 	advance(map, 0.25)
 	assert(map.unit_position.x < stopped.x)
 	assert(map.get_node("Units").y_sort_enabled)
+
+func check_idle_phases(map: BattleMap) -> void:
+	var phases := {}
+	var before := PackedInt32Array()
+	for unit in map.infantry:
+		assert(unit.animation == &"idle" and unit.is_playing())
+		assert(unit.frame >= 0 and unit.frame < unit.sprite_frames.get_frame_count(&"idle"))
+		phases[unit.frame] = true
+		before.append(unit.frame)
+		unit.set_frame_and_progress(unit.frame, 0.5)
+	assert(phases.size() > 1, "Soldiers must not synchronize when movement ends")
+	# A zero-distance order and subsequent idle ticks must preserve playback phase.
+	map.selection.assign(map.infantry)
+	var center := Vector2.ZERO
+	for unit in map.infantry: center += unit.position
+	map.issue_move(center / map.infantry.size())
+	advance(map, 0.2)
+	for i in range(map.infantry.size()):
+		assert(map.infantry[i].frame == before[i])
+		assert(is_equal_approx(map.infantry[i].frame_progress, 0.5))
 
 func run() -> void:
 	root.size = Vector2i(1280,800)
@@ -275,5 +298,5 @@ func run() -> void:
 	await process_frame
 	game.battle.set_physics_process(false)
 	check_group_orders(game.battle)
-	print("PASS: fixed terrain, camera WASD/diagonal speed, cursor zoom 1x..3x, every map edge, fixed HUD, zoomed selection/orders, original movement, resize without rebaking, focus loss, creation return")
+	print("PASS: fixed terrain, camera WASD/diagonal speed, cursor zoom 1x..3x, every map edge, fixed HUD, zoomed selection/orders, original movement, randomized idle after arrival/contact without idle resets, resize without rebaking, focus loss, creation return")
 	quit()

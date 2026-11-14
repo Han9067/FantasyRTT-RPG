@@ -1,6 +1,6 @@
 # Project conventions
 
-- Current local Windows release: 0.0.9 (based on web 0.0.35). Increment only the patch once per delivered game update. Never change the first two components unless asked.
+- Current local Windows release: 0.0.10 (based on web 0.0.35). Increment only the patch once per delivered game update. Never change the first two components unless asked.
 - Validate local playable changes and export Windows Desktop to ../PlayTest/FantasyRTT-RPG.exe. The historical Web preset remains available. After each completed version, commit the validated project changes on main, push to origin/main on GitHub, and verify the remote commit.
 - The visual source of truth is the purchased user-supplied MedievalFantasyCharacters.zip. Read docs/character-design.md before changing characters.
 - Preserve loose source PNGs in art/medieval (.gdignore). Build assets/medieval atlases/catalog with tools/build_medieval_atlas.py; do not hand-edit generated images. Runtime uses only needed parts. Preserve original RGBA; no AI redraws, recolouring or resampling.

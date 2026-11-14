@@ -21,6 +21,12 @@ const HUD_LAYER := 10
 class BattleUnit extends AnimatedSprite2D:
 	var target := Vector2.ZERO
 
+	func enter_idle() -> void:
+		# Choose a phase only on entry; repeated idle orders must not jump frames.
+		if animation == &"idle" and is_playing(): return
+		play(&"idle")
+		frame = randi_range(0, sprite_frames.get_frame_count(&"idle") - 1)
+
 	func contact_box() -> Rect2:
 		return Rect2(position + BODY_CENTER_FROM_FEET - CONTACT_SIZE * 0.5, CONTACT_SIZE)
 
@@ -88,7 +94,7 @@ func _ready() -> void:
 	hero.target = unit_position
 	hero.flip_h = true
 	hero.offset = -sprite_anchor(true)
-	player_sprite.play("idle")
+	hero.enter_idle()
 	get_viewport().size_changed.connect(resize_map)
 
 func deploy_infantry(units: Node2D, allied: bool) -> void:
@@ -114,8 +120,7 @@ func deploy_infantry(units: Node2D, allied: bool) -> void:
 				enemies.append(sprite)
 			units.add_child(sprite)
 			sprite.add_to_group(group)
-			sprite.play("idle")
-			sprite.frame = (row + column) % CharacterArt.FRAME_COUNTS.idle
+			sprite.enter_idle()
 
 func create_standard() -> void:
 	var overlay := CanvasLayer.new()
@@ -274,7 +279,10 @@ func issue_move(point: Vector2) -> void:
 	var offset := (point - center).clamp(bounds.position - formation.position, bounds.end - formation.end)
 	for unit in selection:
 		unit.target = unit.position + offset
-		unit.play("idle" if unit.position.is_equal_approx(unit.target) else "walk")
+		if unit.position.is_equal_approx(unit.target):
+			unit.enter_idle()
+		else:
+			unit.play("walk")
 	order_marker = center + offset
 	joint_order = selection.size() == friendlies.size()
 	var hero := hero_group[0]
@@ -326,7 +334,7 @@ func advance_formation(members: Array[BattleUnit], blockers: Array[BattleUnit], 
 			unit.position = unit.target
 		else:
 			unit.position += step
-		if fraction < 1.0 or arrived: unit.play("idle")
+		if fraction < 1.0 or arrived: unit.enter_idle()
 	queue_redraw()
 
 # Swept AABB on both axes, including fast movement in a long physics tick.
