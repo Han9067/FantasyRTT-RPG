@@ -3,6 +3,9 @@ extends Node2D
 signal status_changed
 signal pause_changed(paused: bool)
 const Ground = preload("res://scripts/battle_ground.gd")
+const Combat = preload("res://scripts/battle_combat.gd")
+const Outline = preload("res://scripts/selection_outline.gdshader")
+const ATTACK_CURSOR = preload("res://assets/ui/attack_cursor.svg")
 const MOVE_SPEED := 76.0
 const DRAG_THRESHOLD := 4.0
 const MAP_SIZE := Vector2(2560,1600)
@@ -20,18 +23,6 @@ const BODY_CENTER_FROM_FEET := Vector2(0, -13)
 const HUD_LAYER := 10
 const ALLIED_ROUTE_COLOR := Color("58a6ff")
 const ENEMY_ROUTE_COLOR := Color("ff625f")
-
-class BattleUnit extends AnimatedSprite2D:
-	var target := Vector2.ZERO
-
-	func enter_idle() -> void:
-		# Choose a phase only on entry; repeated idle orders must not jump frames.
-		if animation == &"idle" and is_playing(): return
-		play(&"idle")
-		frame = randi_range(0, sprite_frames.get_frame_count(&"idle") - 1)
-
-	func contact_box() -> Rect2:
-		return Rect2(position + BODY_CENTER_FROM_FEET - CONTACT_SIZE * 0.5, CONTACT_SIZE)
 
 var friendlies: Array[BattleUnit] = []
 var infantry: Array[BattleUnit] = []
@@ -59,6 +50,10 @@ var viewport_size := Vector2.ZERO
 var camera: Camera2D
 var zoom_level := MIN_ZOOM
 var pan_keys: Dictionary = {}
+var combat: RefCounted
+var outline_material: ShaderMaterial
+var pointer_screen := Vector2(-1, -1)
+var attack_cursor_active := false
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -69,7 +64,14 @@ func _ready() -> void:
 	units.name = "Units"
 	units.y_sort_enabled = true
 	add_child(units)
+	combat = Combat.new(self)
+	outline_material = ShaderMaterial.new()
+	outline_material.shader = Outline
+	Input.set_custom_mouse_cursor(ATTACK_CURSOR, Input.CURSOR_CROSS, Vector2(27, 5))
 	var hero := BattleUnit.new()
+	hero.max_hp = 100
+	hero.hp = 100
+	hero.attack_damage = 6
 	player_sprite = hero
 	player_sprite.sprite_frames = character_frames
 	player_sprite.centered = false
@@ -109,6 +111,8 @@ func deploy_infantry(units: Node2D, allied: bool) -> void:
 	for row in range(INFANTRY_ROWS):
 		for column in range(INFANTRY_COLUMNS):
 			var sprite := BattleUnit.new()
+			sprite.allied = allied
+			sprite.avoid_side = -1.0 if row < INFANTRY_ROWS / 2 else 1.0
 			sprite.centered = false
 			sprite.flip_h = allied
 			sprite.sprite_frames = variants[(row + 2 * column) % variants.size()]
@@ -146,13 +150,57 @@ func create_standard() -> void:
 	overlay.add_child(standard)
 
 func place_standard() -> void:
+	if not standard.visible: return
+	var marked: Array[BattleUnit] = []
+	for unit in selection:
+		if unit.alive() and infantry.has(unit): marked.append(unit)
+	if marked.is_empty(): marked.assign(Combat.living(selection))
+	if marked.is_empty():
+		standard.hide()
+	else:
+		standard.position = Combat.center(marked) + BODY_CENTER_FROM_FEET
+
+func refresh_selection() -> void:
+	selection.assign(Combat.living(selection))
+	selected = selection.has(player_sprite)
+	player_sprite.material = outline_material if selected else null
+	standard.visible = not selection.is_empty()
 	if standard.visible:
-		if selection.has(infantry[0]):
-			var first := infantry[0].contact_box().get_center()
-			var last := infantry[-1].contact_box().get_center()
-			standard.position = first.lerp(last, 0.5)
-		else:
-			standard.position = hero_group[0].contact_box().get_center()
+		place_standard()
+		standard.play()
+	else:
+		standard.stop()
+	refresh_attack_cursor()
+	status_changed.emit()
+	queue_redraw()
+
+func enemy_at(point: Vector2) -> BattleUnit:
+	var front: BattleUnit
+	for enemy in enemies:
+		if not enemy.alive(): continue
+		if Rect2(enemy.position + Vector2(-14, -29), Vector2(28, 32)).has_point(point):
+			if front == null or enemy.position.y >= front.position.y: front = enemy
+	return front
+
+func refresh_attack_cursor() -> void:
+	attack_cursor_active = not selection.is_empty() and screen_playable_rect().has_point(pointer_screen) and enemy_at(screen_to_world(pointer_screen)) != null
+	Input.set_default_cursor_shape(Input.CURSOR_CROSS if attack_cursor_active else Input.CURSOR_ARROW)
+
+func _exit_tree() -> void:
+	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+	Input.set_custom_mouse_cursor(null, Input.CURSOR_CROSS)
+
+func issue_attack(enemy: BattleUnit) -> void:
+	if enemy == null or not enemy.alive() or selection.is_empty(): return
+	combat.cancel_for(selection)
+	combat.command(selection)
+	joint_order = false
+	for key: String in ["hero", "infantry"]:
+		if combat.orders.has(key): order_formation(Combat.living(combat.group(key)), Combat.center(Combat.living(enemies)))
+	order_marker = enemy.position
+	marker_time = 0.8
+	status_changed.emit()
+	queue_redraw()
 
 func playable_rect() -> Rect2:
 	return Rect2(Vector2(18,96), Vector2(maxf(1,map_size.x-36),maxf(1,map_size.y-168)))
@@ -213,6 +261,7 @@ func finish_selection(screen_point: Vector2) -> void:
 	var point := screen_to_world(screen_point)
 	var front: BattleUnit
 	for unit in friendlies:
+		if not unit.alive(): continue
 		var bounds := Rect2(unit.position + Vector2(-14,-29), Vector2(28,32))
 		if is_box and box.intersects(bounds):
 			selection.append(unit)
@@ -221,16 +270,9 @@ func finish_selection(screen_point: Vector2) -> void:
 	if front != null: selection.append(front)
 	selected = selection.has(player_sprite)
 	if selection.size() > int(selected):
-		selection.assign(infantry)
+		selection.assign(Combat.living(infantry))
 		if selected: selection.append(hero_group[0])
-	standard.visible = not selection.is_empty()
-	if standard.visible:
-		place_standard()
-		standard.play()
-	else:
-		standard.stop()
-	status_changed.emit()
-	queue_redraw()
+	refresh_selection()
 
 func _input(event: InputEvent) -> void:
 	# A drag begun on the field still ends if the pointer is released over the HUD.
@@ -239,6 +281,9 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouse:
+		pointer_screen = event.position
+		refresh_attack_cursor()
 	if event is InputEventKey:
 		var key: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
 		if key in [KEY_W,KEY_A,KEY_S,KEY_D]:
@@ -248,6 +293,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		var point := screen_to_world(event.position)
 		var over_field := screen_playable_rect().has_point(event.position)
+		if event.pressed and event.button_index in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT] and attack_cursor_active:
+			dragging = false
+			issue_attack(enemy_at(point))
+			get_viewport().set_input_as_handled()
+			return
 		if event.button_index in [MOUSE_BUTTON_WHEEL_UP,MOUSE_BUTTON_WHEEL_DOWN]:
 			if event.pressed and over_field:
 				change_zoom(ZOOM_STEP if event.button_index == MOUSE_BUTTON_WHEEL_UP else -ZOOM_STEP,event.position)
@@ -273,8 +323,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func issue_move(point: Vector2) -> void:
 	if selection.is_empty(): return
+	combat.cancel_for(selection)
 	order_marker = order_formation(selection, point)
-	joint_order = selection.size() == friendlies.size()
+	joint_order = selection.size() == Combat.living(friendlies).size()
 	var hero := hero_group[0]
 	destination = hero.target
 	moving = not hero.position.is_equal_approx(destination)
@@ -300,6 +351,7 @@ func order_formation(members: Array[BattleUnit], point: Vector2) -> Vector2:
 	return center + offset
 
 func update_unit_animation(unit: BattleUnit) -> void:
+	if not unit.alive() or unit.swing_time >= 0.0: return
 	if unit.position.is_equal_approx(unit.target):
 		unit.enter_idle()
 	else:
@@ -320,14 +372,21 @@ func set_battle_paused(value: bool) -> void:
 func _physics_process(delta: float) -> void:
 	var direction := Vector2(int(pan_keys.get(KEY_D,false))-int(pan_keys.get(KEY_A,false)),int(pan_keys.get(KEY_S,false))-int(pan_keys.get(KEY_W,false)))
 	pan_camera(direction,delta)
+	refresh_attack_cursor()
 	# Camera and input stay live; only battlefield simulation is paused.
 	if battle_paused: return
-	if joint_order:
-		advance_formation(friendlies, enemies, delta)
+	combat.prepare(delta)
+	if joint_order and not combat.orders.has("hero") and not combat.orders.has("infantry"):
+		advance_formation(Combat.living(friendlies), Combat.living(enemies), delta)
 	else:
-		advance_formation(hero_group, enemies, delta, infantry)
-		advance_formation(infantry, enemies, delta, hero_group)
-	advance_formation(enemies, friendlies, delta)
+		if not combat.engaged("hero"):
+			advance_formation(Combat.living(hero_group), Combat.living(enemies), delta, Combat.living(infantry))
+		if not combat.engaged("infantry"):
+			advance_formation(Combat.living(infantry), Combat.living(enemies), delta, Combat.living(hero_group))
+	if not combat.engaged("enemy"):
+		advance_formation(Combat.living(enemies), Combat.living(friendlies), delta)
+	combat.step(delta)
+	if selection.any(func(unit: BattleUnit) -> bool: return not unit.alive()): refresh_selection()
 	unit_position = player_sprite.position
 	destination = hero_group[0].target
 	moving = unit_position != destination
@@ -339,6 +398,7 @@ func _physics_process(delta: float) -> void:
 # All members translate by the same amount. The first contact limits the
 # whole formation, so the front rank cannot pass through a unit or bunch up.
 func advance_formation(members: Array[BattleUnit], blockers: Array[BattleUnit], delta: float, others: Array[BattleUnit] = []) -> void:
+	if members.is_empty(): return
 	var leader := members[0]
 	var distance := leader.target - leader.position
 	if distance == Vector2.ZERO: return
@@ -390,6 +450,8 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
 		dragging = false
 		pan_keys.clear()
+		pointer_screen = Vector2(-1, -1)
+		refresh_attack_cursor()
 		queue_redraw()
 
 func ellipse_points(center: Vector2, radius: float) -> PackedVector2Array:
@@ -401,7 +463,7 @@ func ellipse_points(center: Vector2, radius: float) -> PackedVector2Array:
 
 func movement_guides() -> Array[Dictionary]:
 	var guides: Array[Dictionary] = []
-	for group in [hero_group, infantry, enemies]:
+	for group in [Combat.living(hero_group), Combat.living(infantry), Combat.living(enemies)]:
 		if group.is_empty(): continue
 		var start := Vector2.ZERO
 		var finish := Vector2.ZERO
@@ -412,7 +474,7 @@ func movement_guides() -> Array[Dictionary]:
 		finish /= group.size()
 		if start.is_equal_approx(finish): continue
 		guides.append({"start": start, "end": finish,
-			"color": ENEMY_ROUTE_COLOR if group == enemies else ALLIED_ROUTE_COLOR})
+			"color": ALLIED_ROUTE_COLOR if group[0].allied else ENEMY_ROUTE_COLOR})
 	return guides
 
 func _draw() -> void:

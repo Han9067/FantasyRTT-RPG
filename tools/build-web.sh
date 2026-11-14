@@ -10,10 +10,15 @@ python tools/build_medieval_atlas.py
 python tools/build_world_map.py
 python tests/world_plan_check.py
 godot --headless --editor --import --quit
-godot --headless --script res://tests/smoke.gd
-godot --headless --script res://tests/battle_smoke.gd
-godot --headless --script res://tests/world_navigation_smoke.gd
-godot --headless --script res://tests/world_smoke.gd
+for check in smoke battle_smoke combat_smoke world_navigation_smoke world_smoke; do
+  log="builds/${check}.log"
+  godot --headless --script "res://tests/${check}.gd" --quit-after 3600 > "$log" 2>&1
+  cat "$log"
+  # Godot can exit successfully after a script assertion; never publish that build.
+  if rg -q 'SCRIPT ERROR:|^ERROR:' "$log" || ! rg -q '^PASS:' "$log"; then
+    exit 1
+  fi
+done
 release_version=$(sed -n 's/^config\/version="\(.*\)"/\1/p' project.godot)
 [[ "$release_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
 # Each export gets new URLs even when a version number is reused or reset.
