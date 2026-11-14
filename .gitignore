@@ -2,3 +2,7 @@
 builds/
 
 __pycache__/
+
+# Local desktop test builds are not source artifacts.
+PlayTest/
+*.exe
