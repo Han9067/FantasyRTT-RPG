@@ -140,8 +140,8 @@ func create_standard() -> void:
 	frames.set_animation_loop(&"default", true)
 	standard.sprite_frames = frames
 	standard.centered = false
-	# Keep the visible bottom-left pivot, with a fixed 3px left adjustment.
-	standard.offset = -Vector2(18, 56) + Vector2(-3, 0)
+	# Visible bottom-left pivot: 7px left and 4px up from the formation center.
+	standard.offset = -Vector2(18, 56) + Vector2(-7, -4)
 	standard.hide()
 	overlay.add_child(standard)
 

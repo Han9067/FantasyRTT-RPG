@@ -91,7 +91,7 @@ func check_group_orders(map: BattleMap) -> void:
 		var texture := map.standard.sprite_frames.get_frame_texture(&"default", frame)
 		var visible := texture.get_image().get_used_rect()
 		var lower_left := Vector2(visible.position.x, visible.end.y)
-		assert(map.standard.offset + lower_left == Vector2(-3, 0))
+		assert(map.standard.offset + lower_left == Vector2(-7, -4))
 	assert(map.standard.position.is_equal_approx(center + Battle.BODY_CENTER_FROM_FEET))
 	map.issue_move(center + Vector2(-40,0))
 	advance(map, 0.2)
