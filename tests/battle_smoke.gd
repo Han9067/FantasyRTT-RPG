@@ -55,6 +55,8 @@ func check_infantry(map: BattleMap) -> void:
 			columns[feet.x] = columns.get(feet.x, 0) + 1
 			rows[feet.y] = rows.get(feet.y, 0) + 1
 		assert(columns.size() == 4 and rows.size() == 5)
+		assert(is_equal_approx(soldiers[1].position.x - soldiers[0].position.x, 23.0))
+		assert(is_equal_approx(soldiers[4].position.y - soldiers[0].position.y, 16.0))
 		for total in columns.values(): assert(total == 5)
 		for total in rows.values(): assert(total == 4)
 		var config := Art.infantry_appearance(allied, 0)
@@ -89,7 +91,7 @@ func check_group_orders(map: BattleMap) -> void:
 		var texture := map.standard.sprite_frames.get_frame_texture(&"default", frame)
 		var visible := texture.get_image().get_used_rect()
 		var lower_left := Vector2(visible.position.x, visible.end.y)
-		assert(map.standard.offset + lower_left == Vector2.ZERO)
+		assert(map.standard.offset + lower_left == Vector2(-3, 0))
 	assert(map.standard.position.is_equal_approx(center + Battle.BODY_CENTER_FROM_FEET))
 	map.issue_move(center + Vector2(-40,0))
 	advance(map, 0.2)
@@ -149,6 +151,89 @@ func check_idle_phases(map: BattleMap) -> void:
 	for i in range(map.infantry.size()):
 		assert(map.infantry[i].frame == before[i])
 		assert(is_equal_approx(map.infantry[i].frame_progress, 0.5))
+
+func check_tactical_pause(game: Control) -> void:
+	var map: BattleMap = game.battle
+	var pause_button: Button = game.screen.find_child("PauseButton", true, false)
+	var hero := map.hero_group[0]
+	select_click(map, map.world_to_screen(hero.position + Battle.BODY_CENTER_FROM_FEET))
+	map.issue_move(hero.position + Vector2(0, 120))
+	advance(map, 0.2)
+	assert(hero.animation == &"walk")
+	pause_button.button_pressed = true
+	assert(map.battle_paused and not paused, "Pause the battlefield, not the input/UI tree")
+	assert(pause_button.get_theme_stylebox("pressed").border_color == Color("ffd54a"))
+	var sprites: Array[AnimatedSprite2D] = []
+	for unit in map.friendlies: sprites.append(unit)
+	for unit in map.enemies: sprites.append(unit)
+	sprites.append(map.standard)
+	var frozen := []
+	for sprite in sprites:
+		frozen.append([sprite.position, sprite.animation, sprite.frame, sprite.frame_progress])
+	await create_timer(0.2).timeout
+	advance(map, 1.0)
+	for i in range(sprites.size()):
+		assert(sprites[i].position == frozen[i][0])
+		assert(sprites[i].animation == frozen[i][1] and sprites[i].frame == frozen[i][2])
+		assert(is_equal_approx(sprites[i].frame_progress, frozen[i][3]))
+	# Selection, camera and replacement orders remain live while paused.
+	select_click(map, map.world_to_screen(map.infantry[0].position + Battle.BODY_CENTER_FROM_FEET))
+	assert(map.selection == map.infantry)
+	var center := (map.infantry[0].position + map.infantry[-1].position) * 0.5
+	click(map, map.world_to_screen(center + Vector2(0, 80)), MOUSE_BUTTON_RIGHT)
+	var final_target := center + Vector2(150, 180)
+	click(map, map.world_to_screen(final_target), MOUSE_BUTTON_RIGHT)
+	map.order_formation(map.enemies, (map.enemies[0].position + map.enemies[-1].position) * 0.5 + Vector2(-80, 100))
+	assert(map.infantry[0].animation == &"idle", "Queued orders preserve the paused pose")
+	var guides := map.movement_guides()
+	assert(guides.size() == 3)
+	assert(guides[0].color == Battle.ALLIED_ROUTE_COLOR and guides[0].end == hero.target)
+	assert(guides[1].color == Battle.ALLIED_ROUTE_COLOR and guides[1].end.is_equal_approx(final_target))
+	assert(guides[2].color == Battle.ENEMY_ROUTE_COLOR)
+	var old_camera := map.camera.position
+	key(map, KEY_D, true)
+	advance(map, 0.2)
+	key(map, KEY_D, false)
+	assert(map.camera.position.x > old_camera.x)
+	map.change_zoom(2, Vector2(640, 400))
+	map.camera.position = hero.position
+	map.clamp_camera()
+	select_click(map, map.world_to_screen(hero.position + Battle.BODY_CENTER_FROM_FEET))
+	assert(map.selected)
+	var hero_target := map.screen_to_world(Vector2(700, 500))
+	click(map, Vector2(700, 500), MOUSE_BUTTON_RIGHT)
+	assert(hero.target.is_equal_approx(hero_target))
+	await create_timer(0.2).timeout
+	advance(map, 2.0)
+	for i in range(sprites.size() - 1):
+		assert(sprites[i].position == frozen[i][0])
+		assert(sprites[i].animation == frozen[i][1] and sprites[i].frame == frozen[i][2])
+		assert(is_equal_approx(sprites[i].frame_progress, frozen[i][3]))
+	var flag_frame := map.standard.frame
+	var flag_progress := map.standard.frame_progress
+	await create_timer(0.2).timeout
+	assert(map.standard.frame == flag_frame and is_equal_approx(map.standard.frame_progress, flag_progress))
+	pause_button.button_pressed = false
+	assert(not map.battle_paused and not pause_button.button_pressed)
+	assert(pause_button.get_theme_stylebox("normal").border_color != Color("ffd54a"))
+	advance(map, 0.2)
+	assert(hero.position != frozen[0][0])
+	assert(map.infantry[0].position != frozen[1][0] and map.infantry[0].animation == &"walk")
+	assert(map.enemies[0].position != frozen[map.friendlies.size()][0] and map.enemies[0].animation == &"walk")
+	await create_timer(0.13).timeout
+	assert(hero.frame != frozen[0][2] or not is_equal_approx(hero.frame_progress, frozen[0][3]))
+	advance(map, 20.0)
+	assert(map.movement_guides().is_empty(), "Routes disappear after arrival or contact")
+	# Leaving a paused battle cannot freeze the campaign or the next battle.
+	map.set_battle_paused(true)
+	game.show_world()
+	await process_frame
+	assert(not paused and game.current_screen == "world")
+	game.show_battle()
+	await process_frame
+	assert(not game.battle.battle_paused)
+	assert(game.battle.player_sprite.speed_scale == 1.0)
+	print("PASS: tactical pause freezes both armies and flag; selection/camera/queued orders remain live; blue/red guides; resume and scene exit")
 
 func run() -> void:
 	root.size = Vector2i(1280,800)
@@ -219,13 +304,11 @@ func run() -> void:
 	key(map,KEY_A,false)
 	key(map,KEY_W,false)
 	assert(is_equal_approx(center.distance_to(map.camera.position),210))
-	var icons: HBoxContainer = game.screen.get_node("CommandIcons")
-	assert(icons.get_child_count() == 3)
-	for i in range(3):
-		var icon := icons.get_child(i) as TextureRect
-		assert(icon.texture != null and icon.accessibility_name == ["정지","사수","공격"][i])
-		assert(icon.mouse_filter == Control.MOUSE_FILTER_IGNORE)
-	var hud_position: Vector2 = icons.get_global_transform_with_canvas().origin
+	assert(game.screen.get_node_or_null("CommandIcons") == null)
+	var pause_button: Button = game.screen.find_child("PauseButton", true, false)
+	assert(pause_button != null and pause_button.toggle_mode and pause_button.icon != null)
+	assert(pause_button.mouse_filter == Control.MOUSE_FILTER_STOP)
+	var hud_position: Vector2 = pause_button.get_global_transform_with_canvas().origin
 	# Zoom about the cursor, with absolute 1x and 3x bounds.
 	var anchor := Vector2(700,420)
 	var anchor_world := map.screen_to_world(anchor)
@@ -236,8 +319,8 @@ func run() -> void:
 	assert(map.zoom_level == 3.0)
 	assert(map.standard.get_global_transform_with_canvas().origin.is_equal_approx(map.world_to_screen(map.standard.position)))
 	assert(map.player_sprite.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2(3,3)))
-	assert(icons.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2.ONE))
-	assert(icons.get_global_transform_with_canvas().origin == hud_position)
+	assert(pause_button.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2.ONE))
+	assert(pause_button.get_global_transform_with_canvas().origin == hud_position)
 	# At maximum zoom and a panned camera, click, drag and move still use world coordinates.
 	map.camera.position = map.unit_position
 	map.clamp_camera()
@@ -298,5 +381,9 @@ func run() -> void:
 	await process_frame
 	game.battle.set_physics_process(false)
 	check_group_orders(game.battle)
+	game.show_battle()
+	await process_frame
+	game.battle.set_physics_process(false)
+	await check_tactical_pause(game)
 	print("PASS: fixed terrain, camera WASD/diagonal speed, cursor zoom 1x..3x, every map edge, fixed HUD, zoomed selection/orders, original movement, randomized idle after arrival/contact without idle resets, resize without rebaking, focus loss, creation return")
 	quit()

@@ -1,6 +1,7 @@
 class_name BattleMap
 extends Node2D
 signal status_changed
+signal pause_changed(paused: bool)
 const Ground = preload("res://scripts/battle_ground.gd")
 const MOVE_SPEED := 76.0
 const DRAG_THRESHOLD := 4.0
@@ -12,11 +13,13 @@ const ZOOM_STEP := 0.25
 const BODY_CENTER_X := CharacterArt.BODY_ORIGIN.x + 16
 const INFANTRY_COLUMNS := 4
 const INFANTRY_ROWS := 5
-const FORMATION_SPACING := Vector2(22, 15)
+const FORMATION_SPACING := Vector2(23, 16)
 const DEPLOYMENT_OFFSET := 440.0
 const CONTACT_SIZE := Vector2(5, 5)
 const BODY_CENTER_FROM_FEET := Vector2(0, -13)
 const HUD_LAYER := 10
+const ALLIED_ROUTE_COLOR := Color("58a6ff")
+const ENEMY_ROUTE_COLOR := Color("ff625f")
 
 class BattleUnit extends AnimatedSprite2D:
 	var target := Vector2.ZERO
@@ -36,6 +39,7 @@ var enemies: Array[BattleUnit] = []
 var hero_group: Array[BattleUnit] = []
 var selection: Array[BattleUnit] = []
 var joint_order := false
+var battle_paused := false
 var standard: AnimatedSprite2D
 var order_marker := Vector2.ZERO
 var character_frames: SpriteFrames
@@ -101,7 +105,7 @@ func deploy_infantry(units: Node2D, allied: bool) -> void:
 	var group: StringName = &"allied_infantry" if allied else &"enemy_infantry"
 	var variants: Array[SpriteFrames] = []
 	for i in range(5):
-		variants.append(CharacterArt.infantry_frames(CharacterArt.infantry_appearance(allied, i), allied))
+		variants.append(CharacterArt.infantry_frames(CharacterArt.infantry_appearance(allied, i), true))
 	for row in range(INFANTRY_ROWS):
 		for column in range(INFANTRY_COLUMNS):
 			var sprite := BattleUnit.new()
@@ -136,8 +140,8 @@ func create_standard() -> void:
 	frames.set_animation_loop(&"default", true)
 	standard.sprite_frames = frames
 	standard.centered = false
-	# Bottom-left corner of the visible artwork in all eight padded 64x64 frames.
-	standard.offset = -Vector2(18, 56)
+	# Keep the visible bottom-left pivot, with a fixed 3px left adjustment.
+	standard.offset = -Vector2(18, 56) + Vector2(-3, 0)
 	standard.hide()
 	overlay.add_child(standard)
 
@@ -269,21 +273,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func issue_move(point: Vector2) -> void:
 	if selection.is_empty(): return
-	var center := Vector2.ZERO
-	var formation := Rect2(selection[0].position, Vector2.ZERO)
-	for unit in selection:
-		center += unit.position
-		formation = formation.expand(unit.position)
-	center /= selection.size()
-	var bounds := playable_rect()
-	var offset := (point - center).clamp(bounds.position - formation.position, bounds.end - formation.end)
-	for unit in selection:
-		unit.target = unit.position + offset
-		if unit.position.is_equal_approx(unit.target):
-			unit.enter_idle()
-		else:
-			unit.play("walk")
-	order_marker = center + offset
+	order_marker = order_formation(selection, point)
 	joint_order = selection.size() == friendlies.size()
 	var hero := hero_group[0]
 	destination = hero.target
@@ -292,14 +282,52 @@ func issue_move(point: Vector2) -> void:
 	status_changed.emit()
 	queue_redraw()
 
+func order_formation(members: Array[BattleUnit], point: Vector2) -> Vector2:
+	if members.is_empty(): return point
+	var center := Vector2.ZERO
+	var formation := Rect2(members[0].position, Vector2.ZERO)
+	for unit in members:
+		center += unit.position
+		formation = formation.expand(unit.position)
+	center /= members.size()
+	var bounds := playable_rect()
+	var offset := (point - center).clamp(bounds.position - formation.position, bounds.end - formation.end)
+	for unit in members:
+		unit.target = unit.position + offset
+		# Queued orders must not change the frozen pose while paused.
+		if not battle_paused: update_unit_animation(unit)
+	queue_redraw()
+	return center + offset
+
+func update_unit_animation(unit: BattleUnit) -> void:
+	if unit.position.is_equal_approx(unit.target):
+		unit.enter_idle()
+	else:
+		unit.play("walk")
+
+func set_battle_paused(value: bool) -> void:
+	if battle_paused == value: return
+	battle_paused = value
+	for group in [friendlies, enemies]:
+		for unit: BattleUnit in group:
+			unit.speed_scale = 0.0 if value else 1.0
+			if not value: update_unit_animation(unit)
+	standard.speed_scale = 0.0 if value else 1.0
+	pause_changed.emit(value)
+	status_changed.emit()
+	queue_redraw()
+
 func _physics_process(delta: float) -> void:
 	var direction := Vector2(int(pan_keys.get(KEY_D,false))-int(pan_keys.get(KEY_A,false)),int(pan_keys.get(KEY_S,false))-int(pan_keys.get(KEY_W,false)))
 	pan_camera(direction,delta)
+	# Camera and input stay live; only battlefield simulation is paused.
+	if battle_paused: return
 	if joint_order:
 		advance_formation(friendlies, enemies, delta)
 	else:
 		advance_formation(hero_group, enemies, delta, infantry)
 		advance_formation(infantry, enemies, delta, hero_group)
+	advance_formation(enemies, friendlies, delta)
 	unit_position = player_sprite.position
 	destination = hero_group[0].target
 	moving = unit_position != destination
@@ -371,7 +399,34 @@ func ellipse_points(center: Vector2, radius: float) -> PackedVector2Array:
 		points.append((center + Vector2(cos(a)*radius,sin(a)*radius*0.4)).round())
 	return points
 
+func movement_guides() -> Array[Dictionary]:
+	var guides: Array[Dictionary] = []
+	for group in [hero_group, infantry, enemies]:
+		if group.is_empty(): continue
+		var start := Vector2.ZERO
+		var finish := Vector2.ZERO
+		for unit: BattleUnit in group:
+			start += unit.position
+			finish += unit.target
+		start /= group.size()
+		finish /= group.size()
+		if start.is_equal_approx(finish): continue
+		guides.append({"start": start, "end": finish,
+			"color": ENEMY_ROUTE_COLOR if group == enemies else ALLIED_ROUTE_COLOR})
+	return guides
+
 func _draw() -> void:
+	# One persistent route per formation/hero, including orders queued in pause.
+	for guide in movement_guides():
+		var start: Vector2 = guide.start
+		var finish: Vector2 = guide.end
+		var color: Color = guide.color
+		var direction := (finish - start).normalized()
+		var arrow_size := minf(8.0 / zoom_level, start.distance_to(finish) * 0.5)
+		draw_line(start, finish, color, 2.0 / zoom_level)
+		for side in [-1, 1]:
+			var wing: Vector2 = finish - direction * arrow_size + direction.orthogonal() * arrow_size * 0.5 * side
+			draw_line(finish, wing, color, 2.0 / zoom_level)
 	# Ground shadow and selection feedback remain at native resolution.
 	draw_colored_polygon(ellipse_points(unit_position+Vector2(1,1),10),Color(0.25,0.27,0.18,0.30))
 	if marker_time > 0:

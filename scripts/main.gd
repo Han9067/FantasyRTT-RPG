@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.1")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.2")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -486,26 +486,14 @@ func show_battle() -> void:
 	move_child(battle,0)
 	var header := HBoxContainer.new()
 	screen.add_child(header)
+	header.add_theme_constant_override("separation", 14)
+	var pause_button := preload("res://scripts/battle_pause_button.gd").new()
+	header.add_child(pause_button)
+	pause_button.toggled.connect(battle.set_battle_paused)
+	battle.pause_changed.connect(pause_button.show_pause_state)
 	var title := label_text("서부 초원  /  전투 시험장", 22)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(title)
 	header.add_child(button("← 월드맵", show_world))
 	spacer(screen)
-	var commands := HBoxContainer.new()
-	commands.name = "CommandIcons"
-	commands.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
-	commands.add_theme_constant_override("separation", 6)
-	screen.add_child(commands)
-	for entry in [
-		["정지", preload("res://assets/ui/commands/stop.png")],
-		["사수", preload("res://assets/ui/commands/hold.png")],
-		["공격", preload("res://assets/ui/commands/attack.png")]
-	]:
-		var icon := TextureRect.new()
-		icon.texture = entry[1]
-		icon.accessibility_name = entry[0]
-		icon.custom_minimum_size = Vector2(56, 56)
-		icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		commands.add_child(icon)
 	ignore_battle_overlay_input(screen)
