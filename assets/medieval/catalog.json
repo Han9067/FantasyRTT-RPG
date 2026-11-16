@@ -21230,6 +21230,235 @@
           ]
         }
       ]
+    },
+    "sprites/weapons/ranged weapons/bow_shot.png": {
+      "slots": [
+        {
+          "name": "bow_shot_01",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_01.png",
+          "sha256": "42df36b76400896a7d445e2cd4362fb260e7aeea60a4211cc7be44d00153e108",
+          "size": [
+            64,
+            32
+          ],
+          "id": 1,
+          "atlas": "atlas_01.png",
+          "rect": [
+            673,
+            439,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_02",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_02.png",
+          "sha256": "a2d406d7b336a094b8865d748b705d2972c9352489479ef78c542024ebdbdfd7",
+          "size": [
+            64,
+            32
+          ],
+          "id": 2,
+          "atlas": "atlas_01.png",
+          "rect": [
+            739,
+            439,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_03",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_03.png",
+          "sha256": "21dc1fff6155a972bac8a601caf5d2fb52c08d4810ebadeee8eb70715fa617d5",
+          "size": [
+            64,
+            32
+          ],
+          "id": 3,
+          "atlas": "atlas_01.png",
+          "rect": [
+            805,
+            439,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_04",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_04.png",
+          "sha256": "e2678ceb6f6dc1acc269c3c249be581506546068a84c3daa9fea904d47256d0b",
+          "size": [
+            64,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_01.png",
+          "rect": [
+            871,
+            439,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_05",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_05.png",
+          "sha256": "1d70690da6fb2ef263b734fa556ea79f5af49f671c7ad9fa2692eac4b5b29fb7",
+          "size": [
+            64,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_01.png",
+          "rect": [
+            937,
+            439,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_06",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_06.png",
+          "sha256": "83f76bfb88f9aa9604c76570c279bb851562e7e5544d4a2d33e6a9cae3b089f3",
+          "size": [
+            64,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_01.png",
+          "rect": [
+            1,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_07",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_07.png",
+          "sha256": "c7f2df38dbdd9aec18a22c3fc08707d9115ab1be412fb25ff6ed4ee4943dda0b",
+          "size": [
+            64,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_01.png",
+          "rect": [
+            67,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_08",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_08.png",
+          "sha256": "2ded9848ed9c671848a2dd81c6ba92673ca163cf7b086405a190b4423e2ba1b3",
+          "size": [
+            64,
+            32
+          ],
+          "id": 8,
+          "atlas": "atlas_01.png",
+          "rect": [
+            133,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_09",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_09.png",
+          "sha256": "3de8b2615ea3ff5aad5d1d0e2d81000ed81663688c24e6d448d390fa7e2d3836",
+          "size": [
+            64,
+            32
+          ],
+          "id": 9,
+          "atlas": "atlas_01.png",
+          "rect": [
+            199,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_10",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_10.png",
+          "sha256": "aaf38e969998074e22e7b9f7e55d723d1ec2c2593c8145c9766abe962bcd436f",
+          "size": [
+            64,
+            32
+          ],
+          "id": 10,
+          "atlas": "atlas_01.png",
+          "rect": [
+            265,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_11",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_11.png",
+          "sha256": "37bb498316bcb0d7d7e71c3765ae991d1d3fca690592364a8bc55b7442230e33",
+          "size": [
+            64,
+            32
+          ],
+          "id": 11,
+          "atlas": "atlas_01.png",
+          "rect": [
+            331,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_12",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_12.png",
+          "sha256": "0cd4e755f4379cf87fbfa403ffa9ff65cf0c10c40766071cfb7b9eb9f8221f5e",
+          "size": [
+            64,
+            32
+          ],
+          "id": 12,
+          "atlas": "atlas_01.png",
+          "rect": [
+            397,
+            473,
+            64,
+            32
+          ]
+        }
+      ]
+    },
+    "sprites/weapons/projectiles/arrow.png": {
+      "slots": [
+        {
+          "name": "arrow_01",
+          "source": "sprites/weapons/projectiles/arrow/arrow_01.png",
+          "sha256": "14774bab4b89345bf1276f2dc1b2eda8c7f587cbae60407dfaae2a99872c7257",
+          "size": [
+            32,
+            32
+          ],
+          "id": 1,
+          "atlas": "atlas_01.png",
+          "rect": [
+            463,
+            473,
+            32,
+            32
+          ]
+        }
+      ]
     }
   },
   "atlases": [
@@ -23460,7 +23689,7 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "bow_shot"
     },
     "bow_02": {
       "id": "bow_02",
@@ -23622,6 +23851,27 @@
         100,
         100
       ]
+    },
+    "bow_shot": {
+      "frames": 12,
+      "durations_ms": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "source": "sprites/weapons/ranged weapons/bow_shot",
+      "release_frame": 7
     }
-  }
+  },
+  "bow_shot": "sprites/weapons/ranged weapons/bow_shot.png",
+  "arrow": "sprites/weapons/projectiles/arrow.png"
 }

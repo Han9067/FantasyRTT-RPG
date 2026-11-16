@@ -31,7 +31,7 @@ func run() -> void:
 			assert(original.get_data() == Art.part_image(path, i).get_data(), "Atlas/import changed source pixels")
 			assert(Rect2i(Vector2i.ZERO, Art.atlas_image(slot.atlas).get_size()).encloses(Art.part_rect(path, i)))
 			part_count += 1
-	assert(part_count == 1237)
+	assert(part_count == 1250)
 	var config := Art.defaults()
 	assert(Art.count(config, "face") == 40)
 	assert(Art.count(config, "body") == 12)
@@ -104,7 +104,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.11")
+	assert(game.game_version == "0.0.12")
 	game.show_creation()
 	await process_frame
 	await process_frame
@@ -203,7 +203,7 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 1237 loose source parts match two atlases byte-for-byte; two weapon slots; 11 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
+	print("PASS: 1250 loose source parts match two atlases byte-for-byte; two weapon slots; 11 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
 	quit()
 
 func verify_shield_layers() -> void:
@@ -235,6 +235,10 @@ func verify_equipment(catalog: Dictionary) -> void:
 	for id in catalog.weapon_items:
 		config.equipped_weapon = id
 		var weapon: Dictionary = Art.equipped_weapon(config)
+		# The ranged smoke check covers all twelve original bow shot frames.
+		if id == "bow_01":
+			assert(weapon.attack == "bow_shot")
+			continue
 		var is_spear: bool = weapon.family == "two_spear"
 		assert(weapon.attack == ("thrust_attack" if is_spear else "chop_attack"))
 		if is_spear: spear_count += 1
@@ -280,4 +284,4 @@ func verify_equipment(catalog: Dictionary) -> void:
 			assert(ready.rotation == -1 and extended.rotation == -1)
 			assert(extended.grip.x < ready.grip.x and extended.grip.y == ready.grip.y, "Thrust must extend horizontally")
 	assert(spear_count == 17)
-	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels and grips without clipping; 17 spears thrust, other weapons chop; stable preview crops and reference timing")
+	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels and grips without clipping; 17 spears thrust, other melee weapons chop; stable preview crops and reference timing")

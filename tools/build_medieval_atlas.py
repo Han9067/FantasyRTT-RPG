@@ -45,12 +45,12 @@ def weapon_grip(family, name, image):
 def build(source=SOURCE, dest=DEST):
     catalog = {'schema': 5, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'primary_types': [], 'secondary_types': [], 'melee_groups': {}, 'weapon_items': {}}
     pending = []
-    def add(group, filename_prefix=None, only_file=None):
+    def add(group, filename_prefix=None, only_file=None, only_files=None):
         key = group + '.png'
         if key in catalog['sheets']:
             return key
         folder = source / group
-        files = [folder/only_file] if only_file else list(folder.glob('*.png'))
+        files = [folder/name for name in only_files] if only_files else ([folder/only_file] if only_file else list(folder.glob('*.png')))
         if not files:
             raise ValueError(f'No loose PNGs in {folder}')
         slots = []
@@ -113,7 +113,7 @@ def build(source=SOURCE, dest=DEST):
                 catalog['weapon_items'][slot['name']] = {
                     'id': slot['name'], 'family': folder.name, 'sheet': key, 'slot': index,
                     'two_handed': not melee or hands == 'two', 'number': slot['id'],
-                    'grip': grip, 'attack': 'thrust_attack' if family == 'spear' else 'chop_attack'}
+                    'grip': grip, 'attack': 'bow_shot' if slot['name'] == 'bow_01' else ('thrust_attack' if family == 'spear' else 'chop_attack')}
     catalog['attack_effect'] = add('sprites/VFX/weapon/weaponfx03')
     catalog['thrust_effect'] = add('sprites/VFX/weapon/weaponfx02')
     catalog['infantry_helmet'] = add('sprites/wardrobe/metal/metal', only_file='metal_20.png')
@@ -130,6 +130,12 @@ def build(source=SOURCE, dest=DEST):
         catalog['attack_references'][attack] = {'source':guide.relative_to(source).as_posix(),
             'sha256':hashlib.sha256(guide.read_bytes()).hexdigest(),
             'frames':len(durations), 'durations_ms':durations}
+
+    catalog['bow_shot'] = add('sprites/weapons/ranged weapons/bow_shot',
+                              only_files=[f'bow_shot_{i:02d}.png' for i in range(1,13)])
+    catalog['arrow'] = add('sprites/weapons/projectiles/arrow', only_file='arrow_01.png')
+    catalog['attack_references']['bow_shot'] = {'frames':12, 'durations_ms':[100]*12,
+        'source':'sprites/weapons/ranged weapons/bow_shot', 'release_frame':7}
 
     pages = [Image.new('RGBA', (PAGE_SIZE,PAGE_SIZE))]
     x = y = GUTTER

@@ -47,7 +47,7 @@ func run() -> void:
 	var hero := map.hero_group[0]
 	assert(hero.hp == 100 and hero.max_hp == 100 and hero.attack_damage == 6)
 	for unit in map.infantry + map.enemies:
-		assert(unit.hp == 10 and unit.max_hp == 10 and unit.attack_damage == 4)
+		assert(unit.hp == 10 and unit.max_hp == 10 and unit.attack_damage == 4 and unit.accuracy == 0.75)
 		assert(unit.sprite_frames.get_frame_count(&"attack") == 6)
 		assert(unit.sprite_frames.get_animation_speed(&"attack") == 10)
 	var enemy_point := map.world_to_screen(map.enemies[0].position + BattleMap.BODY_CENTER_FROM_FEET)
@@ -97,6 +97,7 @@ func run() -> void:
 	await process_frame
 	hero = map.hero_group[0]
 	victim = map.enemies[0]
+	victim.accuracy = 1.0 # Isolate exact impact timing from the separately tested hit roll.
 	for unit in map.infantry: unit.take_damage(1000)
 	for unit in map.enemies:
 		if unit != victim: unit.take_damage(1000)

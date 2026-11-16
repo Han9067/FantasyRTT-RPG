@@ -9,6 +9,10 @@ func fresh() -> BattleMap:
 	game.show_battle()
 	var map: BattleMap = game.battle
 	map.set_physics_process(false)
+	# Keep these legacy formation scenarios isolated from the new ranged group.
+	for unit in map.archers:
+		unit.position = Vector2(400,1400) + unit.formation_slot
+		unit.target = unit.position
 	return map
 
 func no_overlap(map: BattleMap) -> void:

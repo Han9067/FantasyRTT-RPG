@@ -10,6 +10,12 @@ var allied := true
 var max_hp := 10
 var hp := 10
 var attack_damage := 4
+var accuracy := 0.75
+var ranged := false
+var shot_time := -1.0
+var shot_target: BattleUnit
+var shot_released := false
+var shots_fired := 0
 var health_time := 0.0
 var health_bar: Node2D
 var opponent: BattleUnit
@@ -50,6 +56,7 @@ func take_damage(amount: int) -> void:
 	if hp == 0:
 		target = position
 		swing_time = -1.0
+		shot_time = -1.0
 		opponent = null
 		swing_target = null
 		stop()
@@ -61,6 +68,9 @@ func enter_idle() -> void:
 	if animation == &"idle" and is_playing(): return
 	play(&"idle")
 	frame = randi_range(0, sprite_frames.get_frame_count(&"idle") - 1)
+
+func roll_hit() -> bool:
+	return randf() < accuracy
 
 func contact_box() -> Rect2:
 	return Rect2(position + BODY_CENTER_FROM_FEET - CONTACT_SIZE * 0.5, CONTACT_SIZE)

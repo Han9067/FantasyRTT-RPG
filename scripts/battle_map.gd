@@ -27,10 +27,12 @@ const ENEMY_ROUTE_COLOR := Color("ff625f")
 
 var friendlies: Array[BattleUnit] = []
 var infantry: Array[BattleUnit] = []
+var archers: Array[BattleUnit] = []
+var joint_members: Array[BattleUnit] = []
 var enemies: Array[BattleUnit] = []
 var hero_group: Array[BattleUnit] = []
 var selection: Array[BattleUnit] = []
-var packed_counts := {"hero": 1, "infantry": 20, "enemy": 20}
+var packed_counts := {"hero": 1, "infantry": 20, "enemy": 20, "archers": 20}
 var reform_anchors: Dictionary = {}
 var joint_order := false
 var battle_paused := false
@@ -77,6 +79,7 @@ func _ready() -> void:
 	hero.max_hp = 100
 	hero.hp = 100
 	hero.attack_damage = 6
+	hero.accuracy = 1.0
 	player_sprite = hero
 	player_sprite.sprite_frames = character_frames
 	player_sprite.centered = false
@@ -86,6 +89,7 @@ func _ready() -> void:
 	hero_group.append(hero)
 	deploy_infantry(units, true)
 	deploy_infantry(units, false)
+	deploy_infantry(units, true, true)
 	create_standard()
 	ground.generate(Vector2i(map_size))
 	camera = Camera2D.new()
@@ -108,15 +112,21 @@ func _ready() -> void:
 	hero.enter_idle()
 	get_viewport().size_changed.connect(resize_map)
 
-func deploy_infantry(units: Node2D, allied: bool) -> void:
-	var group: StringName = &"allied_infantry" if allied else &"enemy_infantry"
+func deploy_infantry(units: Node2D, allied: bool, archer := false) -> void:
+	var group: StringName = &"allied_archers" if archer else (&"allied_infantry" if allied else &"enemy_infantry")
 	var variants: Array[SpriteFrames] = []
 	for i in range(5):
-		variants.append(CharacterArt.infantry_frames(CharacterArt.infantry_appearance(allied, i), true))
+		var appearance := CharacterArt.archer_appearance(allied, i) if archer else CharacterArt.infantry_appearance(allied, i)
+		variants.append(CharacterArt.infantry_frames(appearance, true))
 	for row in range(INFANTRY_ROWS):
 		for column in range(INFANTRY_COLUMNS):
 			var sprite := BattleUnit.new()
 			sprite.allied = allied
+			sprite.ranged = archer
+			if archer:
+				sprite.max_hp = 6
+				sprite.hp = 6
+				sprite.accuracy = 0.6
 			sprite.avoid_side = -1.0 if row < INFANTRY_ROWS / 2 else 1.0
 			sprite.centered = false
 			sprite.flip_h = allied
@@ -124,11 +134,13 @@ func deploy_infantry(units: Node2D, allied: bool) -> void:
 			var side := -1 if allied else 1
 			var slot := Vector2(column - (INFANTRY_COLUMNS - 1) * 0.5, row - (INFANTRY_ROWS - 1) * 0.5)
 			sprite.position = map_size * 0.5 + Vector2(side * DEPLOYMENT_OFFSET, 0) + slot * FORMATION_SPACING
+			if archer: sprite.position.y += 160.0
 			sprite.formation_slot = slot * FORMATION_SPACING
 			sprite.target = sprite.position
 			sprite.offset = -sprite_anchor(sprite.flip_h)
 			if allied:
-				infantry.append(sprite)
+				if archer: archers.append(sprite)
+				else: infantry.append(sprite)
 				friendlies.append(sprite)
 			else:
 				enemies.append(sprite)
@@ -200,9 +212,10 @@ func _exit_tree() -> void:
 func issue_attack(enemy: BattleUnit) -> void:
 	if enemy == null or not enemy.alive() or selection.is_empty(): return
 	combat.cancel_for(selection)
-	combat.command(selection)
+	combat.command(selection, enemy)
 	joint_order = false
-	for key: String in ["hero", "infantry"]:
+	joint_members.clear()
+	for key: String in ["hero", "infantry", "archers"]:
 		if combat.orders.has(key): order_formation(Combat.living(combat.group(key)), Combat.center(Combat.living(enemies)))
 	order_marker = enemy.position
 	marker_time = 0.8
@@ -275,10 +288,11 @@ func finish_selection(screen_point: Vector2) -> void:
 		elif not is_box and bounds.has_point(point) and (front == null or unit.position.y >= front.position.y):
 			front = unit
 	if front != null: selection.append(front)
-	selected = selection.has(player_sprite)
-	if selection.size() > int(selected):
-		selection.assign(Combat.living(infantry))
-		if selected: selection.append(hero_group[0])
+	var selected_keys: Dictionary = {}
+	for unit in selection: selected_keys[combat.key_for(unit)] = true
+	selection.clear()
+	for key: String in ["hero", "infantry", "archers"]:
+		if selected_keys.has(key): selection.append_array(Combat.living(combat.group(key)))
 	refresh_selection()
 
 func _input(event: InputEvent) -> void:
@@ -332,7 +346,10 @@ func issue_move(point: Vector2) -> void:
 	if selection.is_empty(): return
 	combat.cancel_for(selection)
 	order_marker = order_formation(selection, point)
-	joint_order = selection.size() == Combat.living(friendlies).size()
+	joint_members.assign(selection)
+	var keys: Dictionary = {}
+	for unit in selection: keys[combat.key_for(unit)] = true
+	joint_order = keys.size() > 1
 	var hero := hero_group[0]
 	destination = hero.target
 	moving = not hero.position.is_equal_approx(destination)
@@ -409,7 +426,7 @@ func order_formation(members: Array[BattleUnit], point: Vector2) -> Vector2:
 	return center + offset
 
 func update_unit_animation(unit: BattleUnit) -> void:
-	if not unit.alive() or unit.swing_time >= 0.0: return
+	if not unit.alive() or unit.swing_time >= 0.0 or unit.shot_time >= 0.0: return
 	if unit.position.is_equal_approx(unit.target):
 		unit.enter_idle()
 	else:
@@ -434,7 +451,7 @@ func _physics_process(delta: float) -> void:
 	# Camera and input stay live; only battlefield simulation is paused.
 	if battle_paused: return
 	combat.prepare(delta)
-	for key: String in ["infantry", "enemy"]:
+	for key: String in ["infantry", "enemy", "archers"]:
 		var members: Array[BattleUnit] = Combat.living(combat.group(key))
 		if not combat.orders.has(key) and not members.is_empty() and members.size() != packed_counts[key]:
 			var stationary := members.all(func(unit: BattleUnit) -> bool: return unit.position.is_equal_approx(unit.target))
@@ -443,13 +460,23 @@ func _physics_process(delta: float) -> void:
 				var goal := Vector2.ZERO
 				for unit in members: goal += unit.target
 				order_formation(members, goal / members.size())
-	if joint_order and not combat.orders.has("hero") and not combat.orders.has("infantry"):
-		advance_formation(Combat.living(friendlies), Combat.living(enemies), delta)
-	else:
-		if not combat.engaged("hero"):
-			advance_formation(Combat.living(hero_group), Combat.living(enemies), delta, Combat.living(infantry))
-		if not combat.engaged("infantry"):
-			advance_formation(Combat.living(infantry), Combat.living(enemies), delta, Combat.living(hero_group))
+	var together: Array[BattleUnit] = []
+	if joint_order: together = Combat.living(joint_members)
+	var together_keys: Dictionary = {}
+	for unit: BattleUnit in together: together_keys[combat.key_for(unit)] = true
+	if together_keys.keys().any(func(key: String) -> bool: return combat.orders.has(key)):
+		together.clear()
+		together_keys.clear()
+	if not together.is_empty():
+		var others := Combat.living(friendlies)
+		for unit: BattleUnit in together: others.erase(unit)
+		advance_formation(together, Combat.living(enemies), delta, others)
+	for key: String in ["hero", "infantry", "archers"]:
+		if combat.engaged(key) or together_keys.has(key): continue
+		var members := Combat.living(combat.group(key))
+		var others := Combat.living(friendlies)
+		for unit in members: others.erase(unit)
+		advance_formation(members, Combat.living(enemies), delta, others)
 	if not combat.engaged("enemy"):
 		advance_formation(Combat.living(enemies), Combat.living(friendlies), delta)
 	combat.step(delta)
@@ -532,7 +559,7 @@ func ellipse_points(center: Vector2, radius: float) -> PackedVector2Array:
 
 func movement_guides() -> Array[Dictionary]:
 	var guides: Array[Dictionary] = []
-	for group in [Combat.living(hero_group), Combat.living(infantry), Combat.living(enemies)]:
+	for group in [Combat.living(hero_group), Combat.living(infantry), Combat.living(enemies), Combat.living(archers)]:
 		if group.is_empty(): continue
 		var start := Vector2.ZERO
 		var finish := Vector2.ZERO

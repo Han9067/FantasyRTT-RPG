@@ -51,13 +51,23 @@ static func infantry_appearance(allied: bool, variant: int) -> Dictionary:
 	config.offhand_item = data().melee_groups.one_shield.find("shield_31")
 	return config
 
+static func archer_appearance(allied: bool, variant: int) -> Dictionary:
+	var config := infantry_appearance(allied, variant)
+	config.equipped_weapon = "bow_01"
+	config.offhand = -1
+	config.offhand_item = -1
+	return config
+
+static func frame_count(config: Dictionary, animation: String) -> int:
+	return 12 if animation == "attack" and equipped_weapon(config).attack == "bow_shot" else FRAME_COUNTS[animation]
+
 static func infantry_frames(config: Dictionary, can_walk: bool) -> SpriteFrames:
 	var frames := SpriteFrames.new()
 	frames.remove_animation("default")
 	for animation in (["idle", "walk", "attack"] if can_walk else ["idle"]):
 		frames.add_animation(animation)
 		frames.set_animation_speed(animation, 6.0 if animation == "idle" else (10.0 if animation == "attack" else 12.0))
-		for i in range(FRAME_COUNTS[animation]):
+		for i in range(frame_count(config, animation)):
 			frames.add_frame(animation, ImageTexture.create_from_image(compose(config, animation, i)))
 	return frames
 
@@ -120,6 +130,10 @@ static func pose(animation: String, frame: int, attack_type := "chop_attack") ->
 	return result
 
 static func local_pose(animation: String, frame: int, attack_type: String) -> Dictionary:
+	if attack_type == "bow_shot" and animation == "attack":
+		var draw_x: int = [33,37,40,42,43,44,32,34,31,33,32,33][frame]
+		return {"bob": 0, "grip": Vector2i(35,43), "free_hand": Vector2i(draw_x-2,35),
+			"rotation": 0, "visible": true, "effect": -1, "effect_origin": Vector2i.ZERO, "body_frame": 0}
 	if animation == "attack":
 		if attack_type == "thrust_attack":
 			# Original thrust guide: upright guard, horizontal preparation, three
@@ -138,7 +152,7 @@ static func local_pose(animation: String, frame: int, attack_type: String) -> Di
 			"effect_sheet": data().attack_effect, "effect_rotation": 0, "effect_origin": Vector2i(0,21)}
 	var bob := int([0, 1, 2, 1][frame]) if animation == "idle" else int([0, 1, 0, -1, 0, 1, 0, -1][frame])
 	var swing := 0 if animation == "idle" else int([0, 1, 1, 0, 0, -1, -1, 0][frame])
-	return {"bob": bob, "grip": Vector2i(35, (42 if attack_type == "thrust_attack" else 49) + bob + swing), "free_hand": Vector2i(46, 41 + bob - swing),
+	return {"bob": bob, "grip": Vector2i(35, (42 if attack_type == "thrust_attack" else (43 if attack_type == "bow_shot" else 49)) + bob + swing), "free_hand": Vector2i(46, 41 + bob - swing),
 		"rotation": 0, "visible": true, "effect": -1, "effect_origin": Vector2i.ZERO,
 		"body_frame": frame + (0 if animation == "idle" else (4 if animation == "walk" else 12))}
 
@@ -150,7 +164,7 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon: Dictionary = equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
-	var grip := Vector2i(int(weapon.grip[0]), int(weapon.grip[1]))
+	var grip := Vector2i(29,16) if weapon.attack == "bow_shot" and animation == "attack" else Vector2i(int(weapon.grip[0]), int(weapon.grip[1]))
 	return current_pose.grip - rotated_point(grip, part_rect(weapon.sheet, weapon.slot).size, current_pose.rotation)
 
 static func atlas_image(filename: String) -> Image:
@@ -179,7 +193,7 @@ static func paste_rotated(target: Image, path: String, index: int, position: Vec
 	target.blend_rect(part, Rect2i(Vector2i.ZERO, part.get_size()), position)
 
 static func compose(config: Dictionary, animation := "idle", frame := 0, include_weapon := true) -> Image:
-	assert(FRAME_COUNTS.has(animation) and frame >= 0 and frame < FRAME_COUNTS[animation])
+	assert(FRAME_COUNTS.has(animation) and frame >= 0 and frame < frame_count(config, animation))
 	var img := Image.create(FRAME_SIZE.x, FRAME_SIZE.y, false, Image.FORMAT_RGBA8)
 	img.fill(Color.TRANSPARENT)
 	var base := BODY_ORIGIN
@@ -192,7 +206,10 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	paste(img, data().bodies[config.body], body_index, base)
 	if include_weapon and current_pose.visible:
 		var weapon := equipped_weapon(config)
-		paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
+		if weapon.attack == "bow_shot" and animation == "attack":
+			paste(img, data().bow_shot, frame, weapon_position(config, animation, frame))
+		else:
+			paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
 	paste(img, race.heads[config.skin], config.face, head)
 	if config.has("helmet"):
 		paste(img, config.helmet, 0, head + Vector2i(0, -2))
@@ -232,7 +249,7 @@ static func animations(config: Dictionary) -> SpriteFrames:
 		frames.add_animation(animation)
 		frames.set_animation_loop(animation, true)
 		frames.set_animation_speed(animation, 6.0 if animation == "idle" else (10.0 if animation == "attack" else 12.0))
-		for i in range(FRAME_COUNTS[animation]):
+		for i in range(frame_count(config, animation)):
 			var image := compose(config, animation, i)
 			var texture := ImageTexture.create_from_image(image)
 			textures.append(texture)

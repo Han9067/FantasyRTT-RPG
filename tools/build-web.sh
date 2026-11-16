@@ -10,7 +10,7 @@ python tools/build_medieval_atlas.py
 python tools/build_world_map.py
 python tests/world_plan_check.py
 godot --headless --editor --import --quit
-for check in smoke battle_smoke march_smoke combat_smoke ranks_smoke world_navigation_smoke world_smoke; do
+for check in smoke battle_smoke march_smoke combat_smoke ranks_smoke ranged_smoke world_navigation_smoke world_smoke; do
   log="builds/${check}.log"
   godot --headless --script "res://tests/${check}.gd" --quit-after 3600 > "$log" 2>&1
   cat "$log"

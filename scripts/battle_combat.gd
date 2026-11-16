@@ -1,5 +1,6 @@
 extends RefCounted
 ## Formation approach, then individual melee slots with solid unit collisions.
+const Ranged = preload("res://scripts/battle_ranged.gd")
 const REACH := 25.0
 const ENGAGE_DISTANCE := 43.0
 const FIGHTING_DEPTH_GAP := 13.0
@@ -12,10 +13,12 @@ const IMPACT_TIME := 0.3
 const SWING_DURATION := 0.6
 var map: Node2D
 var orders: Dictionary = {}
+var ranged: RefCounted
 var plan_time := 0.0
 
 func _init(battle: Node2D) -> void:
 	map = battle
+	ranged = Ranged.new(battle)
 
 static func living(units: Array[BattleUnit]) -> Array[BattleUnit]:
 	var result: Array[BattleUnit] = []
@@ -31,10 +34,11 @@ func all_units() -> Array[BattleUnit]:
 
 func group(key: String) -> Array[BattleUnit]:
 	if key == "hero": return map.hero_group
+	if key == "archers": return map.archers
 	return map.infantry if key == "infantry" else map.enemies
 
 func key_for(unit: BattleUnit) -> String:
-	return "hero" if unit == map.player_sprite else ("infantry" if unit.allied else "enemy")
+	return "hero" if unit == map.player_sprite else ("archers" if unit.ranged else ("infantry" if unit.allied else "enemy"))
 
 func foes(key: String) -> Array[BattleUnit]:
 	return living(map.friendlies if key == "enemy" else map.enemies)
@@ -47,9 +51,9 @@ static func center(units: Array[BattleUnit]) -> Vector2:
 func engaged(key: String) -> bool:
 	return orders.has(key) and orders[key].engaged
 
-func command(units: Array[BattleUnit]) -> void:
+func command(units: Array[BattleUnit], enemy: BattleUnit = null) -> void:
 	for unit in units:
-		if unit.alive(): orders[key_for(unit)] = {"engaged": false}
+		if unit.alive(): orders[key_for(unit)] = {"engaged": false, "target_key": key_for(enemy) if enemy != null else "enemy"}
 	plan_time = 0.0
 
 func cancel(key: String, reform := false) -> void:
@@ -58,6 +62,8 @@ func cancel(key: String, reform := false) -> void:
 		unit.opponent = null
 		unit.swing_target = null
 		unit.swing_time = -1.0
+		unit.shot_time = -1.0
+		unit.shot_target = null
 		unit.target = unit.position
 		unit.march_path.clear()
 		if not map.battle_paused: unit.enter_idle()
@@ -68,6 +74,9 @@ func cancel_for(units: Array[BattleUnit]) -> void:
 		if orders.has(key_for(unit)): cancel(key_for(unit))
 
 func begin_melee(key: String, focus := Vector2.INF) -> void:
+	if key == "archers":
+		if not orders.has(key): command(group(key))
+		return
 	var members := living(group(key))
 	var direction := (center(foes(key)) if focus == Vector2.INF else focus) - center(members)
 	var axis := Vector2(signf(direction.x), 0) if absf(direction.x) >= absf(direction.y) else Vector2(0, signf(direction.y))
@@ -144,13 +153,16 @@ func replace_fronts(key: String) -> void:
 
 func is_front(unit: BattleUnit) -> bool:
 	var key := key_for(unit)
-	return engaged(key) and orders[key].fronts.has(unit)
+	return engaged(key) and key != "archers" and orders[key].fronts.has(unit)
 
 func prepare(delta: float) -> void:
 	for unit in all_units():
 		unit.tick_health(delta)
 		unit.cooldown = maxf(0.0, unit.cooldown - delta)
 	for key: String in orders.keys():
+		if key == "archers":
+			ranged.prepare()
+			continue
 		var members := living(group(key))
 		var opponents := foes(key)
 		if members.is_empty() or opponents.is_empty():
@@ -305,7 +317,7 @@ func contact_slot(unit: BattleUnit, axis: Vector2, lane: float, opponents: Array
 
 func plan_slots() -> void:
 	for key: String in orders:
-		if not engaged(key): continue
+		if not engaged(key) or key == "archers": continue
 		replace_fronts(key)
 		var order: Dictionary = orders[key]
 		var axis: Vector2 = order.axis
@@ -417,13 +429,13 @@ func step(delta: float) -> void:
 		plan_time = 0.2
 	var hits: Array[Dictionary] = []
 	for key: String in orders:
-		if not engaged(key): continue
+		if not engaged(key) or key == "archers": continue
 		for unit in living(group(key)):
 			if unit.swing_time >= 0.0:
 				unit.swing_time += delta
 				if not unit.impact_done and unit.swing_time >= IMPACT_TIME:
 					unit.impact_done = true
-					if can_strike(unit, unit.swing_target):
+					if can_strike(unit, unit.swing_target) and unit.roll_hit():
 						hits.append({"attacker": unit, "target": unit.swing_target})
 				if unit.swing_time >= SWING_DURATION:
 					unit.swing_time = -1.0
@@ -461,4 +473,5 @@ func step(delta: float) -> void:
 		attacker.damage_dealt += mini(victim.hp, attacker.attack_damage)
 		victim.take_damage(attacker.attack_damage)
 	if not hits.is_empty(): plan_time = 0.0
+	ranged.step(delta)
 	map.queue_redraw()

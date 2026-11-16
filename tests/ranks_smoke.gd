@@ -9,6 +9,11 @@ func fresh() -> BattleMap:
 	game.show_battle()
 	var map: BattleMap = game.battle
 	map.set_physics_process(false)
+	# Keep these legacy formation scenarios isolated from the new ranged group.
+	for unit in map.archers:
+		unit.position = Vector2(400,1400) + unit.formation_slot
+		unit.target = unit.position
+	for unit in map.infantry + map.enemies: unit.accuracy = 1.0
 	return map
 
 func advance(map: BattleMap, seconds: float) -> void:
