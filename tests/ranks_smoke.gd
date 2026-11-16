@@ -42,27 +42,23 @@ func check_compact(map: BattleMap, count: int, anchor: Vector2) -> void:
 	assert(Combat.center(members).distance_to(anchor) < 0.1)
 	assert(map.standard.position.distance_to(anchor + BattleMap.BODY_CENTER_FROM_FEET) < 0.1)
 
-func run() -> void:
-	root.size = Vector2i(1280,800)
-	game = load("res://main.tscn").instantiate()
-	root.add_child(game)
-	await process_frame
+func setup_pressure(extra_column := false) -> BattleMap:
 	var map := fresh()
-	await process_frame
-	assert(BattleMap.FORMATION_SPACING == Vector2(25,18) and Combat.REACH == 20.0)
-	var hero := map.hero_group[0]
-	var enemy := map.enemies[0]
-	enemy.position = hero.position + Vector2(20,0)
-	assert(map.combat.can_strike(hero,enemy))
-	enemy.position.x += 0.1
-	assert(not map.combat.can_strike(hero,enemy))
-	# Start two aligned ranks at the new reach; prevent ordinary deaths until promotion is tested.
-	map = fresh()
-	await process_frame
 	map.hero_group[0].position = Vector2(400,400)
 	map.hero_group[0].target = map.hero_group[0].position
-	var center := Combat.center(map.infantry)
-	var shift := center + Vector2(95,0) - Combat.center(map.enemies)
+	var origin := Combat.center(map.infantry)
+	if extra_column:
+		for row in range(5):
+			var unit := BattleUnit.new()
+			unit.sprite_frames = map.infantry[0].sprite_frames
+			unit.position = origin + Vector2(-62.5, (row-2)*18)
+			unit.formation_slot = unit.position-origin
+			unit.target = unit.position
+			map.get_node("Units").add_child(unit)
+			map.infantry.append(unit)
+			map.friendlies.append(unit)
+		map.packed_counts.infantry = 25
+	var shift := origin + Vector2(100,0) - Combat.center(map.enemies)
 	for unit in map.enemies:
 		unit.position += shift
 		unit.target = unit.position
@@ -72,38 +68,98 @@ func run() -> void:
 	map.selection.assign(map.infantry)
 	map.refresh_selection()
 	map.issue_attack(map.enemies[0])
-	advance(map, 0.1)
+	return map
+
+func run() -> void:
+	root.size = Vector2i(1280,800)
+	game = load("res://main.tscn").instantiate()
+	root.add_child(game)
+	await process_frame
+	var map := fresh()
+	await process_frame
+	assert(BattleMap.FORMATION_SPACING == Vector2(25,18) and Combat.REACH == 25.0)
+	var hero := map.hero_group[0]
+	var enemy := map.enemies[0]
+	enemy.position = hero.position + Vector2(25,0)
+	assert(map.combat.can_strike(hero,enemy))
+	enemy.position.x += 0.1
+	assert(not map.combat.can_strike(hero,enemy))
+	# Four columns: both leading columns fight, and both reserves press forward.
+	map = setup_pressure()
+	var original: Dictionary = {}
+	for unit in map.infantry: original[unit] = unit.position
+	advance(map,0.1)
 	var fronts: Array[BattleUnit] = map.combat.orders.infantry.fronts.duplicate()
-	assert(fronts.size() == 5)
-	var waiting: Dictionary = {}
-	for unit in map.infantry:
-		if not fronts.has(unit): waiting[unit] = unit.position
-	assert(waiting.size() == 15)
-	advance(map, 1.0)
-	for unit: BattleUnit in waiting:
-		assert(unit.position == waiting[unit] and unit.damage_dealt == 0 and unit.animation == &"idle")
-	for unit in fronts: assert(unit.damage_dealt > 0)
-	var fallen := fronts[2]
-	fallen.take_damage(10000)
-	advance(map, 0.25)
-	var next_fronts: Array[BattleUnit] = map.combat.orders.infantry.fronts
-	assert(next_fronts.size() == 5 and not next_fronts.has(fallen))
-	var promoted: BattleUnit
+	assert(fronts.size() == 10 and map.combat.orders.infantry.depths == 2)
+	var reserve_columns: Array = map.combat.reserve_columns("infantry")
+	var first_pool: Array = reserve_columns[0].duplicate()
+	var last_pool: Array = reserve_columns[1].duplicate()
+	var frozen: Dictionary = {}
+	for unit in map.combat.all_units(): frozen[unit] = [unit.position,unit.damage_dealt]
+	map.set_battle_paused(true)
+	advance(map,2.0)
+	for unit: BattleUnit in frozen:
+		assert(unit.position == frozen[unit][0] and unit.damage_dealt == frozen[unit][1])
+	map.set_battle_paused(false)
+	advance(map,3.0)
+	for unit in fronts: assert(unit.damage_dealt > 0, "Both fighting columns must actually hit")
+	for unit: BattleUnit in first_pool + last_pool:
+		assert(unit.damage_dealt == 0 and unit.position.x > original[unit].x+10, "Reserves follow without attacking")
+	var rear_front_x := INF
+	for unit in fronts: rear_front_x = minf(rear_front_x,unit.position.x)
+	var reserve_x := Combat.center(map.combat.reserve_columns("infantry")[0]).x
+	assert(rear_front_x-reserve_x >= 5.0 and rear_front_x-reserve_x < 21.0, "First reserve column stays close")
+	# Two simultaneous casualties take exactly two soldiers from the foremost reserve column.
+	fronts[0].take_damage(10000)
+	fronts[5].take_damage(10000)
+	advance(map,0.1)
+	var next_fronts := Combat.living(map.combat.orders.infantry.fronts)
+	assert(next_fronts.size() == 10)
+	var promoted: Array[BattleUnit] = []
 	for unit in next_fronts:
-		if not fronts.has(unit): promoted = unit
-	assert(promoted != null and waiting.has(promoted))
-	advance(map, 1.5)
-	assert(promoted.damage_dealt > 0)
-	for unit: BattleUnit in waiting:
-		if unit != promoted: assert(unit.position == waiting[unit] and unit.damage_dealt == 0)
-	# Victory automatically compacts survivors around a stable flag anchor.
+		if not fronts.has(unit): promoted.append(unit)
+	assert(promoted.size() == 2)
+	for unit in promoted: assert(first_pool.has(unit) and not last_pool.has(unit))
+	advance(map,3.0)
+	for unit in promoted: assert(unit.damage_dealt > 0, "Random replacement at %s must reach %s" % [unit.position, unit.combat_slot])
+	# Exhaust that column before recruiting from the next one, without duplicate promotions.
+	for i in range(4): next_fronts[i].take_damage(10000)
+	advance(map,0.1)
+	var final_fronts := Combat.living(map.combat.orders.infantry.fronts)
+	assert(final_fronts.size() == 10)
+	var first_count := 0
+	var second_count := 0
+	for unit in final_fronts:
+		if not next_fronts.has(unit):
+			if first_pool.has(unit): first_count += 1
+			if last_pool.has(unit): second_count += 1
+	assert(first_count == 3 and second_count == 1)
 	for unit in map.enemies: unit.take_damage(10000)
-	advance(map, 0.1)
+	advance(map,0.1)
 	assert(not map.combat.orders.has("infantry"))
 	var anchor: Vector2 = map.reform_anchors.infantry
-	advance(map, 8.0)
-	check_compact(map,19,anchor)
-	print("PASS: 20px reach, five front fighters, fifteen reserves, casualty replacement and automatic victory reformation")
+	advance(map,10.0)
+	check_compact(map,14,anchor)
+	print("PASS: 25px reach, 4 columns -> 2 fighting/2 following, close reserves, pause and exact casualty replacement")
+	# Five columns round upward to three fighting columns; sampling varies within the first reserve column.
+	map = setup_pressure(true)
+	advance(map,4.0)
+	fronts.assign(map.combat.orders.infantry.fronts)
+	assert(fronts.size() == 15 and map.combat.orders.infantry.depths == 3)
+	for unit in fronts: assert(unit.damage_dealt > 0, "All three fighting columns participate")
+	first_pool = map.combat.reserve_columns("infantry")[0].duplicate()
+	var fallen := fronts[0]
+	fallen.take_damage(10000)
+	var draws: Dictionary = {}
+	for sample in range(12):
+		map.combat.orders.infantry.fronts[0] = fallen
+		seed(sample+10)
+		map.combat.replace_fronts("infantry")
+		var picked: BattleUnit = map.combat.orders.infantry.fronts[0]
+		assert(first_pool.has(picked))
+		draws[picked] = true
+	assert(draws.size() > 1, "Replacement must be random, not always nearest or first")
+	print("PASS: 5 columns -> 3 fighting/2 following; random replacement restricted to foremost reserve column")
 	# Different survivor counts fill vertical columns first and keep the flag centered.
 	for count in [1,4,5,7,11,17]:
 		map = fresh()

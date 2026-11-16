@@ -137,6 +137,7 @@ func run() -> void:
 	for i in [0, 4, 8, 12, 16]: rear_damage += map.infantry[i].damage_dealt
 	assert(rear_damage > 0 and map.infantry[0].position.distance_to(initial_rear) > 500)
 	assert(saw_red_bar)
+	assert(Combat.living(map.infantry).is_empty() or Combat.living(map.enemies).is_empty(), "Late survivors must keep fighting instead of holding out-of-range empty ranks")
 	assert(map.enemies.any(func(unit: BattleUnit) -> bool: return unit.damage_dealt > 0), "Defenders retaliate")
 	map.set_battle_paused(true)
 	game.show_world()
