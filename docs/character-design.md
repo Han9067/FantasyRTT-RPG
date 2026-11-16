@@ -1,3 +1,7 @@
+# 발사체 원본 정리 — 웹 0.0.5
+
+2026-11-16 사용자 제공 projectiles.zip으로 `art/medieval/sprites/weapons/projectiles`를 교체했다. ZIP 루트의 arrow·bolt 폴더를 이 경로 아래에 두며 PNG 4개의 원본 바이트를 보존한다. 이전 `projectiles & bullets`와 그 안의 arrow_hit·bolt_hit는 제거했다. 현재 무기 원본은 PNG 319개이며 발사체는 아직 원본 보관용이다. 아래 내용은 이전 작업 이력이다.
+
 # Windows 0.0.3 캐릭터 생성
 
 무기 원본은 PNG 330개다. 바탕화면의 MedievalFantasyCharacters/sprites/weapons/melee weapons/one_shield 폴더에 있는 방패 48개를 원래 파일 번호로 선택한다. 근접 9개 폴더에서 방패를 제외한 8종을 무기1에, 한손무기와 방패 4종을 무기2에 표시한다. 번호는 파일명의 숫자를 따르며 결번을 건너뛴다. 양손무기를 선택하면 무기2가 해제된다. 편집 원본과 아틀라스 2장의 1,236개 파츠를 대조한다. 아래 내용은 이전 웹 버전의 이력이다.

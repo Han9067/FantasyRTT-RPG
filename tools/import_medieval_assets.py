@@ -35,7 +35,7 @@ def main():
                         or path.suffix.lower() not in {'.png', '.gif', '.rtf'}
                         or info.filename in names):
                     raise ValueError(f'Invalid asset entry: {info.filename}')
-                if weapons_only and (path.parts[0] not in {'melee weapons', 'ranged weapons', 'projectiles & bullets'} or path.suffix.lower() != '.png'):
+                if weapons_only and (path.parts[0] not in {'melee weapons', 'ranged weapons', 'projectiles'} or path.suffix.lower() != '.png'):
                     raise ValueError(f'Invalid weapon entry: {info.filename}')
                 target = imported/str(path)
                 target.parent.mkdir(parents=True,exist_ok=True)
