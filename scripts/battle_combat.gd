@@ -214,6 +214,14 @@ func active_layout(key: String) -> Dictionary:
 	return {"cells": cells, "depths": depths.size(), "width": width}
 
 func set_slot(unit: BattleUnit, point: Vector2) -> void:
+	var key := key_for(unit)
+	# Keep a usable contact position through the cooldown and the full swing.
+	# Replanning must not pull a fighter back toward its nominal formation cell.
+	if unit.swing_time >= 0.0 or nearest_opponent(unit, foes(key), true) != null:
+		point = unit.position
+	else:
+		var axis: Vector2 = orders[key].axis
+		point -= axis * minf(0.0, (point-unit.position).dot(axis))
 	if unit.combat_slot.distance_squared_to(point) > 1.0: unit.march_path.clear()
 	unit.combat_slot = point
 
@@ -249,7 +257,7 @@ func open_contact_slot(unit: BattleUnit, following: Vector2, axis: Vector2, oppo
 	var best := INF
 	var chosen := following
 	for offset in [0.0, -8.0, 8.0]:
-		for forward in [0.0, 4.0, 8.0]:
+		for forward in [0.0, 4.0, 8.0, 12.0, 16.0]:
 			var point: Vector2 = following + axis*forward + lateral*offset
 			var space := Rect2(point-Vector2.ONE*PERSONAL_SPACE*0.5, Vector2.ONE*PERSONAL_SPACE)
 			if not map.playable_rect().has_point(point): continue
@@ -271,6 +279,20 @@ func open_contact_slot(unit: BattleUnit, following: Vector2, axis: Vector2, oppo
 					best = cost
 					chosen = point
 	return chosen
+
+func contact_slot(unit: BattleUnit, axis: Vector2, lane: float, opponents: Array[BattleUnit]) -> Vector2:
+	var lateral := axis.orthogonal()
+	var enemy: BattleUnit
+	var best := INF
+	for candidate in opponents:
+		var cost := absf(candidate.position.dot(lateral)-lane)*3.0 + unit.position.distance_to(candidate.position)
+		if cost < best:
+			best = cost
+			enemy = candidate
+	var across := absf(lane-enemy.position.dot(lateral))
+	var gap := minf(CONTACT_GAP, sqrt(maxf(36.0, pow(REACH-2.0,2)-across*across)))
+	var plane := (unit.position.dot(axis)+enemy.position.dot(axis)-gap)*0.5
+	return axis*plane + lateral*lane
 
 func plan_slots() -> void:
 	for key: String in orders:
@@ -301,23 +323,19 @@ func plan_slots() -> void:
 				if not unit.alive() or int(layout.cells[i].x) != depth: continue
 				var lane: float = side + layout.cells[i].y*lane_spacing
 				var point: Vector2
-				if depth == 0:
-					var enemy: BattleUnit
-					var best := INF
-					for candidate in opponents:
-						var cost := absf(candidate.position.dot(lateral)-lane)*3.0 + unit.position.distance_to(candidate.position)
-						if cost < best:
-							best = cost
-							enemy = candidate
-					var across := absf(lane-enemy.position.dot(lateral))
-					var gap := minf(CONTACT_GAP, sqrt(maxf(36.0, pow(REACH-2.0,2)-across*across)))
-					var plane := (unit.position.dot(axis)+enemy.position.dot(axis)-gap)*0.5
-					point = axis*plane + lateral*lane
+				var leader_ahead := false
+				for leader in preceding:
+					if (leader.position-unit.position).dot(axis) > 0.0 and absf(leader.position.dot(lateral)-lane) < lane_spacing*0.6:
+						leader_ahead = true
+				if depth == 0 or not leader_ahead:
+					# After a casualty, the physically foremost soldier fills the open
+					# contact line; a replacement still approaching must not hold it back.
+					point = contact_slot(unit, axis, lane, opponents)
 				else:
 					point = follow_slot(unit, preceding, axis, lane, FIGHTING_DEPTH_GAP)
 					point = open_contact_slot(unit, point, axis, opponents, claimed)
-				claimed.append(point)
 				set_slot(unit, map.clamp_point(point))
+				claimed.append(unit.combat_slot)
 				unit.opponent = nearest_opponent(unit, opponents, true)
 				if unit.opponent == null: unit.opponent = nearest_opponent(unit, opponents)
 				row_members.append(unit)
@@ -355,22 +373,27 @@ func safe_motion(unit: BattleUnit, motion: Vector2, keep_ranks := false) -> Vect
 
 func advance_unit(unit: BattleUnit, delta: float) -> void:
 	unit.target = unit.combat_slot
+	var axis: Vector2 = orders[key_for(unit)].axis
 	var wanted := (unit.target - unit.position).limit_length(map.MOVE_SPEED * delta)
 	var motion := safe_motion(unit, wanted, true)
 	if motion.length() < wanted.length() * 0.8 or not unit.march_path.is_empty():
-		var allies := living(group(key_for(unit)))
+		var allies := living(map.friendlies if unit.allied else map.enemies)
 		allies.erase(unit)
 		# A replacement may still need to cross a lane through actual free space.
-		var waypoint: Vector2 = map.march.waypoint(unit, allies)
+		var waypoint: Vector2 = map.march.waypoint(unit, allies, axis, PERSONAL_SPACE)
 		wanted = (waypoint - unit.position).limit_length(map.MOVE_SPEED * delta)
 		motion = safe_motion(unit, wanted, true)
 	if motion.length() < wanted.length() * 0.8:
-		# Slide around occupied front slots rather than walking through allies.
-		for angle in [PI / 4, PI / 2, -PI / 4, -PI / 2]:
+		# In melee, only slide toward an opening. Do not turn a blocked forward
+		# step into a backwards sidestep, or oscillate sideways without progress.
+		for angle in [PI / 4, -PI / 4, PI / 2, -PI / 2]:
 			var alternative := safe_motion(unit, wanted.rotated(angle * unit.avoid_side), true)
+			if alternative.dot(axis) < -0.00001: continue
+			if (wanted-alternative).length_squared() >= wanted.length_squared(): continue
 			if alternative.length() > motion.length() + 0.01:
 				motion = alternative
 				if motion.length() >= wanted.length() * 0.8: break
+	if motion.dot(axis) < -0.00001: motion = Vector2.ZERO
 	if motion.length() > 0.001:
 		face(unit, unit.position + motion)
 		unit.position = map.clamp_point(unit.position + motion)
@@ -401,16 +424,20 @@ func step(delta: float) -> void:
 			# or follow their slot instead of attacking through a friendly body.
 			if not can_strike(unit, unit.opponent):
 				unit.opponent = nearest_opponent(unit, foes(key), true)
-			if can_strike(unit, unit.opponent) and unit.cooldown <= 0.0:
+			if can_strike(unit, unit.opponent):
 				unit.target = unit.position
-				face(unit, unit.opponent.position)
-				unit.cooldown = ATTACK_INTERVAL
-				unit.swing_time = 0.0
+				unit.combat_slot = unit.position
 				unit.march_path.clear()
-				unit.swing_target = unit.opponent
-				unit.impact_done = false
-				unit.play(&"attack")
-				unit.set_frame_and_progress(0, 0.0)
+				face(unit, unit.opponent.position)
+				if unit.cooldown <= 0.0:
+					unit.cooldown = ATTACK_INTERVAL
+					unit.swing_time = 0.0
+					unit.swing_target = unit.opponent
+					unit.impact_done = false
+					unit.play(&"attack")
+					unit.set_frame_and_progress(0, 0.0)
+				else:
+					unit.enter_idle()
 			elif unit.position.distance_to(unit.combat_slot) > 0.1:
 				# Follow the locally available space while the leading soldiers fight.
 				advance_unit(unit, delta)

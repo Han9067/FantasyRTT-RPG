@@ -104,7 +104,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.9")
+	assert(game.game_version == "0.0.10")
 	game.show_creation()
 	await process_frame
 	await process_frame

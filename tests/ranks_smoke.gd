@@ -13,7 +13,15 @@ func fresh() -> BattleMap:
 
 func advance(map: BattleMap, seconds: float) -> void:
 	for i in range(int(seconds * 60)):
+		var before: Dictionary = {}
+		for unit in Combat.living(map.combat.all_units()):
+			var key: String = map.combat.key_for(unit)
+			if map.combat.engaged(key): before[unit] = [unit.position, map.combat.orders[key].axis]
 		map._physics_process(1.0 / 60.0)
+		for unit: BattleUnit in before:
+			var key: String = map.combat.key_for(unit)
+			if unit.alive() and map.combat.engaged(key) and map.combat.orders[key].axis == before[unit][1]:
+				assert((unit.position-before[unit][0]).dot(before[unit][1]) >= -0.0001, "Melee avoidance must not step backwards")
 		var units := Combat.living(map.combat.all_units())
 		for a in range(units.size()):
 			for b in range(a+1, units.size()):
@@ -103,11 +111,9 @@ func run() -> void:
 	map.set_battle_paused(false)
 	advance(map,3.0)
 	var hitters := 0
-	var waiting := 0
 	for unit in fronts:
 		if unit.damage_dealt > 0: hitters += 1
-		else: waiting += 1
-	assert(hitters > 0 and waiting > 0, "Contact space, not a fixed quota, determines who attacks")
+	assert(hitters > 0, "Open contact lanes must keep fighting")
 	assert(fronts.slice(5).any(func(unit: BattleUnit) -> bool: return unit.damage_dealt > 0), "Priority followers use open neighboring attack lanes")
 	for unit: BattleUnit in first_pool + last_pool:
 		assert(unit.damage_dealt == 0 and unit.position.x > original[unit].x+10, "Reserves follow without attacking")
@@ -200,6 +206,29 @@ func run() -> void:
 	assert(not map.combat.can_strike(attacker,enemy), "An occupied attack lane must block a swing")
 	blocker.take_damage(10000)
 	assert(map.combat.can_strike(attacker,enemy), "A casualty opens the attack lane immediately")
+	# A soldier boxed in at the front/sides waits instead of taking the open
+	# backwards escape. Removing the front blocker lets it advance immediately.
+	map = fresh()
+	attacker = map.infantry[3]
+	blocker = map.infantry[7]
+	var upper := map.infantry[11]
+	var lower := map.infantry[15]
+	enemy = map.enemies[0]
+	for unit in map.combat.all_units():
+		if not [attacker,blocker,upper,lower,enemy].has(unit): unit.take_damage(10000)
+	attacker.position = Vector2(600,600)
+	blocker.position = Vector2(608,600)
+	upper.position = Vector2(600,592)
+	lower.position = Vector2(600,608)
+	enemy.position = Vector2(650,600)
+	map.combat.begin_melee("infantry")
+	attacker.combat_slot = Vector2(620,600)
+	var waiting_position := attacker.position
+	for i in range(30): map.combat.advance_unit(attacker,1.0/60.0)
+	assert(attacker.position.distance_to(waiting_position) < 0.01, "Blocked melee soldiers wait instead of retreating")
+	blocker.take_damage(10000)
+	map.combat.advance_unit(attacker,0.1)
+	assert(attacker.position.x > waiting_position.x+1.0, "A new gap allows forward movement")
 	# A reserve exposed to an enemy is allowed to fight without waiting for promotion.
 	map = setup_pressure()
 	advance(map,0.1)

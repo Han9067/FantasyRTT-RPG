@@ -13,20 +13,25 @@ func idle_allies(others: Array[BattleUnit]) -> Array[BattleUnit]:
 			result.append(unit)
 	return result
 
-func clear_line(start: Vector2, finish: Vector2, obstacles: Array[BattleUnit]) -> bool:
-	var point := Rect2(start, Vector2(0.001, 0.001))
+func clear_line(start: Vector2, finish: Vector2, obstacles: Array[BattleUnit], clearance := CLEARANCE) -> bool:
+	var point := Rect2(start, Vector2(0.00001, 0.00001))
 	for obstacle in obstacles:
-		var box := Rect2(obstacle.position - Vector2.ONE * CLEARANCE, Vector2.ONE * CLEARANCE * 2.0)
+		var box := Rect2(obstacle.position - Vector2.ONE * clearance, Vector2.ONE * clearance * 2.0)
 		if map.contact_fraction(point, finish - start, box) < 1.0: return false
 	return true
 
-func route(start: Vector2, finish: Vector2, obstacles: Array[BattleUnit]) -> Array[Vector2]:
+func route(start: Vector2, finish: Vector2, obstacles: Array[BattleUnit], forward_axis := Vector2.ZERO, clearance := CLEARANCE) -> Array[Vector2]:
 	# A visibility graph uses individual bodies, so gaps within an idle formation stay open.
 	var points: Array[Vector2] = [start, finish]
 	for obstacle in obstacles:
 		for corner in [Vector2(-1,-1), Vector2(1,-1), Vector2(-1,1), Vector2(1,1)]:
-			var point: Vector2 = obstacle.position + corner * (CLEARANCE + 0.1)
-			if map.playable_rect().has_point(point) and clear_line(point, point, obstacles): points.append(point)
+			var point: Vector2 = obstacle.position + corner * (clearance + 0.1)
+			if map.playable_rect().has_point(point) and clear_line(point, point, obstacles, clearance): points.append(point)
+			if forward_axis != Vector2.ZERO:
+				# A soldier already beside a blocker may first step sideways at its
+				# current depth, without backing up to the obstacle's rear corner.
+				var side_point := point-forward_axis*(point-start).dot(forward_axis)
+				if not points.has(side_point) and map.playable_rect().has_point(side_point) and clear_line(side_point, side_point, obstacles, clearance): points.append(side_point)
 	var costs: Array[float] = []
 	var previous: Array[int] = []
 	var visited: Array[bool] = []
@@ -48,20 +53,25 @@ func route(start: Vector2, finish: Vector2, obstacles: Array[BattleUnit]) -> Arr
 		visited[current] = true
 		for next in range(points.size()):
 			if visited[next]: continue
+			# Ordinary marching is unrestricted. Melee routes may go sideways or
+			# forward through a gap, but must not retreat to circle an occupied rank.
+			if (points[next]-points[current]).dot(forward_axis) < -0.00001: continue
 			var cost := costs[current] + points[current].distance_to(points[next])
-			if cost < costs[next] and clear_line(points[current], points[next], obstacles):
+			if cost < costs[next] and clear_line(points[current], points[next], obstacles, clearance):
 				costs[next] = cost
 				previous[next] = current
 	return []
 
-func waypoint(unit: BattleUnit, obstacles: Array[BattleUnit]) -> Vector2:
-	if clear_line(unit.position, unit.target, obstacles):
+func waypoint(unit: BattleUnit, obstacles: Array[BattleUnit], forward_axis := Vector2.ZERO, clearance := CLEARANCE) -> Vector2:
+	if clear_line(unit.position, unit.target, obstacles, clearance):
 		unit.march_path.clear()
 		return unit.target
 	while not unit.march_path.is_empty() and unit.position.distance_to(unit.march_path[0]) < 0.05:
 		unit.march_path.pop_front()
-	if unit.march_path.is_empty() or not clear_line(unit.position, unit.march_path[0], obstacles):
-		unit.march_path = route(unit.position, unit.target, obstacles)
+	if not unit.march_path.is_empty() and (unit.march_path[0]-unit.position).dot(forward_axis) < -0.00001:
+		unit.march_path.clear()
+	if unit.march_path.is_empty() or not clear_line(unit.position, unit.march_path[0], obstacles, clearance):
+		unit.march_path = route(unit.position, unit.target, obstacles, forward_axis, clearance)
 	return unit.target if unit.march_path.is_empty() else unit.march_path[0]
 
 func advance(members: Array[BattleUnit], enemies: Array[BattleUnit], delta: float, others: Array[BattleUnit]) -> void:

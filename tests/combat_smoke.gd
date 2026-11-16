@@ -108,6 +108,12 @@ func run() -> void:
 	assert(victim.hp == 10 and hero.hp == 100)
 	advance(map, 0.2)
 	assert(victim.hp == 4 and hero.hp == 96)
+	# Keep a usable contact point through the gap between swings, even when the
+	# nominal formation position would otherwise pull the hero away.
+	var held_position := hero.position
+	advance(map, 0.4)
+	assert(hero.position == held_position, "An attack-ready fighter must hold its ground during cooldown")
+	assert(hero.cooldown > 0 and hero.swing_time < 0)
 	map.set_battle_paused(true)
 	var swing := hero.swing_time
 	advance(map, 4.0)
