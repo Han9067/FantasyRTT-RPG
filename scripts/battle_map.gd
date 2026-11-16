@@ -3,6 +3,7 @@ extends Node2D
 signal status_changed
 signal pause_changed(paused: bool)
 const Ground = preload("res://scripts/battle_ground.gd")
+const March = preload("res://scripts/battle_march.gd")
 const Combat = preload("res://scripts/battle_combat.gd")
 const Outline = preload("res://scripts/selection_outline.gdshader")
 const ATTACK_CURSOR = preload("res://assets/ui/attack_cursor.svg")
@@ -50,6 +51,7 @@ var viewport_size := Vector2.ZERO
 var camera: Camera2D
 var zoom_level := MIN_ZOOM
 var pan_keys: Dictionary = {}
+var march: RefCounted
 var combat: RefCounted
 var outline_material: ShaderMaterial
 var pointer_screen := Vector2(-1, -1)
@@ -65,6 +67,7 @@ func _ready() -> void:
 	units.y_sort_enabled = true
 	add_child(units)
 	combat = Combat.new(self)
+	march = March.new(self)
 	outline_material = ShaderMaterial.new()
 	outline_material.shader = Outline
 	Input.set_custom_mouse_cursor(ATTACK_CURSOR, Input.CURSOR_CROSS, Vector2(27, 5))
@@ -119,6 +122,7 @@ func deploy_infantry(units: Node2D, allied: bool) -> void:
 			var side := -1 if allied else 1
 			var slot := Vector2(column - (INFANTRY_COLUMNS - 1) * 0.5, row - (INFANTRY_ROWS - 1) * 0.5)
 			sprite.position = map_size * 0.5 + Vector2(side * DEPLOYMENT_OFFSET, 0) + slot * FORMATION_SPACING
+			sprite.formation_slot = slot * FORMATION_SPACING
 			sprite.target = sprite.position
 			sprite.offset = -sprite_anchor(sprite.flip_h)
 			if allied:
@@ -335,16 +339,32 @@ func issue_move(point: Vector2) -> void:
 
 func order_formation(members: Array[BattleUnit], point: Vector2) -> Vector2:
 	if members.is_empty(): return point
-	var center := Vector2.ZERO
-	var formation := Rect2(members[0].position, Vector2.ZERO)
+	# Retain each soldier's deployed slot even after local avoidance or melee.
+	var positions: Array[Vector2] = []
+	var centers: Dictionary = {}
+	var slot_centers: Dictionary = {}
 	for unit in members:
-		center += unit.position
-		formation = formation.expand(unit.position)
+		var key: String = combat.key_for(unit)
+		if not centers.has(key):
+			var group: Array[BattleUnit] = Combat.living(combat.group(key))
+			centers[key] = Combat.center(group)
+			var slots := Vector2.ZERO
+			for member in group: slots += member.formation_slot
+			slot_centers[key] = slots / group.size()
+		positions.append(centers[key] + unit.formation_slot - slot_centers[key])
+	var center := Vector2.ZERO
+	var formation := Rect2(positions[0], Vector2.ZERO)
+	for position in positions:
+		center += position
+		formation = formation.expand(position)
 	center /= members.size()
 	var bounds := playable_rect()
 	var offset := (point - center).clamp(bounds.position - formation.position, bounds.end - formation.end)
-	for unit in members:
-		unit.target = unit.position + offset
+	for i in range(members.size()):
+		var unit := members[i]
+		var target := positions[i] + offset
+		if not unit.target.is_equal_approx(target): unit.march_path.clear()
+		unit.target = target
 		# Queued orders must not change the frozen pose while paused.
 		if not battle_paused: update_unit_animation(unit)
 	queue_redraw()
@@ -395,9 +415,11 @@ func _physics_process(delta: float) -> void:
 		marker_time = maxf(0,marker_time-delta)
 		queue_redraw()
 
-# All members translate by the same amount. The first contact limits the
-# whole formation, so the front rank cannot pass through a unit or bunch up.
 func advance_formation(members: Array[BattleUnit], blockers: Array[BattleUnit], delta: float, others: Array[BattleUnit] = []) -> void:
+	march.advance(members, blockers, delta, others)
+
+# Keep aligned ranks together when no idle ally requires local passage.
+func advance_rigid_formation(members: Array[BattleUnit], blockers: Array[BattleUnit], delta: float, others: Array[BattleUnit] = []) -> void:
 	if members.is_empty(): return
 	var leader := members[0]
 	var distance := leader.target - leader.position

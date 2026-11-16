@@ -54,6 +54,7 @@ func cancel(key: String) -> void:
 		unit.swing_target = null
 		unit.swing_time = -1.0
 		unit.target = unit.position
+		unit.march_path.clear()
 		if not map.battle_paused: unit.enter_idle()
 
 func cancel_for(units: Array[BattleUnit]) -> void:
@@ -97,41 +98,7 @@ func prepare(delta: float) -> void:
 			if not engaged(key_for(closest)): begin_melee(key_for(closest))
 		else:
 			var goal := center(living(group(key_for(closest))))
-			map.order_formation(members, approach_waypoint(key, members, goal))
-
-func approach_waypoint(key: String, members: Array[BattleUnit], goal: Vector2) -> Vector2:
-	var origin := center(members)
-	var route: Array = orders[key].get("waypoints", [])
-	while not route.is_empty() and origin.distance_to(route[0]) < 1.0: route.pop_front()
-	if not route.is_empty():
-		orders[key].waypoints = route
-		return route[0]
-	var bounds := members[0].contact_box()
-	for unit in members: bounds = bounds.merge(unit.contact_box())
-	var movement := goal - origin
-	# Keep the formation intact when a separate allied group blocks its approach.
-	for other_key: String in ["hero", "infantry", "enemy"]:
-		var others := living(group(other_key))
-		if other_key == key or others.is_empty() or others[0].allied != members[0].allied: continue
-		var obstacle := others[0].contact_box()
-		for other in others: obstacle = obstacle.merge(other.contact_box())
-		if map.contact_fraction(bounds, movement, obstacle) >= 1.0: continue
-		var obstacle_center := obstacle.get_center() - BattleUnit.BODY_CENTER_FROM_FEET
-		var sideways := (bounds.size.y + obstacle.size.y) * 0.5 + 12.0
-		var forward := (bounds.size.x + obstacle.size.x) * 0.5 + 12.0
-		if absf(movement.x) >= absf(movement.y):
-			var y := obstacle_center.y + (sideways if origin.y >= obstacle_center.y else -sideways)
-			if y > map.playable_rect().end.y - bounds.size.y * 0.5: y = obstacle_center.y - sideways
-			if y < map.playable_rect().position.y + bounds.size.y * 0.5: y = obstacle_center.y + sideways
-			route = [Vector2(origin.x, y), Vector2(obstacle_center.x + signf(movement.x) * forward, y)]
-		else:
-			var x := obstacle_center.x + (forward if origin.x >= obstacle_center.x else -forward)
-			if x > map.playable_rect().end.x - bounds.size.x * 0.5: x = obstacle_center.x - forward
-			if x < map.playable_rect().position.x + bounds.size.x * 0.5: x = obstacle_center.x + forward
-			route = [Vector2(x, origin.y), Vector2(x, obstacle_center.y + signf(movement.y) * sideways)]
-		orders[key].waypoints = route
-		return route[0]
-	return goal
+			map.order_formation(members, goal)
 
 func can_strike(unit: BattleUnit, enemy: BattleUnit) -> bool:
 	if enemy == null or not enemy.alive() or unit.allied == enemy.allied: return false

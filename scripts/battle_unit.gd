@@ -4,6 +4,8 @@ extends AnimatedSprite2D
 const CONTACT_SIZE := Vector2(5, 5)
 const BODY_CENTER_FROM_FEET := Vector2(0, -13)
 var target := Vector2.ZERO
+var formation_slot := Vector2.ZERO
+var march_path: Array[Vector2] = []
 var allied := true
 var max_hp := 10
 var hp := 10

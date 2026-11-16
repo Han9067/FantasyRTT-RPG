@@ -102,20 +102,19 @@ func check_group_orders(map: BattleMap) -> void:
 	advance(map, 1.0)
 	assert(unit.position.is_equal_approx(start - Vector2(40,0)) and unit.animation == "idle")
 	check_idle_phases(map)
-	# March through the hero: the whole group should stop at the first 5px contact.
+	# March past the idle hero, then recover the original formation slots.
 	select_click(map, map.world_to_screen(unit.position))
 	map.issue_move(hero + Vector2(100,0))
 	map._physics_process(8.0)
-	var front_rank := map.infantry[11]
-	assert(absf(hero.x - front_rank.position.x - 5.0) < 0.1)
 	for i in range(map.infantry.size()):
 		var member := map.infantry[i]
+		assert(member.position.is_equal_approx(member.target))
 		assert((member.position - unit.position).is_equal_approx(offsets[i]))
 		assert(member.animation == "idle" and not member.contact_box().intersects(map.hero_group[0].contact_box()))
 	check_idle_phases(map)
 	# Select hero and infantry together, pass the original hero position and meet the enemy.
-	var left := map.world_to_screen(unit.position) - Vector2(20,40)
-	var right := map.world_to_screen(hero) + Vector2(20,50)
+	var left := map.world_to_screen(hero.min(unit.position)) - Vector2(20,40)
+	var right := map.world_to_screen(map.infantry[-1].position.max(hero)) + Vector2(20,50)
 	for corner in [left, right, Vector2(left.x,right.y), Vector2(right.x,left.y)]:
 		drag(map, corner, left + right - corner)
 		assert(map.selection.size() == 21 and map.selected)
