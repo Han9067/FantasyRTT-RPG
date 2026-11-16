@@ -2,9 +2,10 @@ extends RefCounted
 ## Formation approach, then individual melee slots with solid unit collisions.
 const REACH := 25.0
 const ENGAGE_DISTANCE := 43.0
-const FIGHTING_DEPTH_GAP := 12.0
+const FIGHTING_DEPTH_GAP := 13.0
 const CONTACT_GAP := 18.0
-const PERSONAL_SPACE := 8.0
+const PERSONAL_SPACE := 8.5
+const CONTACT_SIDE_STEP := 9.0
 const RESERVE_GAP := 18.0
 const ATTACK_INTERVAL := 1.0
 const IMPACT_TIME := 0.3
@@ -66,9 +67,9 @@ func cancel_for(units: Array[BattleUnit]) -> void:
 	for unit in units:
 		if orders.has(key_for(unit)): cancel(key_for(unit))
 
-func begin_melee(key: String) -> void:
+func begin_melee(key: String, focus := Vector2.INF) -> void:
 	var members := living(group(key))
-	var direction := center(foes(key)) - center(members)
+	var direction := (center(foes(key)) if focus == Vector2.INF else focus) - center(members)
 	var axis := Vector2(signf(direction.x), 0) if absf(direction.x) >= absf(direction.y) else Vector2(0, signf(direction.y))
 	if axis == Vector2.ZERO: axis = Vector2.RIGHT if key != "enemy" else Vector2.LEFT
 	var lateral := axis.orthogonal()
@@ -164,6 +165,12 @@ func prepare(delta: float) -> void:
 					distance = d
 					closest = enemy
 		if engaged(key):
+			# Survivors can end up on opposite sides after an oblique engagement.
+			# Reface a separated enemy behind the group, rather than treating the
+			# necessary pursuit as forbidden backwards avoidance forever.
+			var axis: Vector2 = orders[key].axis
+			if distance > REACH and (closest.position-center(members)).dot(axis) < -REACH:
+				begin_melee(key, closest.position)
 			replace_fronts(key)
 			var defender_key := key_for(closest)
 			var defenders := living(group(defender_key))
@@ -256,7 +263,9 @@ func open_contact_slot(unit: BattleUnit, following: Vector2, axis: Vector2, oppo
 	var lateral := axis.orthogonal()
 	var best := INF
 	var chosen := following
-	for offset in [0.0, -8.0, 8.0]:
+	# Half of the normal 18px row gap leaves room on both sides. Keeping
+	# clearance just below 9px avoids sealing the passage between those rows.
+	for offset in [0.0, -CONTACT_SIDE_STEP, CONTACT_SIDE_STEP]:
 		for forward in [0.0, 4.0, 8.0, 12.0, 16.0]:
 			var point: Vector2 = following + axis*forward + lateral*offset
 			var space := Rect2(point-Vector2.ONE*PERSONAL_SPACE*0.5, Vector2.ONE*PERSONAL_SPACE)

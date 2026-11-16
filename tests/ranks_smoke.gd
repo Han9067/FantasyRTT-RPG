@@ -115,6 +115,12 @@ func run() -> void:
 		if unit.damage_dealt > 0: hitters += 1
 	assert(hitters > 0, "Open contact lanes must keep fighting")
 	assert(fronts.slice(5).any(func(unit: BattleUnit) -> bool: return unit.damage_dealt > 0), "Priority followers use open neighboring attack lanes")
+	# The extra visual breathing room must coexist with second-rank participation
+	# through the original 18px lanes; increasing the body collider would seal them.
+	for a in range(fronts.size()):
+		for b in range(a+1, fronts.size()):
+			var separation := (fronts[a].position-fronts[b].position).abs()
+			assert(maxf(separation.x,separation.y) >= 8.5-0.001, "Melee comrades retain the enlarged spacing")
 	for unit: BattleUnit in first_pool + last_pool:
 		assert(unit.damage_dealt == 0 and unit.position.x > original[unit].x+10, "Reserves follow without attacking")
 	var rear_front_x := INF
@@ -217,9 +223,9 @@ func run() -> void:
 	for unit in map.combat.all_units():
 		if not [attacker,blocker,upper,lower,enemy].has(unit): unit.take_damage(10000)
 	attacker.position = Vector2(600,600)
-	blocker.position = Vector2(608,600)
-	upper.position = Vector2(600,592)
-	lower.position = Vector2(600,608)
+	blocker.position = Vector2(600+Combat.PERSONAL_SPACE,600)
+	upper.position = Vector2(600,600-Combat.PERSONAL_SPACE)
+	lower.position = Vector2(600,600+Combat.PERSONAL_SPACE)
 	enemy.position = Vector2(650,600)
 	map.combat.begin_melee("infantry")
 	attacker.combat_slot = Vector2(620,600)
