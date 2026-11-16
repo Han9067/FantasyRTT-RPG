@@ -2,9 +2,10 @@ extends RefCounted
 ## Formation approach, then individual melee slots with solid unit collisions.
 const REACH := 25.0
 const ENGAGE_DISTANCE := 43.0
-const FIGHTING_DEPTH_GAP := 7.0
+const FIGHTING_DEPTH_GAP := 12.0
+const CONTACT_GAP := 18.0
+const PERSONAL_SPACE := 8.0
 const RESERVE_GAP := 18.0
-const RESERVE_DEPTH_GAP := 18.0
 const ATTACK_INTERVAL := 1.0
 const IMPACT_TIME := 0.3
 const SWING_DURATION := 0.6
@@ -113,15 +114,31 @@ func reserve_columns(key: String) -> Array:
 		if not available.is_empty(): columns.append(available)
 	return columns
 
+func replacement_cost(unit: BattleUnit, point: Vector2) -> float:
+	var cost := unit.position.distance_to(point)
+	# Favor a short open approach over crossing occupied lanes. This bounded sweep
+	# avoids running a visibility graph for every candidate at every casualty.
+	for other in all_units():
+		if other == unit or not other.alive(): continue
+		if map.contact_fraction(unit.contact_box(), point-unit.position, other.contact_box()) < 1.0:
+			cost += 24.0
+	return cost
+
 func replace_fronts(key: String) -> void:
 	var fronts: Array[BattleUnit] = orders[key].fronts
-	# Keep vacant cells so exactly one random reserve inherits each fallen fighter's role.
 	for i in range(fronts.size()):
 		if fronts[i].alive(): continue
 		var columns := reserve_columns(key)
 		if columns.is_empty(): break
-		var first: Array = columns[0]
-		fronts[i] = first[randi_range(0, first.size()-1)]
+		var best := INF
+		var candidates: Array[BattleUnit] = []
+		var vacancy := fronts[i].combat_slot
+		for unit: BattleUnit in columns[0]:
+			best = minf(best, replacement_cost(unit, vacancy))
+		for unit: BattleUnit in columns[0]:
+			if replacement_cost(unit, vacancy) <= best + 3.0: candidates.append(unit)
+		# Randomness only breaks near ties in the foremost available reserve rank.
+		fronts[i] = candidates.pick_random()
 		plan_time = 0.0
 
 func is_front(unit: BattleUnit) -> bool:
@@ -164,15 +181,16 @@ func prepare(delta: float) -> void:
 			map.order_formation(members, goal)
 
 func can_strike(unit: BattleUnit, enemy: BattleUnit) -> bool:
+	return can_strike_from(unit, unit.position, enemy)
+
+func can_strike_from(unit: BattleUnit, point: Vector2, enemy: BattleUnit) -> bool:
 	if enemy == null or not enemy.alive() or unit.allied == enemy.allied: return false
-	if unit.position.distance_to(enemy.position) > REACH: return false
-	var ray := Rect2(unit.contact_box().get_center(), Vector2(0.1, 0.1))
-	var motion := enemy.position - unit.position
+	if point.distance_to(enemy.position) > REACH: return false
+	var ray := Rect2(unit.contact_box().get_center()+point-unit.position, Vector2(0.1, 0.1))
+	var motion := enemy.position - point
 	for other in all_units():
 		if other == unit or other == enemy or not other.alive(): continue
-		# The compressed fighting half can strike past its own participating comrades.
-		# Reserves and unrelated groups still block the line; all movement stays solid.
-		if key_for(other) == key_for(unit) and is_front(unit) and is_front(other): continue
+		# Every living body blocks an attack ray, including participating comrades.
 		if map.contact_fraction(ray, motion, other.contact_box()) < 1.0: return false
 	return true
 
@@ -199,64 +217,122 @@ func set_slot(unit: BattleUnit, point: Vector2) -> void:
 	if unit.combat_slot.distance_squared_to(point) > 1.0: unit.march_path.clear()
 	unit.combat_slot = point
 
+func nearest_opponent(unit: BattleUnit, opponents: Array[BattleUnit], require_clear := false) -> BattleUnit:
+	var chosen: BattleUnit
+	var best := INF
+	for enemy in opponents:
+		if require_clear and not can_strike(unit, enemy): continue
+		var cost := unit.position.distance_squared_to(enemy.position)
+		if cost < best:
+			chosen = enemy
+			best = cost
+	return chosen
+
+func follow_slot(unit: BattleUnit, leaders: Array[BattleUnit], axis: Vector2, lane: float, gap: float) -> Vector2:
+	var lateral := axis.orthogonal()
+	var leader: BattleUnit
+	var best := INF
+	for candidate in leaders:
+		var cost := absf(candidate.position.dot(lateral)-lane)
+		if cost < best:
+			best = cost
+			leader = candidate
+	if leader == null: return unit.position
+	# Follow the actual soldier ahead, not a future front plane. A blocked leader
+	# therefore slows its followers instead of making them route around the queue.
+	return axis*(leader.position.dot(axis)-gap) + lateral*lane
+
+func open_contact_slot(unit: BattleUnit, following: Vector2, axis: Vector2, opponents: Array[BattleUnit], claimed: Array[Vector2]) -> Vector2:
+	# A priority follower can use a nearby gap, but never force its way into one.
+	# Search only within its lane neighborhood, preserving the group's overall shape.
+	var lateral := axis.orthogonal()
+	var best := INF
+	var chosen := following
+	for offset in [0.0, -8.0, 8.0]:
+		for forward in [0.0, 4.0, 8.0]:
+			var point: Vector2 = following + axis*forward + lateral*offset
+			var space := Rect2(point-Vector2.ONE*PERSONAL_SPACE*0.5, Vector2.ONE*PERSONAL_SPACE)
+			if not map.playable_rect().has_point(point): continue
+			var free := true
+			for slot in claimed:
+				if space.intersects(Rect2(slot-Vector2.ONE*PERSONAL_SPACE*0.5, Vector2.ONE*PERSONAL_SPACE)):
+					free = false
+			for other in all_units():
+				if other == unit or not other.alive(): continue
+				if space.intersects(Rect2(other.position-Vector2.ONE*PERSONAL_SPACE*0.5, Vector2.ONE*PERSONAL_SPACE)):
+					free = false
+				if map.contact_fraction(unit.contact_box(), point-unit.position, other.contact_box()) < 1.0:
+					free = false
+			if not free: continue
+			for enemy in opponents:
+				if not can_strike_from(unit, point, enemy): continue
+				var cost := unit.position.distance_to(point)
+				if cost < best:
+					best = cost
+					chosen = point
+	return chosen
+
 func plan_slots() -> void:
-	var layouts: Dictionary = {}
-	for key: String in orders:
-		if engaged(key):
-			replace_fronts(key)
-			layouts[key] = active_layout(key)
 	for key: String in orders:
 		if not engaged(key): continue
+		replace_fronts(key)
 		var order: Dictionary = orders[key]
 		var axis: Vector2 = order.axis
 		var lateral := axis.orthogonal()
-		var opponents: Array[BattleUnit] = []
-		var layout: Dictionary = layouts[key]
-		var combined_depths: int = layout.depths
-		for enemy in foes(key):
-			var other_key := key_for(enemy)
-			if not engaged(other_key) or is_front(enemy):
-				opponents.append(enemy)
-				if engaged(other_key): combined_depths = maxi(combined_depths, layouts[other_key].depths)
+		var opponents := foes(key)
 		if opponents.is_empty(): continue
-		var forward := INF
+		var layout := active_layout(key)
 		var lower := INF
 		var upper := -INF
 		for enemy in opponents:
-			forward = minf(forward, enemy.position.dot(axis))
 			lower = minf(lower, enemy.position.dot(lateral))
 			upper = maxf(upper, enemy.position.dot(lateral))
 		var lane_spacing: float = map.FORMATION_SPACING.y if axis.x != 0 else map.FORMATION_SPACING.x
-		lane_spacing = minf(lane_spacing, maxf(6.0, (upper-lower+lane_spacing) / layout.width))
+		# Preserve a readable width; only narrow for a genuinely smaller enemy front.
+		lane_spacing = minf(lane_spacing, maxf(10.0, (upper-lower+40.0)/maxi(1, layout.width-1)))
 		var side: float = clampf(order.lateral_center, lower, upper)
-		var depth_gap := minf(FIGHTING_DEPTH_GAP, (REACH-7.0) / maxi(1, combined_depths-1))
-		var contact_gap := REACH - 1.0 - (combined_depths-1) * depth_gap
-		var own_forward := -INF
-		for unit in living(order.fronts): own_forward = maxf(own_forward, unit.position.dot(axis))
-		if own_forward == -INF: continue
-		# Both sides approach the same contact midpoint, avoiding alternating overshoot.
-		var first_plane := (own_forward + forward - contact_gap) * 0.5
 		var fronts: Array[BattleUnit] = order.fronts
-		for i in range(fronts.size()):
-			var unit := fronts[i]
-			if not unit.alive(): continue
-			var cell: Vector2 = layout.cells[i]
-			set_slot(unit, map.clamp_point(axis * (first_plane-cell.x*depth_gap) + lateral * (side+cell.y*lane_spacing)))
-			var best := INF
-			unit.opponent = null
-			for enemy in opponents:
-				var cost := unit.position.distance_squared_to(enemy.position)
-				if cost < best:
-					best = cost
-					unit.opponent = enemy
-		var columns := reserve_columns(key)
-		for i in range(columns.size()):
-			var column: Array = columns[i]
-			var plane: float = first_plane - (layout.depths-1)*depth_gap - RESERVE_GAP - i*RESERVE_DEPTH_GAP
+		var preceding: Array[BattleUnit] = []
+		var claimed: Array[Vector2] = []
+		for depth in range(layout.depths):
+			var row_members: Array[BattleUnit] = []
+			for i in range(fronts.size()):
+				var unit := fronts[i]
+				if not unit.alive() or int(layout.cells[i].x) != depth: continue
+				var lane: float = side + layout.cells[i].y*lane_spacing
+				var point: Vector2
+				if depth == 0:
+					var enemy: BattleUnit
+					var best := INF
+					for candidate in opponents:
+						var cost := absf(candidate.position.dot(lateral)-lane)*3.0 + unit.position.distance_to(candidate.position)
+						if cost < best:
+							best = cost
+							enemy = candidate
+					var across := absf(lane-enemy.position.dot(lateral))
+					var gap := minf(CONTACT_GAP, sqrt(maxf(36.0, pow(REACH-2.0,2)-across*across)))
+					var plane := (unit.position.dot(axis)+enemy.position.dot(axis)-gap)*0.5
+					point = axis*plane + lateral*lane
+				else:
+					point = follow_slot(unit, preceding, axis, lane, FIGHTING_DEPTH_GAP)
+					point = open_contact_slot(unit, point, axis, opponents, claimed)
+				claimed.append(point)
+				set_slot(unit, map.clamp_point(point))
+				unit.opponent = nearest_opponent(unit, opponents, true)
+				if unit.opponent == null: unit.opponent = nearest_opponent(unit, opponents)
+				row_members.append(unit)
+			preceding = row_members
+		for column: Array in reserve_columns(key):
+			var following: Array[BattleUnit] = []
 			for row in range(column.size()):
 				var unit: BattleUnit = column[row]
-				unit.opponent = null
-				set_slot(unit, map.clamp_point(axis*plane + lateral*(side+(row-(column.size()-1)*0.5)*lane_spacing)))
+				var lane := side+(row-(column.size()-1)*0.5)*lane_spacing
+				set_slot(unit, map.clamp_point(follow_slot(unit, preceding, axis, lane, RESERVE_GAP)))
+				# Priority ranks are not an absolute permission gate: an exposed reserve
+				# can defend/attack a reachable enemy without pushing through its allies.
+				unit.opponent = nearest_opponent(unit, opponents, true)
+				following.append(unit)
+			preceding = following
 
 func face(unit: BattleUnit, point: Vector2) -> void:
 	if absf(point.x - unit.position.x) > 0.001:
@@ -269,7 +345,7 @@ func safe_motion(unit: BattleUnit, motion: Vector2, keep_ranks := false) -> Vect
 		if other != unit and other.alive():
 			fraction = minf(fraction, map.contact_fraction(unit.contact_box(), motion, other.contact_box()))
 			if keep_ranks and key_for(other) == key_for(unit):
-				var size := Vector2(6, 6)
+				var size := Vector2.ONE * PERSONAL_SPACE
 				var body := Rect2(unit.position - size * 0.5, size)
 				var obstacle := Rect2(other.position - size * 0.5, size)
 				# Existing slight deformation can separate without becoming trapped.
@@ -284,8 +360,7 @@ func advance_unit(unit: BattleUnit, delta: float) -> void:
 	if motion.length() < wanted.length() * 0.8 or not unit.march_path.is_empty():
 		var allies := living(group(key_for(unit)))
 		allies.erase(unit)
-		# A random replacement may need to cross lanes. Route through real gaps
-		# instead of leaving it stuck behind an occupied fighting cell.
+		# A replacement may still need to cross a lane through actual free space.
 		var waypoint: Vector2 = map.march.waypoint(unit, allies)
 		wanted = (waypoint - unit.position).limit_length(map.MOVE_SPEED * delta)
 		motion = safe_motion(unit, wanted, true)
@@ -322,17 +397,10 @@ func step(delta: float) -> void:
 					unit.swing_time = -1.0
 					unit.enter_idle()
 				continue
-			if not is_front(unit):
-				# Waiting ranks move with the engagement and stay immediately behind it.
-				if unit.position.distance_to(unit.combat_slot) > 0.1: advance_unit(unit, delta)
-				else:
-					unit.target = unit.position
-					unit.enter_idle()
-				continue
-			if unit.opponent == null or not unit.opponent.alive():
-				unit.target = unit.position
-				unit.enter_idle()
-				continue
+			# Recheck nearby openings after movement/casualties; blocked soldiers wait
+			# or follow their slot instead of attacking through a friendly body.
+			if not can_strike(unit, unit.opponent):
+				unit.opponent = nearest_opponent(unit, foes(key), true)
 			if can_strike(unit, unit.opponent) and unit.cooldown <= 0.0:
 				unit.target = unit.position
 				face(unit, unit.opponent.position)
@@ -344,8 +412,7 @@ func step(delta: float) -> void:
 				unit.play(&"attack")
 				unit.set_frame_and_progress(0, 0.0)
 			elif unit.position.distance_to(unit.combat_slot) > 0.1:
-				# Close the fighting ranks between swings, rather than stopping the whole
-				# group as soon as the first row enters attack range.
+				# Follow the locally available space while the leading soldiers fight.
 				advance_unit(unit, delta)
 			else:
 				unit.target = unit.position

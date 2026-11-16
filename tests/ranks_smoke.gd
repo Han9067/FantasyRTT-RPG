@@ -84,7 +84,7 @@ func run() -> void:
 	assert(map.combat.can_strike(hero,enemy))
 	enemy.position.x += 0.1
 	assert(not map.combat.can_strike(hero,enemy))
-	# Four columns: both leading columns fight, and both reserves press forward.
+	# Four columns retain a preferred fighting half, but blocked ranks wait.
 	map = setup_pressure()
 	var original: Dictionary = {}
 	for unit in map.infantry: original[unit] = unit.position
@@ -102,7 +102,13 @@ func run() -> void:
 		assert(unit.position == frozen[unit][0] and unit.damage_dealt == frozen[unit][1])
 	map.set_battle_paused(false)
 	advance(map,3.0)
-	for unit in fronts: assert(unit.damage_dealt > 0, "Both fighting columns must actually hit")
+	var hitters := 0
+	var waiting := 0
+	for unit in fronts:
+		if unit.damage_dealt > 0: hitters += 1
+		else: waiting += 1
+	assert(hitters > 0 and waiting > 0, "Contact space, not a fixed quota, determines who attacks")
+	assert(fronts.slice(5).any(func(unit: BattleUnit) -> bool: return unit.damage_dealt > 0), "Priority followers use open neighboring attack lanes")
 	for unit: BattleUnit in first_pool + last_pool:
 		assert(unit.damage_dealt == 0 and unit.position.x > original[unit].x+10, "Reserves follow without attacking")
 	var rear_front_x := INF
@@ -121,7 +127,9 @@ func run() -> void:
 	assert(promoted.size() == 2)
 	for unit in promoted: assert(first_pool.has(unit) and not last_pool.has(unit))
 	advance(map,3.0)
-	for unit in promoted: assert(unit.damage_dealt > 0, "Random replacement at %s must reach %s" % [unit.position, unit.combat_slot])
+	for unit in promoted:
+		assert(unit.position.distance_to(unit.combat_slot) < 1.0, "Replacement must reach its available cell")
+	assert(promoted.any(func(unit: BattleUnit) -> bool: return unit.damage_dealt > 0), "Vacant contact positions resume fighting")
 	# Exhaust that column before recruiting from the next one, without duplicate promotions.
 	for i in range(4): next_fronts[i].take_damage(10000)
 	advance(map,0.1)
@@ -140,26 +148,83 @@ func run() -> void:
 	var anchor: Vector2 = map.reform_anchors.infantry
 	advance(map,10.0)
 	check_compact(map,14,anchor)
-	print("PASS: 25px reach, 4 columns -> 2 fighting/2 following, close reserves, pause and exact casualty replacement")
-	# Five columns round upward to three fighting columns; sampling varies within the first reserve column.
+	print("PASS: 25px reach, space-limited fighting, close following reserves, pause and exact casualty replacement")
+	# Five columns retain three priority columns; actual participation depends on space.
 	map = setup_pressure(true)
 	advance(map,4.0)
 	fronts.assign(map.combat.orders.infantry.fronts)
 	assert(fronts.size() == 15 and map.combat.orders.infantry.depths == 3)
-	for unit in fronts: assert(unit.damage_dealt > 0, "All three fighting columns participate")
+	assert(fronts.any(func(unit: BattleUnit) -> bool: return unit.damage_dealt > 0))
 	first_pool = map.combat.reserve_columns("infantry")[0].duplicate()
 	var fallen := fronts[0]
 	fallen.take_damage(10000)
-	var draws: Dictionary = {}
+	var best_cost := INF
+	for unit: BattleUnit in first_pool:
+		best_cost = minf(best_cost, map.combat.replacement_cost(unit, fallen.combat_slot))
 	for sample in range(12):
 		map.combat.orders.infantry.fronts[0] = fallen
 		seed(sample+10)
 		map.combat.replace_fronts("infantry")
 		var picked: BattleUnit = map.combat.orders.infantry.fronts[0]
 		assert(first_pool.has(picked))
+		assert(map.combat.replacement_cost(picked, fallen.combat_slot) <= best_cost+3.0, "Prefer accessible replacements")
+	# With equal approaches, still vary the choice instead of always taking an index.
+	for unit in map.combat.all_units():
+		if not first_pool.has(unit): unit.position = Vector2(2200,1400)
+	fallen.combat_slot = Vector2(600,600)
+	for i in range(first_pool.size()): first_pool[i].position = Vector2(300,200+i*40)
+	first_pool[0].position = Vector2(570,590)
+	first_pool[1].position = Vector2(570,610)
+	var draws: Dictionary = {}
+	for sample in range(16):
+		map.combat.orders.infantry.fronts[0] = fallen
+		seed(sample+20)
+		map.combat.replace_fronts("infantry")
+		var picked: BattleUnit = map.combat.orders.infantry.fronts[0]
+		assert(picked == first_pool[0] or picked == first_pool[1])
 		draws[picked] = true
-	assert(draws.size() > 1, "Replacement must be random, not always nearest or first")
-	print("PASS: 5 columns -> 3 fighting/2 following; random replacement restricted to foremost reserve column")
+	assert(draws.size() == 2, "Equivalent replacement routes retain variety")
+	print("PASS: 5-column priorities, nearest accessible replacement and random ties in foremost reserve rank")
+	# Even priority fighters cannot attack through one another.
+	map = fresh()
+	var attacker := map.infantry[3]
+	var blocker := map.infantry[7]
+	enemy = map.enemies[0]
+	for unit in map.combat.all_units():
+		if unit != attacker and unit != blocker and unit != enemy: unit.take_damage(10000)
+	attacker.position = Vector2(600,600)
+	blocker.position = Vector2(610,600)
+	enemy.position = Vector2(620,600)
+	map.combat.begin_melee("infantry")
+	assert(map.combat.is_front(attacker) and map.combat.is_front(blocker))
+	assert(not map.combat.can_strike(attacker,enemy), "An occupied attack lane must block a swing")
+	blocker.take_damage(10000)
+	assert(map.combat.can_strike(attacker,enemy), "A casualty opens the attack lane immediately")
+	# A reserve exposed to an enemy is allowed to fight without waiting for promotion.
+	map = setup_pressure()
+	advance(map,0.1)
+	var exposed: BattleUnit = map.combat.reserve_columns("infantry")[0][0]
+	enemy = map.enemies[0]
+	enemy.position = exposed.position + Vector2(0, 20)
+	enemy.target = enemy.position
+	assert(not map.combat.is_front(exposed))
+	advance(map,0.6)
+	assert(exposed.damage_dealt > 0, "An open, reachable enemy permits reserve participation")
+	print("PASS: friendly bodies block attacks, casualties open lanes and exposed reserves can fight")
+	# Horizontal, vertical and oblique engagements must finish, with solid bodies.
+	for direction: Vector2 in [Vector2.LEFT,Vector2.UP,Vector2.DOWN,Vector2(1,0.6).normalized()]:
+		map = fresh()
+		map.player_sprite.position = Vector2(400,400)
+		map.player_sprite.target = map.player_sprite.position
+		var shift := Combat.center(map.infantry)+direction*170-Combat.center(map.enemies)
+		for unit in map.enemies:
+			unit.position += shift
+			unit.target = unit.position
+		map.selection.assign(map.infantry)
+		map.issue_attack(map.enemies[0])
+		advance(map,35.0)
+		assert(Combat.living(map.infantry).is_empty() or Combat.living(map.enemies).is_empty(), "Combat must resolve from direction %s" % direction)
+	print("PASS: left/up/down/oblique engagements resolve without physical overlap")
 	# Different survivor counts fill vertical columns first and keep the flag centered.
 	for count in [1,4,5,7,11,17]:
 		map = fresh()
