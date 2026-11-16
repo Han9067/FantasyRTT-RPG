@@ -17,7 +17,7 @@ const ZOOM_STEP := 0.25
 const BODY_CENTER_X := CharacterArt.BODY_ORIGIN.x + 16
 const INFANTRY_COLUMNS := 4
 const INFANTRY_ROWS := 5
-const FORMATION_SPACING := Vector2(23, 16)
+const FORMATION_SPACING := Vector2(25, 18)
 const DEPLOYMENT_OFFSET := 440.0
 const CONTACT_SIZE := Vector2(5, 5)
 const BODY_CENTER_FROM_FEET := Vector2(0, -13)
@@ -30,6 +30,8 @@ var infantry: Array[BattleUnit] = []
 var enemies: Array[BattleUnit] = []
 var hero_group: Array[BattleUnit] = []
 var selection: Array[BattleUnit] = []
+var packed_counts := {"hero": 1, "infantry": 20, "enemy": 20}
+var reform_anchors: Dictionary = {}
 var joint_order := false
 var battle_paused := false
 var standard: AnimatedSprite2D
@@ -162,7 +164,8 @@ func place_standard() -> void:
 	if marked.is_empty():
 		standard.hide()
 	else:
-		standard.position = Combat.center(marked) + BODY_CENTER_FROM_FEET
+		var key: String = combat.key_for(marked[0])
+		standard.position = reform_anchors.get(key, Combat.center(marked)) + BODY_CENTER_FROM_FEET
 
 func refresh_selection() -> void:
 	selection.assign(Combat.living(selection))
@@ -337,6 +340,39 @@ func issue_move(point: Vector2) -> void:
 	status_changed.emit()
 	queue_redraw()
 
+func pack_survivors(key: String) -> void:
+	var members: Array[BattleUnit] = Combat.living(combat.group(key))
+	if members.size() == packed_counts.get(key, -1): return
+	packed_counts[key] = members.size()
+	if members.is_empty(): return
+	var side := 1.0 if key == "enemy" else -1.0
+	members.sort_custom(func(a: BattleUnit, b: BattleUnit) -> bool:
+		return a.position.x * side < b.position.x * side if a.position.x != b.position.x else a.position.y < b.position.y)
+	for start in range(0, members.size(), INFANTRY_ROWS):
+		var column := members.slice(start, start + INFANTRY_ROWS)
+		column.sort_custom(func(a: BattleUnit, b: BattleUnit) -> bool: return a.position.y < b.position.y)
+		for row in range(column.size()): members[start + row] = column[row]
+	var slots: Array[Vector2] = []
+	var average := Vector2.ZERO
+	for i in range(members.size()):
+		var column := i / INFANTRY_ROWS
+		var row := i % INFANTRY_ROWS
+		var count := mini(INFANTRY_ROWS, members.size() - column * INFANTRY_ROWS)
+		var slot := Vector2(column * FORMATION_SPACING.x * side, (row - (count-1)*0.5) * FORMATION_SPACING.y)
+		slots.append(slot)
+		average += slot
+	average /= members.size()
+	for i in range(members.size()): members[i].formation_slot = slots[i] - average
+
+func reform_group(key: String) -> void:
+	var members: Array[BattleUnit] = Combat.living(combat.group(key))
+	if members.is_empty():
+		reform_anchors.erase(key)
+		return
+	var anchor := Combat.center(members)
+	var placed := order_formation(members, anchor)
+	reform_anchors[key] = placed
+
 func order_formation(members: Array[BattleUnit], point: Vector2) -> Vector2:
 	if members.is_empty(): return point
 	# Retain each soldier's deployed slot even after local avoidance or melee.
@@ -346,6 +382,8 @@ func order_formation(members: Array[BattleUnit], point: Vector2) -> Vector2:
 	for unit in members:
 		var key: String = combat.key_for(unit)
 		if not centers.has(key):
+			pack_survivors(key)
+			reform_anchors.erase(key)
 			var group: Array[BattleUnit] = Combat.living(combat.group(key))
 			centers[key] = Combat.center(group)
 			var slots := Vector2.ZERO
@@ -396,6 +434,15 @@ func _physics_process(delta: float) -> void:
 	# Camera and input stay live; only battlefield simulation is paused.
 	if battle_paused: return
 	combat.prepare(delta)
+	for key: String in ["infantry", "enemy"]:
+		var members: Array[BattleUnit] = Combat.living(combat.group(key))
+		if not combat.orders.has(key) and not members.is_empty() and members.size() != packed_counts[key]:
+			var stationary := members.all(func(unit: BattleUnit) -> bool: return unit.position.is_equal_approx(unit.target))
+			if stationary: reform_group(key)
+			else:
+				var goal := Vector2.ZERO
+				for unit in members: goal += unit.target
+				order_formation(members, goal / members.size())
 	if joint_order and not combat.orders.has("hero") and not combat.orders.has("infantry"):
 		advance_formation(Combat.living(friendlies), Combat.living(enemies), delta)
 	else:

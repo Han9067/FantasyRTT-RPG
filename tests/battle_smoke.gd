@@ -55,8 +55,8 @@ func check_infantry(map: BattleMap) -> void:
 			columns[feet.x] = columns.get(feet.x, 0) + 1
 			rows[feet.y] = rows.get(feet.y, 0) + 1
 		assert(columns.size() == 4 and rows.size() == 5)
-		assert(is_equal_approx(soldiers[1].position.x - soldiers[0].position.x, 23.0))
-		assert(is_equal_approx(soldiers[4].position.y - soldiers[0].position.y, 16.0))
+		assert(is_equal_approx(soldiers[1].position.x - soldiers[0].position.x, 25.0))
+		assert(is_equal_approx(soldiers[4].position.y - soldiers[0].position.y, 18.0))
 		for total in columns.values(): assert(total == 5)
 		for total in rows.values(): assert(total == 4)
 		var config := Art.infantry_appearance(allied, 0)
