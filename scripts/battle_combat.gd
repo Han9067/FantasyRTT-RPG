@@ -473,5 +473,9 @@ func step(delta: float) -> void:
 		attacker.damage_dealt += mini(victim.hp, attacker.attack_damage)
 		victim.take_damage(attacker.attack_damage)
 	if not hits.is_empty(): plan_time = 0.0
+	# Sample after both marching and melee movement, before any arrow is released.
+	for unit in all_units():
+		unit.velocity = (unit.position-unit.motion_start)/delta if unit.alive() and delta > 0.0 else Vector2.ZERO
+		unit.velocity = unit.velocity.limit_length(map.MOVE_SPEED*1.25)
 	ranged.step(delta)
 	map.queue_redraw()

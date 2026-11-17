@@ -4,6 +4,8 @@ extends AnimatedSprite2D
 const CONTACT_SIZE := Vector2(5, 5)
 const BODY_CENTER_FROM_FEET := Vector2(0, -13)
 var target := Vector2.ZERO
+var motion_start := Vector2.ZERO
+var velocity := Vector2.ZERO
 var formation_slot := Vector2.ZERO
 var march_path: Array[Vector2] = []
 var allied := true
@@ -55,6 +57,7 @@ func take_damage(amount: int) -> void:
 	health_bar.queue_redraw()
 	if hp == 0:
 		target = position
+		velocity = Vector2.ZERO
 		swing_time = -1.0
 		shot_time = -1.0
 		opponent = null

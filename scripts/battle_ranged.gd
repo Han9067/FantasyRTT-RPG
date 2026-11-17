@@ -45,15 +45,29 @@ func prepare() -> void:
 	var direction: Vector2 = (map.combat.center(members)-target_center).normalized()
 	map.order_formation(members, target_center+direction*(RANGE-80.0))
 
+func predicted_aim(start: Vector2, target: BattleUnit) -> Vector2:
+	var current := target.contact_box().get_center()
+	if target.velocity.length_squared() < 0.01 or target.position.is_equal_approx(target.target): return current
+	var point := current
+	# The predicted distance changes flight time. Iterate the same timing rule
+	# used by the projectile, then freeze this estimate at release (never home).
+	for iteration in range(10):
+		var travel := target.velocity * Arrow.flight_time(start, point)
+		travel = travel.limit_length(target.position.distance_to(target.target))
+		point = map.clamp_point(target.position+travel) + BattleUnit.BODY_CENTER_FROM_FEET
+	return point
+
 func fire(unit: BattleUnit, target: BattleUnit) -> BattleArrow:
 	map.combat.face(unit, target.position)
 	var hit := unit.roll_hit()
-	var point := target.contact_box().get_center()
+	var start := unit.position+Vector2(17.0 if unit.flip_h else -17.0,-13.0)
+	var aim := predicted_aim(start, target)
+	var point := aim
 	# A miss visibly falls wide; a successful accuracy roll can still be dodged.
 	if not hit: point += Vector2.RIGHT.rotated(randf()*TAU)*randf_range(12.0,24.0)
-	var start := unit.position+Vector2(17.0 if unit.flip_h else -17.0,-13.0)
 	var arrow := Arrow.new()
 	arrow.configure(start, point, unit, target, hit)
+	arrow.aim_snapshot = aim
 	map.get_node("Units").add_child(arrow)
 	projectiles.append(arrow)
 	unit.shots_fired += 1

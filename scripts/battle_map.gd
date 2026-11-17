@@ -462,6 +462,7 @@ func _physics_process(delta: float) -> void:
 	refresh_attack_cursor()
 	# Camera and input stay live; only battlefield simulation is paused.
 	if battle_paused: return
+	for unit: BattleUnit in combat.all_units(): unit.motion_start = unit.position
 	combat.prepare(delta)
 	for key: String in ["infantry", "enemy", "archers"]:
 		var members: Array[BattleUnit] = Combat.living(combat.group(key))

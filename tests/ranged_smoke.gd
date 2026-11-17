@@ -25,6 +25,73 @@ func fresh() -> BattleMap:
 	map.set_physics_process(false)
 	return map
 
+func prediction_check(map: BattleMap) -> void:
+	var shooter := map.archers[0]
+	var victim := map.enemies[0]
+	for unit in map.combat.all_units():
+		if unit != shooter and unit != victim: unit.take_damage(1000)
+	shooter.position = Vector2(900,800)
+	shooter.target = shooter.position
+	shooter.accuracy = 1.0
+	for direction in [Vector2.RIGHT,Vector2.LEFT,Vector2.UP,Vector2.DOWN,Vector2(1,1).normalized(),Vector2(-1,-1).normalized()]:
+		map.combat.orders.clear()
+		victim.hp = 100
+		victim.position = Vector2(1300,800)
+		victim.target = victim.position+direction*400
+		victim.march_path.clear()
+		advance(map,0.1)
+		assert(victim.velocity.dot(direction) > 70, "Prediction must use actual movement in every direction")
+		var shot: BattleArrow = map.combat.ranged.fire(shooter,victim)
+		var lead := shot.landing-victim.contact_box().get_center()
+		assert(lead.dot(direction) > 20 and absf(lead.cross(direction)) < 0.1)
+		assert(lead.distance_to(victim.velocity*shot.duration) < 0.2, "Lead must account for flight time to the predicted point")
+		var fixed_landing := shot.landing
+		# Follow the real march loop to impact, not a manually teleported target.
+		advance(map,shot.duration+0.05)
+		assert(victim.hp == 96, "Consistent straight/diagonal motion should intersect the led arrow")
+		assert(shot.landing == fixed_landing, "Projectile endpoints never track the target after release")
+	# Stop and reverse after release: the arrow must continue to its frozen point.
+	for reverse in [false,true]:
+		map.combat.orders.clear()
+		victim.hp = 100
+		victim.position = Vector2(1300,800)
+		victim.target = victim.position+Vector2(400,0)
+		advance(map,0.1)
+		var shot: BattleArrow = map.combat.ranged.fire(shooter,victim)
+		var fixed_landing := shot.landing
+		victim.target = victim.position + (Vector2(-300,0) if reverse else Vector2.ZERO)
+		advance(map,shot.duration+0.05)
+		assert(shot.landing == fixed_landing and victim.hp == 100)
+	map.combat.orders.clear()
+	victim.target = victim.position
+	advance(map,0.1)
+	assert(victim.velocity.is_zero_approx())
+	var idle: BattleArrow = map.combat.ranged.fire(shooter,victim)
+	assert(idle.landing == victim.contact_box().get_center())
+	map.combat.ranged.step(idle.duration)
+	# A short remaining route must not be extrapolated beyond its destination.
+	map.combat.orders.clear()
+	victim.position = Vector2(1300,800)
+	victim.target = victim.position+Vector2(3,0)
+	advance(map,1.0/60.0)
+	var arriving: BattleArrow = map.combat.ranged.fire(shooter,victim)
+	assert(arriving.landing.distance_to(victim.target+BattleUnit.BODY_CENTER_FROM_FEET) < 0.1)
+	map.combat.ranged.step(arriving.duration)
+	# Paused orders do not create fake velocity; misses scatter around the lead.
+	map.set_battle_paused(true)
+	var frozen_velocity := victim.velocity
+	victim.target += Vector2(0,200)
+	advance(map,0.5)
+	assert(victim.velocity == frozen_velocity)
+	map.set_battle_paused(false)
+	advance(map,0.1)
+	shooter.accuracy = 0.0
+	var miss: BattleArrow = map.combat.ranged.fire(shooter,victim)
+	assert(miss.aim_snapshot.y > victim.contact_box().get_center().y)
+	assert(miss.landing.distance_to(miss.aim_snapshot) >= 11.9 and miss.landing.distance_to(miss.aim_snapshot) <= 24.1)
+	map.combat.ranged.step(miss.duration)
+	print("PASS: measured motion leads horizontal/vertical/diagonal targets into actual impacts; stationary/arrival aims, frozen stops/turns, paused velocity and miss scatter")
+
 func art_check() -> void:
 	var catalog := Art.data()
 	var config := Art.archer_appearance(true,0)
@@ -205,4 +272,5 @@ func run() -> void:
 	advance(map,1.0)
 	assert(victim.hp == 6)
 	print("PASS: infantry misses animate without damage and successful strikes apply four damage")
+	prediction_check(fresh())
 	quit()
