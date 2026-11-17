@@ -11,17 +11,12 @@ func _init() -> void:
 	focus_mode = Control.FOCUS_NONE
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	accessibility_name = "전투 일시정지"
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	theme = GameUITheme.build()
 	for state in ["normal", "hover", "pressed", "hover_pressed"]:
-		var active: bool = state in ["pressed", "hover_pressed"]
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("414d46") if state.begins_with("hover") else Color("333d3a")
-		style.border_color = Color("ffd54a") if active else Color("756b50")
-		style.set_border_width_all(3 if active else 2)
+		var style := GameUITheme.button_style(state,true)
 		style.set_content_margin_all(12)
-		if active:
-			style.shadow_color = Color(1.0, 0.78, 0.16, 0.3)
-			style.shadow_size = 4
-		add_theme_stylebox_override(state, style)
+		add_theme_stylebox_override(state,style)
 	show_pause_state(false)
 
 func show_pause_state(paused: bool) -> void:

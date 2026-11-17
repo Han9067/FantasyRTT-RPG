@@ -1,10 +1,12 @@
 extends Control
 ## Drag the viewport rectangle with a stable grab offset; never orders the party.
+var frame_style := GameUITheme.panel_style(6)
 var world: WorldMap
 var camera_dragging := false
 var grab_offset := Vector2.ZERO
 
 func _ready() -> void:
+	theme = GameUITheme.build()
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	tooltip_text = "사각형 내부를 잡아 끌면 카메라가 이동합니다."
@@ -53,7 +55,7 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if not is_instance_valid(world): return
 	var bounds := map_bounds()
-	draw_rect(Rect2(Vector2.ZERO,size),Color("26352be8"))
+	frame_style.draw(get_canvas_item(),Rect2(Vector2.ZERO,size))
 	draw_texture_rect(WorldMap.TERRAIN,bounds,false)
 	var view := camera_rect()
 	draw_rect(view,Color(1,0.9,0.6,0.12))
@@ -61,4 +63,4 @@ func _draw() -> void:
 	var p := bounds.position + world.unit_position / world.map_size * bounds.size
 	draw_circle(p,3,Color("283c2b"))
 	draw_rect(Rect2(p-Vector2(1,1),Vector2(3,3)),Color("fff2b7"))
-	draw_rect(bounds,Color("ab9868"),false,1)
+	draw_rect(bounds,GameUITheme.BORDER,false,1)

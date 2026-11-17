@@ -161,7 +161,7 @@ func check_tactical_pause(game: Control) -> void:
 	assert(hero.animation == &"walk")
 	pause_button.button_pressed = true
 	assert(map.battle_paused and not paused, "Pause the battlefield, not the input/UI tree")
-	assert(pause_button.get_theme_stylebox("pressed").border_color == Color("ffd54a"))
+	assert(pause_button.get_theme_stylebox("pressed").texture.get_image().get_pixel(16,0) == Color("ffd54a"))
 	var sprites: Array[AnimatedSprite2D] = []
 	for unit in map.friendlies: sprites.append(unit)
 	for unit in map.enemies: sprites.append(unit)
@@ -214,7 +214,7 @@ func check_tactical_pause(game: Control) -> void:
 	assert(map.standard.frame == flag_frame and is_equal_approx(map.standard.frame_progress, flag_progress))
 	pause_button.button_pressed = false
 	assert(not map.battle_paused and not pause_button.button_pressed)
-	assert(pause_button.get_theme_stylebox("normal").border_color != Color("ffd54a"))
+	assert(pause_button.get_theme_stylebox("normal").texture.get_image().get_pixel(16,0) != Color("ffd54a"))
 	advance(map, 0.2)
 	assert(hero.position != frozen[0][0])
 	assert(map.infantry[0].position != frozen[1][0] and map.infantry[0].animation == &"walk")

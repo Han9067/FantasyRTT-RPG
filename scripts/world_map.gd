@@ -206,16 +206,9 @@ func create_city_popup() -> void:
 	city_popup.name = "CityPopup"
 	city_popup.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	city_popup.custom_minimum_size = Vector2(240,112)
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("252e30f5")
-	style.border_color = Color("ab9868")
-	style.set_border_width_all(1)
-	style.set_content_margin_all(14)
-	city_popup.add_theme_stylebox_override("panel",style)
-	var popup_theme := Theme.new()
-	popup_theme.default_font = load("res://assets/fonts/NotoSansCJK-Regular.ttc")
-	popup_theme.default_font_size = 16
-	city_popup.theme = popup_theme
+	city_popup.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	city_popup.add_theme_stylebox_override("panel",GameUITheme.panel_style(14))
+	city_popup.theme = GameUITheme.build()
 	overlay.add_child(city_popup)
 	var content := VBoxContainer.new()
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -224,12 +217,12 @@ func create_city_popup() -> void:
 	city_title = Label.new()
 	city_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	city_title.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	city_title.add_theme_color_override("font_color",Color("f2e3ba"))
+	city_title.add_theme_color_override("font_color",GameUITheme.INK)
 	content.add_child(city_title)
 	var rule := HSeparator.new()
 	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var line := StyleBoxLine.new()
-	line.color = Color("ab9868")
+	line.color = GameUITheme.BUTTON_BORDER
 	line.thickness = 1
 	rule.add_theme_stylebox_override("separator",line)
 	content.add_child(rule)
@@ -237,7 +230,7 @@ func create_city_popup() -> void:
 	lord.name = "Lord"
 	lord.text = "영주 : 없음"
 	lord.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	lord.add_theme_color_override("font_color",Color("eee9dd"))
+	lord.add_theme_color_override("font_color",GameUITheme.INK)
 	content.add_child(lord)
 	city_popup.hide()
 

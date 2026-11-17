@@ -1,10 +1,10 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.14")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.15")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
-const GOLD = Color("c9ab70")
-const INK = Color("e6dfce")
+const GOLD = GameUITheme.MUTED
+const INK = GameUITheme.INK
 const BattleMapScene = preload("res://scripts/battle_map.gd")
 const WorldMapScene = preload("res://scripts/world_map.gd")
 var character_frames: SpriteFrames
@@ -33,43 +33,30 @@ var age_label: Label
 var name_input: LineEdit
 var age_slider: HSlider
 var create_button: Button
+var paper_background: StyleBoxTexture
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	resized.connect(queue_redraw)
-	var t := Theme.new()
-	t.default_font = load("res://assets/fonts/NotoSansCJK-Regular.ttc")
-	t.default_font_size = 18
-	for kind in ["normal", "hover", "pressed", "focus", "disabled"]:
-		var s := StyleBoxFlat.new()
-		s.bg_color = Color("333d3a") if kind == "normal" else Color("52604e")
-		s.border_color = GOLD if kind != "normal" else Color("756b50")
-		s.set_border_width_all(2)
-		s.content_margin_left = 20
-		s.content_margin_right = 20
-		s.content_margin_top = 10
-		s.content_margin_bottom = 10
-		t.set_stylebox(kind, "Button", s)
-	t.set_color("font_color", "Label", INK)
-	t.set_color("font_color", "Button", INK)
-	t.set_color("font_color", "LineEdit", INK)
-	theme = t
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	theme = GameUITheme.build()
+	paper_background = GameUITheme.panel_style(0)
 	character_frames = CharacterArt.animations(appearance)
 	show_menu()
 
 func _draw() -> void:
 	if current_screen in ["battle", "world"]: return
-	draw_rect(Rect2(Vector2.ZERO, size), Color("171f22"))
+	paper_background.draw(get_canvas_item(),Rect2(Vector2.ZERO,size))
 	# Quiet silhouettes of a fortified city, drawn on an integer pixel grid.
 	var base := size.y * 0.80
 	for i in range(24):
 		var x := float(i) * size.x / 23.0
 		var h := float(40 + (i * 37 % 110))
-		draw_rect(Rect2(x, base - h, 48, size.y), Color("212e30"))
+		draw_rect(Rect2(x, base - h, 48, size.y), Color("d7bd8d"))
 		if i % 3 == 0:
 			for j in range(3):
-				draw_rect(Rect2(x + j * 18, base - h - 10, 10, 12), Color("212e30"))
-	draw_line(Vector2(0, size.y - 30), Vector2(size.x, size.y - 30), Color("514c3c"), 2)
+				draw_rect(Rect2(x + j * 18, base - h - 10, 10, 12), Color("d7bd8d"))
+	draw_line(Vector2(0, size.y - 30), Vector2(size.x, size.y - 30), GameUITheme.BUTTON_BORDER, 2)
 
 func label_text(value: String, font_size := 18) -> Label:
 	var l := Label.new()
@@ -133,7 +120,7 @@ func show_menu() -> void:
 	current_screen = "menu"
 	spacer(screen)
 	var overline := label_text("F A N T A S Y R T T  ·  R P G", 16)
-	overline.modulate = GOLD
+	overline.add_theme_color_override("font_color",GOLD)
 	overline.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	screen.add_child(overline)
 	var title := label_text("중세 전략 RPG", 64)
@@ -153,17 +140,12 @@ func show_menu() -> void:
 	spacer(screen)
 	var footer := label_text("버전 : " + game_version, 14)
 	footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	footer.modulate = GOLD
+	footer.add_theme_color_override("font_color",GOLD)
 	screen.add_child(footer)
 
 func panel() -> PanelContainer:
 	var p := PanelContainer.new()
-	var s := StyleBoxFlat.new()
-	s.bg_color = Color("252e30")
-	s.border_color = Color("756b50")
-	s.set_border_width_all(2)
-	s.set_content_margin_all(22)
-	p.add_theme_stylebox_override("panel", s)
+	p.add_theme_stylebox_override("panel",GameUITheme.panel_style())
 	return p
 
 func show_creation() -> void:
@@ -295,7 +277,7 @@ func show_creation() -> void:
 		detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		detail.clip_text = true
 		detail.custom_minimum_size.x = 64
-		detail.modulate = GOLD
+		detail.add_theme_color_override("font_color",GOLD)
 		detail.visible = key not in ["weapon", "offhand"]
 		row.add_child(detail)
 		part_controls[key] = {"left": left, "right": right, "number": number, "detail": detail}
@@ -308,8 +290,8 @@ func show_creation() -> void:
 
 func part_button(value: String, callback: Callable) -> Button:
 	var result := button(value, callback)
-	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
-		var style := theme.get_stylebox(state, "Button").duplicate() as StyleBoxFlat
+	for state in ["normal", "hover", "pressed", "hover_pressed", "focus", "disabled"]:
+		var style := theme.get_stylebox(state, "Button").duplicate() as StyleBox
 		style.content_margin_left = 8
 		style.content_margin_right = 8
 		result.add_theme_stylebox_override(state, style)
@@ -463,6 +445,9 @@ func show_battle() -> void:
 	battle.pause_changed.connect(pause_button.show_pause_state)
 	var title := label_text("서부 초원  /  전투 시험장", 22)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title.add_theme_color_override("font_color",GameUITheme.IVORY)
+	title.add_theme_color_override("font_outline_color",GameUITheme.BORDER)
+	title.add_theme_constant_override("outline_size",4)
 	header.add_child(title)
 	header.add_child(button("← 월드맵", show_world))
 	spacer(screen)
