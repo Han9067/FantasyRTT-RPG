@@ -36,7 +36,9 @@ var packed_counts := {"hero": 1, "infantry": 20, "enemy": 20, "archers": 20}
 var reform_anchors: Dictionary = {}
 var joint_order := false
 var battle_paused := false
-var standard: AnimatedSprite2D
+var standard: AnimatedSprite2D # Infantry flag retained for existing callers.
+var standards: Dictionary = {}
+var roster: HBoxContainer
 var order_marker := Vector2.ZERO
 var character_frames: SpriteFrames
 var character_name := "여행자"
@@ -91,6 +93,12 @@ func _ready() -> void:
 	deploy_infantry(units, false)
 	deploy_infantry(units, true, true)
 	create_standard()
+	var roster_layer := CanvasLayer.new()
+	roster_layer.layer = HUD_LAYER + 2
+	add_child(roster_layer)
+	roster = preload("res://scripts/battle_roster.gd").new()
+	roster.battle = self
+	roster_layer.add_child(roster)
 	ground.generate(Vector2i(map_size))
 	camera = Camera2D.new()
 	camera.position_smoothing_enabled = false
@@ -153,42 +161,40 @@ func create_standard() -> void:
 	overlay.layer = HUD_LAYER + 1
 	overlay.follow_viewport_enabled = true
 	add_child(overlay)
-	standard = AnimatedSprite2D.new()
-	standard.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var frames := SpriteFrames.new()
 	for i in range(1, 9):
 		frames.add_frame(&"default", load("res://assets/battle/flag/flag_%02d.png" % i))
 	frames.set_animation_speed(&"default", 8.0)
 	frames.set_animation_loop(&"default", true)
-	standard.sprite_frames = frames
-	standard.centered = false
-	# Visible bottom-left pivot: 7px left and 4px up from the formation center.
-	standard.offset = -Vector2(18, 56) + Vector2(-7, -4)
-	standard.hide()
-	overlay.add_child(standard)
+	for key: String in ["infantry", "archers"]:
+		var flag := AnimatedSprite2D.new()
+		flag.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		flag.sprite_frames = frames
+		flag.centered = false
+		# Preserve the original flag art and its adjusted bottom-left pivot.
+		flag.offset = -Vector2(18, 56) + Vector2(-7, -4)
+		flag.hide()
+		overlay.add_child(flag)
+		standards[key] = flag
+	standard = standards.infantry
 
 func place_standard() -> void:
-	if not standard.visible: return
-	var marked: Array[BattleUnit] = []
-	for unit in selection:
-		if unit.alive() and infantry.has(unit): marked.append(unit)
-	if marked.is_empty(): marked.assign(Combat.living(selection))
-	if marked.is_empty():
-		standard.hide()
-	else:
-		var key: String = combat.key_for(marked[0])
-		standard.position = reform_anchors.get(key, Combat.center(marked)) + BODY_CENTER_FROM_FEET
+	for key: String in standards:
+		var flag: AnimatedSprite2D = standards[key]
+		var members: Array[BattleUnit] = Combat.living(combat.group(key))
+		var marked := members.any(func(unit: BattleUnit) -> bool: return selection.has(unit))
+		flag.visible = marked
+		if marked:
+			flag.position = reform_anchors.get(key, Combat.center(members)) + BODY_CENTER_FROM_FEET
+			if not flag.is_playing(): flag.play()
+		else:
+			flag.stop()
 
 func refresh_selection() -> void:
 	selection.assign(Combat.living(selection))
 	selected = selection.has(player_sprite)
 	player_sprite.material = outline_material if selected else null
-	standard.visible = not selection.is_empty()
-	if standard.visible:
-		place_standard()
-		standard.play()
-	else:
-		standard.stop()
+	place_standard()
 	refresh_attack_cursor()
 	status_changed.emit()
 	queue_redraw()
@@ -202,7 +208,7 @@ func enemy_at(point: Vector2) -> BattleUnit:
 	return front
 
 func refresh_attack_cursor() -> void:
-	attack_cursor_active = not selection.is_empty() and screen_playable_rect().has_point(pointer_screen) and enemy_at(screen_to_world(pointer_screen)) != null
+	attack_cursor_active = not selection.is_empty() and field_input_at(pointer_screen) and enemy_at(screen_to_world(pointer_screen)) != null
 	Input.set_default_cursor_shape(Input.CURSOR_CROSS if attack_cursor_active else Input.CURSOR_ARROW)
 
 func _exit_tree() -> void:
@@ -234,6 +240,9 @@ func resize_map() -> void:
 
 func screen_playable_rect() -> Rect2:
 	return Rect2(Vector2(0,96),Vector2(viewport_size.x,maxf(1,viewport_size.y-96)))
+
+func field_input_at(point: Vector2) -> bool:
+	return screen_playable_rect().has_point(point) and not (is_instance_valid(roster) and roster.get_global_rect().has_point(point))
 
 func screen_to_world(point: Vector2) -> Vector2:
 	return get_global_transform_with_canvas().affine_inverse() * point
@@ -296,6 +305,9 @@ func finish_selection(screen_point: Vector2) -> void:
 	refresh_selection()
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventMouse:
+		pointer_screen = event.position
+		refresh_attack_cursor()
 	# A drag begun on the field still ends if the pointer is released over the HUD.
 	if dragging and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 		finish_selection(event.position)
@@ -313,7 +325,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseButton:
 		var point := screen_to_world(event.position)
-		var over_field := screen_playable_rect().has_point(event.position)
+		var over_field := field_input_at(event.position)
 		if event.pressed and event.button_index in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT] and attack_cursor_active:
 			dragging = false
 			issue_attack(enemy_at(point))
@@ -439,7 +451,7 @@ func set_battle_paused(value: bool) -> void:
 		for unit: BattleUnit in group:
 			unit.speed_scale = 0.0 if value else 1.0
 			if not value: update_unit_animation(unit)
-	standard.speed_scale = 0.0 if value else 1.0
+	for flag: AnimatedSprite2D in standards.values(): flag.speed_scale = 0.0 if value else 1.0
 	pause_changed.emit(value)
 	status_changed.emit()
 	queue_redraw()
@@ -568,12 +580,24 @@ func movement_guides() -> Array[Dictionary]:
 			finish += unit.target
 		start /= group.size()
 		finish /= group.size()
-		if start.is_equal_approx(finish): continue
-		guides.append({"start": start, "end": finish,
+		if group.all(func(unit: BattleUnit) -> bool: return unit.position.is_equal_approx(unit.target)): continue
+		guides.append({"start": start, "end": finish, "members": group,
 			"color": ALLIED_ROUTE_COLOR if group[0].allied else ENEMY_ROUTE_COLOR})
 	return guides
 
+func destination_slots() -> Array[Vector2]:
+	var slots: Array[Vector2] = []
+	for guide in movement_guides():
+		var members: Array[BattleUnit] = guide.members
+		if not members[0].allied or combat.engaged(combat.key_for(members[0])): continue
+		for unit in members: slots.append(unit.target)
+	return slots
+
 func _draw() -> void:
+	# Native 20px footprints share the actual movement goals, including paused orders.
+	for slot in destination_slots():
+		draw_circle(slot, 10.0, Color(0.20, 0.53, 1.0, 0.30))
+		draw_arc(slot, 10.0, 0, TAU, 32, Color(0.35, 0.65, 1.0, 0.6), 1.0)
 	# One persistent route per formation/hero, including orders queued in pause.
 	for guide in movement_guides():
 		var start: Vector2 = guide.start
