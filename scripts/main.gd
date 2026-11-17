@@ -1,6 +1,7 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.23")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.24")
+const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = GameUITheme.MUTED
@@ -34,6 +35,12 @@ var name_input: LineEdit
 var age_slider: HSlider
 var create_button: Button
 var paper_background: StyleBoxTexture
+var preset_store = PresetStore.new()
+var preset_save_button: Button
+var preset_buttons: Array[Button] = []
+var preset_popup: PopupPanel
+var preset_choices: Array[Button] = []
+var preset_message: Label
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -81,6 +88,13 @@ func _process(delta: float) -> void:
 
 func clear_screen() -> void:
 	queue_redraw()
+	if is_instance_valid(preset_popup):
+		preset_popup.hide()
+		remove_child(preset_popup)
+		preset_popup.queue_free()
+		preset_popup = null
+	preset_buttons.clear()
+	preset_choices.clear()
 	if is_instance_valid(battle):
 		battle.set_process_unhandled_input(false)
 		battle.set_physics_process(false)
@@ -170,7 +184,22 @@ func show_creation() -> void:
 	var fields := VBoxContainer.new()
 	fields.add_theme_constant_override("separation", 10)
 	top_panel.add_child(fields)
-	fields.add_child(label_text("인물 정보", 20))
+	var details_header := HBoxContainer.new()
+	details_header.add_theme_constant_override("separation", 8)
+	fields.add_child(details_header)
+	var details_title := label_text("인물 정보", 20)
+	details_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	details_header.add_child(details_title)
+	preset_save_button = button("저장", open_preset_popup)
+	preset_save_button.custom_minimum_size = Vector2(64, 36)
+	details_header.add_child(preset_save_button)
+	for i in range(PresetStore.SLOT_COUNT):
+		var slot := button("%d번" % (i + 1), apply_preset.bind(i))
+		slot.custom_minimum_size = Vector2(64, 36)
+		details_header.add_child(slot)
+		preset_buttons.append(slot)
+	create_preset_popup()
+	refresh_preset_buttons()
 	var inputs := HBoxContainer.new()
 	inputs.add_theme_constant_override("separation", 18)
 	fields.add_child(inputs)
@@ -287,6 +316,59 @@ func show_creation() -> void:
 	select_gender(selected_gender)
 	refresh_part_controls()
 	_process(0.0)
+
+func create_preset_popup() -> void:
+	preset_popup = PopupPanel.new()
+	preset_popup.name = "PresetSavePopup"
+	preset_popup.theme = theme
+	preset_popup.unresizable = true
+	preset_popup.close_requested.connect(preset_popup.hide)
+	add_child(preset_popup)
+	var content := VBoxContainer.new()
+	content.add_theme_constant_override("separation", 14)
+	preset_popup.add_child(content)
+	preset_message = label_text("저장할 슬롯 선택", 20)
+	preset_message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content.add_child(preset_message)
+	var choices := HBoxContainer.new()
+	choices.alignment = BoxContainer.ALIGNMENT_CENTER
+	choices.add_theme_constant_override("separation", 12)
+	content.add_child(choices)
+	for i in range(PresetStore.SLOT_COUNT):
+		var choice := button(str(i + 1), save_preset.bind(i))
+		choice.custom_minimum_size = Vector2(64, 64)
+		choices.add_child(choice)
+		preset_choices.append(choice)
+	var hint := label_text("기존 프리셋은 덮어씁니다.", 14)
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content.add_child(hint)
+
+func refresh_preset_buttons() -> void:
+	for i in range(preset_buttons.size()):
+		var empty: bool = preset_store.get_appearance(i).is_empty()
+		preset_buttons[i].disabled = empty
+		preset_buttons[i].tooltip_text = "빈 슬롯" if empty else "%d번 외형 불러오기" % (i + 1)
+
+func open_preset_popup() -> void:
+	preset_message.text = "저장할 슬롯 선택"
+	preset_popup.popup_centered()
+	preset_choices[0].grab_focus()
+
+func save_preset(slot: int) -> void:
+	if preset_store.save_appearance(slot, appearance) != OK:
+		preset_message.text = "저장하지 못했습니다. 다시 시도해 주세요."
+		return
+	refresh_preset_buttons()
+	preset_popup.hide()
+	preset_buttons[slot].grab_focus()
+
+func apply_preset(slot: int) -> void:
+	var saved: Dictionary = preset_store.get_appearance(slot)
+	if saved.is_empty(): return
+	appearance = saved
+	character_frames = CharacterArt.animations(appearance)
+	refresh_part_controls()
+	set_preview_animation(preview_animation)
 
 func part_button(value: String, callback: Callable) -> Button:
 	var result := button(value, callback)

@@ -104,7 +104,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.23")
+	assert(game.game_version == "0.0.24")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
