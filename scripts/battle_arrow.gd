@@ -18,7 +18,7 @@ static var arrow_texture: Texture2D
 static func flight_time(from: Vector2, to: Vector2) -> float:
 	return clampf(from.distance_to(to)/240.0, 0.35, 1.5)
 
-func configure(from: Vector2, to: Vector2, source: BattleUnit, target: BattleUnit, hit: bool) -> void:
+func configure(from: Vector2, to: Vector2, source: BattleUnit, target: BattleUnit, hit: bool, shot_range := 640.0) -> void:
 	launch = from
 	landing = to
 	aim_snapshot = target.contact_box().get_center()
@@ -28,8 +28,10 @@ func configure(from: Vector2, to: Vector2, source: BattleUnit, target: BattleUni
 	allied = source.allied
 	accurate = hit
 	duration = flight_time(from, to)
-	# A modest, capped arc takes priority over forcing a downward-facing impact.
-	arc_height = clampf(from.distance_to(to)*0.22, 18.0, 128.0)
+	# Preserve the current maximum-range arc, but flatten the launch angle nearby.
+	# Quadratic height makes the added slope decrease with distance; no minimum loft.
+	var range_fraction := clampf(from.distance_to(to)/maxf(shot_range,1.0), 0.0, 1.0)
+	arc_height = 128.0*range_fraction*range_fraction
 	if arrow_texture == null:
 		arrow_texture = ImageTexture.create_from_image(CharacterArt.part_image(CharacterArt.data().arrow, 0))
 	sprite = Sprite2D.new()

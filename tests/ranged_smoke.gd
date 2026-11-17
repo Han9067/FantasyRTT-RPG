@@ -187,7 +187,7 @@ func run() -> void:
 		probe.configure(shooter.position,shooter.position+offset,shooter,victim,true)
 		probe.advance(probe.duration*0.5)
 		var rise := -probe.sprite.position.y
-		assert(rise >= 18 and rise <= 128)
+		assert(rise > 0 and rise <= 128)
 		assert(rise < maxf(48.0,offset.length()*0.65)*0.4, "Arc must be substantially lower than the former steep flight")
 		for fraction in [0.1,0.5,0.9]:
 			probe.elapsed = probe.duration*(fraction-0.001)
@@ -204,6 +204,22 @@ func run() -> void:
 		if offset == Vector2(0,-640):
 			assert(Vector2.LEFT.rotated(probe.sprite.rotation).y < 0, "Do not force downward orientation against the actual path")
 		probe.free()
+	# At maximum range retain the previous 128px arc / horizontal launch angle.
+	# Nearer shots must become progressively flatter, without the old minimum loft.
+	var previous_angle := -1.0
+	for distance in [40.0,80.0,160.0,320.0,480.0,640.0]:
+		var distance_probe := BattleArrow.new()
+		distance_probe.configure(shooter.position,shooter.position+Vector2(distance,0),shooter,victim,true,Ranged.RANGE)
+		var launch_tip := Vector2.LEFT.rotated(distance_probe.sprite.rotation)
+		var launch_angle := absf(launch_tip.angle())
+		assert(launch_angle > previous_angle, "Closer shots must use a smaller launch angle")
+		previous_angle = launch_angle
+		if distance <= 160.0: assert(launch_angle < deg_to_rad(12))
+		if distance == 640.0:
+			assert(is_equal_approx(distance_probe.arc_height,128.0))
+			assert(is_equal_approx(launch_angle,atan(0.8)))
+		distance_probe.free()
+	print("PASS: maximum-range arc preserved; progressively flatter launch angles from 640px to 40px")
 	var endpoint := arrow.landing
 	map.combat.ranged.step(arrow.duration*0.5)
 	assert(arrow.landing == endpoint and arrow.sprite.position.y < -10 and victim.hp == 10)

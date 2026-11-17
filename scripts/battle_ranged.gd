@@ -66,7 +66,7 @@ func fire(unit: BattleUnit, target: BattleUnit) -> BattleArrow:
 	# A miss visibly falls wide; a successful accuracy roll can still be dodged.
 	if not hit: point += Vector2.RIGHT.rotated(randf()*TAU)*randf_range(12.0,24.0)
 	var arrow := Arrow.new()
-	arrow.configure(start, point, unit, target, hit)
+	arrow.configure(start, point, unit, target, hit, RANGE)
 	arrow.aim_snapshot = aim
 	map.get_node("Units").add_child(arrow)
 	projectiles.append(arrow)
