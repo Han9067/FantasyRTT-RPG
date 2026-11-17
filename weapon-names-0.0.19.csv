@@ -1,0 +1,110 @@
+﻿family,file,name_ko,visual_note,source
+axe,axe_01.png,벌목 손도끼,작고 각진 날과 짧은 자루,sprites/weapons/melee weapons/axe/axe_01.png
+axe,axe_02.png,갈고리 전투도끼,위쪽이 굽은 날과 돌출된 도끼등,sprites/weapons/melee weapons/axe/axe_02.png
+axe,axe_03.png,쐐기날 손도끼,쐐기처럼 벌어지는 날과 띠 자루,sprites/weapons/melee weapons/axe/axe_03.png
+axe,axe_04.png,부리등 전투도끼,둥근 날 뒤로 나온 작은 부리,sprites/weapons/melee weapons/axe/axe_04.png
+axe,axe_05.png,곡자루 손도끼,작은 편날과 굽은 손잡이,sprites/weapons/melee weapons/axe/axe_05.png
+axe,axe_06.png,긴자루 손도끼,좁은 날 아래로 길게 뻗은 자루,sprites/weapons/melee weapons/axe/axe_06.png
+axe,axe_07.png,양날 손도끼,좌우에 마주 보는 둥근 날,sprites/weapons/melee weapons/axe/axe_07.png
+axe,axe_08.png,각날 양날도끼,직각에 가까운 좌우 날,sprites/weapons/melee weapons/axe/axe_08.png
+axe,axe_09.png,잎날 손도끼,작은 잎 모양의 도끼날,sprites/weapons/melee weapons/axe/axe_09.png
+axe,axe_10.png,넓은날 벌목도끼,넓고 네모난 편날,sprites/weapons/melee weapons/axe/axe_10.png
+axe,axe_11.png,둥근날 곡자루도끼,둥근 날과 크게 휜 자루,sprites/weapons/melee weapons/axe/axe_11.png
+axe,axe_12.png,횡날 전투도끼,가로로 길게 뻗은 도끼머리,sprites/weapons/melee weapons/axe/axe_12.png
+axe,axe_13.png,황동장식 벌채도,넓은 칼형 날과 금빛 끝장식,sprites/weapons/melee weapons/axe/axe_13.png
+axe,axe_14.png,직날 벌채도,반듯한 사각 칼형 날,sprites/weapons/melee weapons/axe/axe_14.png
+axe,axe_15.png,광날 벌채도,폭이 넓고 위쪽이 굽은 칼형 날,sprites/weapons/melee weapons/axe/axe_15.png
+axe,axe_16.png,방패날 전투도끼,둥근 외곽의 넓은 도끼머리,sprites/weapons/melee weapons/axe/axe_16.png
+axe,axe_17.png,수염날 도끼,아래로 길게 내려온 도끼날,sprites/weapons/melee weapons/axe/axe_17.png
+axe,axe_18.png,장날 전투도끼,길고 두꺼운 편날과 돌출된 등,sprites/weapons/melee weapons/axe/axe_18.png
+axe,axe_19.png,갈퀴날 의장도끼,갈퀴처럼 벌어진 머리와 금빛 끝장식,sprites/weapons/melee weapons/axe/axe_19.png
+axe_big,axe_big_01.png,황동 양날대전부,금빛 머리 장식과 벌어진 양날,sprites/weapons/melee weapons/axe_big/axe_big_01.png
+axe_big,axe_big_02.png,편날 장부,한쪽 날과 금빛 띠 장식,sprites/weapons/melee weapons/axe_big/axe_big_02.png
+axe_big,axe_big_03.png,강철 양날대전부,넓고 대칭적인 은회색 양날,sprites/weapons/melee weapons/axe_big/axe_big_03.png
+axe_big,axe_big_04.png,황동 부리날대도끼,금빛 머리와 돌출된 뒷부리,sprites/weapons/melee weapons/axe_big/axe_big_04.png
+axe_big,axe_big_05.png,반월날 대도끼,길게 굽은 반달형 편날,sprites/weapons/melee weapons/axe_big/axe_big_05.png
+blunt,blunt_01.png,목제 몽둥이,붉은 갈색의 둥근 타격부,sprites/weapons/melee weapons/blunt/blunt_01.png
+blunt,blunt_02.png,못박힌 몽둥이,몽둥이 둘레의 돌출 가시,sprites/weapons/melee weapons/blunt/blunt_02.png
+blunt,blunt_03.png,철추 도리깨,짧은 연결줄 끝의 묵직한 추,sprites/weapons/melee weapons/blunt/blunt_03.png
+blunt,blunt_04.png,가시추 도리깨,연결줄 끝의 각진 가시추,sprites/weapons/melee weapons/blunt/blunt_04.png
+blunt,blunt_05.png,다각추 도리깨,넓고 다면적인 타격추,sprites/weapons/melee weapons/blunt/blunt_05.png
+blunt,blunt_06.png,긴사슬 도리깨,크게 늘어진 연결줄과 가시추,sprites/weapons/melee weapons/blunt/blunt_06.png
+blunt,blunt_07.png,철제 전투망치,단순한 편측 망치머리,sprites/weapons/melee weapons/blunt/blunt_07.png
+blunt,blunt_08.png,부리등 전투망치,망치 반대쪽으로 뾰족한 부리,sprites/weapons/melee weapons/blunt/blunt_08.png
+blunt,blunt_09.png,양두 망치,양쪽으로 뻗은 짧은 머리,sprites/weapons/melee weapons/blunt/blunt_09.png
+blunt,blunt_10.png,각형 철망치,두툼한 사각 머리,sprites/weapons/melee weapons/blunt/blunt_10.png
+blunt,blunt_11.png,황동 부리망치,금빛으로 장식된 뾰족한 망치등,sprites/weapons/melee weapons/blunt/blunt_11.png
+blunt,blunt_12.png,띠쇠 목망치,나무색 머리를 감싼 중앙 띠쇠,sprites/weapons/melee weapons/blunt/blunt_12.png
+blunt,blunt_13.png,돌기 양두전투망치,양쪽에 장식 돌기가 있는 머리,sprites/weapons/melee weapons/blunt/blunt_13.png
+blunt,blunt_14.png,각형 양두망치,네모난 양쪽 타격면,sprites/weapons/melee weapons/blunt/blunt_14.png
+blunt,blunt_15.png,단두 전투망치,한쪽 타격면이 크고 반대쪽이 작은 머리,sprites/weapons/melee weapons/blunt/blunt_15.png
+blunt,blunt_16.png,구형 철퇴,작고 둥근 철퇴머리,sprites/weapons/melee weapons/blunt/blunt_16.png
+blunt,blunt_17.png,홈날 철퇴,세로 홈이 보이는 둥근 머리,sprites/weapons/melee weapons/blunt/blunt_17.png
+blunt,blunt_18.png,별머리 철퇴,별 모양으로 돌출된 머리,sprites/weapons/melee weapons/blunt/blunt_18.png
+blunt,blunt_19.png,격자머리 철퇴,촘촘한 표면의 둥근 머리,sprites/weapons/melee weapons/blunt/blunt_19.png
+blunt_big,blunt_big_01.png,장대 철퇴,긴 자루 위의 커다란 격자 머리,sprites/weapons/melee weapons/blunt_big/blunt_big_01.png
+blunt_big,blunt_big_02.png,띠쇠 대곤봉,띠쇠가 둘러진 길쭉한 타격부,sprites/weapons/melee weapons/blunt_big/blunt_big_02.png
+spear,spear_01.png,민병대 단창,짧고 단순한 창촉,sprites/weapons/melee weapons/spear/spear_01.png
+spear,spear_02.png,보병 단창,가느다란 창촉과 반듯한 자루,sprites/weapons/melee weapons/spear/spear_02.png
+spear,spear_03.png,두갈래 창,두 갈래로 벌어진 창촉,sprites/weapons/melee weapons/spear/spear_03.png
+spear,spear_04.png,삼지창,세 방향으로 갈라진 창촉,sprites/weapons/melee weapons/spear/spear_04.png
+spear,spear_05.png,십자날 창,중앙 촉 아래 가로날,sprites/weapons/melee weapons/spear/spear_05.png
+spear,spear_06.png,날개촉 창,중앙 촉 아래 넓은 날개,sprites/weapons/melee weapons/spear/spear_06.png
+spear,spear_07.png,잎날 창,둥글게 넓어지는 잎 모양 촉,sprites/weapons/melee weapons/spear/spear_07.png
+spear,spear_08.png,날개받이 창,폭넓은 가로 받침과 중앙 촉,sprites/weapons/melee weapons/spear/spear_08.png
+spear,spear_10.png,가로막이 창,창촉 아래 길게 뻗은 가로막이,sprites/weapons/melee weapons/spear/spear_10.png
+spear,spear_11.png,광촉 사냥창,톱니처럼 넓어지는 촉,sprites/weapons/melee weapons/spear/spear_11.png
+spear,spear_12.png,황동장식 창,금빛 목 장식과 끝장식,sprites/weapons/melee weapons/spear/spear_12.png
+spear,spear_13.png,날개 송곳창,긴 중앙 촉과 굽은 양쪽 날개,sprites/weapons/melee weapons/spear/spear_13.png
+spear,spear_14.png,갈고리 다지창,여러 층으로 갈라지는 갈고리 촉,sprites/weapons/melee weapons/spear/spear_14.png
+spear,spear_101.png,붉은 호위기병창,붉은 갈색 자루와 원뿔형 손막이,sprites/weapons/melee weapons/spear/spear_101.png
+spear,spear_102.png,녹색 호위기병창,녹색 자루와 밝은 손막이,sprites/weapons/melee weapons/spear/spear_102.png
+spear,spear_103.png,띠자루 기병창,밝은 띠가 둘러진 붉은 자루,sprites/weapons/melee weapons/spear/spear_103.png
+spear,spear_104.png,황동 의장기병창,금빛 손막이와 끝장식,sprites/weapons/melee weapons/spear/spear_104.png
+sword,sword_01.png,철제 단검,짧고 넓은 직선 칼날,sprites/weapons/melee weapons/sword/sword_01.png
+sword,sword_02.png,황동손잡이 직검,금빛 손잡이와 곧은 칼날,sprites/weapons/melee weapons/sword/sword_02.png
+sword,sword_03.png,십자 근위검,넓은 십자 가드,sprites/weapons/melee weapons/sword/sword_03.png
+sword,sword_04.png,원반가드 세검,가느다란 날과 둥근 손막이,sprites/weapons/melee weapons/sword/sword_04.png
+sword,sword_05.png,황동가드 세검,얇은 날과 금빛 손막이,sprites/weapons/melee weapons/sword/sword_05.png
+sword,sword_06.png,고리가드 세검,가늘게 뻗은 날과 고리형 손막이,sprites/weapons/melee weapons/sword/sword_06.png
+sword,sword_07.png,황동십자 직검,금빛 십자 가드와 곧은 날,sprites/weapons/melee weapons/sword/sword_07.png
+sword,sword_08.png,외날 보병검,한쪽 날이 강조된 곧은 칼,sprites/weapons/melee weapons/sword/sword_08.png
+sword,sword_09.png,황동가드 외날검,금빛 가드를 단 외날형 칼,sprites/weapons/melee weapons/sword/sword_09.png
+sword,sword_10.png,굽은날 곡도,크게 휘어진 칼날,sprites/weapons/melee weapons/sword/sword_10.png
+sword,sword_11.png,광날 군도,폭이 넓고 끝이 굽은 날,sprites/weapons/melee weapons/sword/sword_11.png
+sword,sword_12.png,황동장식 기사검,가드 중앙에 금빛 장식,sprites/weapons/melee weapons/sword/sword_12.png
+sword,sword_13.png,검은손잡이 직검,어두운 가드와 단순한 직선 날,sprites/weapons/melee weapons/sword/sword_13.png
+sword,sword_14.png,원형가드 의장검,원형 금빛 손막이,sprites/weapons/melee weapons/sword/sword_14.png
+sword_big,sword_big_01.png,십자 양손검,단순한 십자 가드와 긴 날,sprites/weapons/melee weapons/sword_big/sword_big_01.png
+sword_big,sword_big_02.png,광가드 양손검,옆으로 넓게 뻗은 가드,sprites/weapons/melee weapons/sword_big/sword_big_02.png
+sword_big,sword_big_03.png,가죽감은 양손검,붉은 갈색 손잡이와 긴 직선 날,sprites/weapons/melee weapons/sword_big/sword_big_03.png
+sword_big,sword_big_04.png,갈래가드 대검,위로 벌어진 손막이,sprites/weapons/melee weapons/sword_big/sword_big_04.png
+sword_big,sword_big_05.png,황동가드 대검,금빛으로 벌어진 손막이,sprites/weapons/melee weapons/sword_big/sword_big_05.png
+sword_big,sword_big_06.png,첨두 대검,폭이 넓고 끝이 각진 날,sprites/weapons/melee weapons/sword_big/sword_big_06.png
+sword_big,sword_big_07.png,황동손잡이 대검,넓은 날과 금빛 손잡이,sprites/weapons/melee weapons/sword_big/sword_big_07.png
+sword_big,sword_big_08.png,긴혈조 대검,긴 중앙 홈이 보이는 넓은 날,sprites/weapons/melee weapons/sword_big/sword_big_08.png
+sword_big,sword_big_09.png,겹가드 대검,여러 갈래가 겹친 손막이,sprites/weapons/melee weapons/sword_big/sword_big_09.png
+sword_big,sword_big_10.png,물결날 대검,물결처럼 휘어진 긴 날,sprites/weapons/melee weapons/sword_big/sword_big_10.png
+sword_big,sword_big_11.png,광날 대곡도,폭넓게 휘어진 칼날,sprites/weapons/melee weapons/sword_big/sword_big_11.png
+sword_big,sword_big_12.png,톱날 대검,가장자리에 톱니가 있는 날,sprites/weapons/melee weapons/sword_big/sword_big_12.png
+sword_big,sword_big_13.png,광폭 물결대검,넓게 굽은 날과 붉은 장식,sprites/weapons/melee weapons/sword_big/sword_big_13.png
+sword_big,sword_big_14.png,붉은보석 대검,가드 중앙의 붉은 장식,sprites/weapons/melee weapons/sword_big/sword_big_14.png
+sword_big,sword_big_15.png,녹색보석 대검,가드 중앙의 녹색 장식,sprites/weapons/melee weapons/sword_big/sword_big_15.png
+sword_big,sword_big_16.png,황동고리가드 대검,금빛으로 감싸는 고리형 가드,sprites/weapons/melee weapons/sword_big/sword_big_16.png
+sword_big,sword_big_17.png,광날 벌채검,무겁고 넓은 사각형에 가까운 날,sprites/weapons/melee weapons/sword_big/sword_big_17.png
+sword_big,sword_big_18.png,붉은장식 의장대검,넓은 금빛 가드와 붉은 중앙 장식,sprites/weapons/melee weapons/sword_big/sword_big_18.png
+sword_big,sword_big_19.png,황동장식 대군도,굽은 날과 넓은 금빛 가드,sprites/weapons/melee weapons/sword_big/sword_big_19.png
+sword_big,sword_big_20.png,긴날 군도,길게 휘어진 편날과 작은 가드,sprites/weapons/melee weapons/sword_big/sword_big_20.png
+bow,bow_01.png,짧은 사냥활,작고 단순한 갈색 활,sprites/weapons/ranged weapons/bow/bow_01.png
+bow,bow_02.png,목제 단궁,조금 더 길게 뻗은 나무색 활,sprites/weapons/ranged weapons/bow/bow_02.png
+bow,bow_03.png,각궁,각지게 휘어진 황갈색 활대,sprites/weapons/ranged weapons/bow/bow_03.png
+bow,bow_04.png,반곡 사냥활,끝부분이 반대로 휘는 붉은 활대,sprites/weapons/ranged weapons/bow/bow_04.png
+bow,bow_05.png,회색 전투궁,차가운 회색의 긴 활대,sprites/weapons/ranged weapons/bow/bow_05.png
+bow,bow_06.png,장식 복합궁,여러 구간이 두드러지는 황갈색 활대,sprites/weapons/ranged weapons/bow/bow_06.png
+bow,bow_07.png,목제 장궁,길고 단순한 갈색 활대,sprites/weapons/ranged weapons/bow/bow_07.png
+crossbow,crossbow_01.png,소형 석궁,짧은 몸체와 작은 활대,sprites/weapons/ranged weapons/crossbow/crossbow_01.png
+crossbow,crossbow_02.png,보병 석궁,길어진 개머리판과 활대,sprites/weapons/ranged weapons/crossbow/crossbow_02.png
+crossbow,crossbow_03.png,쇠장식 석궁,몸체 뒤쪽의 갈래 장식,sprites/weapons/ranged weapons/crossbow/crossbow_03.png
+crossbow,crossbow_04.png,중형 석궁,넓은 활대와 묵직한 몸체,sprites/weapons/ranged weapons/crossbow/crossbow_04.png
+sling,sling_01.png,가죽 투석구,가죽 주머니와 끈을 사용하는 투석구,sprites/weapons/ranged weapons/sling/sling_01.png
+stick_sling,stick_sling_01.png,장대 투석구,막대 끝에 투석 끈을 연결한 형태,sprites/weapons/ranged weapons/stick_sling/stick_sling_01.png
