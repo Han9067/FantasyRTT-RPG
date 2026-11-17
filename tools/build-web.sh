@@ -29,6 +29,19 @@ rm -rf builds/web
 mkdir -p builds/web
 godot --headless --export-release Web "builds/web/game-${build_id}.html"
 mv "builds/web/game-${build_id}.html" builds/web/index.html
+# The loading/error shell uses the same uploaded font as the game UI.
+cp assets/fonts/PFStardust3-Bold.ttf "builds/web/ui-font-${build_id}.ttf"
+python - "$build_id" <<'PYFONT'
+from pathlib import Path
+import sys
+page = Path("builds/web/index.html")
+css = """@font-face { font-family: 'PF Stardust'; src: url('ui-font-%s.ttf') format('truetype'); font-style: normal; font-weight: 400; font-display: swap; }
+body, #status-notice { font-family: 'PF Stardust', sans-serif; }
+""" % sys.argv[1]
+html = page.read_text()
+assert "</style>" in html
+page.write_text(html.replace("</style>", css + "</style>", 1))
+PYFONT
 touch builds/web/.nojekyll
 printf '{"version":"%s","build_id":"%s","test_url":"%s"}\n' \
   "$release_version" "$build_id" "$test_url" > builds/web/build-info.json

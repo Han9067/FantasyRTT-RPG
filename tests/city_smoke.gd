@@ -61,6 +61,11 @@ func run() -> void:
 			assert(not map.city_popup.visible and not map.entrance_cursor_active)
 	print("PASS: all four cities at 1x/3x, entrance cursor, walkable routes, arrival-only entry and 400px panel")
 	await process_frame
+	assert(map.city_actions.size() == 4)
+	for action in map.city_actions:
+		assert(action.size.x == 285, "City buttons must use 80% of the original 356px content width")
+		assert(absf(action.get_global_rect().get_center().x - map.city_panel.get_global_rect().get_center().x) <= 0.5, "Centering may round by half a pixel for an odd button width")
+	assert(map.city_actions[3].text == "나가기" and map.city_actions[3].position.y > map.city_actions[2].position.y)
 	var original := map.unit_position
 	var current := map.current_city
 	for i in range(3):
@@ -68,6 +73,10 @@ func run() -> void:
 		if i>0: assert(map.city_actions[i].position.y > map.city_actions[i-1].position.y)
 		map.city_actions[i].pressed.emit()
 		assert(map.current_city == current and map.unit_position == original and not map.party_marker.visible)
+	map.city_actions[3].pressed.emit()
+	assert(map.current_city.is_empty() and map.party_marker.visible and not map.city_panel.visible)
+	assert(map.unit_position == original and not map.moving, "Exit button must restore the party without issuing travel")
+	map.enter_city(current)
 	mouse(map,Vector2(200,400),MOUSE_BUTTON_RIGHT)
 	assert(map.current_city == current and map.unit_position == original, "Panel clicks cannot issue map orders")
 	map.update_world_cursor(Vector2(200,400))
@@ -76,6 +85,7 @@ func run() -> void:
 	await process_frame
 	await process_frame
 	assert(map.city_panel.size == Vector2(400,684))
+	for action in map.city_actions: assert(action.size.x == 285)
 	# A battle round trip preserves the occupied city and hidden party.
 	game.enter_battle_from_world()
 	await process_frame
@@ -90,7 +100,7 @@ func run() -> void:
 	escape.pressed = true
 	map._unhandled_input(escape)
 	assert(map.current_city.is_empty() and map.party_marker.visible and not map.city_panel.visible)
-	print("PASS: placeholder button order/no effects, UI input isolation, panel resize, battle return and Escape exit")
+	print("PASS: 80%-width centered buttons, Exit button/Escape parity, placeholder button order/no effects, UI input isolation, panel resize, battle return and Escape exit")
 	# A new valid travel order cancels entry; invalid terrain preserves the valid order.
 	map.restore_travel(map.spawn_position,map.spawn_position,3)
 	map.issue_city_entry(map.cities[1])

@@ -104,10 +104,12 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.22")
+	assert(game.game_version == "0.0.23")
+	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
 	await process_frame
+	verify_ui_font(game)
 	assert(game.bottom_panel.is_ancestor_of(game.portrait))
 	assert(game.portrait.get_global_rect().get_center().is_equal_approx(game.portrait.get_parent().get_global_rect().get_center()))
 	for label in game.bottom_panel.find_children("*", "Label", true, false):
@@ -194,6 +196,7 @@ func run() -> void:
 				assert(game.portrait.texture.atlas == frames.get_frame_texture(animation, i))
 		game.create_button.pressed.emit()
 		await process_frame
+		verify_ui_font(game)
 		assert(game.world.character_frames == frame_set)
 		assert(game.world.unit_position == game.world.spawn_position)
 		assert(game.world.scale == Vector2.ONE and game.world.player_sprite.scale == Vector2.ONE)
@@ -285,3 +288,12 @@ func verify_equipment(catalog: Dictionary) -> void:
 			assert(extended.grip.x < ready.grip.x and extended.grip.y == ready.grip.y, "Thrust must extend horizontally")
 	assert(spear_count == 17)
 	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels and grips without clipping; 17 spears thrust, other melee weapons chop; stable preview crops and reference timing")
+
+func verify_ui_font(node: Node) -> void:
+	if node is Label or node is Button or node is LineEdit:
+		var font: Font = node.get_theme_font("font")
+		assert(font.resource_path == "res://assets/fonts/PFStardust3-Bold.ttf", "UI text must inherit the uploaded font")
+		for character in node.text:
+			if character.strip_edges().is_empty(): continue
+			assert(font.has_char(character.unicode_at(0)), "Missing uploaded-font glyph: " + character)
+	for child in node.get_children(): verify_ui_font(child)

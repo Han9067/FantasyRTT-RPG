@@ -359,15 +359,17 @@ func create_city_panel() -> void:
 	city_panel_title.add_theme_font_size_override("font_size",24)
 	content.add_child(city_panel_title)
 	content.add_child(HSeparator.new())
-	for caption in ["내성","길드","시장"]:
+	for caption in ["내성","길드","시장","나가기"]:
 		var action := Button.new()
 		action.text = caption
 		action.custom_minimum_size.y = 52
+		action.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		action.focus_mode = Control.FOCUS_NONE
 		action.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		content.add_child(action)
 		city_actions.append(action)
-	# The three actions are intentionally placeholders with no connected callbacks.
+		if caption == "나가기": action.pressed.connect(exit_city)
+	# The first three actions remain placeholders; only Exit has a callback.
 	layout_city_panel()
 	city_panel.hide()
 
@@ -375,6 +377,9 @@ func layout_city_panel() -> void:
 	if not is_inside_tree() or not is_instance_valid(city_panel): return
 	city_panel.position = Vector2(18,18)
 	city_panel.size = Vector2(400,maxf(1,get_viewport_rect().size.y-36))
+	var frame := city_panel.get_theme_stylebox("panel")
+	var content_width := city_panel.size.x-frame.get_content_margin(SIDE_LEFT)-frame.get_content_margin(SIDE_RIGHT)
+	for action in city_actions: action.custom_minimum_size.x = roundf(content_width*0.8)
 
 func refresh_attack_cursor() -> void:
 	# World hover owns its cursor; inherited mouse handling must not restore the arrow.

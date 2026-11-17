@@ -2,13 +2,16 @@ config_version=5
 
 [application]
 config/name="중세 전략 RPG"
-config/version="0.0.22"
+config/version="0.0.23"
 run/main_scene="res://main.tscn"
 
 [display]
 window/size/viewport_width=1280
 window/size/viewport_height=800
 window/stretch/mode="canvas_items"
+
+[gui]
+theme/custom_font="res://assets/fonts/PFStardust3-Bold.ttf"
 
 [rendering]
 renderer/rendering_method="gl_compatibility"

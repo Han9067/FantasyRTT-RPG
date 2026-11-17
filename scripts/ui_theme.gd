@@ -67,7 +67,7 @@ static func button_style(state: String, pause := false) -> StyleBoxTexture:
 static func build() -> Theme:
 	if shared != null: return shared
 	var t := Theme.new()
-	t.default_font = load("res://assets/fonts/NotoSansCJK-Regular.ttc")
+	t.default_font = load("res://assets/fonts/PFStardust3-Bold.ttf")
 	t.default_font_size = 18
 	for state in ["normal","hover","pressed","hover_pressed","disabled"]:
 		t.set_stylebox(state,"Button",button_style(state))
