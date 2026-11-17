@@ -187,7 +187,7 @@ func run() -> void:
 		probe.configure(shooter.position,shooter.position+offset,shooter,victim,true)
 		probe.advance(probe.duration*0.5)
 		var rise := -probe.sprite.position.y
-		assert(rise > 0 and rise <= 128)
+		assert(rise > 0 and rise <= 160)
 		assert(rise < maxf(48.0,offset.length()*0.65)*0.4, "Arc must be substantially lower than the former steep flight")
 		for fraction in [0.1,0.5,0.9]:
 			probe.elapsed = probe.duration*(fraction-0.001)
@@ -204,7 +204,7 @@ func run() -> void:
 		if offset == Vector2(0,-640):
 			assert(Vector2.LEFT.rotated(probe.sprite.rotation).y < 0, "Do not force downward orientation against the actual path")
 		probe.free()
-	# At maximum range retain the previous 128px arc / horizontal launch angle.
+	# At maximum range retain the raised 160px arc / horizontal launch angle.
 	# Nearer shots must become progressively flatter, without the old minimum loft.
 	var previous_angle := -1.0
 	for distance in [40.0,80.0,160.0,320.0,480.0,640.0]:
@@ -214,12 +214,29 @@ func run() -> void:
 		var launch_angle := absf(launch_tip.angle())
 		assert(launch_angle > previous_angle, "Closer shots must use a smaller launch angle")
 		previous_angle = launch_angle
-		if distance <= 160.0: assert(launch_angle < deg_to_rad(12))
+		if distance <= 160.0: assert(launch_angle < deg_to_rad(15))
 		if distance == 640.0:
-			assert(is_equal_approx(distance_probe.arc_height,128.0))
-			assert(is_equal_approx(launch_angle,atan(0.8)))
+			assert(is_equal_approx(distance_probe.arc_height,160.0))
+			assert(absf(launch_angle-atan(1.0)) < 0.005)
 		distance_probe.free()
-	print("PASS: maximum-range arc preserved; progressively flatter launch angles from 640px to 40px")
+	print("PASS: raised maximum-range arc; progressively flatter launch angles from 640px to 40px")
+	# Measure visual travel, including the arc, rather than only the ground projection.
+	for offset in [Vector2(20,0),Vector2(80,0),Vector2(160,0),Vector2(320,0),Vector2(640,0),Vector2(0,-640),Vector2(0,640),Vector2(400,-400)]:
+		var speed_probe := BattleArrow.new()
+		speed_probe.configure(shooter.position,shooter.position+offset,shooter,victim,true,Ranged.RANGE)
+		assert(is_equal_approx(speed_probe.duration,BattleArrow.flight_time(speed_probe.launch,speed_probe.landing,Ranged.RANGE)))
+		var sample_delta := speed_probe.duration/200.0
+		var traveled_length := 0.0
+		for sample in range(200):
+			var visual_before := speed_probe.position+speed_probe.sprite.position
+			speed_probe.advance(sample_delta)
+			var traveled := visual_before.distance_to(speed_probe.position+speed_probe.sprite.position)
+			traveled_length += traveled
+			assert(absf(traveled/sample_delta-BattleArrow.FLIGHT_SPEED) < 2.0, "Visible arrow speed must stay constant near/far and throughout the arc")
+		assert(absf(traveled_length/speed_probe.duration-BattleArrow.FLIGHT_SPEED) < 0.5)
+		assert(speed_probe.position.distance_to(speed_probe.landing) < 0.01)
+		speed_probe.free()
+	print("PASS: 480px/s visual arc travel at short/long distances and all directions; shared flight times")
 	var endpoint := arrow.landing
 	map.combat.ranged.step(arrow.duration*0.5)
 	assert(arrow.landing == endpoint and arrow.sprite.position.y < -10 and victim.hp == 10)

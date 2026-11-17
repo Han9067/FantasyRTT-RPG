@@ -52,7 +52,7 @@ func predicted_aim(start: Vector2, target: BattleUnit) -> Vector2:
 	# The predicted distance changes flight time. Iterate the same timing rule
 	# used by the projectile, then freeze this estimate at release (never home).
 	for iteration in range(10):
-		var travel := target.velocity * Arrow.flight_time(start, point)
+		var travel := target.velocity * Arrow.flight_time(start, point, RANGE)
 		travel = travel.limit_length(target.position.distance_to(target.target))
 		point = map.clamp_point(target.position+travel) + BattleUnit.BODY_CENTER_FROM_FEET
 	return point

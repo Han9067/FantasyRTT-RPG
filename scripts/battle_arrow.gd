@@ -1,6 +1,9 @@
 class_name BattleArrow
 extends Node2D
-## A ballistic path stores its destination once; no target tracking in flight.
+## A fixed parabola traversed at constant world-pixel speed; never tracks its target.
+const FLIGHT_SPEED := 480.0
+const MAX_ARC_HEIGHT := 160.0
+const PATH_SEGMENTS := 128
 var launch := Vector2.ZERO
 var landing := Vector2.ZERO
 var aim_snapshot := Vector2.ZERO
@@ -13,10 +16,25 @@ var accurate := false
 var shooter: BattleUnit
 var intended: BattleUnit
 var sprite: Sprite2D
+var path_points := PackedVector2Array()
+var path_lengths := PackedFloat64Array()
 static var arrow_texture: Texture2D
 
-static func flight_time(from: Vector2, to: Vector2) -> float:
-	return clampf(from.distance_to(to)/240.0, 0.35, 1.5)
+static func path_profile(from: Vector2, to: Vector2, shot_range := 640.0) -> Dictionary:
+	var range_fraction := clampf(from.distance_to(to)/maxf(shot_range,1.0),0.0,1.0)
+	var height := MAX_ARC_HEIGHT*range_fraction*range_fraction
+	var points := PackedVector2Array([Vector2.ZERO])
+	var lengths := PackedFloat64Array([0.0])
+	for i in range(1,PATH_SEGMENTS+1):
+		var t := float(i)/PATH_SEGMENTS
+		var point := (to-from)*t + Vector2(0,-4.0*height*t*(1.0-t))
+		lengths.append(lengths[-1]+points[-1].distance_to(point))
+		points.append(point)
+	return {"height":height,"points":points,"lengths":lengths}
+
+static func flight_time(from: Vector2, to: Vector2, shot_range := 640.0) -> float:
+	var profile := path_profile(from,to,shot_range)
+	return maxf(profile.lengths[-1]/FLIGHT_SPEED,0.000001)
 
 func configure(from: Vector2, to: Vector2, source: BattleUnit, target: BattleUnit, hit: bool, shot_range := 640.0) -> void:
 	launch = from
@@ -27,11 +45,11 @@ func configure(from: Vector2, to: Vector2, source: BattleUnit, target: BattleUni
 	damage = source.attack_damage
 	allied = source.allied
 	accurate = hit
-	duration = flight_time(from, to)
-	# Preserve the current maximum-range arc, but flatten the launch angle nearby.
-	# Quadratic height makes the added slope decrease with distance; no minimum loft.
-	var range_fraction := clampf(from.distance_to(to)/maxf(shot_range,1.0), 0.0, 1.0)
-	arc_height = 128.0*range_fraction*range_fraction
+	var profile := path_profile(from,to,shot_range)
+	arc_height = profile.height
+	path_points = profile.points
+	path_lengths = profile.lengths
+	duration = maxf(path_lengths[-1]/FLIGHT_SPEED,0.000001)
 	if arrow_texture == null:
 		arrow_texture = ImageTexture.create_from_image(CharacterArt.part_image(CharacterArt.data().arrow, 0))
 	sprite = Sprite2D.new()
@@ -43,11 +61,15 @@ func configure(from: Vector2, to: Vector2, source: BattleUnit, target: BattleUni
 	update_pose()
 
 func update_pose() -> void:
-	var t := clampf(elapsed/duration, 0.0, 1.0)
-	position = launch.lerp(landing, t)
-	sprite.position = Vector2(0, -4.0*arc_height*t*(1.0-t))
-	var tangent := landing-launch+Vector2(0,-4.0*arc_height*(1.0-2.0*t))
-	# arrow_01 points left in its untouched source PNG.
+	var traveled := clampf(elapsed*FLIGHT_SPEED,0.0,path_lengths[-1])
+	var index := clampi(path_lengths.bsearch(traveled),1,PATH_SEGMENTS)
+	var segment_length := path_lengths[index]-path_lengths[index-1]
+	var fraction := (traveled-path_lengths[index-1])/segment_length if segment_length > 0.0 else 1.0
+	var t := (index-1+fraction)/PATH_SEGMENTS
+	position = launch.lerp(landing,t)
+	sprite.position = path_points[index-1].lerp(path_points[index],fraction)-(landing-launch)*t
+	# arrow_01 points left in its untouched source PNG. Follow the actual segment.
+	var tangent := path_points[index]-path_points[index-1]
 	sprite.rotation = tangent.angle()+PI
 
 func advance(delta: float) -> bool:

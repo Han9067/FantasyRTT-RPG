@@ -29,6 +29,15 @@ func run() -> void:
 		assert(roster.counts[key].horizontal_alignment == HORIZONTAL_ALIGNMENT_CENTER)
 		var portrait: TextureRect = card.get_child(0).get_child(0).get_child(0)
 		assert(portrait.texture.atlas == map.combat.group(key)[0].sprite_frames.get_frame_texture(&"idle", 0))
+	assert(map.selected_archer_range().is_empty())
+	map.selection.assign(map.hero_group+map.infantry)
+	map.refresh_selection()
+	assert(map.selected_archer_range().is_empty(), "Only selected archers display firing range")
+	map.selection.assign(map.archers)
+	map.refresh_selection()
+	var range_area := map.selected_archer_range()
+	assert(range_area.radius == 640.0)
+	assert(range_area.center == BattleMap.Combat.center(map.archers))
 	map.selection.assign(map.friendlies)
 	map.refresh_selection()
 	assert(map.standards.size() == 2 and not map.standards.has("hero"))
@@ -56,6 +65,7 @@ func run() -> void:
 	map.refresh_selection()
 	assert(not map.standard.visible and not map.standards.archers.visible)
 	assert(map.destination_slots() == slots, "Orders retain their footprints after deselection")
+	assert(map.selected_archer_range().is_empty())
 	map.selection.assign(map.friendlies)
 	map.refresh_selection()
 	var event := InputEventMouseButton.new()
@@ -71,6 +81,7 @@ func run() -> void:
 	assert(roster.counts.infantry.text == "19" and map.destination_slots().size() == 40)
 	for member in BattleMap.Combat.living(map.friendlies): assert(map.destination_slots().has(member.target))
 	tick(map, 8)
+	assert(map.selected_archer_range().center == BattleMap.Combat.center(map.archers), "Selected range follows the actual formation during movement")
 	assert(map.destination_slots().is_empty() and map.movement_guides().is_empty(), "Footprints and routes disappear together at arrival")
 	for key: String in map.standards:
 		assert(map.standards[key].position.is_equal_approx(BattleMap.Combat.center(BattleMap.Combat.living(map.combat.group(key))) + BattleMap.BODY_CENTER_FROM_FEET))
@@ -81,6 +92,7 @@ func run() -> void:
 	assert(roster.counts.archers.text == "" and roster.counts.hero.text == "")
 	assert(roster.cards.archers.visible and not map.standards.archers.visible)
 	assert(map.standard.visible)
+	assert(map.selected_archer_range().is_empty(), "Annihilated archers have no range circle")
 	root.size = Vector2i(960,720)
 	await process_frame
 	await process_frame
@@ -92,6 +104,7 @@ func run() -> void:
 	assert(roster.position == screen_position)
 	print("PASS: three portrait/count cards, live casualties and blank zero counts, tall split panels, HUD input/resize/camera isolation")
 	print("PASS: simultaneous infantry/archer flags follow each formation, pause/deselect/death cleanup, no hero flag")
+	print("PASS: archer-only selected 640px range circle, mixed selection, moving center and annihilation cleanup")
 	print("PASS: actual destination slots for 41 allies, paused/replacement orders, casualties, deselection and arrival cleanup")
 	game.show_world()
 	await process_frame

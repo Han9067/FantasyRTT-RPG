@@ -594,7 +594,17 @@ func destination_slots() -> Array[Vector2]:
 		for unit in members: slots.append(unit.target)
 	return slots
 
+func selected_archer_range() -> Dictionary:
+	var members: Array[BattleUnit] = Combat.living(archers)
+	if members.is_empty() or not members.any(func(unit: BattleUnit) -> bool: return selection.has(unit)): return {}
+	return {"center":Combat.center(members),"radius":combat.ranged.RANGE}
+
 func _draw() -> void:
+	# World-space range indicator stays under soldiers, flags and the screen-space HUD.
+	var firing_range := selected_archer_range()
+	if not firing_range.is_empty():
+		draw_circle(firing_range.center,firing_range.radius,Color(1,1,1,0.06))
+		draw_arc(firing_range.center,firing_range.radius,0,TAU,192,Color(1,1,1,0.45),1.5/zoom_level)
 	# Native 20px footprints share the actual movement goals, including paused orders.
 	for slot in destination_slots():
 		draw_circle(slot, 10.0, Color(0.20, 0.53, 1.0, 0.30))
