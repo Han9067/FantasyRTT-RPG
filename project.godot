@@ -1,8 +1,8 @@
 config_version=5
 
 [application]
-config/name="분열의 시대"
-config/version="0.0.13"
+config/name="중세 전략 RPG"
+config/version="0.0.14"
 run/main_scene="res://main.tscn"
 
 [display]

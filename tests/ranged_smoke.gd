@@ -113,6 +113,17 @@ func run() -> void:
 	victim.target = victim.position+Vector2(1,0) # Explicit move prevents auto retaliation in this fixture.
 	shooter.accuracy = 1.0
 	var arrow: BattleArrow = map.combat.ranged.fire(shooter,victim)
+	# The arrow follows its tangent and finishes with the tip pointing down,
+	# including long horizontal shots and shots toward the top of the map.
+	for offset in [Vector2(640,0),Vector2(-640,0),Vector2(0,-640),Vector2(0,640),Vector2(400,-400)]:
+		var probe := BattleArrow.new()
+		probe.configure(shooter.position,shooter.position+offset,shooter,victim,true)
+		probe.advance(probe.duration*0.5)
+		assert(probe.sprite.position.y <= -48)
+		probe.advance(probe.duration)
+		assert(Vector2.LEFT.rotated(probe.sprite.rotation).y > 0.8, "Arrow tip must descend steeply at impact")
+		assert(probe.position.is_equal_approx(probe.landing))
+		probe.free()
 	var endpoint := arrow.landing
 	map.combat.ranged.step(arrow.duration*0.5)
 	assert(arrow.landing == endpoint and arrow.sprite.position.y < -10 and victim.hp == 10)
@@ -134,7 +145,7 @@ func run() -> void:
 	map.combat.ranged.step(arrow.duration)
 	assert(victim.hp == 2, "Already-fired arrows survive the shooter's death")
 	print("PASS: parabolic non-homing flight, movement dodge, damage only at impact, missed shots and posthumous flight")
-	# The firing loop has a five-second cadence; keep stationary durable targets.
+	# The firing loop has a four-second cadence; keep stationary durable targets.
 	map = fresh()
 	await process_frame
 	var shift := Combat.center(map.archers)+Vector2(230,0)-Combat.center(map.enemies)
@@ -153,7 +164,7 @@ func run() -> void:
 			count = map.archers[0].shots_fired
 			releases.append(i/60.0)
 	assert(releases.size() == 3)
-	for i in range(1,releases.size()): assert(absf(releases[i]-releases[i-1]-5.0) <= 0.02)
+	for i in range(1,releases.size()): assert(absf(releases[i]-releases[i-1]-4.0) <= 0.02)
 	for unit in map.archers: assert(unit.shots_fired == 3)
 	# Check the configured Bernoulli rolls independently of target movement.
 	for sample: BattleUnit in [map.archers[0],map.infantry[0]]:
@@ -161,7 +172,7 @@ func run() -> void:
 		var hits := 0
 		for i in range(10000): hits += int(sample.roll_hit())
 		assert(absf(hits/10000.0-sample.accuracy) < 0.02)
-	print("PASS: 5-second cadence and seeded 60%/75% hit-roll distributions")
+	print("PASS: 4-second cadence and seeded 60%/75% hit-roll distributions")
 	# A melee miss still animates but applies no damage; a hit applies four.
 	map = fresh()
 	await process_frame

@@ -40,7 +40,7 @@ func run() -> void:
 	assert(map.character_frames == game.character_frames and map.character_name == "제국의 여행자")
 	assert(map.selected and not map.moving and map.player_sprite.scale == Vector2.ONE)
 	assert(map.player_sprite.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2(3,3)))
-	assert(map.zoom_level == 3 and "300%" in game.world_status.text)
+	assert(map.zoom_level == 3)
 	# One world-only token: fixed original layers, clipped selected character, native pixels.
 	var marker: WorldPartyMarker = map.party_marker
 	assert(marker.get_child_count() == 3)
@@ -86,7 +86,6 @@ func run() -> void:
 	map.player_sprite.flip_h = false
 	map.update_sprite()
 	assert(game.battle_button.get_global_rect().get_center().x == 640, "Battle link must be centered")
-	assert(game.world_status.get_theme_font("font") == game.theme.default_font)
 	for city in map.cities:
 		assert(city["size"] == [96.0,96.0])
 		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(Vector2(city.position[0]-48,city.position[1]-48),Vector2(96,96))))
@@ -94,9 +93,32 @@ func run() -> void:
 		var city: Dictionary = map.cities[i]
 		assert(city.name == str(i+1), "City names must be consecutive numbers")
 		assert(Vector2(city.position[0],city.position[1]) == Vector2(city.tile_position[0]*32+48,city.tile_position[1]*32+48))
-		var label: Label = map.get_node("CityLabel_"+city.name)
-		assert(label.text == str(i+1))
-		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(label.position,label.size)), "Edge city label clipped")
+		assert(not map.has_node("CityLabel_"+city.name))
+	# Hover follows camera/zoom and leaves the newly cleared bottom area playable.
+	map.set_process(false)
+	for zoom in [1.0,2.0,3.0]:
+		map.zoom_level = zoom
+		for city: Dictionary in map.cities:
+			map.camera.position = Vector2(city.position[0],city.position[1])
+			map.clamp_camera()
+			var city_point := map.world_to_screen(Vector2(city.position[0],city.position[1]))
+			map.update_city_hover(city_point)
+			assert(map.city_popup.visible and map.city_title.text == "도시 "+city.name)
+			assert(Rect2(Vector2.ZERO,map.viewport_size).encloses(map.city_popup.get_global_rect()))
+			assert(map.city_popup.mouse_filter == Control.MOUSE_FILTER_IGNORE)
+			map.update_city_hover(city_point,true)
+			assert(not map.city_popup.visible)
+	map.zoom_level = 3
+	map.camera.position = Vector2(1328,592)-Vector2(620,380)/3
+	map.clamp_camera()
+	var edge_hover := map.world_to_screen(Vector2(1328,592))
+	map.update_city_hover(edge_hover)
+	assert(map.city_popup.visible and not map.city_popup.get_global_rect().has_point(edge_hover))
+	assert(Rect2(Vector2.ZERO,map.viewport_size).encloses(map.city_popup.get_global_rect()))
+	map.update_city_hover(Vector2(640,42))
+	assert(not map.city_popup.visible, "HUD must not trigger city hover")
+	assert(map.can_interact_at(Vector2(200,790)), "Removed bottom panel must not leave a dead input strip")
+	map.restore_travel(map.spawn_position,map.spawn_position,3)
 	# Cursor and orders share the exact same blocked/reachable predicate.
 	var river := Vector2(1264,624)
 	var bridge := Vector2(1296,688)
@@ -191,7 +213,6 @@ func run() -> void:
 	await process_frame
 	inside(map)
 	assert(is_equal_approx(map.zoom_level,3.375), "Oversized viewport exposed terrain boundary")
-	assert(game.world_status.text.ends_with("337%"), "Fit zoom must also update the HUD")
 	root.size = Vector2i(960,720)
 	await process_frame
 	await process_frame
@@ -281,5 +302,5 @@ func run() -> void:
 	game.create_button.pressed.emit()
 	await process_frame
 	assert(game.world.unit_position == game.world.spawn_position and game.world.zoom_level == 3)
-	print("PASS: creation -> world, 4 uploaded native 96px Tiled cities, persistent selection, fixed idle-first-frame portrait during travel, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
+	print("PASS: creation -> world, 4 native cities with bounded camera-aware hover cards, cleared HUD, persistent selection, fixed idle-first-frame portrait during travel, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
 	quit()

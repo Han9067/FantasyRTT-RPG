@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.13")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.14")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = Color("c9ab70")
@@ -20,7 +20,6 @@ var current_screen := ""
 var battle: BattleMap
 var battle_hud: CanvasLayer
 var world: WorldMap
-var world_status: Label
 var world_overview: Control
 var battle_button: Button
 var travel_state: Dictionary = {}
@@ -137,7 +136,7 @@ func show_menu() -> void:
 	overline.modulate = GOLD
 	overline.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	screen.add_child(overline)
-	var title := label_text("분열의 시대", 64)
+	var title := label_text("중세 전략 RPG", 64)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	screen.add_child(title)
 	var subtitle := label_text("무너진 제국, 당신의 깃발 아래 다시 하나로.", 20)
@@ -394,12 +393,6 @@ func show_world() -> void:
 	var header := Control.new()
 	header.custom_minimum_size.y = 50
 	screen.add_child(header)
-	var left := label_text("분열된 제국  /  월드맵",20)
-	header.add_child(left)
-	left.anchor_right = 0.33
-	left.offset_top = 10
-	left.offset_bottom = 42
-	left.clip_text = true
 	battle_button = button("전투맵 이동", enter_battle_from_world)
 	header.add_child(battle_button)
 	battle_button.focus_mode = Control.FOCUS_NONE
@@ -417,25 +410,6 @@ func show_world() -> void:
 	back.offset_right = 0
 	back.offset_bottom = 48
 	spacer(screen)
-	var info := panel()
-	var style := info.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
-	style.set_content_margin_all(10)
-	style.bg_color = Color("252e30e8")
-	info.add_theme_stylebox_override("panel",style)
-	screen.add_child(info)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation",12)
-	info.add_child(row)
-	world_status = label_text("",14)
-	world_status.custom_minimum_size.x = 215
-	world_status.clip_text = true
-	row.add_child(world_status)
-	var instructions := label_text("우클릭 : 이동   방향키/WASD : 카메라   휠 : 확대",13)
-	instructions.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(instructions)
-	row.add_child(label_text("버전 : " + game_version,13))
-	world.status_changed.connect(refresh_world_status)
-	refresh_world_status()
 	var overview := preload("res://scripts/world_overview.gd").new()
 	overview.world = world
 	world_overview = overview
@@ -446,12 +420,8 @@ func show_world() -> void:
 	overview.offset_right = -24
 	overview.offset_top = 92
 	overview.offset_bottom = 260
+	world.hud_controls.assign([battle_button,back,overview])
 	ignore_battle_overlay_input(screen)
-
-func refresh_world_status() -> void:
-	if not is_instance_valid(world_status) or not is_instance_valid(world): return
-	world_status.text = world.character_name + (" · 이동 중" if world.moving else " · 대기") + " · %d%%" % int(world.zoom_level*100)
-	world_status.tooltip_text = world_status.text
 
 func enter_battle_from_world() -> void:
 	if is_instance_valid(world):

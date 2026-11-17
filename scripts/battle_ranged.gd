@@ -1,7 +1,7 @@
 extends RefCounted
 const Arrow = preload("res://scripts/battle_arrow.gd")
 const RANGE := 640.0
-const INTERVAL := 5.0
+const INTERVAL := 4.0
 const RELEASE_TIME := 0.7
 const SHOT_DURATION := 1.2
 var map: Node2D

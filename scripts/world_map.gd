@@ -14,6 +14,10 @@ var route_points := PackedVector2Array()
 var route_index := 0
 var blocked_cursor := false
 var pointer_inside := true
+var hud_controls: Array[Control] = []
+var city_popup: PanelContainer
+var city_title: Label
+var hovered_city: Dictionary = {}
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -33,23 +37,7 @@ func _ready() -> void:
 		tile.position = Vector2(chunk.position[0],chunk.position[1])
 		terrain.add_child(tile)
 	cities = layout.cities
-	for city in cities:
-		var title := Label.new()
-		title.name = "CityLabel_" + city.name
-		title.text = city.name
-		var half_height: float = city["size"][1] * 0.5
-		var label_y: float = city.position[1]+half_height+3
-		if label_y+24 > map_size.y: label_y = city.position[1]-half_height-26
-		title.position = Vector2(clampf(city.position[0]-32,0,map_size.x-64),label_y)
-		title.size = Vector2(64,24)
-		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		title.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		title.add_theme_font_override("font",load("res://assets/fonts/NotoSansCJK-Regular.ttc"))
-		title.add_theme_font_size_override("font_size",16)
-		title.add_theme_color_override("font_color",Color("f2e3ba"))
-		title.add_theme_color_override("font_outline_color",Color("283a2b"))
-		title.add_theme_constant_override("outline_size",4)
-		add_child(title)
+	create_city_popup()
 	party_marker = PartyMarker.new()
 	party_marker.name = "PartyMarker"
 	party_marker.setup(character_appearance)
@@ -76,7 +64,7 @@ func playable_rect() -> Rect2:
 	return Rect2(Vector2(18,32),map_size-Vector2(36,50))
 
 func screen_playable_rect() -> Rect2:
-	return Rect2(Vector2(0,96),Vector2(viewport_size.x,maxf(1,viewport_size.y-168)))
+	return Rect2(Vector2.ZERO,viewport_size)
 
 func update_sprite() -> void:
 	party_marker.place(unit_position)
@@ -131,12 +119,13 @@ static func make_blocked_cursor() -> ImageTexture:
 	return ImageTexture.create_from_image(image)
 
 func cursor_blocked_at(screen_point: Vector2) -> bool:
-	return screen_playable_rect().has_point(screen_point) and not can_move_to(screen_to_world(screen_point))
+	return can_interact_at(screen_point) and not can_move_to(screen_to_world(screen_point))
 
 func _process(_delta: float) -> void:
 	var point := get_viewport().get_mouse_position()
 	var hovered := get_viewport().gui_get_hovered_control()
 	var over_ui := is_instance_valid(hovered) and hovered.mouse_filter!=Control.MOUSE_FILTER_IGNORE
+	update_city_hover(point,over_ui)
 	var blocked := pointer_inside and not over_ui and cursor_blocked_at(point)
 	if blocked!=blocked_cursor:
 		blocked_cursor = blocked
@@ -146,6 +135,8 @@ func _notification(what: int) -> void:
 	super._notification(what)
 	if what in [NOTIFICATION_WM_MOUSE_EXIT,NOTIFICATION_WM_WINDOW_FOCUS_OUT]:
 		pointer_inside = false
+		if is_instance_valid(city_popup): city_popup.hide()
+		hovered_city = {}
 		blocked_cursor = false
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	elif what in [NOTIFICATION_WM_MOUSE_ENTER,NOTIFICATION_WM_WINDOW_FOCUS_IN]:
@@ -179,6 +170,7 @@ func pan_camera(direction: Vector2, delta: float) -> void:
 	clamp_camera()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouse and not can_interact_at(event.position): return
 	if event is InputEventKey:
 		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
 		if code in [KEY_LEFT,KEY_RIGHT,KEY_UP,KEY_DOWN]:
@@ -199,3 +191,74 @@ func restore_travel(position_in_world: Vector2, camera_position: Vector2, zoom: 
 	camera.position = camera_position
 	clamp_camera()
 	update_sprite()
+
+func can_interact_at(point: Vector2) -> bool:
+	if not screen_playable_rect().has_point(point): return false
+	for control in hud_controls:
+		if is_instance_valid(control) and control.is_visible_in_tree() and control.get_global_rect().has_point(point): return false
+	return true
+
+func create_city_popup() -> void:
+	var overlay := CanvasLayer.new()
+	overlay.layer = 11
+	add_child(overlay)
+	city_popup = PanelContainer.new()
+	city_popup.name = "CityPopup"
+	city_popup.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	city_popup.custom_minimum_size = Vector2(240,112)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("252e30f5")
+	style.border_color = Color("ab9868")
+	style.set_border_width_all(1)
+	style.set_content_margin_all(14)
+	city_popup.add_theme_stylebox_override("panel",style)
+	var popup_theme := Theme.new()
+	popup_theme.default_font = load("res://assets/fonts/NotoSansCJK-Regular.ttc")
+	popup_theme.default_font_size = 16
+	city_popup.theme = popup_theme
+	overlay.add_child(city_popup)
+	var content := VBoxContainer.new()
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_theme_constant_override("separation",10)
+	city_popup.add_child(content)
+	city_title = Label.new()
+	city_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	city_title.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	city_title.add_theme_color_override("font_color",Color("f2e3ba"))
+	content.add_child(city_title)
+	var rule := HSeparator.new()
+	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var line := StyleBoxLine.new()
+	line.color = Color("ab9868")
+	line.thickness = 1
+	rule.add_theme_stylebox_override("separator",line)
+	content.add_child(rule)
+	var lord := Label.new()
+	lord.name = "Lord"
+	lord.text = "영주 : 없음"
+	lord.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	lord.add_theme_color_override("font_color",Color("eee9dd"))
+	content.add_child(lord)
+	city_popup.hide()
+
+func update_city_hover(screen_point: Vector2, over_ui := false) -> void:
+	hovered_city = {}
+	if pointer_inside and not over_ui and can_interact_at(screen_point):
+		var point := screen_to_world(screen_point)
+		for city: Dictionary in cities:
+			var dimensions := Vector2(city["size"][0],city["size"][1])
+			var center := Vector2(city.position[0],city.position[1])
+			if Rect2(center-dimensions*0.5,dimensions).has_point(point):
+				hovered_city = city
+				break
+	if hovered_city.is_empty():
+		city_popup.hide()
+		return
+	var city_name: String = hovered_city.name
+	city_title.text = "도시 " + city_name if city_name.is_valid_int() else city_name
+	city_popup.size = city_popup.get_combined_minimum_size()
+	var position := screen_point+Vector2(18,18)
+	if position.x+city_popup.size.x > viewport_size.x-8: position.x = screen_point.x-city_popup.size.x-18
+	if position.y+city_popup.size.y > viewport_size.y-8: position.y = screen_point.y-city_popup.size.y-18
+	city_popup.position = position.clamp(Vector2(8,8),(viewport_size-city_popup.size-Vector2(8,8)).max(Vector2(8,8)))
+	city_popup.show()
