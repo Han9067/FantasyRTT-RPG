@@ -113,16 +113,29 @@ func run() -> void:
 	victim.target = victim.position+Vector2(1,0) # Explicit move prevents auto retaliation in this fixture.
 	shooter.accuracy = 1.0
 	var arrow: BattleArrow = map.combat.ranged.fire(shooter,victim)
-	# The arrow follows its tangent and finishes with the tip pointing down,
-	# including long horizontal shots and shots toward the top of the map.
-	for offset in [Vector2(640,0),Vector2(-640,0),Vector2(0,-640),Vector2(0,640),Vector2(400,-400)]:
+	# Keep a visible but low arc at short/long distances in every firing direction.
+	# Compare orientation to actual neighboring positions instead of forcing a down-facing tip.
+	for offset in [Vector2(40,0),Vector2(320,0),Vector2(640,0),Vector2(-640,0),Vector2(0,-640),Vector2(0,640),Vector2(400,-400)]:
 		var probe := BattleArrow.new()
 		probe.configure(shooter.position,shooter.position+offset,shooter,victim,true)
 		probe.advance(probe.duration*0.5)
-		assert(probe.sprite.position.y <= -48)
+		var rise := -probe.sprite.position.y
+		assert(rise >= 18 and rise <= 128)
+		assert(rise < maxf(48.0,offset.length()*0.65)*0.4, "Arc must be substantially lower than the former steep flight")
+		for fraction in [0.1,0.5,0.9]:
+			probe.elapsed = probe.duration*(fraction-0.001)
+			probe.update_pose()
+			var path_before := probe.position+probe.sprite.position
+			probe.elapsed = probe.duration*(fraction+0.001)
+			probe.update_pose()
+			var path_after := probe.position+probe.sprite.position
+			probe.elapsed = probe.duration*fraction
+			probe.update_pose()
+			assert(Vector2.LEFT.rotated(probe.sprite.rotation).dot((path_after-path_before).normalized()) > 0.999)
 		probe.advance(probe.duration)
-		assert(Vector2.LEFT.rotated(probe.sprite.rotation).y > 0.8, "Arrow tip must descend steeply at impact")
-		assert(probe.position.is_equal_approx(probe.landing))
+		assert(probe.position.is_equal_approx(probe.landing) and probe.sprite.position.is_zero_approx())
+		if offset == Vector2(0,-640):
+			assert(Vector2.LEFT.rotated(probe.sprite.rotation).y < 0, "Do not force downward orientation against the actual path")
 		probe.free()
 	var endpoint := arrow.landing
 	map.combat.ranged.step(arrow.duration*0.5)

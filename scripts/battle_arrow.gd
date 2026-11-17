@@ -25,8 +25,8 @@ func configure(from: Vector2, to: Vector2, source: BattleUnit, target: BattleUni
 	allied = source.allied
 	accurate = hit
 	duration = clampf(from.distance_to(to)/240.0, 0.35, 1.5)
-	# Scale the arch with distance so even long shots descend tip-first.
-	arc_height = maxf(48.0, from.distance_to(to)*0.65)
+	# A modest, capped arc takes priority over forcing a downward-facing impact.
+	arc_height = clampf(from.distance_to(to)*0.22, 18.0, 128.0)
 	if arrow_texture == null:
 		arrow_texture = ImageTexture.create_from_image(CharacterArt.part_image(CharacterArt.data().arrow, 0))
 	sprite = Sprite2D.new()
