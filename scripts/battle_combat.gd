@@ -207,7 +207,9 @@ func can_strike_from(unit: BattleUnit, point: Vector2, enemy: BattleUnit) -> boo
 	if point.distance_to(enemy.position) > REACH: return false
 	var ray := Rect2(unit.contact_box().get_center()+point-unit.position, Vector2(0.1, 0.1))
 	var motion := enemy.position - point
+	var nearby := Rect2(point,motion).abs().grow(3.0)
 	for other in all_units():
+		if not nearby.has_point(other.position): continue
 		if other == unit or other == enemy or not other.alive(): continue
 		# Every living body blocks an attack ray, including participating comrades.
 		if map.contact_fraction(ray, motion, other.contact_box()) < 1.0: return false
@@ -286,12 +288,18 @@ func open_contact_slot(unit: BattleUnit, following: Vector2, axis: Vector2, oppo
 			for slot in claimed:
 				if space.intersects(Rect2(slot-Vector2.ONE*PERSONAL_SPACE*0.5, Vector2.ONE*PERSONAL_SPACE)):
 					free = false
+					break
+			if not free: continue
+			var nearby := Rect2(unit.position,point-unit.position).abs().grow(PERSONAL_SPACE+0.001)
 			for other in all_units():
+				if not nearby.has_point(other.position): continue
 				if other == unit or not other.alive(): continue
 				if space.intersects(Rect2(other.position-Vector2.ONE*PERSONAL_SPACE*0.5, Vector2.ONE*PERSONAL_SPACE)):
 					free = false
+					break
 				if map.contact_fraction(unit.contact_box(), point-unit.position, other.contact_box()) < 1.0:
 					free = false
+					break
 			if not free: continue
 			for enemy in opponents:
 				if not can_strike_from(unit, point, enemy): continue
@@ -380,16 +388,19 @@ func face(unit: BattleUnit, point: Vector2) -> void:
 
 func safe_motion(unit: BattleUnit, motion: Vector2, keep_ranks := false) -> Vector2:
 	var fraction := 1.0
+	var nearby := Rect2(unit.position,motion).abs().grow(PERSONAL_SPACE+0.001)
+	var contact := unit.contact_box()
+	var size := Vector2.ONE*PERSONAL_SPACE
+	var body := Rect2(unit.position-size*0.5,size)
+	var key := key_for(unit)
 	for other in all_units():
-		if other != unit and other.alive():
-			fraction = minf(fraction, map.contact_fraction(unit.contact_box(), motion, other.contact_box()))
-			if keep_ranks and key_for(other) == key_for(unit):
-				var size := Vector2.ONE * PERSONAL_SPACE
-				var body := Rect2(unit.position - size * 0.5, size)
-				var obstacle := Rect2(other.position - size * 0.5, size)
-				# Existing slight deformation can separate without becoming trapped.
-				if not body.intersects(obstacle):
-					fraction = minf(fraction, map.contact_fraction(body, motion, obstacle))
+		if other == unit or not other.alive() or not nearby.has_point(other.position): continue
+		fraction = minf(fraction,map.contact_fraction(contact,motion,other.contact_box()))
+		if keep_ranks and key_for(other) == key:
+			var obstacle := Rect2(other.position-size*0.5,size)
+			# Existing slight deformation can separate without becoming trapped.
+			if not body.intersects(obstacle):
+				fraction = minf(fraction,map.contact_fraction(body,motion,obstacle))
 	return motion * maxf(0.0, fraction - 0.0001) if fraction < 1.0 else motion
 
 func advance_unit(unit: BattleUnit, delta: float) -> void:

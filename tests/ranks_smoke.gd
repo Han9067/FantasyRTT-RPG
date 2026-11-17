@@ -21,7 +21,7 @@ func advance(map: BattleMap, seconds: float) -> void:
 		var before: Dictionary = {}
 		for unit in Combat.living(map.combat.all_units()):
 			var key: String = map.combat.key_for(unit)
-			if map.combat.engaged(key): before[unit] = [unit.position, map.combat.orders[key].axis]
+			if key != "archers" and map.combat.engaged(key): before[unit] = [unit.position, map.combat.orders[key].axis]
 		map._physics_process(1.0 / 60.0)
 		for unit: BattleUnit in before:
 			var key: String = map.combat.key_for(unit)

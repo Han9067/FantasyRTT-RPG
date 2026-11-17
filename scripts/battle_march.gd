@@ -2,6 +2,11 @@ extends RefCounted
 ## Local passage around idle allies; each soldier retains its destination slot.
 const CLEARANCE := 6.0
 var map: Node2D
+var simulation_time := 0.0
+var failed_searches: Dictionary = {}
+
+func begin_frame(delta: float) -> void:
+	simulation_time += delta
 
 func _init(battle: Node2D) -> void:
 	map = battle
@@ -15,23 +20,29 @@ func idle_allies(others: Array[BattleUnit]) -> Array[BattleUnit]:
 
 func clear_line(start: Vector2, finish: Vector2, obstacles: Array[BattleUnit], clearance := CLEARANCE) -> bool:
 	var point := Rect2(start, Vector2(0.00001, 0.00001))
+	var nearby := Rect2(start,finish-start).abs().grow(clearance+0.0001)
 	for obstacle in obstacles:
+		if not nearby.has_point(obstacle.position): continue
 		var box := Rect2(obstacle.position - Vector2.ONE * clearance, Vector2.ONE * clearance * 2.0)
 		if map.contact_fraction(point, finish - start, box) < 1.0: return false
 	return true
 
 func route(start: Vector2, finish: Vector2, obstacles: Array[BattleUnit], forward_axis := Vector2.ZERO, clearance := CLEARANCE) -> Array[Vector2]:
+	# No graph can reach an endpoint already inside an allied body.
+	if not clear_line(finish,finish,obstacles,clearance): return []
 	# A visibility graph uses individual bodies, so gaps within an idle formation stay open.
 	var points: Array[Vector2] = [start, finish]
 	for obstacle in obstacles:
 		for corner in [Vector2(-1,-1), Vector2(1,-1), Vector2(-1,1), Vector2(1,1)]:
 			var point: Vector2 = obstacle.position + corner * (clearance + 0.1)
-			if map.playable_rect().has_point(point) and clear_line(point, point, obstacles, clearance): points.append(point)
+			if candidate_reachable(start,finish,point,forward_axis) and map.playable_rect().has_point(point) and clear_line(point, point, obstacles, clearance): points.append(point)
 			if forward_axis != Vector2.ZERO:
 				# A soldier already beside a blocker may first step sideways at its
 				# current depth, without backing up to the obstacle's rear corner.
 				var side_point := point-forward_axis*(point-start).dot(forward_axis)
-				if not points.has(side_point) and map.playable_rect().has_point(side_point) and clear_line(side_point, side_point, obstacles, clearance): points.append(side_point)
+				if candidate_reachable(start,finish,side_point,forward_axis) and not points.has(side_point) and map.playable_rect().has_point(side_point) and clear_line(side_point, side_point, obstacles, clearance): points.append(side_point)
+	var heuristic: Array[float] = []
+	for point in points: heuristic.append(point.distance_to(finish))
 	var costs: Array[float] = []
 	var previous: Array[int] = []
 	var visited: Array[bool] = []
@@ -42,7 +53,7 @@ func route(start: Vector2, finish: Vector2, obstacles: Array[BattleUnit], forwar
 	for iteration in range(points.size()):
 		var current := -1
 		for i in range(points.size()):
-			if not visited[i] and costs[i] < INF and (current == -1 or costs[i] < costs[current]): current = i
+			if not visited[i] and costs[i] < INF and (current == -1 or costs[i]+heuristic[i] < costs[current]+heuristic[current]): current = i
 		if current == -1: break
 		if current == 1:
 			var path: Array[Vector2] = []
@@ -62,16 +73,28 @@ func route(start: Vector2, finish: Vector2, obstacles: Array[BattleUnit], forwar
 				previous[next] = current
 	return []
 
+static func candidate_reachable(start: Vector2, finish: Vector2, point: Vector2, axis: Vector2) -> bool:
+	# A forward-only route can never use points behind its start or past its goal.
+	return axis == Vector2.ZERO or ((point-start).dot(axis) >= -0.00001 and (finish-point).dot(axis) >= -0.00001)
+
 func waypoint(unit: BattleUnit, obstacles: Array[BattleUnit], forward_axis := Vector2.ZERO, clearance := CLEARANCE) -> Vector2:
 	if clear_line(unit.position, unit.target, obstacles, clearance):
 		unit.march_path.clear()
+		failed_searches.erase(unit)
 		return unit.target
 	while not unit.march_path.is_empty() and unit.position.distance_to(unit.march_path[0]) < 0.05:
 		unit.march_path.pop_front()
 	if not unit.march_path.is_empty() and (unit.march_path[0]-unit.position).dot(forward_axis) < -0.00001:
 		unit.march_path.clear()
 	if unit.march_path.is_empty() or not clear_line(unit.position, unit.march_path[0], obstacles, clearance):
+		var failed: Dictionary = failed_searches.get(unit,{})
+		if not failed.is_empty() and simulation_time < failed.until and unit.position.distance_squared_to(failed.start) < 4.0 and unit.target.is_equal_approx(failed.goal) and forward_axis == failed.axis and clearance == failed.clearance and obstacles.size() == failed.count:
+			return unit.target
 		unit.march_path = route(unit.position, unit.target, obstacles, forward_axis, clearance)
+		if unit.march_path.is_empty():
+			failed_searches[unit] = {"until":simulation_time+0.08+0.02*(unit.get_index()%5),"start":unit.position,"goal":unit.target,"axis":forward_axis,"clearance":clearance,"count":obstacles.size()}
+		else:
+			failed_searches.erase(unit)
 	return unit.target if unit.march_path.is_empty() else unit.march_path[0]
 
 func advance(members: Array[BattleUnit], enemies: Array[BattleUnit], delta: float, others: Array[BattleUnit]) -> void:
