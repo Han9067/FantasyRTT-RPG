@@ -30,7 +30,7 @@ var damage_dealt := 0
 class HealthBar extends Node2D:
 	func _draw() -> void:
 		var unit: BattleUnit = get_parent()
-		draw_rect(Rect2(-10, -39, 20, 5), GameUITheme.BORDER)
+		draw_rect(Rect2(-13, -42, 26, 11), GameUITheme.BORDER)
 		draw_rect(Rect2(-9, -38, 18, 3), GameUITheme.PAPER)
 		draw_rect(Rect2(-9, -38, 18.0 * unit.hp / unit.max_hp, 3), Color("ed4545"))
 

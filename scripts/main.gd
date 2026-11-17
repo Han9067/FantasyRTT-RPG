@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.15")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.16")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
 const GOLD = GameUITheme.MUTED
@@ -371,7 +371,7 @@ func show_world() -> void:
 	add_child(world)
 	move_child(world,0)
 	if not travel_state.is_empty():
-		world.restore_travel(travel_state.position,travel_state.camera,travel_state.zoom)
+		world.restore_travel(travel_state.position,travel_state.camera,travel_state.zoom,travel_state.get("city_id",""))
 	var header := Control.new()
 	header.custom_minimum_size.y = 50
 	screen.add_child(header)
@@ -407,7 +407,7 @@ func show_world() -> void:
 
 func enter_battle_from_world() -> void:
 	if is_instance_valid(world):
-		travel_state = {"position":world.unit_position,"camera":world.camera.position,"zoom":world.zoom_level}
+		travel_state = {"position":world.unit_position,"camera":world.camera.position,"zoom":world.zoom_level,"city_id":world.current_city.get("id","")}
 	show_battle()
 
 

@@ -1,6 +1,7 @@
 class_name GameUITheme
 extends RefCounted
 ## Shared native-pixel paper frames. Textures are generated once, then tiled by nine-slice.
+const BORDER_WIDTH := 5 # Previously 2px; user requested +3px.
 const PAPER := Color("ead4a4")
 const BORDER := Color("533721")
 const BUTTON_BORDER := Color("b58a5b")
@@ -21,11 +22,11 @@ static func paper_texture(fill: Color, edge: Color, dimensions := Vector2i(32,32
 			var inset := 4 if dy < 2 else (2 if dy < 4 else 0)
 			if x < inset or x >= dimensions.x-inset: continue
 			var color := fill
-			if dy < 2 or x < inset+2 or x >= dimensions.x-inset-2:
+			if dy < BORDER_WIDTH or x < inset+BORDER_WIDTH or x >= dimensions.x-inset-BORDER_WIDTH:
 				color = edge
-			elif y == 2 or x == 2:
+			elif y == BORDER_WIDTH or x == BORDER_WIDTH:
 				color = fill.lightened(0.25)
-			elif y >= dimensions.y-4 or x >= dimensions.x-4:
+			elif y >= dimensions.y-7 or x >= dimensions.x-7:
 				color = fill.darkened(0.12)
 			elif (x*17+y*31)%83 == 0:
 				color = fill.darkened(0.045)
@@ -74,8 +75,8 @@ static func build() -> Theme:
 	var focus := StyleBoxFlat.new()
 	focus.bg_color = Color.TRANSPARENT
 	focus.border_color = Color("8e602f")
-	focus.set_border_width_all(1)
-	focus.set_expand_margin_all(2)
+	focus.set_border_width_all(4)
+	focus.set_expand_margin_all(4)
 	focus.anti_aliasing = false
 	t.set_stylebox("focus","Button",focus)
 	for control in ["Button","LineEdit","Label","TooltipLabel","PopupMenu"]:
@@ -96,18 +97,18 @@ static func build() -> Theme:
 	var rail := StyleBoxFlat.new()
 	rail.bg_color = Color("c8ab79")
 	rail.border_color = BORDER
-	rail.set_border_width_all(1)
-	rail.content_margin_top = 3
-	rail.content_margin_bottom = 3
+	rail.set_border_width_all(4)
+	rail.content_margin_top = 6
+	rail.content_margin_bottom = 6
 	rail.anti_aliasing = false
 	t.set_stylebox("slider","HSlider",rail)
 	var filled := rail.duplicate() as StyleBoxFlat
 	filled.bg_color = BUTTON_BORDER
 	t.set_stylebox("grabber_area","HSlider",filled)
 	t.set_stylebox("grabber_area_highlight","HSlider",filled)
-	t.set_icon("grabber","HSlider",paper_texture(IVORY,BUTTON_BORDER,Vector2i(14,20)))
-	t.set_icon("grabber_highlight","HSlider",paper_texture(Color("fffaf0"),BORDER,Vector2i(14,20)))
-	t.set_icon("grabber_disabled","HSlider",paper_texture(PAPER,BUTTON_BORDER,Vector2i(14,20)))
+	t.set_icon("grabber","HSlider",paper_texture(IVORY,BUTTON_BORDER,Vector2i(20,26)))
+	t.set_icon("grabber_highlight","HSlider",paper_texture(Color("fffaf0"),BORDER,Vector2i(20,26)))
+	t.set_icon("grabber_disabled","HSlider",paper_texture(PAPER,BUTTON_BORDER,Vector2i(20,26)))
 	var separator := StyleBoxLine.new()
 	separator.color = BUTTON_BORDER
 	separator.thickness = 2

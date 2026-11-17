@@ -18,6 +18,14 @@ var hud_controls: Array[Control] = []
 var city_popup: PanelContainer
 var city_title: Label
 var hovered_city: Dictionary = {}
+var pending_city: Dictionary = {}
+var current_city: Dictionary = {}
+var entrance_cursor_active := false
+var city_entry_cache: Dictionary = {}
+var city_panel: PanelContainer
+var city_panel_title: Label
+var city_actions: Array[Button] = []
+var city_overlay: CanvasLayer
 
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -57,8 +65,12 @@ func _ready() -> void:
 	unit_position = spawn_position
 	destination = unit_position
 	update_sprite()
+	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+	Input.set_custom_mouse_cursor(make_entrance_cursor(),Input.CURSOR_CROSS,Vector2(24,16))
+	create_city_panel()
 	Input.set_custom_mouse_cursor(make_blocked_cursor(),Input.CURSOR_FORBIDDEN,Vector2(12,12))
 	get_viewport().size_changed.connect(resize_map)
+	get_viewport().size_changed.connect(layout_city_panel)
 
 func playable_rect() -> Rect2:
 	return Rect2(Vector2(18,32),map_size-Vector2(36,50))
@@ -82,6 +94,8 @@ func issue_move(point: Vector2) -> void:
 	if not can_move_to(point): return
 	var path := navigation.route(unit_position,point)
 	if path.is_empty(): return
+	pending_city = {}
+	exit_city()
 	destination = point
 	route_points = path
 	route_index = 0
@@ -106,6 +120,7 @@ func _physics_process(delta: float) -> void:
 			remaining = 0
 		update_sprite()
 		queue_redraw()
+	finish_city_arrival()
 	if marker_time>0:
 		marker_time = maxf(0,marker_time-delta)
 		queue_redraw()
@@ -126,10 +141,7 @@ func _process(_delta: float) -> void:
 	var hovered := get_viewport().gui_get_hovered_control()
 	var over_ui := is_instance_valid(hovered) and hovered.mouse_filter!=Control.MOUSE_FILTER_IGNORE
 	update_city_hover(point,over_ui)
-	var blocked := pointer_inside and not over_ui and cursor_blocked_at(point)
-	if blocked!=blocked_cursor:
-		blocked_cursor = blocked
-		Input.set_default_cursor_shape(Input.CURSOR_FORBIDDEN if blocked else Input.CURSOR_ARROW)
+	update_world_cursor(point,over_ui)
 
 func _notification(what: int) -> void:
 	super._notification(what)
@@ -138,6 +150,7 @@ func _notification(what: int) -> void:
 		if is_instance_valid(city_popup): city_popup.hide()
 		hovered_city = {}
 		blocked_cursor = false
+		entrance_cursor_active = false
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	elif what in [NOTIFICATION_WM_MOUSE_ENTER,NOTIFICATION_WM_WINDOW_FOCUS_IN]:
 		pointer_inside = true
@@ -145,6 +158,7 @@ func _notification(what: int) -> void:
 func _exit_tree() -> void:
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	Input.set_custom_mouse_cursor(null,Input.CURSOR_FORBIDDEN)
+	Input.set_custom_mouse_cursor(null,Input.CURSOR_CROSS)
 
 func _draw() -> void:
 	# The portrait token replaces the battlefield body, ground shadow and selection ring.
@@ -173,15 +187,27 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouse and not can_interact_at(event.position): return
 	if event is InputEventKey:
 		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+		if code == KEY_ESCAPE and event.pressed and not current_city.is_empty():
+			exit_city()
+			get_viewport().set_input_as_handled()
+			return
 		if code in [KEY_LEFT,KEY_RIGHT,KEY_UP,KEY_DOWN]:
 			pan_keys[code] = event.pressed
+			get_viewport().set_input_as_handled()
+			return
+	if event is InputEventMouseButton and event.pressed and event.button_index in [MOUSE_BUTTON_LEFT,MOUSE_BUTTON_RIGHT]:
+		var city := city_at(screen_to_world(event.position))
+		if not city.is_empty():
+			issue_city_entry(city)
 			get_viewport().set_input_as_handled()
 			return
 	# Left click never deselects or starts a battle-style selection rectangle.
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT: return
 	super._unhandled_input(event)
 
-func restore_travel(position_in_world: Vector2, camera_position: Vector2, zoom: float) -> void:
+func restore_travel(position_in_world: Vector2, camera_position: Vector2, zoom: float, city_id := "") -> void:
+	pending_city = {}
+	exit_city()
 	unit_position = clamp_point(position_in_world) if navigation.open_cell(navigation.cell_at(clamp_point(position_in_world))) else spawn_position
 	destination = unit_position
 	route_points.clear()
@@ -191,17 +217,20 @@ func restore_travel(position_in_world: Vector2, camera_position: Vector2, zoom: 
 	camera.position = camera_position
 	clamp_camera()
 	update_sprite()
+	for city: Dictionary in cities:
+		if city.id == city_id and city_bounds(city).has_point(unit_position): enter_city(city)
 
 func can_interact_at(point: Vector2) -> bool:
 	if not screen_playable_rect().has_point(point): return false
+	if is_instance_valid(city_panel) and city_panel.visible and city_panel.get_global_rect().has_point(point): return false
 	for control in hud_controls:
 		if is_instance_valid(control) and control.is_visible_in_tree() and control.get_global_rect().has_point(point): return false
 	return true
 
 func create_city_popup() -> void:
-	var overlay := CanvasLayer.new()
-	overlay.layer = 11
-	add_child(overlay)
+	city_overlay = CanvasLayer.new()
+	city_overlay.layer = 11
+	add_child(city_overlay)
 	city_popup = PanelContainer.new()
 	city_popup.name = "CityPopup"
 	city_popup.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -209,7 +238,7 @@ func create_city_popup() -> void:
 	city_popup.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	city_popup.add_theme_stylebox_override("panel",GameUITheme.panel_style(14))
 	city_popup.theme = GameUITheme.build()
-	overlay.add_child(city_popup)
+	city_overlay.add_child(city_popup)
 	var content := VBoxContainer.new()
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_theme_constant_override("separation",10)
@@ -237,21 +266,143 @@ func create_city_popup() -> void:
 func update_city_hover(screen_point: Vector2, over_ui := false) -> void:
 	hovered_city = {}
 	if pointer_inside and not over_ui and can_interact_at(screen_point):
-		var point := screen_to_world(screen_point)
-		for city: Dictionary in cities:
-			var dimensions := Vector2(city["size"][0],city["size"][1])
-			var center := Vector2(city.position[0],city.position[1])
-			if Rect2(center-dimensions*0.5,dimensions).has_point(point):
-				hovered_city = city
-				break
+		hovered_city = city_at(screen_to_world(screen_point))
+	if not hovered_city.is_empty() and hovered_city.id == current_city.get("id",""): hovered_city = {}
 	if hovered_city.is_empty():
 		city_popup.hide()
 		return
-	var city_name: String = hovered_city.name
-	city_title.text = "도시 " + city_name if city_name.is_valid_int() else city_name
+	city_title.text = display_city_name(hovered_city)
 	city_popup.size = city_popup.get_combined_minimum_size()
 	var position := screen_point+Vector2(18,18)
 	if position.x+city_popup.size.x > viewport_size.x-8: position.x = screen_point.x-city_popup.size.x-18
 	if position.y+city_popup.size.y > viewport_size.y-8: position.y = screen_point.y-city_popup.size.y-18
 	city_popup.position = position.clamp(Vector2(8,8),(viewport_size-city_popup.size-Vector2(8,8)).max(Vector2(8,8)))
 	city_popup.show()
+
+static func city_bounds(city: Dictionary) -> Rect2:
+	var dimensions := Vector2(city["size"][0],city["size"][1])
+	return Rect2(Vector2(city.position[0],city.position[1])-dimensions*0.5,dimensions)
+
+static func display_city_name(city: Dictionary) -> String:
+	var value: String = city.name
+	return "도시 "+value if value.is_valid_int() else value
+
+func city_at(point: Vector2) -> Dictionary:
+	for city: Dictionary in cities:
+		if city_bounds(city).has_point(point): return city
+	return {}
+
+func city_entry_point(city: Dictionary) -> Vector2:
+	var cell := navigation.cell_at(unit_position)
+	if not navigation.open_cell(cell): return Vector2.INF
+	var component := navigation.components[navigation.index(cell)]
+	var key := str(city.id)+":"+str(component)
+	if city_entry_cache.has(key): return city_entry_cache[key]
+	var center := Vector2(city.position[0],city.position[1])
+	var chosen := center if can_move_to(center) else Vector2.INF
+	if chosen == Vector2.INF:
+		# Choose an actual reachable point inside the city, never teleport across terrain.
+		var bounds := city_bounds(city)
+		var first := navigation.cell_at(bounds.position)
+		var last := navigation.cell_at(bounds.end-Vector2.ONE)
+		var best := INF
+		for y in range(first.y,last.y+1):
+			for x in range(first.x,last.x+1):
+				var point := (Vector2(x,y)+Vector2.ONE*0.5)*navigation.cell_size
+				if bounds.has_point(point) and can_move_to(point) and point.distance_squared_to(center)<best:
+					chosen = point
+					best = point.distance_squared_to(center)
+	city_entry_cache[key] = chosen
+	return chosen
+
+func issue_city_entry(city: Dictionary) -> void:
+	var point := city_entry_point(city)
+	if point == Vector2.INF: return
+	issue_move(point)
+	if not destination.is_equal_approx(point): return
+	pending_city = city
+	finish_city_arrival()
+
+func finish_city_arrival() -> void:
+	if moving or pending_city.is_empty(): return
+	var city := pending_city
+	pending_city = {}
+	if unit_position.distance_to(destination)<=0.25 and city_bounds(city).has_point(unit_position): enter_city(city)
+
+func enter_city(city: Dictionary) -> void:
+	current_city = city
+	marker_time = 0.0
+	party_marker.hide()
+	city_popup.hide()
+	city_panel_title.text = display_city_name(city)
+	layout_city_panel()
+	city_panel.show()
+	queue_redraw()
+
+func exit_city() -> void:
+	current_city = {}
+	if is_instance_valid(city_panel): city_panel.hide()
+	if is_instance_valid(party_marker): party_marker.show()
+
+func create_city_panel() -> void:
+	city_panel = PanelContainer.new()
+	city_panel.name = "CityPanel"
+	city_panel.theme = GameUITheme.build()
+	city_panel.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	city_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	city_overlay.add_child(city_panel)
+	var content := VBoxContainer.new()
+	content.add_theme_constant_override("separation",14)
+	city_panel.add_child(content)
+	city_panel_title = Label.new()
+	city_panel_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	city_panel_title.add_theme_font_size_override("font_size",24)
+	content.add_child(city_panel_title)
+	content.add_child(HSeparator.new())
+	for caption in ["내성","길드","시장"]:
+		var action := Button.new()
+		action.text = caption
+		action.custom_minimum_size.y = 52
+		action.focus_mode = Control.FOCUS_NONE
+		action.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		content.add_child(action)
+		city_actions.append(action)
+	# The three actions are intentionally placeholders with no connected callbacks.
+	layout_city_panel()
+	city_panel.hide()
+
+func layout_city_panel() -> void:
+	if not is_inside_tree() or not is_instance_valid(city_panel): return
+	city_panel.position = Vector2(18,18)
+	city_panel.size = Vector2(400,maxf(1,get_viewport_rect().size.y-36))
+
+func refresh_attack_cursor() -> void:
+	# World hover owns its cursor; inherited mouse handling must not restore the arrow.
+	pass
+
+func update_world_cursor(point: Vector2, over_ui := false) -> void:
+	var valid := pointer_inside and not over_ui and can_interact_at(point)
+	var city := city_at(screen_to_world(point)) if valid else {}
+	var entering: bool = not city.is_empty() and city.id != current_city.get("id","") and city_entry_point(city) != Vector2.INF
+	var blocked: bool = valid and not entering and cursor_blocked_at(point)
+	if entering != entrance_cursor_active or blocked != blocked_cursor:
+		entrance_cursor_active = entering
+		blocked_cursor = blocked
+		Input.set_default_cursor_shape(Input.CURSOR_CROSS if entering else (Input.CURSOR_FORBIDDEN if blocked else Input.CURSOR_ARROW))
+
+static func make_entrance_cursor() -> ImageTexture:
+	var image := Image.create(32,32,false,Image.FORMAT_RGBA8)
+	image.fill_rect(Rect2i(18,2,13,28),GameUITheme.BORDER)
+	image.fill_rect(Rect2i(21,5,7,22),GameUITheme.IVORY)
+	image.fill_rect(Rect2i(23,6,5,21),GameUITheme.INK)
+	image.fill_rect(Rect2i(16,28,16,3),GameUITheme.BORDER)
+	var arrow: Dictionary = {}
+	for y in range(7,26):
+		for x in range(2,25):
+			if (x<16 and y>=14 and y<=18) or (x>=16 and absi(y-16)<=24-x): arrow[Vector2i(x,y)] = true
+	for point: Vector2i in arrow:
+		var edge := false
+		for step in [Vector2i.LEFT,Vector2i.RIGHT,Vector2i.UP,Vector2i.DOWN]:
+			if not arrow.has(point+step): edge = true
+		image.set_pixelv(point,GameUITheme.BORDER if edge else GameUITheme.IVORY)
+	return ImageTexture.create_from_image(image)

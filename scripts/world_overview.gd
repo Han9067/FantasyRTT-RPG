@@ -61,6 +61,7 @@ func _draw() -> void:
 	draw_rect(view,Color(1,0.9,0.6,0.12))
 	draw_rect(view,Color("fff1be") if camera_dragging else Color("f0dfac"),false,1)
 	var p := bounds.position + world.unit_position / world.map_size * bounds.size
-	draw_circle(p,3,Color("283c2b"))
-	draw_rect(Rect2(p-Vector2(1,1),Vector2(3,3)),Color("fff2b7"))
-	draw_rect(bounds,GameUITheme.BORDER,false,1)
+	if world.current_city.is_empty():
+		draw_circle(p,3,Color("283c2b"))
+		draw_rect(Rect2(p-Vector2(1,1),Vector2(3,3)),Color("fff2b7"))
+	draw_rect(bounds,GameUITheme.BORDER,false,4)
