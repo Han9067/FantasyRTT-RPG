@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.38")
+	assert(game.game_version == "0.0.39")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
@@ -249,6 +249,9 @@ func verify_equipment(catalog: Dictionary) -> void:
 	var spear_count := 0
 	assert(catalog.weapon_items.has("two_spear/17") and not catalog.weapon_items.has("spear_101"))
 	var expected_offsets := {}
+	var two_sword_offsets := [13, 13, 13, 14, 13, 14, 14, 14, 14, 14, 13, 13, 12, 14, 13, 14, 14, 14, 15, 14]
+	for index in range(two_sword_offsets.size()):
+		expected_offsets["two_sword/%d" % (index + 1)] = two_sword_offsets[index]
 	var blunt_offsets := [5, 6, 3, 4, 4, 4, 4, 4, 4, 4, 4, 6, 5, 5, 5, 5, 6, 7, 6]
 	for index in range(blunt_offsets.size()):
 		expected_offsets["one_blunt/%d" % (index + 1)] = blunt_offsets[index]
