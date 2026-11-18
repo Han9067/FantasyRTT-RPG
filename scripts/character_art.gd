@@ -6,7 +6,7 @@ const FRAME_SIZE := Vector2i(136, 104)
 const PREVIEW_REGION := Rect2i(0, 0, 136, 104)
 const PREVIEW_SCALE := 3
 const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 1.0)
-const PRIMARY_WEAPON_ANCHOR := Vector2i(68, 68)
+const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
 const FEET_Y := 80
 const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8, "attack": 6}
@@ -165,9 +165,12 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 	return point
 
 static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> Vector2i:
-	var attack: String = equipped_weapon(config).attack
-	# Every weapon shares one resting bottom-center anchor. Retain animation motion.
-	return PRIMARY_WEAPON_ANCHOR + pose(animation, frame, attack).grip - pose("idle", 0, attack).grip
+	var weapon := equipped_weapon(config)
+	var current_pose := pose(animation, frame, weapon.attack)
+	# Melee offsets start at the visible left hand center in every pose.
+	if data().primary_types.has(weapon.family):
+		return current_pose.grip
+	return NON_MELEE_WEAPON_ANCHOR + current_pose.grip - pose("idle", 0, weapon.attack).grip
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon: Dictionary = equipped_weapon(config)
