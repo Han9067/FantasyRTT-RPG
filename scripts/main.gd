@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.24")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.25")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -34,6 +34,7 @@ var age_label: Label
 var name_input: LineEdit
 var age_slider: HSlider
 var create_button: Button
+var creation_theme: Theme
 var paper_background: StyleBoxTexture
 var preset_store = PresetStore.new()
 var preset_save_button: Button
@@ -165,6 +166,13 @@ func panel() -> PanelContainer:
 func show_creation() -> void:
 	clear_screen()
 	current_screen = "creation"
+	if creation_theme == null:
+		creation_theme = GameUITheme.build().duplicate()
+		var bold := FontVariation.new()
+		bold.base_font = creation_theme.default_font
+		bold.variation_embolden = 0.8
+		creation_theme.default_font = bold
+	screen.theme = creation_theme
 	preview_animation = "idle"
 	animation_time = 0.0
 	last_preview_frame = -1
@@ -287,13 +295,13 @@ func show_creation() -> void:
 		row.name = key
 		row.add_theme_constant_override("separation", 6)
 		parts_columns[1 if key in ["beard", "beard_color", "weapon", "weapon_item", "offhand", "offhand_item"] else 0].add_child(row)
-		var title := label_text(entry[1], 16)
+		var title := label_text(entry[1], 18)
 		title.custom_minimum_size.x = 88
 		row.add_child(title)
 		var left := part_button("◀", change_part.bind(key, -1))
 		left.accessibility_name = entry[1] + " 이전"
 		row.add_child(left)
-		var number := label_text("", 17)
+		var number := label_text("", 19)
 		number.custom_minimum_size.x = 52
 		if key in ["weapon", "offhand"]:
 			number.custom_minimum_size.x = 104
@@ -302,7 +310,7 @@ func show_creation() -> void:
 		var right := part_button("▶", change_part.bind(key, 1))
 		right.accessibility_name = entry[1] + " 다음"
 		row.add_child(right)
-		var detail := label_text("", 13)
+		var detail := label_text("", 15)
 		detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		detail.clip_text = true
 		detail.custom_minimum_size.x = 64
@@ -320,7 +328,7 @@ func show_creation() -> void:
 func create_preset_popup() -> void:
 	preset_popup = PopupPanel.new()
 	preset_popup.name = "PresetSavePopup"
-	preset_popup.theme = theme
+	preset_popup.theme = creation_theme
 	preset_popup.unresizable = true
 	preset_popup.close_requested.connect(preset_popup.hide)
 	add_child(preset_popup)
@@ -372,6 +380,7 @@ func apply_preset(slot: int) -> void:
 
 func part_button(value: String, callback: Callable) -> Button:
 	var result := button(value, callback)
+	result.add_theme_font_size_override("font_size", 20)
 	for state in ["normal", "hover", "pressed", "hover_pressed", "focus", "disabled"]:
 		var style := theme.get_stylebox(state, "Button").duplicate() as StyleBox
 		style.content_margin_left = 8

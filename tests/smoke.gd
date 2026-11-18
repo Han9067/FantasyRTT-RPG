@@ -104,7 +104,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.24")
+	assert(game.game_version == "0.0.25")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
@@ -292,7 +292,8 @@ func verify_equipment(catalog: Dictionary) -> void:
 func verify_ui_font(node: Node) -> void:
 	if node is Label or node is Button or node is LineEdit:
 		var font: Font = node.get_theme_font("font")
-		assert(font.resource_path == "res://assets/fonts/PFStardust3-Bold.ttf", "UI text must inherit the uploaded font")
+		var source_font: Font = font.base_font if font is FontVariation else font
+		assert(source_font.resource_path == "res://assets/fonts/PFStardust3-Bold.ttf", "UI text must inherit the uploaded font")
 		for character in node.text:
 			if character.strip_edges().is_empty(): continue
 			assert(font.has_char(character.unicode_at(0)), "Missing uploaded-font glyph: " + character)
