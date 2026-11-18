@@ -18226,7 +18226,7 @@
         {
           "name": "2",
           "source": "sprites/weapons/melee weapons/one_blunt/2.png",
-          "sha256": "07b008cd1f75876b70568527b16c53ee163a387c02b826bd82e6954d1ce0bc79",
+          "sha256": "b0447af1dccd5d353f1a932a22cc58c19a32da82172cd84680861cb9ad4ed36d",
           "size": [
             32,
             32
@@ -18243,7 +18243,7 @@
         {
           "name": "3",
           "source": "sprites/weapons/melee weapons/one_blunt/3.png",
-          "sha256": "bdc5fae07b90e088e592fbdfe13b7d1e8632d248b24adcdca0dbc3578064fbbb",
+          "sha256": "15992a7f9a4aae460e34c44496ed326144251d960a26ebb204e7327a38d57c95",
           "size": [
             32,
             32
@@ -18260,7 +18260,7 @@
         {
           "name": "4",
           "source": "sprites/weapons/melee weapons/one_blunt/4.png",
-          "sha256": "792af5b600c24600498de8c0a21a438b0154038f6832a0c2cb7fb2e464640dfe",
+          "sha256": "194483ebbc0e42b6b6dd4609d2bb042afd369263b3bf5f27566acfb93c82c2c2",
           "size": [
             32,
             32
@@ -18277,7 +18277,7 @@
         {
           "name": "5",
           "source": "sprites/weapons/melee weapons/one_blunt/5.png",
-          "sha256": "b48fa2cab6f41db8ea1da86cdbd1e18c8e8a35293d9995b1cf1d51a532a653d2",
+          "sha256": "65d21b498611d3c544b0c1789133d3b7477e4297b893ffb70f9d64f8d9441e99",
           "size": [
             32,
             32
@@ -18345,7 +18345,7 @@
         {
           "name": "9",
           "source": "sprites/weapons/melee weapons/one_blunt/9.png",
-          "sha256": "f7a86e0c0ed31748a7421355b6939303435a31696b0a8bd67245879cd32eae80",
+          "sha256": "842c3f2bfb83a349954e2cb5b68b7f992004b46f6747be31185b476df0704fc4",
           "size": [
             32,
             32
@@ -18362,7 +18362,7 @@
         {
           "name": "10",
           "source": "sprites/weapons/melee weapons/one_blunt/10.png",
-          "sha256": "08a9d199dde8245c7556b4f1acb231fc88eb46cda5cf1af4b58a1650ba639f57",
+          "sha256": "2410a22f078cd1a822a072de3737e0291b6edd28dab63d1add217a507d098196",
           "size": [
             32,
             32
@@ -18396,7 +18396,7 @@
         {
           "name": "12",
           "source": "sprites/weapons/melee weapons/one_blunt/12.png",
-          "sha256": "bab8f804baf3130db98ce3a5e473c9b669ec886b65fca17b11ff16d569bd617e",
+          "sha256": "97ea21bca59acff6a582f275ad04d6a37191e303cad5e4856f954c521f651c6c",
           "size": [
             32,
             32
@@ -18413,7 +18413,7 @@
         {
           "name": "13",
           "source": "sprites/weapons/melee weapons/one_blunt/13.png",
-          "sha256": "b0d0b2ce488c28f9596a6079d667fb0a2b8fd82551efca609d0d579c349b2917",
+          "sha256": "676cdb0aedde95d5b013942eb2d604c6bc36df2412895f08b629e377befa4afb",
           "size": [
             32,
             32
@@ -18430,7 +18430,7 @@
         {
           "name": "14",
           "source": "sprites/weapons/melee weapons/one_blunt/14.png",
-          "sha256": "69244514ba0b0e67edd9f1b060189f6d599fbb4e2c268e20e102bd7a784fb147",
+          "sha256": "bca87fdd0308545dad9ed8d2c897a782972a07a964d3fef3e4e00c9f1d5d16f9",
           "size": [
             32,
             32
@@ -18447,7 +18447,7 @@
         {
           "name": "15",
           "source": "sprites/weapons/melee weapons/one_blunt/15.png",
-          "sha256": "f1d6b607c99879a1d9e7fe2681158fb9a7022a35e86279adcb03a6f0ac29dd23",
+          "sha256": "5b212ef12fa5c9302319ecfca6051fde1d84f74bf1f2e426436c95912fb3d678",
           "size": [
             32,
             32
@@ -18464,7 +18464,7 @@
         {
           "name": "16",
           "source": "sprites/weapons/melee weapons/one_blunt/16.png",
-          "sha256": "5bd98b781c8a96e3f2a6cafa725f9244b400364f59ac9a667a6fe3897c0d25b0",
+          "sha256": "3749eb4f8962f8cc9ea5fc3472cdee3d4e92fb58a0da66e1a48d9ad774fb346d",
           "size": [
             32,
             32
@@ -18481,7 +18481,7 @@
         {
           "name": "17",
           "source": "sprites/weapons/melee weapons/one_blunt/17.png",
-          "sha256": "d672bae8879d06bb4e1aa8c2887a2878246c26e314964d700e6b9d573a23172d",
+          "sha256": "112dc3be67865b5e3fca8a2c24856ea9240e76d768812fa78177d8e2984c500f",
           "size": [
             32,
             32
@@ -18498,7 +18498,7 @@
         {
           "name": "18",
           "source": "sprites/weapons/melee weapons/one_blunt/18.png",
-          "sha256": "3bcb17177a4253b3dfb9bbcc4cb961388793ae9d8e9d5c724073219d64205440",
+          "sha256": "dddf3a7e35c31415a94d978dadc605e3427c616911211730ffd14efa179e0456",
           "size": [
             32,
             32
@@ -18515,7 +18515,7 @@
         {
           "name": "19",
           "source": "sprites/weapons/melee weapons/one_blunt/19.png",
-          "sha256": "02bda437b86bcf204c4cf604675c77b321989917d0450789b7683f5edc49f49b",
+          "sha256": "6c562c7f6db97ce7984399f0f5e6e7a8d90dc18f2992ecb31ffc0638cbc2425b",
           "size": [
             32,
             32
@@ -21888,7 +21888,7 @@
         24
       ],
       "attack": "chop_attack",
-      "y_up": 7
+      "y_up": 5
     },
     "one_blunt/2": {
       "id": "one_blunt/2",
@@ -21898,10 +21898,11 @@
       "two_handed": false,
       "number": 2,
       "grip": [
-        15,
+        16,
         24
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 6
     },
     "one_blunt/3": {
       "id": "one_blunt/3",
@@ -21911,10 +21912,11 @@
       "two_handed": false,
       "number": 3,
       "grip": [
-        12,
+        13,
         22
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 3
     },
     "one_blunt/4": {
       "id": "one_blunt/4",
@@ -21927,7 +21929,8 @@
         13,
         23
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 4
     },
     "one_blunt/5": {
       "id": "one_blunt/5",
@@ -21937,10 +21940,11 @@
       "two_handed": false,
       "number": 5,
       "grip": [
-        14,
+        15,
         24
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 4
     },
     "one_blunt/6": {
       "id": "one_blunt/6",
@@ -21953,7 +21957,8 @@
         14,
         23
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 4
     },
     "one_blunt/7": {
       "id": "one_blunt/7",
@@ -21966,7 +21971,8 @@
         16,
         24
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 4
     },
     "one_blunt/8": {
       "id": "one_blunt/8",
@@ -21979,7 +21985,8 @@
         16,
         24
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 4
     },
     "one_blunt/9": {
       "id": "one_blunt/9",
@@ -21989,10 +21996,11 @@
       "two_handed": false,
       "number": 9,
       "grip": [
-        15,
+        16,
         26
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 4
     },
     "one_blunt/10": {
       "id": "one_blunt/10",
@@ -22002,10 +22010,11 @@
       "two_handed": false,
       "number": 10,
       "grip": [
-        15,
+        16,
         26
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 4
     },
     "one_blunt/11": {
       "id": "one_blunt/11",
@@ -22018,7 +22027,8 @@
         16,
         25
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 4
     },
     "one_blunt/12": {
       "id": "one_blunt/12",
@@ -22028,10 +22038,11 @@
       "two_handed": false,
       "number": 12,
       "grip": [
-        15,
+        16,
         26
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 6
     },
     "one_blunt/13": {
       "id": "one_blunt/13",
@@ -22041,10 +22052,11 @@
       "two_handed": false,
       "number": 13,
       "grip": [
-        15,
+        16,
         25
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 5
     },
     "one_blunt/14": {
       "id": "one_blunt/14",
@@ -22054,10 +22066,11 @@
       "two_handed": false,
       "number": 14,
       "grip": [
-        15,
+        16,
         25
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 5
     },
     "one_blunt/15": {
       "id": "one_blunt/15",
@@ -22067,10 +22080,11 @@
       "two_handed": false,
       "number": 15,
       "grip": [
-        15,
+        16,
         26
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 5
     },
     "one_blunt/16": {
       "id": "one_blunt/16",
@@ -22080,10 +22094,11 @@
       "two_handed": false,
       "number": 16,
       "grip": [
-        15,
+        16,
         25
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 5
     },
     "one_blunt/17": {
       "id": "one_blunt/17",
@@ -22093,10 +22108,11 @@
       "two_handed": false,
       "number": 17,
       "grip": [
-        15,
+        16,
         25
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 6
     },
     "one_blunt/18": {
       "id": "one_blunt/18",
@@ -22106,10 +22122,11 @@
       "two_handed": false,
       "number": 18,
       "grip": [
-        15,
+        16,
         25
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 7
     },
     "one_blunt/19": {
       "id": "one_blunt/19",
@@ -22119,10 +22136,11 @@
       "two_handed": false,
       "number": 19,
       "grip": [
-        15,
+        16,
         26
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 6
     },
     "one_shield/1": {
       "id": "one_shield/1",
