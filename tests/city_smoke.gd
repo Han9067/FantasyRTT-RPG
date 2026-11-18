@@ -48,6 +48,15 @@ func run() -> void:
 	for slot in map.inventory.slot_grid.get_children(): assert(slot.size == Vector2(64, 64))
 	assert(map.inventory.sheet.get_global_rect().get_center().distance_to(Vector2(640, 400)) < 1)
 	assert(not map.can_interact_at(Vector2(640, 400)))
+	var view: TextureRect = map.inventory.slot_grid.get_child(0).get_child(0)
+	for dimensions in [Vector2i(32, 32), Vector2i(32, 64), Vector2i(96, 48)]:
+		var texture := ImageTexture.create_from_image(Image.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8))
+		map.inventory.set_slot_texture(0, texture)
+		assert(view.texture == texture and view.size == Vector2(64, 64))
+		var mode := TextureRect.STRETCH_KEEP_ASPECT_CENTERED if dimensions.x > 64 else TextureRect.STRETCH_KEEP_CENTERED
+		assert(view.stretch_mode == mode)
+	map.inventory.set_slot_texture(0, null)
+	assert(view.texture == null)
 	var cancel := InputEventKey.new()
 	cancel.keycode = KEY_ESCAPE
 	cancel.pressed = true

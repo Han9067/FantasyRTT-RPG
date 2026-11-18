@@ -1,5 +1,18 @@
 extends ColorRect
 ## Screen-space inventory. Layout uses native pixels and scales down on small viewports.
+class ItemIcon extends TextureRect:
+	func _ready() -> void:
+		expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		resized.connect(update_fit)
+		update_fit()
+
+	func update_fit() -> void:
+		if texture != null and (texture.get_width() > size.x or texture.get_height() > size.y):
+			stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		else:
+			stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+
 var sheet := PanelContainer.new()
 var slot_style := GameUITheme.paper_style(GameUITheme.IVORY, GameUITheme.BUTTON_BORDER, 5)
 var section_style := GameUITheme.panel_style(10)
@@ -41,7 +54,7 @@ func setup(appearance: Dictionary) -> void:
 	card.add_theme_stylebox_override("panel", slot_style)
 	people.add_child(card)
 	var avatar := CharacterArt.compose(appearance)
-	card.add_child(icon(avatar.get_region(avatar.get_used_rect())))
+	card.add_child(portrait_icon(avatar.get_region(avatar.get_used_rect())))
 
 	var middle := VBoxContainer.new()
 	middle.add_theme_constant_override("separation", 10)
@@ -64,7 +77,8 @@ func setup(appearance: Dictionary) -> void:
 		if label == "무기2": item = secondary
 		if not item.is_empty():
 			var art := CharacterArt.part_image(item.sheet, item.slot)
-			var image := icon(art.get_region(art.get_used_rect()))
+			var image := ItemIcon.new()
+			image.texture = ImageTexture.create_from_image(art)
 			image.size_flags_vertical = Control.SIZE_EXPAND_FILL
 			stack.add_child(image)
 	var stats := VBoxContainer.new()
@@ -85,8 +99,17 @@ func setup(appearance: Dictionary) -> void:
 		slot.custom_minimum_size = Vector2(64, 64)
 		slot.add_theme_stylebox_override("panel", slot_style)
 		slot_grid.add_child(slot)
+		var item_icon := ItemIcon.new()
+		slot.add_child(item_icon)
+		item_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	resized.connect(layout_sheet)
 	hide()
+
+func set_slot_texture(index: int, item: Texture2D) -> void:
+	if index < 0 or index >= slot_grid.get_child_count(): return
+	var view: ItemIcon = slot_grid.get_child(index).get_child(0)
+	view.texture = item
+	view.update_fit()
 
 func open() -> void:
 	show()
@@ -112,7 +135,7 @@ func section(parent: Control, contents: Control) -> void:
 	parent.add_child(panel)
 	panel.add_child(contents)
 
-func icon(image: Image) -> TextureRect:
+func portrait_icon(image: Image) -> TextureRect:
 	var view := TextureRect.new()
 	view.texture = ImageTexture.create_from_image(image)
 	view.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
