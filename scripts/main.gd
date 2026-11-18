@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.28")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.29")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -165,6 +165,7 @@ func panel() -> PanelContainer:
 func show_creation() -> void:
 	clear_screen()
 	current_screen = "creation"
+	screen.add_theme_constant_override("separation", 10)
 	preview_animation = "idle"
 	animation_time = 0.0
 	last_preview_frame = -1

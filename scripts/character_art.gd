@@ -2,20 +2,20 @@ class_name CharacterArt
 extends RefCounted
 ## Composite original modular sprites at integer coordinates; never resample source art.
 const ROOT := "res://assets/medieval/"
-const FRAME_SIZE := Vector2i(128, 96)
-const PREVIEW_REGION := Rect2i(16, 11, 129, 97)
-const PREVIEW_SCALE := 2
-const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 0.5)
-const PRIMARY_WEAPON_CENTER := Vector2i(68, 60)
+const FRAME_SIZE := Vector2i(136, 104)
+const PREVIEW_REGION := Rect2i(0, 0, 136, 104)
+const PREVIEW_SCALE := 3
+const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 1.0)
+const PRIMARY_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
-const FEET_Y := 72
+const FEET_Y := 80
 const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8, "attack": 6}
 # Original chop_attack_sample.gif: six fixed-body frames, exactly 100ms each.
 # Padding accommodates enlarged weapons at their original pixel size.
-const BODY_ORIGIN := Vector2i(64, 40)
-const CANVAS_PADDING := Vector2i(32, 16)
+const BODY_ORIGIN := Vector2i(64, 48)
+const CANVAS_PADDING := Vector2i(32, 24)
 const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
-const ATTACK_EFFECT_ORIGIN := Vector2i(32, 37)
+const ATTACK_EFFECT_ORIGIN := Vector2i(32, 45)
 const BODY_LABELS := ["검정", "파랑", "갈색", "금색", "초록", "회색", "주황", "분홍", "보라", "빨강", "은색", "노랑"]
 const PARTS := [
 	["skin", "피부색"], ["face", "얼굴"], ["body", "복장 색상"],
@@ -164,17 +164,23 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 	if turns == -1: return Vector2i(point.y, size.x - 1 - point.x)
 	return point
 
-static func weapon_center(config: Dictionary, animation: String, frame: int) -> Vector2i:
+static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var attack: String = equipped_weapon(config).attack
-	# Every weapon shares one resting image center. Retain each animation's motion.
-	return PRIMARY_WEAPON_CENTER + pose(animation, frame, attack).grip - pose("idle", 0, attack).grip
+	# Every weapon shares one resting bottom-center anchor. Retain animation motion.
+	return PRIMARY_WEAPON_ANCHOR + pose(animation, frame, attack).grip - pose("idle", 0, attack).grip
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon: Dictionary = equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
 	var size := part_rect(data().bow_shot, frame).size if weapon.attack == "bow_shot" and animation == "attack" else part_rect(weapon.sheet, weapon.slot).size
-	if current_pose.rotation != 0: size = Vector2i(size.y, size.x)
-	return weapon_center(config, animation, frame) - Vector2i(Vector2(size) * PRIMARY_WEAPON_PIVOT)
+	return weapon_anchor(config, animation, frame) - weapon_pivot_offset(size, current_pose.rotation)
+
+static func weapon_pivot_offset(size: Vector2i, turns: int) -> Vector2i:
+	# Rotate the original image-boundary pivot with the art, not the rotated AABB's bottom.
+	var pivot := Vector2(size) * PRIMARY_WEAPON_PIVOT
+	if turns == 1: pivot = Vector2(size.y - pivot.y, pivot.x)
+	elif turns == -1: pivot = Vector2(pivot.y, size.x - pivot.x)
+	return Vector2i(pivot)
 
 static func atlas_image(filename: String) -> Image:
 	if not images.has(filename):
@@ -258,7 +264,7 @@ static func animations(config: Dictionary) -> SpriteFrames:
 			var texture := ImageTexture.create_from_image(image)
 			textures.append(texture)
 			frames.add_frame(animation, texture, float(timing.durations_ms[i]) / 100.0 if animation == "attack" else 1.0)
-	# One equipment-independent canvas keeps the body centered and the scale fixed.
+	# One equipment-independent padded canvas keeps the scale fixed in every pose.
 	for texture in textures:
 		texture.set_meta("preview_region", Rect2(PREVIEW_REGION))
 	return frames
