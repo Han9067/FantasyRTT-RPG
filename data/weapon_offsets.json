@@ -1,0 +1,14 @@
+{
+  "spreadsheet_url": "https://docs.google.com/spreadsheets/d/1BWG4PpFc1Berv_unuYejSReYtNKQtu-MyeWKj5tWXKY/edit#gid=1008322047",
+  "sheet": "무기",
+  "range": "A1:C6",
+  "synced_on": "2026-11-18",
+  "rows": [
+    ["이름(한글)", "종류", "Y"],
+    ["한손검1", "한손검", 6],
+    ["한손검2", "한손검", 10],
+    ["한손도끼1", "한손도끼", 4],
+    ["한손도끼2", "한손도끼", 6],
+    ["한손둔기1", "한손둔기", 7]
+  ]
+}

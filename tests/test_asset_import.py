@@ -40,6 +40,31 @@ class AssetImportTest(unittest.TestCase):
             self.assertEqual((runtime/'catalog.json').read_bytes(), catalog)
             self.assertFalse((root/'escape.png').exists())
 
+    def test_melee_import_keeps_other_assets_and_rejects_incomplete_replacement(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source, runtime = root/'source', root/'runtime'
+            shutil.copytree(ROOT/'art/medieval', source)
+            runtime.mkdir()
+            melee = source/'sprites/weapons/melee weapons'
+            inputs = {p.relative_to(melee).as_posix(): p.read_bytes() for p in melee.rglob('*.png')}
+            untouched = {p.relative_to(source).as_posix(): p.read_bytes() for p in source.rglob('*')
+                         if p.is_file() and not p.is_relative_to(melee)}
+            (melee/'one_axe/old.png').write_bytes(b'stale')
+            archive = root/'melee.zip'
+            with zipfile.ZipFile(archive, 'w') as z:
+                for name, data in inputs.items(): z.writestr(name, data)
+            with patch.object(importer,'SOURCE',source), patch.object(importer,'DEST',runtime), patch.object(sys,'argv',['import',str(archive),'--melee']), contextlib.redirect_stdout(io.StringIO()):
+                importer.main()
+            self.assertEqual({p.relative_to(melee).as_posix():p.read_bytes() for p in melee.rglob('*.png')}, inputs)
+            for name, data in untouched.items(): self.assertEqual((source/name).read_bytes(), data)
+            catalog = (runtime/'catalog.json').read_bytes()
+            with zipfile.ZipFile(archive,'w') as z: z.writestr('one_axe/1.png',inputs['one_axe/1.png'])
+            with patch.object(importer,'SOURCE',source), patch.object(importer,'DEST',runtime), patch.object(sys,'argv',['import',str(archive),'--melee']):
+                with self.assertRaises(ValueError): importer.main()
+            self.assertEqual((runtime/'catalog.json').read_bytes(), catalog)
+            self.assertEqual({p.relative_to(melee).as_posix():p.read_bytes() for p in melee.rglob('*.png')}, inputs)
+
     def test_invalid_zip_preserves_previous_source_and_runtime(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

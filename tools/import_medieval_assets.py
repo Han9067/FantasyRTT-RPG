@@ -13,13 +13,17 @@ from build_medieval_atlas import build, SOURCE, DEST
 
 def main():
     weapons_only = '--weapons' in sys.argv[2:]
+    melee_only = '--melee' in sys.argv[2:]
+    if weapons_only and melee_only:
+        raise ValueError('Choose only one import scope')
+    subtree = 'sprites/weapons/melee weapons' if melee_only else 'sprites/weapons'
     with tempfile.TemporaryDirectory(prefix='medieval-import-', dir=SOURCE.parent) as temp:
         staging = Path(temp)/'source'
         generated = Path(temp)/'runtime'
-        if weapons_only:
+        if weapons_only or melee_only:
             shutil.copytree(SOURCE, staging)
-            shutil.rmtree(staging/'sprites/weapons')
-            imported = staging/'sprites/weapons'
+            shutil.rmtree(staging/subtree)
+            imported = staging/subtree
             imported.mkdir()
         else:
             staging.mkdir()
@@ -37,10 +41,19 @@ def main():
                     raise ValueError(f'Invalid asset entry: {info.filename}')
                 if weapons_only and (path.parts[0] not in {'melee weapons', 'ranged weapons', 'projectiles'} or path.suffix.lower() != '.png'):
                     raise ValueError(f'Invalid weapon entry: {info.filename}')
+                if melee_only and (len(path.parts) != 2 or path.parts[0] not in {
+                        'one_axe', 'one_blunt', 'one_sword', 'one_shield', 'two_axe',
+                        'two_blunt', 'two_sword', 'two_polearm', 'two_spear'}
+                        or path.suffix != '.png' or not path.stem.isdecimal()):
+                    raise ValueError(f'Invalid melee entry: {info.filename}')
                 target = imported/str(path)
                 target.parent.mkdir(parents=True,exist_ok=True)
                 target.write_bytes(archive.read(info))
                 names.add(info.filename)
+        if melee_only and {n.split('/')[0] for n in names} != {
+                'one_axe', 'one_blunt', 'one_sword', 'one_shield', 'two_axe',
+                'two_blunt', 'two_sword', 'two_polearm', 'two_spear'}:
+            raise ValueError('Melee replacement must contain all nine folders')
         (staging/'.gdignore').write_text('')
         # Resolve all renamed active parts, parse the guide and verify atlas pixels
         # before touching the existing project source or runtime output.
@@ -55,7 +68,7 @@ def main():
             metadata = DEST/(page.name+'.import')
             if metadata.is_file():
                 shutil.copy2(metadata, generated/metadata.name)
-        target = SOURCE/'sprites/weapons' if weapons_only else SOURCE
+        target = SOURCE/subtree if weapons_only or melee_only else SOURCE
         backups, installed = [], []
         try:
             for directory, prepared in [(target, imported), (DEST, generated)]:
@@ -72,7 +85,7 @@ def main():
             for directory, backup in reversed(backups):
                 backup.rename(directory)
             raise
-        print(f'Replaced {"weapons" if weapons_only else "source"} with exactly {len(names)} ZIP files; no previous files retained in that subtree.')
+        print(f'Replaced {"melee" if melee_only else ("weapons" if weapons_only else "source")} with exactly {len(names)} ZIP files; no previous files retained in that subtree.')
 
 if __name__ == '__main__':
     main()

@@ -50,9 +50,9 @@ static func infantry_appearance(allied: bool, variant: int) -> Dictionary:
 	config.face = [2, 17, 26, 9, 34][variant]
 	config.hair = 0
 	config.helmet = data().infantry_helmet
-	config.equipped_weapon = "sword_01"
+	config.equipped_weapon = "one_sword/1"
 	config.offhand = data().secondary_types.find("one_shield")
-	config.offhand_item = data().melee_groups.one_shield.find("shield_31")
+	config.offhand_item = data().melee_groups.one_shield.find("one_shield/27")
 	return config
 
 static func archer_appearance(allied: bool, variant: int) -> Dictionary:
@@ -170,7 +170,7 @@ static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> 
 	var current_pose := pose(animation, frame, weapon.attack)
 	# The melee image center follows the screen-left hand center in every pose.
 	if data().primary_types.has(weapon.family):
-		return current_pose.grip
+		return current_pose.grip + Vector2i(0, -int(weapon.get("y_up", 0)))
 	return NON_MELEE_WEAPON_ANCHOR + current_pose.grip - pose("idle", 0, weapon.attack).grip
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:

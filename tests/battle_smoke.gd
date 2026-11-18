@@ -62,8 +62,8 @@ func check_infantry(map: BattleMap) -> void:
 		var config := Art.infantry_appearance(allied, 0)
 		assert(Art.BODY_LABELS[config.body] == ("파랑" if allied else "빨강"))
 		assert(Art.data().sheets[config.helmet].slots[0].name == "metal_20")
-		assert(config.hair == 0 and Art.equipped_weapon(config).id == "sword_01")
-		assert(Art.equipped_offhand(config).id == "shield_31")
+		assert(config.hair == 0 and Art.equipped_weapon(config).id == "one_sword/1")
+		assert(Art.equipped_offhand(config).id == "one_shield/27")
 		var helmeted := Art.compose(config)
 		config.hair = 7
 		assert(Art.compose(config).get_data() == helmeted.get_data())

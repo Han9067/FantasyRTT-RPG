@@ -42,10 +42,36 @@ def weapon_grip(family, name, image):
     return [xs[len(xs)//2], y]
 
 
+def load_weapon_offsets(path=ROOT / 'data/weapon_offsets.json'):
+    """Use a reviewed Sheets snapshot; positive Y means upward in the game."""
+    rows = json.loads(path.read_text(encoding='utf-8'))['rows']
+    if rows[0] != ['이름(한글)', '종류', 'Y']:
+        raise ValueError('Unexpected weapon sheet headers')
+    families = {'한손검':'one_sword', '한손도끼':'one_axe', '한손둔기':'one_blunt',
+                '양손검':'two_sword', '양손도끼':'two_axe', '양손둔기':'two_blunt',
+                '양손장병기':'two_polearm', '양손창':'two_spear'}
+    offsets = {}
+    for row in rows[1:]:
+        if not row or not any(str(v).strip() for v in row):
+            continue
+        if len(row) != 3:
+            raise ValueError(f'Incomplete weapon row: {row}')
+        name, kind, y = row
+        kind = str(kind).replace(' ', '')
+        match = re.fullmatch(re.escape(kind) + r'([1-9][0-9]*)', str(name).replace(' ', ''))
+        if kind not in families or not match or type(y) not in (int, float) or not float(y).is_integer():
+            raise ValueError(f'Invalid weapon offset: {row}')
+        key = f'{families[kind]}/{int(match[1])}'
+        if key in offsets:
+            raise ValueError(f'Duplicate weapon offset: {key}')
+        offsets[key] = int(y)
+    return offsets
+
+
 def build(source=SOURCE, dest=DEST):
-    catalog = {'schema': 5, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'primary_types': [], 'secondary_types': [], 'melee_groups': {}, 'weapon_items': {}}
+    catalog = {'schema': 6, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'primary_types': [], 'secondary_types': [], 'melee_groups': {}, 'weapon_items': {}}
     pending = []
-    def add(group, filename_prefix=None, only_file=None, only_files=None):
+    def add(group, filename_prefix=None, only_file=None, only_files=None, numeric=False):
         key = group + '.png'
         if key in catalog['sheets']:
             return key
@@ -55,14 +81,16 @@ def build(source=SOURCE, dest=DEST):
             raise ValueError(f'No loose PNGs in {folder}')
         slots = []
         def number(path):
-            match = re.fullmatch(re.escape(filename_prefix or folder.name) + r'_(\d+)', path.stem)
+            match = re.fullmatch(r'(\d+)' if numeric else re.escape(filename_prefix or folder.name) + r'_(\d+)', path.stem)
             if not match:
-                raise ValueError(f'Expected {folder.name}_NN.png: {path}')
+                raise ValueError(f'Invalid numbered PNG: {path}')
             return int(match[1])
         files.sort(key=number)
         ids = [number(path) for path in files]
         if len(ids) != len(set(ids)) or any(i < 1 for i in ids):
             raise ValueError(f'Duplicate or invalid part numbers: {folder}')
+        if numeric and ids != list(range(1, len(ids) + 1)):
+            raise ValueError(f'Melee numbering must be sequential from 1: {folder}')
         for path in files:
             raw = path.read_bytes()
             with Image.open(path) as image:
@@ -97,10 +125,10 @@ def build(source=SOURCE, dest=DEST):
                 if hands not in ('one', 'two'):
                     raise ValueError(f'Expected one_ or two_ in {folder}')
             prefix = family + '_big' if melee and hands == 'two' and family in ('axe', 'blunt', 'sword') else family
-            key = add(folder.relative_to(source).as_posix(), prefix)
+            key = add(folder.relative_to(source).as_posix(), prefix, numeric=melee)
             slots = catalog['sheets'][key]['slots']
             if melee:
-                catalog['melee_groups'][folder.name] = [slot['name'] for slot in slots]
+                catalog['melee_groups'][folder.name] = [f"{folder.name}/{slot['id']}" for slot in slots]
                 if family != 'shield':
                     catalog['primary_types'].append(folder.name)
                 if hands == 'one':
@@ -108,12 +136,17 @@ def build(source=SOURCE, dest=DEST):
             for index, slot in enumerate(slots):
                 with Image.open(source / slot['source']) as image:
                     grip = weapon_grip(family, slot['name'], image.convert('RGBA'))
-                if slot['name'] in catalog['weapon_items']:
+                equipment_id = f"{folder.name}/{slot['id']}" if melee else slot['name']
+                if equipment_id in catalog['weapon_items']:
                     raise ValueError(f"Duplicate equipment ID: {slot['name']}")
-                catalog['weapon_items'][slot['name']] = {
-                    'id': slot['name'], 'family': folder.name, 'sheet': key, 'slot': index,
+                catalog['weapon_items'][equipment_id] = {
+                    'id': equipment_id, 'family': folder.name, 'sheet': key, 'slot': index,
                     'two_handed': not melee or hands == 'two', 'number': slot['id'],
                     'grip': grip, 'attack': 'bow_shot' if slot['name'] == 'bow_01' else ('thrust_attack' if family == 'spear' else 'chop_attack')}
+    for equipment_id, y_up in load_weapon_offsets().items():
+        if equipment_id not in catalog['weapon_items']:
+            raise ValueError(f'Sheet weapon missing from source: {equipment_id}')
+        catalog['weapon_items'][equipment_id]['y_up'] = y_up
     catalog['attack_effect'] = add('sprites/VFX/weapon/weaponfx03')
     catalog['thrust_effect'] = add('sprites/VFX/weapon/weaponfx02')
     catalog['infantry_helmet'] = add('sprites/wardrobe/metal/metal', only_file='metal_20.png')
