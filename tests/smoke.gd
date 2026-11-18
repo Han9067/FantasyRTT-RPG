@@ -40,10 +40,10 @@ func run() -> void:
 	assert(catalog.weapon_items.size() == 163)
 	assert(not catalog.primary_types.has("one_shield"))
 	assert(catalog.secondary_types == ["one_axe", "one_blunt", "one_shield", "one_sword"])
-	assert(Art.PRIMARY_WEAPON_PIVOT == Vector2(0.5,1.0))
-	assert(Art.weapon_pivot_offset(Vector2i(32,64),0) == Vector2i(16,64))
-	assert(Art.weapon_pivot_offset(Vector2i(32,64),1) == Vector2i(0,16))
-	assert(Art.weapon_pivot_offset(Vector2i(32,64),-1) == Vector2i(64,16))
+	assert(Art.PRIMARY_WEAPON_PIVOT == Vector2(0.5,0.5))
+	assert(Art.weapon_pivot_offset(Vector2i(32,64),0) == Vector2i(16,32))
+	assert(Art.weapon_pivot_offset(Vector2i(32,64),1) == Vector2i(32,16))
+	assert(Art.weapon_pivot_offset(Vector2i(32,64),-1) == Vector2i(32,16))
 	verify_equipment(catalog)
 	verify_shield_layers()
 	config.offhand = catalog.secondary_types.find("one_sword")
@@ -60,7 +60,7 @@ func run() -> void:
 				for frame in range(Art.FRAME_COUNTS[animation]):
 					var pose := Art.pose(animation, frame)
 					var position := Art.weapon_position(config, animation, frame)
-					assert(position + Art.weapon_pivot_offset(Vector2i(32,32),pose.rotation) == Art.weapon_anchor(config,animation,frame), "Primary weapon bottom-center pivot must use its shared anchor")
+					assert(position + Art.weapon_pivot_offset(Vector2i(32,32),pose.rotation) == Art.weapon_anchor(config,animation,frame), "Primary weapon image center must use the hand anchor")
 					var art := Art.compose(config, animation, frame)
 					assert(Rect2i(preview.region).encloses(art.get_used_rect()), "Weapon clipped in preview")
 					# Verify both visible hands use exactly the selected skin, overlaid above the weapon.
@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.31")
+	assert(game.game_version == "0.0.32")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
@@ -259,7 +259,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 		var region := preview.region
 		assert(preview.get_size() == Vector2(Art.PREVIEW_REGION.size), "Equipment must not resize the preview canvas")
 		if catalog.primary_types.has(weapon.family):
-			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack).grip + Vector2i(0,8), "Melee pivot must be eight pixels below the left hand center")
+			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack).grip, "Melee image center must meet the left hand center")
 		else:
 			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR)
 		assert(region == Rect2(Art.PREVIEW_REGION), "All weapons share the same padded preview canvas")
@@ -278,9 +278,10 @@ func verify_equipment(catalog: Dictionary) -> void:
 					occupied.position += position
 					assert(Rect2i(Vector2i.ZERO, Art.FRAME_SIZE).encloses(occupied), "Weapon clipped before composition: " + id)
 					assert(Rect2i(region).encloses(occupied), "Weapon clipped by preview crop: " + id)
-					assert(position + Art.weapon_pivot_offset(source.get_size(),pose.rotation) == Art.weapon_anchor(config,animation,f))
+					var pivot := Art.PRIMARY_WEAPON_PIVOT if catalog.primary_types.has(weapon.family) else Art.NON_MELEE_WEAPON_PIVOT
+					assert(position + Art.weapon_pivot_offset(source.get_size(),pose.rotation,pivot) == Art.weapon_anchor(config,animation,f))
 					if catalog.primary_types.has(weapon.family):
-						assert(position + Art.weapon_pivot_offset(source.get_size(),pose.rotation) == pose.grip + Vector2i(0,8), "Melee offset must remain eight pixels down in every pose: " + id)
+						assert(position + Art.weapon_pivot_offset(source.get_size(),pose.rotation) == pose.grip, "Melee image center must follow the hand in every pose: " + id)
 				if animation == "attack":
 					var reference: Dictionary = catalog.attack_references[weapon.attack]
 					assert(is_equal_approx(frames.get_frame_duration(animation,f) / frames.get_animation_speed(animation), reference.durations_ms[f] / 1000.0))
@@ -298,7 +299,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 			assert(ready.rotation == -1 and extended.rotation == -1)
 			assert(extended.grip.x < ready.grip.x and extended.grip.y == ready.grip.y, "Thrust must extend horizontally")
 	assert(spear_count == 17)
-	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels without clipping and place melee bottom-center pivots eight pixels below the left hand; 17 spears thrust, other melee weapons chop; fixed preview canvas and reference timing")
+	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels without clipping and align melee image centers to the left hand; 17 spears thrust, other melee weapons chop; fixed preview canvas and reference timing")
 
 func verify_ui_font(node: Node) -> void:
 	if node is Label or node is Button or node is LineEdit:

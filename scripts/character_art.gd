@@ -5,8 +5,8 @@ const ROOT := "res://assets/medieval/"
 const FRAME_SIZE := Vector2i(136, 104)
 const PREVIEW_REGION := Rect2i(0, 0, 136, 104)
 const PREVIEW_SCALE := 3
-const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 1.0)
-const PRIMARY_MELEE_OFFSET := Vector2i(0, 8)
+const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 0.5)
+const NON_MELEE_WEAPON_PIVOT := Vector2(0.5, 1.0)
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
 const FEET_Y := 80
@@ -168,20 +168,21 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon := equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
-	# Apply the shared melee adjustment in canvas coordinates after pose rotation.
+	# The melee image center follows the screen-left hand center in every pose.
 	if data().primary_types.has(weapon.family):
-		return current_pose.grip + PRIMARY_MELEE_OFFSET
+		return current_pose.grip
 	return NON_MELEE_WEAPON_ANCHOR + current_pose.grip - pose("idle", 0, weapon.attack).grip
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon: Dictionary = equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
 	var size := part_rect(data().bow_shot, frame).size if weapon.attack == "bow_shot" and animation == "attack" else part_rect(weapon.sheet, weapon.slot).size
-	return weapon_anchor(config, animation, frame) - weapon_pivot_offset(size, current_pose.rotation)
+	var pivot := PRIMARY_WEAPON_PIVOT if data().primary_types.has(weapon.family) else NON_MELEE_WEAPON_PIVOT
+	return weapon_anchor(config, animation, frame) - weapon_pivot_offset(size, current_pose.rotation, pivot)
 
-static func weapon_pivot_offset(size: Vector2i, turns: int) -> Vector2i:
+static func weapon_pivot_offset(size: Vector2i, turns: int, normalized_pivot := PRIMARY_WEAPON_PIVOT) -> Vector2i:
 	# Rotate the original image-boundary pivot with the art, not the rotated AABB's bottom.
-	var pivot := Vector2(size) * PRIMARY_WEAPON_PIVOT
+	var pivot := Vector2(size) * normalized_pivot
 	if turns == 1: pivot = Vector2(size.y - pivot.y, pivot.x)
 	elif turns == -1: pivot = Vector2(pivot.y, size.x - pivot.x)
 	return Vector2i(pivot)
