@@ -19407,7 +19407,7 @@
         {
           "name": "4",
           "source": "sprites/weapons/melee weapons/one_sword/4.png",
-          "sha256": "3746acf6df015afaeec2ce47d57eb42f2cbbfb33a409a2a97d447e20f6af4919",
+          "sha256": "98ca79f166835dc758e8d69e0d8d091d1759812ea0a7646b56e09d5b74838bc8",
           "size": [
             32,
             32
@@ -19424,7 +19424,7 @@
         {
           "name": "5",
           "source": "sprites/weapons/melee weapons/one_sword/5.png",
-          "sha256": "bb8637e72bb3506db7721af427a88f5ff80b6cbe7c337f9a11a4e8c136e98690",
+          "sha256": "a6d408c0d527d61bb36429eb30b29e4f57da7bafda05117c2cde04edbdfbef07",
           "size": [
             32,
             32
@@ -19441,7 +19441,7 @@
         {
           "name": "6",
           "source": "sprites/weapons/melee weapons/one_sword/6.png",
-          "sha256": "28199ac66d0fdff275ef409f5a1189e60d82aa8623aae9a255e299163b404a70",
+          "sha256": "3934f94d1d6eae44ca0adb6681607f0d9d6d4d02e2d48638a1ab510843458176",
           "size": [
             32,
             32
@@ -19458,7 +19458,7 @@
         {
           "name": "7",
           "source": "sprites/weapons/melee weapons/one_sword/7.png",
-          "sha256": "ec1dab193bb59c2622c6cefcfb70f419ce61919577ee7dcd1e0aa04ab028c43f",
+          "sha256": "c24958af29d4f7c4c18b108174c7c4088ed158510a1e316bbf1eaabff705dd76",
           "size": [
             32,
             32
@@ -19475,7 +19475,7 @@
         {
           "name": "8",
           "source": "sprites/weapons/melee weapons/one_sword/8.png",
-          "sha256": "07ac6596323ef7d4c30bedcfc7692497756423dd17af4ee8383e25e2b85cf7c7",
+          "sha256": "a9cd46cf0d3b1adec4c6bbfb72c75bee1dac4a4ccabbf569532a6502dd84ab79",
           "size": [
             32,
             32
@@ -19492,7 +19492,7 @@
         {
           "name": "9",
           "source": "sprites/weapons/melee weapons/one_sword/9.png",
-          "sha256": "bfd8e08136224fb498e75474c0706b377b4cf032781d721385978ecf319ddb20",
+          "sha256": "b90702ec531eee3df362ff2d6b9d81c62573a0a3d62177efe84984c09c821ca8",
           "size": [
             32,
             32
@@ -19509,7 +19509,7 @@
         {
           "name": "10",
           "source": "sprites/weapons/melee weapons/one_sword/10.png",
-          "sha256": "75a0deeee76c2d7cffd0bc8c98577c7de0025e8a88437ccbe656d53304d65ccf",
+          "sha256": "44ee16523abfa5471eb39a0757bbe5aef9f4349d5aa3b70c63e88f0df5d03817",
           "size": [
             32,
             32
@@ -19526,7 +19526,7 @@
         {
           "name": "11",
           "source": "sprites/weapons/melee weapons/one_sword/11.png",
-          "sha256": "e9bd7c7ad2f1444a4d112b818e4bbc51bd369f758242509cdf79d636b976617e",
+          "sha256": "fafacc77052a1f17d2a6fa32413d34c97ef3c59a65ed1006c75c94756d3e98a4",
           "size": [
             32,
             32
@@ -19543,7 +19543,7 @@
         {
           "name": "12",
           "source": "sprites/weapons/melee weapons/one_sword/12.png",
-          "sha256": "865ff0429fe2b3a19cda38b9a30a91db47fd7e914bed8d455c1782a86a812932",
+          "sha256": "6fb8298a5f83b3ee123fef9f8e3be15319c8ed66f0cc37ed6e5232a6778abdcb",
           "size": [
             32,
             32
@@ -19560,7 +19560,7 @@
         {
           "name": "13",
           "source": "sprites/weapons/melee weapons/one_sword/13.png",
-          "sha256": "4f2e65ea09fd18306338c369124a59b900a64e69e735d8cf10f88e569c60dda8",
+          "sha256": "b1ad4f03e002358a1cd2b0081a3f5912a99bea3dafce9d256596fee7e72a9811",
           "size": [
             32,
             32
@@ -19577,7 +19577,7 @@
         {
           "name": "14",
           "source": "sprites/weapons/melee weapons/one_sword/14.png",
-          "sha256": "d415db4e6c26e322bcc1ee5ea8bfaf075fadef92ad21ad46c5926f6d53c512f9",
+          "sha256": "b35ff416a55cfc1eda476463da80093fde8c3cdf22c701eb86e1cf00201666b0",
           "size": [
             32,
             32
@@ -22747,7 +22747,7 @@
         24
       ],
       "attack": "chop_attack",
-      "y_up": 6
+      "y_up": 5
     },
     "one_sword/2": {
       "id": "one_sword/2",
@@ -22774,7 +22774,8 @@
         16,
         28
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 11
     },
     "one_sword/4": {
       "id": "one_sword/4",
@@ -22784,10 +22785,11 @@
       "two_handed": false,
       "number": 4,
       "grip": [
-        15,
+        16,
         28
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 10
     },
     "one_sword/5": {
       "id": "one_sword/5",
@@ -22797,10 +22799,11 @@
       "two_handed": false,
       "number": 5,
       "grip": [
-        15,
+        16,
         28
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 10
     },
     "one_sword/6": {
       "id": "one_sword/6",
@@ -22810,10 +22813,11 @@
       "two_handed": false,
       "number": 6,
       "grip": [
-        15,
+        16,
         28
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 10
     },
     "one_sword/7": {
       "id": "one_sword/7",
@@ -22823,10 +22827,11 @@
       "two_handed": false,
       "number": 7,
       "grip": [
-        17,
+        18,
         27
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 10
     },
     "one_sword/8": {
       "id": "one_sword/8",
@@ -22836,10 +22841,11 @@
       "two_handed": false,
       "number": 8,
       "grip": [
-        15,
+        16,
         27
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 9
     },
     "one_sword/9": {
       "id": "one_sword/9",
@@ -22849,10 +22855,11 @@
       "two_handed": false,
       "number": 9,
       "grip": [
-        15,
+        16,
         28
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 9
     },
     "one_sword/10": {
       "id": "one_sword/10",
@@ -22862,10 +22869,11 @@
       "two_handed": false,
       "number": 10,
       "grip": [
-        15,
+        16,
         28
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 10
     },
     "one_sword/11": {
       "id": "one_sword/11",
@@ -22875,10 +22883,11 @@
       "two_handed": false,
       "number": 11,
       "grip": [
-        15,
+        16,
         28
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 11
     },
     "one_sword/12": {
       "id": "one_sword/12",
@@ -22888,10 +22897,11 @@
       "two_handed": false,
       "number": 12,
       "grip": [
-        15,
+        16,
         27
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 7
     },
     "one_sword/13": {
       "id": "one_sword/13",
@@ -22901,10 +22911,11 @@
       "two_handed": false,
       "number": 13,
       "grip": [
-        17,
+        16,
         23
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 6
     },
     "one_sword/14": {
       "id": "one_sword/14",
@@ -22914,10 +22925,11 @@
       "two_handed": false,
       "number": 14,
       "grip": [
-        17,
+        16,
         25
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "y_up": 8
     },
     "two_axe/1": {
       "id": "two_axe/1",

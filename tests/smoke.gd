@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.34")
+	assert(game.game_version == "0.0.35")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
@@ -239,7 +239,10 @@ func verify_equipment(catalog: Dictionary) -> void:
 	var config := Art.defaults()
 	var spear_count := 0
 	assert(catalog.weapon_items.has("two_spear/17") and not catalog.weapon_items.has("spear_101"))
-	var expected_offsets := {"one_sword/1":6, "one_sword/2":10, "one_axe/1":4, "one_axe/2":6, "one_blunt/1":7}
+	var expected_offsets := {"one_axe/1":4, "one_axe/2":6, "one_blunt/1":7}
+	var sword_offsets := [5,10,11,10,10,10,10,9,9,10,11,7,6,8]
+	for index in range(sword_offsets.size()):
+		expected_offsets["one_sword/%d" % (index + 1)] = sword_offsets[index]
 	for removed in ["throwing weapons", "ranged weapons/pistol", "ranged weapons/musket", "ranged weapons/arquebus"]:
 		assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/weapons/" + removed))
 	for id in catalog.weapon_items:
