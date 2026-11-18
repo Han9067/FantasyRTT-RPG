@@ -60,7 +60,7 @@ func run() -> void:
 				for frame in range(Art.FRAME_COUNTS[animation]):
 					var pose := Art.pose(animation, frame)
 					var position := Art.weapon_position(config, animation, frame)
-					assert(position + Art.weapon_pivot_offset(Vector2i(32,32),pose.rotation) == Art.weapon_anchor(config,animation,frame), "Primary weapon image center must use the hand anchor")
+					assert(position + Art.rotated_point(Vector2i(16,16),Vector2i(32,32),pose.rotation) == Art.weapon_anchor(config,animation,frame), "Primary weapon image center must use the hand anchor")
 					var art := Art.compose(config, animation, frame)
 					assert(Rect2i(preview.region).encloses(art.get_used_rect()), "Weapon clipped in preview")
 					# Verify both visible hands use exactly the selected skin, overlaid above the weapon.
@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.33")
+	assert(game.game_version == "0.0.34")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
@@ -279,10 +279,18 @@ func verify_equipment(catalog: Dictionary) -> void:
 					occupied.position += position
 					assert(Rect2i(Vector2i.ZERO, Art.FRAME_SIZE).encloses(occupied), "Weapon clipped before composition: " + id)
 					assert(Rect2i(region).encloses(occupied), "Weapon clipped by preview crop: " + id)
-					var pivot := Art.PRIMARY_WEAPON_PIVOT if catalog.primary_types.has(weapon.family) else Art.NON_MELEE_WEAPON_PIVOT
-					assert(position + Art.weapon_pivot_offset(source.get_size(),pose.rotation,pivot) == Art.weapon_anchor(config,animation,f))
 					if catalog.primary_types.has(weapon.family):
-						assert(position + Art.weapon_pivot_offset(source.get_size(),pose.rotation) == pose.grip - Vector2i(0,expected_offsets.get(id,0)), "Melee offset must stay upward in every pose: " + id)
+						# Mark the source pixel under the idle hand, then rotate an actual
+						# image to locate it independently of the placement math.
+						var contact := source.get_size() / 2 + Vector2i(0,expected_offsets.get(id,0))
+						var marker := Image.create(source.get_width(),source.get_height(),false,Image.FORMAT_RGBA8)
+						marker.set_pixelv(contact,Color.WHITE)
+						if pose.rotation != 0: marker.rotate_90(CLOCKWISE if pose.rotation == 1 else COUNTERCLOCKWISE)
+						assert(position + marker.get_used_rect().position == pose.grip, "Idle contact pixel detached from hand: " + id)
+						if pose.rotation == 0:
+							assert(position == pose.grip - contact, "Idle/walk placement must remain unchanged")
+					else:
+						assert(position + Art.weapon_pivot_offset(source.get_size(),pose.rotation,Art.NON_MELEE_WEAPON_PIVOT) == Art.weapon_anchor(config,animation,f))
 				if animation == "attack":
 					var reference: Dictionary = catalog.attack_references[weapon.attack]
 					assert(is_equal_approx(frames.get_frame_duration(animation,f) / frames.get_animation_speed(animation), reference.durations_ms[f] / 1000.0))
@@ -300,7 +308,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 			assert(ready.rotation == -1 and extended.rotation == -1)
 			assert(extended.grip.x < ready.grip.x and extended.grip.y == ready.grip.y, "Thrust must extend horizontally")
 	assert(spear_count == 17)
-	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels without clipping and apply only the five sheet Y offsets above the left hand; 17 spears thrust, other melee weapons chop; fixed preview canvas and reference timing")
+	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels without clipping and keep the idle contact pixel attached through both attack rotations with unchanged sheet offsets; 17 spears thrust, other melee weapons chop; fixed preview canvas and reference timing")
 
 func verify_ui_font(node: Node) -> void:
 	if node is Label or node is Button or node is LineEdit:

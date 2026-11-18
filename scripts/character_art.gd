@@ -168,17 +168,23 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon := equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
-	# The melee image center follows the screen-left hand center in every pose.
+	# Rotate the sheet adjustment with the weapon around the gripping hand.
 	if data().primary_types.has(weapon.family):
-		return current_pose.grip + Vector2i(0, -int(weapon.get("y_up", 0)))
+		var offset := Vector2i(0, -int(weapon.get("y_up", 0)))
+		if current_pose.rotation == 1: offset = Vector2i(-offset.y, offset.x)
+		elif current_pose.rotation == -1: offset = Vector2i(offset.y, -offset.x)
+		return current_pose.grip + offset
 	return NON_MELEE_WEAPON_ANCHOR + current_pose.grip - pose("idle", 0, weapon.attack).grip
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon: Dictionary = equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
 	var size := part_rect(data().bow_shot, frame).size if weapon.attack == "bow_shot" and animation == "attack" else part_rect(weapon.sheet, weapon.slot).size
-	var pivot := PRIMARY_WEAPON_PIVOT if data().primary_types.has(weapon.family) else NON_MELEE_WEAPON_PIVOT
-	return weapon_anchor(config, animation, frame) - weapon_pivot_offset(size, current_pose.rotation, pivot)
+	if data().primary_types.has(weapon.family):
+		# Use the same pixel-center rotation as the hand and Image.rotate_90.
+		var pivot := Vector2i(Vector2(size) * PRIMARY_WEAPON_PIVOT)
+		return weapon_anchor(config, animation, frame) - rotated_point(pivot, size, current_pose.rotation)
+	return weapon_anchor(config, animation, frame) - weapon_pivot_offset(size, current_pose.rotation, NON_MELEE_WEAPON_PIVOT)
 
 static func weapon_pivot_offset(size: Vector2i, turns: int, normalized_pivot := PRIMARY_WEAPON_PIVOT) -> Vector2i:
 	# Rotate the original image-boundary pivot with the art, not the rotated AABB's bottom.
