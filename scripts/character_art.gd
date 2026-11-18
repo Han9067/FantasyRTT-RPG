@@ -37,7 +37,7 @@ static func data() -> Dictionary:
 
 static func defaults() -> Dictionary:
 	return {"skin": 0, "face": 0, "body": 4, "hair": 1, "hair_color": 1,
-		"beard": 0, "beard_color": 1, "weapon": 0, "weapon_item": 0,
+		"beard": 0, "beard_color": 1, "weapon": data().primary_types.find("one_sword"), "weapon_item": 0,
 		"offhand": maxi(0, data().secondary_types.find("one_shield")), "offhand_item": 0}
 
 static func human_data() -> Dictionary:
@@ -92,6 +92,19 @@ static func count(config: Dictionary, key: String) -> int:
 			if count(config, "offhand") == 0: return 0
 			return data().melee_groups[data().secondary_types[config.offhand]].size()
 	return 1
+
+static func selection_order(config: Dictionary, key: String) -> Array:
+	# Display order is independent of catalog indices stored in existing presets.
+	var order: Array = range(count(config, key))
+	if key not in ["weapon", "offhand"] or order.is_empty(): return order
+	var types: Array = data().primary_types if key == "weapon" else data().secondary_types
+	order.clear()
+	for family in ["one_sword", "one_axe", "one_blunt"]:
+		var index := types.find(family)
+		if index >= 0: order.append(index)
+	for index in range(types.size()):
+		if not order.has(index): order.append(index)
+	return order
 
 static func normalize(config: Dictionary) -> void:
 	# The creator always produces an unarmoured human; old equipment selections

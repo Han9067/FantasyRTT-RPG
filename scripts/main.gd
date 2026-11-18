@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.35")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.36")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -398,7 +398,8 @@ func select_gender(value: int) -> void:
 func change_part(key: String, direction: int) -> void:
 	var total := CharacterArt.count(appearance, key)
 	if total <= 1: return
-	appearance[key] = posmod(int(appearance[key]) + direction, total)
+	var order := CharacterArt.selection_order(appearance, key)
+	appearance[key] = order[posmod(order.find(int(appearance[key])) + direction, total)]
 	if key == "weapon":
 		appearance.erase("equipped_weapon")
 		appearance.weapon_item = 0

@@ -22,7 +22,7 @@ func run() -> void:
 	await process_frame
 	game.show_creation()
 	game.change_part("hair",1)
-	game.change_part("weapon",2)
+	assert(Art.equipped_weapon(game.appearance).family == "one_sword")
 	game.name_input.text = "제국의 여행자"
 	game.name_input.text_changed.emit(game.name_input.text)
 	game.create_button.pressed.emit()

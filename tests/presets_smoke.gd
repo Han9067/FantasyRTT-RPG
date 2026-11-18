@@ -72,6 +72,17 @@ func run() -> void:
 	restored = Store.new(path)
 	assert(restored.get_appearance(0).is_empty() and restored.get_appearance(1) == replacement)
 	assert(restored.get_appearance(-1).is_empty() and restored.get_appearance(3).is_empty())
+	# Catalog indices from older presets must retain their original weapon types.
+	var legacy := Art.defaults()
+	legacy.weapon = 0
+	legacy.weapon_item = 0
+	legacy.offhand = 3
+	legacy.offhand_item = 1
+	data.set_value("presets", "0", legacy)
+	assert(data.save(path) == OK)
+	restored = Store.new(path)
+	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "one_axe/1")
+	assert(Art.equipped_offhand(restored.get_appearance(0)).id == "one_sword/2")
 	DirAccess.remove_absolute(path)
 	print("PASS: three disabled empty slots, square popup choices, disk reload, independent appearance/weapon presets, unchanged personal details, preview/dependency refresh, isolated overwrite, cancel/screen cleanup and world continuity")
 	quit()

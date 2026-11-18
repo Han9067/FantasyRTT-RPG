@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.35")
+	assert(game.game_version == "0.0.36")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
@@ -138,7 +138,8 @@ func run() -> void:
 		var key: String = entry[0]
 		var previous: int = game.appearance[key]
 		game.part_controls[key].right.pressed.emit()
-		assert(game.appearance[key] == (previous + 1) % Art.count(game.appearance, key))
+		var order := Art.selection_order(game.appearance, key)
+		assert(game.appearance[key] == order[(order.find(previous) + 1) % order.size()])
 		assert(not game.part_controls[key].number.text.is_empty())
 		assert(game.portrait.size == Vector2(Art.PREVIEW_REGION.size) * Art.PREVIEW_SCALE, "Changing equipment must not resize the character preview")
 		assert(game.portrait.texture.get_size() == Vector2(Art.PREVIEW_REGION.size))
@@ -151,8 +152,16 @@ func run() -> void:
 	assert(game.appearance.face == 39)
 	for hidden in ["race", "hands", "hat_family", "hat_color", "hat"]:
 		assert(not game.part_controls.has(hidden) and not game.appearance.has(hidden))
-	assert(game.part_controls.weapon.number.text == "한손 도끼")
-	game.change_part("weapon", 2)
+	assert(game.part_controls.weapon.number.text == "한손 검")
+	assert(Art.selection_order(game.appearance,"weapon") == [2,0,1,3,4,5,6,7])
+	assert(Art.selection_order(game.appearance,"offhand") == [3,0,1,2])
+	for family in ["one_sword","one_axe","one_blunt","two_axe","two_blunt","two_polearm","two_spear","two_sword"]:
+		assert(Art.equipped_weapon(game.appearance).family == family)
+		game.change_part("weapon",1)
+	assert(Art.equipped_weapon(game.appearance).family == "one_sword")
+	game.appearance.offhand = catalog.secondary_types.find("one_shield")
+	game.appearance.offhand_item = 0
+	game.refresh_part_controls()
 	game.change_part("weapon_item", 3)
 	assert(Art.equipped_weapon(game.appearance).id == "one_sword/4")
 	assert(game.part_controls.weapon_item.number.text == "04")
@@ -169,7 +178,7 @@ func run() -> void:
 			assert(Art.equipped_offhand(game.appearance).id == "one_shield/%d" % expected)
 			game.change_part("offhand_item", direction)
 	assert(previous_frame != game.character_frames.get_frame_texture("idle",0).get_image().get_data())
-	game.change_part("weapon", 1)
+	game.change_part("weapon", 3)
 	assert(Art.equipped_weapon(game.appearance).id == "two_axe/1")
 	for key in ["offhand", "offhand_item"]:
 		assert(game.part_controls[key].left.disabled and game.part_controls[key].right.disabled)
@@ -240,7 +249,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 	var spear_count := 0
 	assert(catalog.weapon_items.has("two_spear/17") and not catalog.weapon_items.has("spear_101"))
 	var expected_offsets := {"one_axe/1":4, "one_axe/2":6, "one_blunt/1":7}
-	var sword_offsets := [5,10,11,10,10,10,10,9,9,10,11,7,6,8]
+	var sword_offsets := [7,10,11,10,10,10,10,9,9,10,11,7,6,8]
 	for index in range(sword_offsets.size()):
 		expected_offsets["one_sword/%d" % (index + 1)] = sword_offsets[index]
 	for removed in ["throwing weapons", "ranged weapons/pistol", "ranged weapons/musket", "ranged weapons/arquebus"]:
