@@ -56,7 +56,7 @@ func run() -> void:
 				for frame in range(Art.FRAME_COUNTS[animation]):
 					var pose := Art.pose(animation, frame)
 					var position := Art.weapon_position(config, animation, frame)
-					assert(position + Art.rotated_point(Vector2i(weapon.grip[0], weapon.grip[1]), Vector2i(32,32), pose.rotation) == pose.grip, "Weapon detached from hand")
+					assert(position + Vector2i(16,16) == Art.weapon_center(config,animation,frame), "Primary weapon image center must use its shared anchor")
 					var art := Art.compose(config, animation, frame)
 					assert(Rect2i(preview.region).encloses(art.get_used_rect()), "Weapon clipped in preview")
 					# Verify both visible hands use exactly the selected skin, overlaid above the weapon.
@@ -104,14 +104,15 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.27")
+	assert(game.game_version == "0.0.28")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
 	await process_frame
 	verify_ui_font(game)
+	assert(game.portrait.size == Vector2(Art.PREVIEW_REGION.size) * Art.PREVIEW_SCALE)
 	assert(game.bottom_panel.is_ancestor_of(game.portrait))
-	assert(game.portrait.get_global_rect().get_center().is_equal_approx(game.portrait.get_parent().get_global_rect().get_center()))
+	assert(game.portrait.get_global_rect().get_center().distance_to(game.portrait.get_parent().get_global_rect().get_center()) <= 0.71)
 	for label in game.bottom_panel.find_children("*", "Label", true, false):
 		assert(label.text not in ["외형 미리보기", "외형 파츠", "좌우 버튼으로 외형과 무기 선택", "성별과 관계없이 파츠 조합 가능"])
 	assert(not game.top_panel.is_ancestor_of(game.portrait))
@@ -135,6 +136,8 @@ func run() -> void:
 		game.part_controls[key].right.pressed.emit()
 		assert(game.appearance[key] == (previous + 1) % Art.count(game.appearance, key))
 		assert(not game.part_controls[key].number.text.is_empty())
+		assert(game.portrait.size == Vector2(Art.PREVIEW_REGION.size) * Art.PREVIEW_SCALE, "Changing equipment must not resize the character preview")
+		assert(game.portrait.texture.get_size() == Vector2(Art.PREVIEW_REGION.size))
 		game.part_controls[key].left.pressed.emit()
 		assert(game.appearance[key] == previous)
 	game.appearance.face = 39
@@ -250,6 +253,8 @@ func verify_equipment(catalog: Dictionary) -> void:
 		var frames := Art.animations(config)
 		var preview := Art.preview_texture(frames.get_frame_texture("idle", 0))
 		var region := preview.region
+		assert(preview.get_size() == Vector2(Art.PREVIEW_REGION.size), "Equipment must not resize the preview canvas")
+		assert(Art.weapon_center(config,"idle",0) == Art.PRIMARY_WEAPON_CENTER, "All primary weapons must share the same resting X/Y center")
 		var body := Art.part_image(catalog.bodies[config.body], 0).get_used_rect()
 		var face := Art.part_image(Art.human_data().heads[config.skin], config.face).get_used_rect()
 		var center := Vector2(Art.BODY_ORIGIN) + Rect2(body.merge(face)).get_center()
@@ -269,7 +274,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 					occupied.position += position
 					assert(Rect2i(Vector2i.ZERO, Art.FRAME_SIZE).encloses(occupied), "Weapon clipped before composition: " + id)
 					assert(Rect2i(region).encloses(occupied), "Weapon clipped by preview crop: " + id)
-					assert(position + Art.rotated_point(Vector2i(weapon.grip[0], weapon.grip[1]), source.get_size(), pose.rotation) == pose.grip)
+					assert(position + rotated.get_size()/2 == Art.weapon_center(config,animation,f))
 				if animation == "attack":
 					var reference: Dictionary = catalog.attack_references[weapon.attack]
 					assert(is_equal_approx(frames.get_frame_duration(animation,f) / frames.get_animation_speed(animation), reference.durations_ms[f] / 1000.0))
@@ -287,7 +292,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 			assert(ready.rotation == -1 and extended.rotation == -1)
 			assert(extended.grip.x < ready.grip.x and extended.grip.y == ready.grip.y, "Thrust must extend horizontally")
 	assert(spear_count == 17)
-	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels and grips without clipping; 17 spears thrust, other melee weapons chop; stable preview crops and reference timing")
+	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels without clipping and share a centered resting anchor; 17 spears thrust, other melee weapons chop; fixed preview canvas and reference timing")
 
 func verify_ui_font(node: Node) -> void:
 	if node is Label or node is Button or node is LineEdit:

@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.27")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.28")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -255,11 +255,14 @@ func show_creation() -> void:
 	frame.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	frame.custom_minimum_size = Vector2(330, 210)
 	preview_column.add_child(frame)
+	var preview_center := CenterContainer.new()
+	frame.add_child(preview_center)
 	portrait = TextureRect.new()
+	portrait.custom_minimum_size = Vector2(CharacterArt.PREVIEW_REGION.size) * CharacterArt.PREVIEW_SCALE
 	portrait.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	frame.add_child(portrait)
+	preview_center.add_child(portrait)
 	var previews := HBoxContainer.new()
 	previews.add_theme_constant_override("separation", 6)
 	preview_column.add_child(previews)

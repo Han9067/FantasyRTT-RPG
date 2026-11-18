@@ -3,12 +3,15 @@ extends RefCounted
 ## Composite original modular sprites at integer coordinates; never resample source art.
 const ROOT := "res://assets/medieval/"
 const FRAME_SIZE := Vector2i(128, 96)
-const PREVIEW_MIN_SIZE := Vector2i(80, 56)
+const PREVIEW_REGION := Rect2i(16, 11, 129, 97)
+const PREVIEW_SCALE := 2
+const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 0.5)
+const PRIMARY_WEAPON_CENTER := Vector2i(68, 60)
 const WORLD_SCALE := 1.0
 const FEET_Y := 72
 const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8, "attack": 6}
 # Original chop_attack_sample.gif: six fixed-body frames, exactly 100ms each.
-# Padding accommodates enlarged weapons; starter previews retain their previous scale.
+# Padding accommodates enlarged weapons at their original pixel size.
 const BODY_ORIGIN := Vector2i(64, 40)
 const CANVAS_PADDING := Vector2i(32, 16)
 const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
@@ -161,11 +164,17 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 	if turns == -1: return Vector2i(point.y, size.x - 1 - point.x)
 	return point
 
+static func weapon_center(config: Dictionary, animation: String, frame: int) -> Vector2i:
+	var attack: String = equipped_weapon(config).attack
+	# Every weapon shares one resting image center. Retain each animation's motion.
+	return PRIMARY_WEAPON_CENTER + pose(animation, frame, attack).grip - pose("idle", 0, attack).grip
+
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon: Dictionary = equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
-	var grip := Vector2i(29,16) if weapon.attack == "bow_shot" and animation == "attack" else Vector2i(int(weapon.grip[0]), int(weapon.grip[1]))
-	return current_pose.grip - rotated_point(grip, part_rect(weapon.sheet, weapon.slot).size, current_pose.rotation)
+	var size := part_rect(data().bow_shot, frame).size if weapon.attack == "bow_shot" and animation == "attack" else part_rect(weapon.sheet, weapon.slot).size
+	if current_pose.rotation != 0: size = Vector2i(size.y, size.x)
+	return weapon_center(config, animation, frame) - Vector2i(Vector2(size) * PRIMARY_WEAPON_PIVOT)
 
 static func atlas_image(filename: String) -> Image:
 	if not images.has(filename):
@@ -239,11 +248,6 @@ static func animations(config: Dictionary) -> SpriteFrames:
 	var frames := SpriteFrames.new()
 	frames.remove_animation("default")
 	var textures: Array[Texture2D] = []
-	var body := part_image(data().bodies[config.body], 0).get_used_rect()
-	var face := part_image(human_data().heads[config.skin], config.face).get_used_rect()
-	var center := Vector2(BODY_ORIGIN) + Rect2(body.merge(face)).get_center()
-	var top_left := Vector2i((center - Vector2(PREVIEW_MIN_SIZE) / 2.0).floor())
-	var twice_center := Vector2i(center * 2.0)
 	var timing: Dictionary = data().attack_references[equipped_weapon(config).attack]
 	for animation in FRAME_COUNTS:
 		frames.add_animation(animation)
@@ -253,13 +257,10 @@ static func animations(config: Dictionary) -> SpriteFrames:
 			var image := compose(config, animation, i)
 			var texture := ImageTexture.create_from_image(image)
 			textures.append(texture)
-			var used := image.get_used_rect()
-			top_left = top_left.min(used.position).min(twice_center - used.end)
 			frames.add_frame(animation, texture, float(timing.durations_ms[i]) / 100.0 if animation == "attack" else 1.0)
-	# Use one crop for every pose, so long equipment stays visible without camera jitter.
-	var preview_region := Rect2i(top_left, twice_center - 2 * top_left)
+	# One equipment-independent canvas keeps the body centered and the scale fixed.
 	for texture in textures:
-		texture.set_meta("preview_region", Rect2(preview_region))
+		texture.set_meta("preview_region", Rect2(PREVIEW_REGION))
 	return frames
 
 static func preview_texture(source: Texture2D) -> AtlasTexture:
