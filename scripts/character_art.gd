@@ -6,6 +6,7 @@ const FRAME_SIZE := Vector2i(136, 104)
 const PREVIEW_REGION := Rect2i(0, 0, 136, 104)
 const PREVIEW_SCALE := 3
 const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 1.0)
+const PRIMARY_MELEE_OFFSET := Vector2i(0, 8)
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
 const FEET_Y := 80
@@ -167,9 +168,9 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon := equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
-	# Melee offsets start at the visible left hand center in every pose.
+	# Apply the shared melee adjustment in canvas coordinates after pose rotation.
 	if data().primary_types.has(weapon.family):
-		return current_pose.grip
+		return current_pose.grip + PRIMARY_MELEE_OFFSET
 	return NON_MELEE_WEAPON_ANCHOR + current_pose.grip - pose("idle", 0, weapon.attack).grip
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
