@@ -1,5 +1,6 @@
 extends HBoxContainer
-## Three small, screen-space cards; portraits reuse the original idle texture.
+## Three screen-space cards composed from original idle artwork.
+const Art = preload("res://scripts/character_art.gd")
 const CARD_SIZE := Vector2(112, 162)
 const GAP := 12
 var battle: BattleMap
@@ -38,6 +39,11 @@ func _ready() -> void:
 		portrait_panel.add_child(holder)
 		var portrait := TextureRect.new()
 		var texture := members[0].sprite_frames.get_frame_texture(&"idle", 0)
+		if key != "hero":
+			# Card-only appearance: first skin for both troop types, original equipment.
+			var appearance := Art.archer_appearance(true, 0) if key == "archers" else Art.infantry_appearance(true, 0)
+			appearance.skin = 0
+			texture = ImageTexture.create_from_image(Art.compose(appearance))
 		var region := texture.get_image().get_used_rect()
 		var crop := AtlasTexture.new()
 		crop.atlas = texture

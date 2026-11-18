@@ -28,7 +28,15 @@ func run() -> void:
 		assert(card.get_child(0).size.y > card.get_child(1).size.y)
 		assert(roster.counts[key].horizontal_alignment == HORIZONTAL_ALIGNMENT_CENTER)
 		var portrait: TextureRect = card.get_child(0).get_child(0).get_child(0)
-		assert(portrait.texture.atlas == map.combat.group(key)[0].sprite_frames.get_frame_texture(&"idle", 0))
+		var original: Texture2D = map.combat.group(key)[0].sprite_frames.get_frame_texture(&"idle", 0)
+		if key == "hero":
+			assert(portrait.texture.atlas == original)
+		else:
+			var art = preload("res://scripts/character_art.gd")
+			var appearance: Dictionary = art.archer_appearance(true,0) if key == "archers" else art.infantry_appearance(true,0)
+			assert(original.get_image().get_data() == art.compose(appearance).get_data(), "Card appearance must not change battlefield frames")
+			appearance.skin = 0
+			assert(portrait.texture.atlas.get_image().get_data() == art.compose(appearance).get_data(), "Troop cards use skin 1 with their original equipment")
 	# Cards are real unit selection controls; field selection shares their highlight state.
 	for key: String in roster.selected_cards: assert(not roster.selected_cards[key])
 	var card_event := InputEventMouseButton.new()

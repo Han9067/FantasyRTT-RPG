@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.25")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.26")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -34,7 +34,6 @@ var age_label: Label
 var name_input: LineEdit
 var age_slider: HSlider
 var create_button: Button
-var creation_theme: Theme
 var paper_background: StyleBoxTexture
 var preset_store = PresetStore.new()
 var preset_save_button: Button
@@ -166,13 +165,6 @@ func panel() -> PanelContainer:
 func show_creation() -> void:
 	clear_screen()
 	current_screen = "creation"
-	if creation_theme == null:
-		creation_theme = GameUITheme.build().duplicate()
-		var bold := FontVariation.new()
-		bold.base_font = creation_theme.default_font
-		bold.variation_embolden = 0.8
-		creation_theme.default_font = bold
-	screen.theme = creation_theme
 	preview_animation = "idle"
 	animation_time = 0.0
 	last_preview_frame = -1
@@ -328,7 +320,7 @@ func show_creation() -> void:
 func create_preset_popup() -> void:
 	preset_popup = PopupPanel.new()
 	preset_popup.name = "PresetSavePopup"
-	preset_popup.theme = creation_theme
+	preset_popup.theme = theme
 	preset_popup.unresizable = true
 	preset_popup.close_requested.connect(preset_popup.hide)
 	add_child(preset_popup)
