@@ -25,6 +25,8 @@ var city_entry_cache: Dictionary = {}
 var city_panel: PanelContainer
 var city_panel_title: Label
 var city_actions: Array[Button] = []
+var inventory := preload("res://scripts/world_inventory.gd").new()
+var menu_bar := HBoxContainer.new()
 var city_overlay: CanvasLayer
 
 func _ready() -> void:
@@ -68,9 +70,29 @@ func _ready() -> void:
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	Input.set_custom_mouse_cursor(make_entrance_cursor(),Input.CURSOR_CROSS,Vector2(24,16))
 	create_city_panel()
+	create_world_menu()
 	Input.set_custom_mouse_cursor(make_blocked_cursor(),Input.CURSOR_FORBIDDEN,Vector2(12,12))
 	get_viewport().size_changed.connect(resize_map)
 	get_viewport().size_changed.connect(layout_city_panel)
+
+func create_world_menu() -> void:
+	menu_bar.theme = GameUITheme.build()
+	city_overlay.add_child(menu_bar)
+	for title in ["캐릭터", "인벤토리", "부대", "저널"]:
+		var action := Button.new()
+		action.text = title
+		action.custom_minimum_size = Vector2(116, 48)
+		action.focus_mode = Control.FOCUS_NONE
+		menu_bar.add_child(action)
+		if title == "인벤토리": action.pressed.connect(open_inventory)
+	menu_bar.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, 18)
+	city_overlay.add_child(inventory)
+	inventory.setup(character_appearance)
+
+func open_inventory() -> void:
+	pan_keys.clear()
+	city_popup.hide()
+	inventory.open()
 
 func playable_rect() -> Rect2:
 	return Rect2(Vector2(18,32),map_size-Vector2(36,50))
@@ -184,6 +206,10 @@ func pan_camera(direction: Vector2, delta: float) -> void:
 	clamp_camera()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if inventory.visible:
+		if event.is_action_pressed("ui_cancel"): inventory.hide()
+		get_viewport().set_input_as_handled()
+		return
 	if event is InputEventMouse and not can_interact_at(event.position): return
 	if event is InputEventKey:
 		var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
@@ -221,6 +247,7 @@ func restore_travel(position_in_world: Vector2, camera_position: Vector2, zoom: 
 		if city.id == city_id and city_bounds(city).has_point(unit_position): enter_city(city)
 
 func can_interact_at(point: Vector2) -> bool:
+	if inventory.visible or menu_bar.get_global_rect().has_point(point): return false
 	if not screen_playable_rect().has_point(point): return false
 	if is_instance_valid(city_panel) and city_panel.visible and city_panel.get_global_rect().has_point(point): return false
 	for control in hud_controls:

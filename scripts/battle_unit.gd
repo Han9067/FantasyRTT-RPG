@@ -12,6 +12,10 @@ var allied := true
 var max_hp := 10
 var hp := 10
 var attack_damage := 4
+const HERO_HP := 100
+const HERO_DAMAGE := 6
+const HERO_ACCURACY := 0.8
+
 var accuracy := 0.75
 var ranged := false
 var shot_time := -1.0

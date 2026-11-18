@@ -128,7 +128,7 @@ func run() -> void:
 	for unit in map.archers:
 		assert(unit.allied and unit.ranged and unit.hp == 6 and unit.max_hp == 6 and unit.attack_damage == 4 and unit.accuracy == 0.6)
 	for unit in map.infantry + map.enemies: assert(unit.accuracy == 0.75 and not unit.ranged)
-	assert(map.hero_group[0].accuracy == 1.0)
+	assert(map.hero_group[0].accuracy == 0.8)
 	click(map,map.archers[0])
 	assert(map.selection.size() == 20 and map.selection.has(map.archers[0]) and not map.selection.has(map.infantry[0]))
 	click(map,map.infantry[0])

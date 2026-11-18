@@ -31,6 +31,30 @@ func run() -> void:
 	map.set_physics_process(false)
 	map.set_process(false)
 	assert(not map.city_panel.visible and map.current_city.is_empty())
+	for index in range(4):
+		var action: Button = map.menu_bar.get_child(index)
+		assert(action.text == ["캐릭터", "인벤토리", "부대", "저널"][index])
+		assert(action.size == Vector2(116, 48))
+		assert(not map.can_interact_at(action.get_global_rect().get_center()))
+		if index != 1:
+			action.pressed.emit()
+			assert(not map.inventory.visible)
+	map.enter_city(map.cities[0])
+	map.menu_bar.get_child(1).pressed.emit()
+	await process_frame
+	await process_frame
+	assert(map.inventory.visible and map.inventory.slot_grid.columns == 8)
+	assert(map.inventory.slot_grid.get_child_count() == 64)
+	for slot in map.inventory.slot_grid.get_children(): assert(slot.size == Vector2(64, 64))
+	assert(map.inventory.sheet.get_global_rect().get_center().distance_to(Vector2(640, 400)) < 1)
+	assert(not map.can_interact_at(Vector2(640, 400)))
+	var cancel := InputEventKey.new()
+	cancel.keycode = KEY_ESCAPE
+	cancel.pressed = true
+	map._unhandled_input(cancel)
+	assert(not map.inventory.visible and map.current_city == map.cities[0])
+	map.exit_city()
+
 	# The drawn frame has exactly three extra native pixels, not a scaled texture.
 	var frame := GameUITheme.panel_style().texture.get_image()
 	for y in range(5): assert(frame.get_pixel(16,y) == GameUITheme.BORDER)

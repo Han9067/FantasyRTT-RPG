@@ -109,7 +109,7 @@ func run() -> void:
 			map.update_city_hover(city_point,true)
 			assert(not map.city_popup.visible)
 	map.zoom_level = 3
-	map.camera.position = Vector2(1328,592)-Vector2(620,380)/3
+	map.camera.position = Vector2(1328,592)-Vector2(620,300)/3
 	map.clamp_camera()
 	var edge_hover := map.world_to_screen(Vector2(1328,592))
 	map.update_city_hover(edge_hover)

@@ -78,10 +78,10 @@ func _ready() -> void:
 	outline_material.shader = Outline
 	Input.set_custom_mouse_cursor(ATTACK_CURSOR, Input.CURSOR_CROSS, Vector2(27, 5))
 	var hero := BattleUnit.new()
-	hero.max_hp = 100
-	hero.hp = 100
-	hero.attack_damage = 6
-	hero.accuracy = 1.0
+	hero.max_hp = BattleUnit.HERO_HP
+	hero.hp = hero.max_hp
+	hero.attack_damage = BattleUnit.HERO_DAMAGE
+	hero.accuracy = BattleUnit.HERO_ACCURACY
 	player_sprite = hero
 	player_sprite.sprite_frames = character_frames
 	player_sprite.centered = false

@@ -97,6 +97,7 @@ func run() -> void:
 	await process_frame
 	hero = map.hero_group[0]
 	victim = map.enemies[0]
+	hero.accuracy = 1.0
 	victim.accuracy = 1.0 # Isolate exact impact timing from the separately tested hit roll.
 	for unit in map.infantry: unit.take_damage(1000)
 	for unit in map.enemies:
