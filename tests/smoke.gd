@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.47")
+	assert(game.game_version == "0.0.48")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item["is_unique"] is bool)
 	assert(Art.weapon_by_item_id(1011).is_unique and not Art.weapon_by_item_id(1001).is_unique)
@@ -280,6 +280,11 @@ func verify_equipment(catalog: Dictionary) -> void:
 		config.equipped_weapon = id
 		var weapon: Dictionary = Art.equipped_weapon(config)
 		assert(int(weapon.get("y_up",0)) == expected_offsets.get(id,0), "Only sheet rows may shift weapons upward")
+		if weapon.two_handed:
+			var armed := Art.compose(config)
+			var with_free_hand := armed.duplicate() as Image
+			Art.paste(with_free_hand, Art.human_data().hand, config.skin, Art.pose("idle", 0).free_hand)
+			assert(armed.get_data() != with_free_hand.get_data(), "Two-handed weapon shows offhand: " + id)
 		# The ranged smoke check covers all twelve original bow shot frames.
 		if id == "bow_01":
 			assert(weapon.attack == "bow_shot")
@@ -294,13 +299,15 @@ func verify_equipment(catalog: Dictionary) -> void:
 		var region := preview.region
 		assert(preview.get_size() == Vector2(Art.PREVIEW_REGION.size), "Equipment must not resize the preview canvas")
 		if (catalog.melee_groups.has(weapon.family) and weapon.family != "one_shield"):
-			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack).grip - Vector2i(0,expected_offsets.get(id,0)), "Melee anchor must use the sheet upward offset")
+			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack,weapon.family).grip - Vector2i(0,expected_offsets.get(id,0)), "Melee anchor must use the sheet upward offset")
 		else:
-			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR)
+			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR + (Vector2i(2,0) if weapon.family == "bow" else Vector2i.ZERO))
 		assert(region == Rect2(Art.PREVIEW_REGION), "All weapons share the same padded preview canvas")
 		for animation in Art.FRAME_COUNTS:
 			for f in range(Art.FRAME_COUNTS[animation]):
-				var pose := Art.pose(animation, f, weapon.attack)
+				var pose := Art.pose(animation, f, weapon.attack, weapon.family)
+				if weapon.family == "two_polearm":
+					assert(pose.grip == Art.pose(animation, f, "thrust_attack").grip)
 				var rendered := frames.get_frame_texture(animation, f)
 				assert(Art.preview_texture(rendered).region == region, "Preview crop changes between poses")
 				assert(Rect2i(region).encloses(rendered.get_image().get_used_rect()))

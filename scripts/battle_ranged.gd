@@ -60,7 +60,9 @@ func predicted_aim(start: Vector2, target: BattleUnit) -> Vector2:
 func fire(unit: BattleUnit, target: BattleUnit) -> BattleArrow:
 	map.combat.face(unit, target.position)
 	var hit := unit.roll_hit()
-	var start := unit.position+Vector2(17.0 if unit.flip_h else -17.0,-13.0)
+	var muzzle := Vector2(-17, -13) + Vector2(CharacterArt.BOW_OFFSET)
+	if unit.flip_h: muzzle.x = -muzzle.x
+	var start := unit.position + muzzle
 	var aim := predicted_aim(start, target)
 	var point := aim
 	# A miss visibly falls wide; a successful accuracy roll can still be dodged.
