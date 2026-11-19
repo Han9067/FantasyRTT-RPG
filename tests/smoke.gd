@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.50")
+	assert(game.game_version == "0.0.51")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item["is_unique"] is bool)
 	assert(Art.weapon_by_item_id(1011).is_unique and not Art.weapon_by_item_id(1001).is_unique)
@@ -296,12 +296,15 @@ func verify_equipment(catalog: Dictionary) -> void:
 			for animation in Art.FRAME_COUNTS:
 				for f in Art.frame_count(config, animation):
 					var bow_pose := Art.pose(animation, f, weapon.attack, weapon.equip_type)
+					if animation == "attack" or (animation == "idle" and f == 0):
+						assert(bow_pose.grip == Art.CANVAS_PADDING + Vector2i(35,45))
+					assert(Art.weapon_anchor(config, animation, f) == bow_pose.grip + Vector2i(2,-1))
 					assert(bow_pose.free_hand + Vector2i(8,8) == bow_pose.grip + Vector2i(4,-2))
 					var armed := Art.compose(config, animation, f)
 					var with_hand := armed.duplicate() as Image
 					Art.paste(with_hand, Art.human_data().hand, config.skin, bow_pose.free_hand)
 					assert(with_hand.get_data() == armed.get_data())
-			assert(Art.weapon_anchor(config, "idle", 0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(1,-2))
+			assert(Art.weapon_anchor(config, "idle", 0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(1,0))
 			continue
 		var is_spear: bool = weapon.family == "two_spear"
 		assert(weapon.attack == ("thrust_attack" if is_spear else "chop_attack"))

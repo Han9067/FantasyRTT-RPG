@@ -9,6 +9,7 @@ const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 0.5)
 const SHIELD_WEAPON_PIVOT := Vector2(0.5, 1.0)
 const ARCHER_BOW := "bow/1"
 const BOW_OFFHAND_CENTER := Vector2i(4, -2)
+const BOW_HOLD_OFFSET := Vector2i(0, 2)
 const BOW_OFFSET := Vector2i(1, 0) # Native sprite faces left; flip_h mirrors this offset.
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
@@ -166,6 +167,7 @@ static func pose(animation: String, frame: int, attack_type := "chop_attack", eq
 	var result := local_pose(animation, frame, attack_type, equip_type)
 	result.grip += CANVAS_PADDING
 	if equip_type == 3:
+		result.grip += BOW_HOLD_OFFSET
 		# The hand textures are 16x16. free_hand stores the top-left, grip the center.
 		result.free_hand = result.grip + BOW_OFFHAND_CENTER - Vector2i(8, 8)
 	else:
@@ -222,7 +224,7 @@ static func bow_shot_slot(weapon: Dictionary, frame: int) -> int:
 	return (int(weapon.number) - 1) * 12 + frame
 
 static func bow_offset(weapon: Dictionary) -> Vector2i:
-	return BOW_OFFSET - Vector2i(0, int(weapon.y_up))
+	return BOW_HOLD_OFFSET + BOW_OFFSET - Vector2i(0, int(weapon.y_up))
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon: Dictionary = equipped_weapon(config)
