@@ -7,7 +7,7 @@ const PREVIEW_REGION := Rect2i(0, 0, 136, 104)
 const PREVIEW_SCALE := 3
 const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 0.5)
 const SHIELD_WEAPON_PIVOT := Vector2(0.5, 1.0)
-const BOW_OFFSET := Vector2i(2, 0) # Native sprite faces left; flip_h mirrors this offset.
+const BOW_OFFSET := Vector2i(1, 0) # Native sprite faces left; flip_h mirrors this offset.
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
 const FEET_Y := 80
@@ -164,7 +164,7 @@ static func pose(animation: String, frame: int, attack_type := "chop_attack", fa
 	return result
 
 static func local_pose(animation: String, frame: int, attack_type: String, family: String) -> Dictionary:
-	var spear_grip := attack_type == "thrust_attack" or family == "two_polearm"
+	var spear_grip := attack_type == "thrust_attack" or family in ["two_polearm", "two_axe", "two_blunt"]
 	if attack_type == "bow_shot" and animation == "attack":
 		return {"bob": 0, "grip": Vector2i(35,43), "free_hand": Vector2i(46,41),
 			"rotation": 0, "visible": true, "effect": -1, "effect_origin": Vector2i.ZERO, "body_frame": 0}

@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.48")
+	assert(game.game_version == "0.0.49")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item["is_unique"] is bool)
 	assert(Art.weapon_by_item_id(1011).is_unique and not Art.weapon_by_item_id(1001).is_unique)
@@ -301,12 +301,12 @@ func verify_equipment(catalog: Dictionary) -> void:
 		if (catalog.melee_groups.has(weapon.family) and weapon.family != "one_shield"):
 			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack,weapon.family).grip - Vector2i(0,expected_offsets.get(id,0)), "Melee anchor must use the sheet upward offset")
 		else:
-			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR + (Vector2i(2,0) if weapon.family == "bow" else Vector2i.ZERO))
+			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR + (Vector2i(1,0) if weapon.family == "bow" else Vector2i.ZERO))
 		assert(region == Rect2(Art.PREVIEW_REGION), "All weapons share the same padded preview canvas")
 		for animation in Art.FRAME_COUNTS:
 			for f in range(Art.FRAME_COUNTS[animation]):
 				var pose := Art.pose(animation, f, weapon.attack, weapon.family)
-				if weapon.family == "two_polearm":
+				if weapon.family in ["two_axe", "two_blunt", "two_polearm"]:
 					assert(pose.grip == Art.pose(animation, f, "thrust_attack").grip)
 				var rendered := frames.get_frame_texture(animation, f)
 				assert(Art.preview_texture(rendered).region == region, "Preview crop changes between poses")
