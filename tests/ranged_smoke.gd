@@ -209,11 +209,11 @@ func run() -> void:
 			var path_after := probe.position+probe.sprite.position
 			probe.elapsed = probe.duration*fraction
 			probe.update_pose()
-			assert(Vector2.LEFT.rotated(probe.sprite.rotation).dot((path_after-path_before).normalized()) > 0.999)
+			assert(Vector2.RIGHT.rotated(probe.sprite.rotation).dot((path_after-path_before).normalized()) > 0.999)
 		probe.advance(probe.duration)
 		assert(probe.position.is_equal_approx(probe.landing) and probe.sprite.position.is_zero_approx())
 		if offset == Vector2(0,-640):
-			assert(Vector2.LEFT.rotated(probe.sprite.rotation).y < 0, "Do not force downward orientation against the actual path")
+			assert(Vector2.RIGHT.rotated(probe.sprite.rotation).y < 0, "Do not force downward orientation against the actual path")
 		probe.free()
 	# At maximum range retain the raised 160px arc / horizontal launch angle.
 	# Nearer shots must become progressively flatter, without the old minimum loft.
@@ -221,7 +221,7 @@ func run() -> void:
 	for distance in [40.0,80.0,160.0,320.0,480.0,640.0]:
 		var distance_probe := BattleArrow.new()
 		distance_probe.configure(shooter.position,shooter.position+Vector2(distance,0),shooter,victim,true,Ranged.RANGE)
-		var launch_tip := Vector2.LEFT.rotated(distance_probe.sprite.rotation)
+		var launch_tip := Vector2.RIGHT.rotated(distance_probe.sprite.rotation)
 		var launch_angle := absf(launch_tip.angle())
 		assert(launch_angle > previous_angle, "Closer shots must use a smaller launch angle")
 		previous_angle = launch_angle

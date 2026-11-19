@@ -68,9 +68,9 @@ func update_pose() -> void:
 	var t := (index-1+fraction)/PATH_SEGMENTS
 	position = launch.lerp(landing,t)
 	sprite.position = path_points[index-1].lerp(path_points[index],fraction)-(landing-launch)*t
-	# arrow_01 points left in its untouched source PNG. Follow the actual segment.
+	# arrow_01 points right in its untouched source PNG. Follow the actual segment.
 	var tangent := path_points[index]-path_points[index-1]
-	sprite.rotation = tangent.angle()+PI
+	sprite.rotation = tangent.angle()
 
 func advance(delta: float) -> bool:
 	elapsed = minf(duration, elapsed+delta)
