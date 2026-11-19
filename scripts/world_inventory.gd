@@ -13,6 +13,11 @@ class ItemIcon extends TextureRect:
 		else:
 			stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
 
+class ItemSlot extends Panel:
+	var item: Dictionary = {}
+
+const INITIAL_FAMILIES := ["one_axe", "one_blunt", "two_sword", "two_axe", "two_blunt",
+	"two_spear", "two_polearm", "bow", "crossbow"]
 const EQUIPMENT_SIZE := Vector2(64, 64)
 const WEAPON_ICON_SCALE := 1.4
 var item_textures: Dictionary = {}
@@ -20,6 +25,9 @@ var sheet := PanelContainer.new()
 var slot_style := GameUITheme.paper_style(GameUITheme.IVORY, GameUITheme.BUTTON_BORDER, 5)
 var section_style := GameUITheme.panel_style(10)
 var slot_grid := GridContainer.new()
+var item_popup := PanelContainer.new()
+var item_title := Label.new()
+var hovered_slot: ItemSlot
 
 func setup(appearance: Dictionary) -> void:
 	theme = GameUITheme.build()
@@ -72,13 +80,11 @@ func setup(appearance: Dictionary) -> void:
 	var primary := CharacterArt.equipped_weapon(appearance)
 	var secondary := CharacterArt.equipped_offhand(appearance)
 	for label in ["무기1", "투구", "무기2", "장갑", "갑옷", "신발", "악세사리", "악세사리", "악세사리"]:
-		var cell := Panel.new()
-		cell.custom_minimum_size = EQUIPMENT_SIZE
-		cell.add_theme_stylebox_override("panel", slot_style)
-		gear.add_child(cell)
+		var cell := add_item_slot(gear)
 		var item: Dictionary = {}
 		if label == "무기1": item = primary
 		if label == "무기2": item = secondary
+		cell.item = item
 		var contents: Control
 		if item.is_empty():
 			var empty_label := caption(label, 15)
@@ -88,6 +94,7 @@ func setup(appearance: Dictionary) -> void:
 			var image := ItemIcon.new()
 			image.texture = inventory_item_texture(item)
 			contents = image
+		contents.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cell.add_child(contents)
 		contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var stats := VBoxContainer.new()
@@ -104,19 +111,76 @@ func setup(appearance: Dictionary) -> void:
 	slot_grid.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
 	section(columns, slot_grid)
 	for index in range(64):
-		var slot := Panel.new()
-		slot.custom_minimum_size = Vector2(64, 64)
-		slot.add_theme_stylebox_override("panel", slot_style)
-		slot_grid.add_child(slot)
+		var slot := add_item_slot(slot_grid)
 		var item_icon := ItemIcon.new()
 		slot.add_child(item_icon)
 		item_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for index in INITIAL_FAMILIES.size():
+		var id: String = CharacterArt.primary_items(INITIAL_FAMILIES[index])[0]
+		set_slot_item(index, CharacterArt.data().weapon_items[id])
+	build_item_popup()
+	visibility_changed.connect(clear_hover)
 	resized.connect(layout_sheet)
 	hide()
 
+func add_item_slot(grid: GridContainer) -> ItemSlot:
+	var slot := ItemSlot.new()
+	slot.custom_minimum_size = EQUIPMENT_SIZE
+	slot.add_theme_stylebox_override("panel", slot_style)
+	grid.add_child(slot)
+	slot.mouse_entered.connect(func():
+		hovered_slot = slot
+		update_item_popup())
+	slot.mouse_exited.connect(func():
+		if hovered_slot == slot: clear_hover())
+	return slot
+
+func build_item_popup() -> void:
+	item_popup.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	item_popup.custom_minimum_size = Vector2(240, 112)
+	item_popup.add_theme_stylebox_override("panel", GameUITheme.panel_style(14))
+	add_child(item_popup)
+	var content := VBoxContainer.new()
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_theme_constant_override("separation", 10)
+	item_popup.add_child(content)
+	item_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	item_title.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(item_title)
+	var divider := HSeparator.new()
+	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var line := StyleBoxLine.new()
+	line.color = GameUITheme.BUTTON_BORDER
+	line.thickness = 1
+	divider.add_theme_stylebox_override("separator", line)
+	content.add_child(divider)
+	item_popup.hide()
+
+func clear_hover() -> void:
+	hovered_slot = null
+	item_popup.hide()
+
+func update_item_popup() -> void:
+	if hovered_slot == null or hovered_slot.item.is_empty() or not is_visible_in_tree():
+		item_popup.hide()
+		return
+	var item := hovered_slot.item
+	var type_name: String = CharacterArt.TYPE_LABELS[item.family]
+	item_title.text = "%s%d" % [type_name.replace(" ", ""), int(item.number)]
+	item_popup.size = item_popup.get_combined_minimum_size()
+	item_popup.scale = sheet.scale
+	var bounds := hovered_slot.get_global_rect()
+	var extent := item_popup.size * item_popup.scale
+	var area := get_global_rect()
+	var pos := bounds.end + Vector2(6, 6)
+	if pos.x + extent.x > area.end.x - 6: pos.x = bounds.position.x - extent.x - 6
+	if pos.y + extent.y > area.end.y - 6: pos.y = bounds.position.y - extent.y - 6
+	item_popup.global_position = pos.clamp(area.position, (area.end - extent).max(area.position))
+	item_popup.show()
+
 # The bag and equipment slots share the same catalog art. Cache only visited items.
 func set_slot_item(index: int, item: Dictionary) -> void:
-	set_slot_texture(index, null if item.is_empty() else inventory_item_texture(item))
+	set_slot_texture(index, null if item.is_empty() else inventory_item_texture(item), item)
 
 func inventory_item_texture(item: Dictionary) -> Texture2D:
 	if item_textures.has(item.id): return item_textures[item.id]
@@ -144,11 +208,14 @@ func weapon_icon_image(source: Image, angle: float) -> Image:
 				canvas.set_pixel(x, y, source.get_pixelv(pixel))
 	return canvas.get_region(canvas.get_used_rect())
 
-func set_slot_texture(index: int, item: Texture2D) -> void:
+func set_slot_texture(index: int, texture: Texture2D, item: Dictionary = {}) -> void:
 	if index < 0 or index >= slot_grid.get_child_count(): return
-	var view: ItemIcon = slot_grid.get_child(index).get_child(0)
-	view.texture = item
+	var slot: ItemSlot = slot_grid.get_child(index)
+	slot.item = item
+	var view: ItemIcon = slot.get_child(0)
+	view.texture = texture
 	view.update_fit()
+	if slot == hovered_slot: update_item_popup()
 
 func open() -> void:
 	show()
@@ -160,6 +227,7 @@ func layout_sheet() -> void:
 	var factor := minf(1.0, minf(usable.x / sheet.size.x, usable.y / sheet.size.y))
 	sheet.scale = Vector2.ONE * factor
 	sheet.position = ((size - sheet.size * factor) * 0.5).round()
+	if hovered_slot != null: update_item_popup()
 
 func caption(value: String, font_size: int) -> Label:
 	var label := Label.new()
