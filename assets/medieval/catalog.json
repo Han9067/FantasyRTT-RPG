@@ -21662,6 +21662,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1201
     },
     "one_axe/2": {
@@ -21677,6 +21678,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": false,
       "item_id": 1202
     },
     "one_axe/3": {
@@ -21692,6 +21694,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1203
     },
     "one_axe/4": {
@@ -21707,6 +21710,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1204
     },
     "one_axe/5": {
@@ -21722,6 +21726,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1205
     },
     "one_axe/6": {
@@ -21737,6 +21742,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1206
     },
     "one_axe/7": {
@@ -21752,6 +21758,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1207
     },
     "one_axe/8": {
@@ -21767,6 +21774,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1208
     },
     "one_axe/9": {
@@ -21782,6 +21790,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1209
     },
     "one_axe/10": {
@@ -21797,6 +21806,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": false,
       "item_id": 1210
     },
     "one_axe/11": {
@@ -21812,6 +21822,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": true,
       "item_id": 1211
     },
     "one_axe/12": {
@@ -21827,6 +21838,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": true,
       "item_id": 1212
     },
     "one_axe/13": {
@@ -21842,6 +21854,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1213
     },
     "one_axe/14": {
@@ -21857,6 +21870,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1214
     },
     "one_axe/15": {
@@ -21872,6 +21886,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1215
     },
     "one_blunt/1": {
@@ -21887,6 +21902,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1401
     },
     "one_blunt/2": {
@@ -21902,6 +21918,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": false,
       "item_id": 1402
     },
     "one_blunt/3": {
@@ -21917,6 +21934,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 3,
+      "is_unique": false,
       "item_id": 1403
     },
     "one_blunt/4": {
@@ -21932,6 +21950,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1404
     },
     "one_blunt/5": {
@@ -21947,6 +21966,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1405
     },
     "one_blunt/6": {
@@ -21962,6 +21982,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1406
     },
     "one_blunt/7": {
@@ -21977,6 +21998,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1407
     },
     "one_blunt/8": {
@@ -21992,6 +22014,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1408
     },
     "one_blunt/9": {
@@ -22007,6 +22030,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1409
     },
     "one_blunt/10": {
@@ -22022,6 +22046,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1410
     },
     "one_blunt/11": {
@@ -22037,6 +22062,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "is_unique": true,
       "item_id": 1411
     },
     "one_blunt/12": {
@@ -22052,6 +22078,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1412
     },
     "one_blunt/13": {
@@ -22067,6 +22094,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": true,
       "item_id": 1413
     },
     "one_blunt/14": {
@@ -22082,6 +22110,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1414
     },
     "one_blunt/15": {
@@ -22097,6 +22126,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1415
     },
     "one_blunt/16": {
@@ -22112,6 +22142,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1416
     },
     "one_blunt/17": {
@@ -22127,6 +22158,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1417
     },
     "one_blunt/18": {
@@ -22142,6 +22174,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1418
     },
     "one_blunt/19": {
@@ -22157,6 +22190,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": false,
       "item_id": 1419
     },
     "one_shield/1": {
@@ -22170,7 +22204,8 @@
         16,
         18
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/2": {
       "id": "one_shield/2",
@@ -22183,7 +22218,8 @@
         16,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/3": {
       "id": "one_shield/3",
@@ -22196,7 +22232,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/4": {
       "id": "one_shield/4",
@@ -22209,7 +22246,8 @@
         15,
         15
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/5": {
       "id": "one_shield/5",
@@ -22222,7 +22260,8 @@
         16,
         15
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/6": {
       "id": "one_shield/6",
@@ -22235,7 +22274,8 @@
         16,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/7": {
       "id": "one_shield/7",
@@ -22248,7 +22288,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/8": {
       "id": "one_shield/8",
@@ -22261,7 +22302,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/9": {
       "id": "one_shield/9",
@@ -22274,7 +22316,8 @@
         15,
         15
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/10": {
       "id": "one_shield/10",
@@ -22287,7 +22330,8 @@
         15,
         15
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/11": {
       "id": "one_shield/11",
@@ -22300,7 +22344,8 @@
         16,
         15
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/12": {
       "id": "one_shield/12",
@@ -22313,7 +22358,8 @@
         16,
         18
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/13": {
       "id": "one_shield/13",
@@ -22326,7 +22372,8 @@
         16,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/14": {
       "id": "one_shield/14",
@@ -22339,7 +22386,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/15": {
       "id": "one_shield/15",
@@ -22352,7 +22400,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/16": {
       "id": "one_shield/16",
@@ -22365,7 +22414,8 @@
         16,
         15
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/17": {
       "id": "one_shield/17",
@@ -22378,7 +22428,8 @@
         16,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/18": {
       "id": "one_shield/18",
@@ -22391,7 +22442,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/19": {
       "id": "one_shield/19",
@@ -22404,7 +22456,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/20": {
       "id": "one_shield/20",
@@ -22417,7 +22470,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/21": {
       "id": "one_shield/21",
@@ -22430,7 +22484,8 @@
         16,
         15
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/22": {
       "id": "one_shield/22",
@@ -22443,7 +22498,8 @@
         15,
         15
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/23": {
       "id": "one_shield/23",
@@ -22456,7 +22512,8 @@
         16,
         18
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/24": {
       "id": "one_shield/24",
@@ -22469,7 +22526,8 @@
         16,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/25": {
       "id": "one_shield/25",
@@ -22482,7 +22540,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/26": {
       "id": "one_shield/26",
@@ -22495,7 +22554,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/27": {
       "id": "one_shield/27",
@@ -22508,7 +22568,8 @@
         16,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/28": {
       "id": "one_shield/28",
@@ -22521,7 +22582,8 @@
         16,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/29": {
       "id": "one_shield/29",
@@ -22534,7 +22596,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/30": {
       "id": "one_shield/30",
@@ -22547,7 +22610,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/31": {
       "id": "one_shield/31",
@@ -22560,7 +22624,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/32": {
       "id": "one_shield/32",
@@ -22573,7 +22638,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/33": {
       "id": "one_shield/33",
@@ -22586,7 +22652,8 @@
         16,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/34": {
       "id": "one_shield/34",
@@ -22599,7 +22666,8 @@
         16,
         18
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/35": {
       "id": "one_shield/35",
@@ -22612,7 +22680,8 @@
         16,
         18
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/36": {
       "id": "one_shield/36",
@@ -22625,7 +22694,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/37": {
       "id": "one_shield/37",
@@ -22638,7 +22708,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/38": {
       "id": "one_shield/38",
@@ -22651,7 +22722,8 @@
         16,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/39": {
       "id": "one_shield/39",
@@ -22664,7 +22736,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/40": {
       "id": "one_shield/40",
@@ -22677,7 +22750,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/41": {
       "id": "one_shield/41",
@@ -22690,7 +22764,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/42": {
       "id": "one_shield/42",
@@ -22703,7 +22778,8 @@
         15,
         14
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/43": {
       "id": "one_shield/43",
@@ -22716,7 +22792,8 @@
         15,
         15
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/44": {
       "id": "one_shield/44",
@@ -22729,7 +22806,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/45": {
       "id": "one_shield/45",
@@ -22742,7 +22820,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/46": {
       "id": "one_shield/46",
@@ -22755,7 +22834,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/47": {
       "id": "one_shield/47",
@@ -22768,7 +22848,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_shield/48": {
       "id": "one_shield/48",
@@ -22781,7 +22862,8 @@
         15,
         17
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "one_sword/1": {
       "id": "one_sword/1",
@@ -22796,6 +22878,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1001
     },
     "one_sword/2": {
@@ -22811,6 +22894,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "is_unique": false,
       "item_id": 1002
     },
     "one_sword/3": {
@@ -22826,6 +22910,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 11,
+      "is_unique": false,
       "item_id": 1003
     },
     "one_sword/4": {
@@ -22841,6 +22926,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "is_unique": false,
       "item_id": 1004
     },
     "one_sword/5": {
@@ -22856,6 +22942,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "is_unique": false,
       "item_id": 1005
     },
     "one_sword/6": {
@@ -22871,6 +22958,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "is_unique": false,
       "item_id": 1006
     },
     "one_sword/7": {
@@ -22886,6 +22974,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "is_unique": false,
       "item_id": 1007
     },
     "one_sword/8": {
@@ -22901,6 +22990,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 9,
+      "is_unique": false,
       "item_id": 1008
     },
     "one_sword/9": {
@@ -22916,6 +23006,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 9,
+      "is_unique": false,
       "item_id": 1009
     },
     "one_sword/10": {
@@ -22931,6 +23022,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "is_unique": false,
       "item_id": 1010
     },
     "one_sword/11": {
@@ -22946,6 +23038,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 11,
+      "is_unique": true,
       "item_id": 1011
     },
     "one_sword/12": {
@@ -22961,6 +23054,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": true,
       "item_id": 1012
     },
     "one_sword/13": {
@@ -22976,6 +23070,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1013
     },
     "one_sword/14": {
@@ -22991,6 +23086,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 8,
+      "is_unique": true,
       "item_id": 1014
     },
     "two_axe/1": {
@@ -23006,6 +23102,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1301
     },
     "two_axe/2": {
@@ -23021,6 +23118,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": false,
       "item_id": 1302
     },
     "two_axe/4": {
@@ -23036,6 +23134,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1304
     },
     "two_axe/11": {
@@ -23051,6 +23150,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1311
     },
     "two_axe/12": {
@@ -23066,6 +23166,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1312
     },
     "two_axe/13": {
@@ -23081,6 +23182,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1313
     },
     "two_axe/14": {
@@ -23096,6 +23198,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1314
     },
     "two_blunt/1": {
@@ -23111,6 +23214,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1501
     },
     "two_blunt/2": {
@@ -23126,6 +23230,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1502
     },
     "two_polearm/1": {
@@ -23141,6 +23246,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 9,
+      "is_unique": false,
       "item_id": 1701
     },
     "two_polearm/2": {
@@ -23156,6 +23262,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1702
     },
     "two_polearm/3": {
@@ -23171,6 +23278,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1703
     },
     "two_polearm/4": {
@@ -23186,6 +23294,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1704
     },
     "two_polearm/5": {
@@ -23201,6 +23310,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1705
     },
     "two_polearm/6": {
@@ -23216,6 +23326,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1706
     },
     "two_polearm/7": {
@@ -23231,6 +23342,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1707
     },
     "two_polearm/8": {
@@ -23246,6 +23358,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "is_unique": false,
       "item_id": 1708
     },
     "two_polearm/9": {
@@ -23261,6 +23374,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 9,
+      "is_unique": true,
       "item_id": 1709
     },
     "two_polearm/10": {
@@ -23276,6 +23390,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 8,
+      "is_unique": true,
       "item_id": 1710
     },
     "two_spear/1": {
@@ -23291,6 +23406,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 9,
+      "is_unique": false,
       "item_id": 1601
     },
     "two_spear/2": {
@@ -23306,6 +23422,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 9,
+      "is_unique": false,
       "item_id": 1602
     },
     "two_spear/3": {
@@ -23321,6 +23438,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1603
     },
     "two_spear/4": {
@@ -23336,6 +23454,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 7,
+      "is_unique": false,
       "item_id": 1604
     },
     "two_spear/5": {
@@ -23351,6 +23470,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 5,
+      "is_unique": false,
       "item_id": 1605
     },
     "two_spear/6": {
@@ -23366,6 +23486,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 3,
+      "is_unique": false,
       "item_id": 1606
     },
     "two_spear/7": {
@@ -23381,6 +23502,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 10,
+      "is_unique": false,
       "item_id": 1607
     },
     "two_spear/8": {
@@ -23396,6 +23518,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 10,
+      "is_unique": false,
       "item_id": 1608
     },
     "two_spear/9": {
@@ -23411,6 +23534,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 10,
+      "is_unique": false,
       "item_id": 1609
     },
     "two_spear/10": {
@@ -23426,6 +23550,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 4,
+      "is_unique": false,
       "item_id": 1610
     },
     "two_spear/11": {
@@ -23441,6 +23566,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1611
     },
     "two_spear/12": {
@@ -23456,6 +23582,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1612
     },
     "two_spear/13": {
@@ -23471,6 +23598,7 @@
       ],
       "attack": "thrust_attack",
       "y_up": 6,
+      "is_unique": true,
       "item_id": 1613
     },
     "two_sword/1": {
@@ -23486,6 +23614,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "is_unique": false,
       "item_id": 1101
     },
     "two_sword/2": {
@@ -23501,6 +23630,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "is_unique": false,
       "item_id": 1102
     },
     "two_sword/3": {
@@ -23516,6 +23646,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "is_unique": false,
       "item_id": 1103
     },
     "two_sword/4": {
@@ -23531,6 +23662,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": false,
       "item_id": 1104
     },
     "two_sword/5": {
@@ -23546,6 +23678,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "is_unique": false,
       "item_id": 1105
     },
     "two_sword/6": {
@@ -23561,6 +23694,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": false,
       "item_id": 1106
     },
     "two_sword/7": {
@@ -23576,6 +23710,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": true,
       "item_id": 1107
     },
     "two_sword/8": {
@@ -23591,6 +23726,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": false,
       "item_id": 1108
     },
     "two_sword/9": {
@@ -23606,6 +23742,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": false,
       "item_id": 1109
     },
     "two_sword/10": {
@@ -23621,6 +23758,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": false,
       "item_id": 1110
     },
     "two_sword/11": {
@@ -23636,6 +23774,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "is_unique": false,
       "item_id": 1111
     },
     "two_sword/12": {
@@ -23651,6 +23790,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "is_unique": true,
       "item_id": 1112
     },
     "two_sword/13": {
@@ -23666,6 +23806,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 12,
+      "is_unique": true,
       "item_id": 1113
     },
     "two_sword/14": {
@@ -23681,6 +23822,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": true,
       "item_id": 1114
     },
     "two_sword/15": {
@@ -23696,6 +23838,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "is_unique": true,
       "item_id": 1115
     },
     "two_sword/16": {
@@ -23711,6 +23854,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": true,
       "item_id": 1116
     },
     "two_sword/17": {
@@ -23726,6 +23870,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": true,
       "item_id": 1117
     },
     "two_sword/18": {
@@ -23741,6 +23886,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": true,
       "item_id": 1118
     },
     "two_sword/19": {
@@ -23756,6 +23902,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 15,
+      "is_unique": true,
       "item_id": 1119
     },
     "two_sword/20": {
@@ -23771,6 +23918,7 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "is_unique": true,
       "item_id": 1120
     },
     "bow_01": {
@@ -23784,7 +23932,8 @@
         15,
         16
       ],
-      "attack": "bow_shot"
+      "attack": "bow_shot",
+      "is_unique": false
     },
     "bow_02": {
       "id": "bow_02",
@@ -23797,7 +23946,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "bow_03": {
       "id": "bow_03",
@@ -23810,7 +23960,8 @@
         16,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "bow_04": {
       "id": "bow_04",
@@ -23823,7 +23974,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "bow_05": {
       "id": "bow_05",
@@ -23836,7 +23988,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "bow_06": {
       "id": "bow_06",
@@ -23849,7 +24002,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "bow_07": {
       "id": "bow_07",
@@ -23862,7 +24016,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "crossbow_01": {
       "id": "crossbow_01",
@@ -23875,7 +24030,8 @@
         16,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "crossbow_02": {
       "id": "crossbow_02",
@@ -23888,7 +24044,8 @@
         16,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "crossbow_03": {
       "id": "crossbow_03",
@@ -23901,7 +24058,8 @@
         16,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     },
     "crossbow_04": {
       "id": "crossbow_04",
@@ -23914,7 +24072,8 @@
         15,
         16
       ],
-      "attack": "chop_attack"
+      "attack": "chop_attack",
+      "is_unique": false
     }
   },
   "attack_effect": "sprites/VFX/weapon/weaponfx03.png",

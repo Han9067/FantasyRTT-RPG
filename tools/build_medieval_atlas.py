@@ -161,10 +161,15 @@ def build(source=SOURCE, dest=DEST):
                 continue  # The art may arrive after its spreadsheet row.
             raise ValueError(f'Sheet weapon missing from source: {equipment_id}')
         catalog['weapon_items'][equipment_id]['y_up'] = y_up
-    sheet_ids = json.loads((ROOT / 'data/weapon_ids.json').read_text(encoding='utf-8'))['item_ids']
+    weapon_data = json.loads((ROOT / 'data/weapon_ids.json').read_text(encoding='utf-8'))
+    sheet_ids = weapon_data['item_ids']
+    unique_ids = set(weapon_data['unique_item_ids'])
+    if not unique_ids.issubset(sheet_ids.values()):
+        raise ValueError('Unique weapon missing from sheet IDs')
     if any(type(value) is not int or value <= 0 for value in sheet_ids.values()) or len(set(sheet_ids.values())) != len(sheet_ids):
         raise ValueError('Weapon sheet IDs must be unique positive integers')
     for key, item in catalog['weapon_items'].items():
+        item['is_unique'] = sheet_ids.get(key) in unique_ids
         if key in sheet_ids:
             item['item_id'] = sheet_ids[key]
     catalog['attack_effect'] = add('sprites/VFX/weapon/weaponfx03')
