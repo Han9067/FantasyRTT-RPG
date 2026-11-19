@@ -13,6 +13,9 @@ class ItemIcon extends TextureRect:
 		else:
 			stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
 
+const EQUIPMENT_SIZE := Vector2(64, 64)
+const WEAPON_ICON_SCALE := 1.4
+var item_textures: Dictionary = {}
 var sheet := PanelContainer.new()
 var slot_style := GameUITheme.paper_style(GameUITheme.IVORY, GameUITheme.BUTTON_BORDER, 5)
 var section_style := GameUITheme.panel_style(10)
@@ -53,8 +56,12 @@ func setup(appearance: Dictionary) -> void:
 	card.custom_minimum_size = Vector2(60, 60)
 	card.add_theme_stylebox_override("panel", slot_style)
 	people.add_child(card)
-	var avatar := CharacterArt.compose(appearance)
-	card.add_child(portrait_icon(avatar.get_region(avatar.get_used_rect())))
+	var avatar := CharacterArt.compose(appearance, "idle", 0, false)
+	var head := CharacterArt.part_image(CharacterArt.human_data().heads[appearance.skin], appearance.face)
+	var face_center := CharacterArt.BODY_ORIGIN + head.get_used_rect().get_center()
+	face_center.y += CharacterArt.pose("idle", 0).bob
+	var closeup := Rect2i(face_center - Vector2i(12, 12), Vector2i(25, 25))
+	card.add_child(portrait_icon(avatar.get_region(closeup)))
 
 	var middle := VBoxContainer.new()
 	middle.add_theme_constant_override("separation", 10)
@@ -65,22 +72,24 @@ func setup(appearance: Dictionary) -> void:
 	var primary := CharacterArt.equipped_weapon(appearance)
 	var secondary := CharacterArt.equipped_offhand(appearance)
 	for label in ["무기1", "투구", "무기2", "장갑", "갑옷", "신발", "악세사리", "악세사리", "악세사리"]:
-		var cell := PanelContainer.new()
-		cell.custom_minimum_size = Vector2(78, 100)
+		var cell := Panel.new()
+		cell.custom_minimum_size = EQUIPMENT_SIZE
 		cell.add_theme_stylebox_override("panel", slot_style)
 		gear.add_child(cell)
-		var stack := VBoxContainer.new()
-		cell.add_child(stack)
-		stack.add_child(caption(label, 16))
 		var item: Dictionary = {}
 		if label == "무기1": item = primary
 		if label == "무기2": item = secondary
-		if not item.is_empty():
-			var art := CharacterArt.part_image(item.sheet, item.slot)
+		var contents: Control
+		if item.is_empty():
+			var empty_label := caption(label, 15)
+			empty_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			contents = empty_label
+		else:
 			var image := ItemIcon.new()
-			image.texture = ImageTexture.create_from_image(art)
-			image.size_flags_vertical = Control.SIZE_EXPAND_FILL
-			stack.add_child(image)
+			image.texture = inventory_item_texture(item)
+			contents = image
+		cell.add_child(contents)
+		contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var stats := VBoxContainer.new()
 	section(middle, stats)
 	stats.add_child(caption("능력치", 19))
@@ -104,6 +113,36 @@ func setup(appearance: Dictionary) -> void:
 		item_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	resized.connect(layout_sheet)
 	hide()
+
+# The bag and equipment slots share the same catalog art. Cache only visited items.
+func set_slot_item(index: int, item: Dictionary) -> void:
+	set_slot_texture(index, null if item.is_empty() else inventory_item_texture(item))
+
+func inventory_item_texture(item: Dictionary) -> Texture2D:
+	if item_textures.has(item.id): return item_textures[item.id]
+	var art := CharacterArt.part_image(item.sheet, item.slot)
+	var shield: bool = item.family == "one_shield"
+	if shield or CharacterArt.data().primary_types.has(item.family):
+		art = weapon_icon_image(art, 0.0 if shield else PI / 4.0)
+	var texture := ImageTexture.create_from_image(art)
+	item_textures[item.id] = texture
+	return texture
+
+func weapon_icon_image(source: Image, angle: float) -> Image:
+	# Sample at pixel centers onto a padded canvas, then center the visible artwork in the slot.
+	var side := ceili(Vector2(source.get_size()).length() * WEAPON_ICON_SCALE) + 2
+	var canvas := Image.create(side, side, false, Image.FORMAT_RGBA8)
+	var inverse_basis := Transform2D(-angle, Vector2.ZERO)
+	var center := Vector2(source.get_size()) * 0.5
+	var origin := Vector2.ONE * (0.5 - side * 0.5)
+	var bounds := Rect2i(Vector2i.ZERO, source.get_size())
+	for y in range(side):
+		for x in range(side):
+			var point := center + inverse_basis * (Vector2(x, y) + origin) / WEAPON_ICON_SCALE
+			var pixel := Vector2i(point.floor())
+			if bounds.has_point(pixel):
+				canvas.set_pixel(x, y, source.get_pixelv(pixel))
+	return canvas.get_region(canvas.get_used_rect())
 
 func set_slot_texture(index: int, item: Texture2D) -> void:
 	if index < 0 or index >= slot_grid.get_child_count(): return
