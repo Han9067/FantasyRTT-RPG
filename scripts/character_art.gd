@@ -7,6 +7,8 @@ const PREVIEW_REGION := Rect2i(0, 0, 136, 104)
 const PREVIEW_SCALE := 3
 const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 0.5)
 const SHIELD_WEAPON_PIVOT := Vector2(0.5, 1.0)
+const ARCHER_BOW := "bow/1"
+const BOW_OFFHAND_CENTER := Vector2i(4, -2)
 const BOW_OFFSET := Vector2i(1, 0) # Native sprite faces left; flip_h mirrors this offset.
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
@@ -36,6 +38,7 @@ static func data() -> Dictionary:
 	if catalog.is_empty():
 		catalog = JSON.parse_string(FileAccess.get_file_as_string(ROOT + "catalog.json"))
 		for item: Dictionary in catalog.weapon_items.values():
+			item.equip_type = int(item.equip_type)
 			if item.has("item_id"):
 				item.item_id = int(item.item_id)
 				weapons_by_item_id[item.item_id] = item
@@ -67,7 +70,7 @@ static func infantry_appearance(allied: bool, variant: int) -> Dictionary:
 
 static func archer_appearance(allied: bool, variant: int) -> Dictionary:
 	var config := infantry_appearance(allied, variant)
-	config.equipped_weapon = "bow_01"
+	config.equipped_weapon = ARCHER_BOW
 	config.offhand = -1
 	config.offhand_item = -1
 	return config
@@ -144,8 +147,11 @@ static func description(config: Dictionary, key: String) -> String:
 	return ""
 
 static func equipped_weapon(config: Dictionary) -> Dictionary:
-	if data().weapon_items.has(config.get("equipped_weapon", "")):
-		return data().weapon_items[config.equipped_weapon]
+	var key: String = config.get("equipped_weapon", "")
+	if key.begins_with("bow_") and key.substr(4).is_valid_int():
+		key = "bow/%d" % int(key.substr(4))
+	if data().weapon_items.has(key):
+		return data().weapon_items[key]
 	var ids: Array = primary_items(data().primary_types[config.weapon])
 	return data().weapon_items[ids[config.get("weapon_item", 0)]]
 
@@ -156,16 +162,20 @@ static func equipped_offhand(config: Dictionary) -> Dictionary:
 	return data().weapon_items[ids[config.get("offhand_item", 0)]]
 
 # Keep weapon, gripping hand and body bob in one pose calculation.
-static func pose(animation: String, frame: int, attack_type := "chop_attack", family := "") -> Dictionary:
-	var result := local_pose(animation, frame, attack_type, family)
+static func pose(animation: String, frame: int, attack_type := "chop_attack", equip_type := 0) -> Dictionary:
+	var result := local_pose(animation, frame, attack_type, equip_type)
 	result.grip += CANVAS_PADDING
-	result.free_hand += CANVAS_PADDING
+	if equip_type == 3:
+		# The hand textures are 16x16. free_hand stores the top-left, grip the center.
+		result.free_hand = result.grip + BOW_OFFHAND_CENTER - Vector2i(8, 8)
+	else:
+		result.free_hand += CANVAS_PADDING
 	result.effect_origin += CANVAS_PADDING
 	return result
 
-static func local_pose(animation: String, frame: int, attack_type: String, family: String) -> Dictionary:
-	var spear_grip := attack_type == "thrust_attack" or family in ["two_polearm", "two_axe", "two_blunt"]
-	if attack_type == "bow_shot" and animation == "attack":
+static func local_pose(animation: String, frame: int, attack_type: String, equip_type: int) -> Dictionary:
+	var spear_grip := equip_type == 2
+	if equip_type == 3 and animation == "attack":
 		return {"bob": 0, "grip": Vector2i(35,43), "free_hand": Vector2i(46,41),
 			"rotation": 0, "visible": true, "effect": -1, "effect_origin": Vector2i.ZERO, "body_frame": 0}
 	if animation == "attack":
@@ -187,7 +197,7 @@ static func local_pose(animation: String, frame: int, attack_type: String, famil
 			"effect_sheet": data().attack_effect, "effect_rotation": 0, "effect_origin": Vector2i(0,21)}
 	var bob := int([0, 1, 2, 1][frame]) if animation == "idle" else int([0, 1, 0, -1, 0, 1, 0, -1][frame])
 	var swing := 0 if animation == "idle" else int([0, 1, 1, 0, 0, -1, -1, 0][frame])
-	return {"bob": bob, "grip": Vector2i(35, (42 if spear_grip else (43 if attack_type == "bow_shot" else 49)) + bob + swing), "free_hand": Vector2i(46, 41 + bob - swing),
+	return {"bob": bob, "grip": Vector2i(35, (42 if spear_grip else (43 if equip_type == 3 else 49)) + bob + swing), "free_hand": Vector2i(46, 41 + bob - swing),
 		"rotation": 0, "visible": true, "effect": -1, "effect_origin": Vector2i.ZERO,
 		"body_frame": frame + (0 if animation == "idle" else (4 if animation == "walk" else 12))}
 
@@ -198,20 +208,26 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 
 static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon := equipped_weapon(config)
-	var current_pose := pose(animation, frame, weapon.attack, weapon.family)
+	var current_pose := pose(animation, frame, weapon.attack, weapon.equip_type)
 	# Rotate the sheet adjustment with the weapon around the gripping hand.
 	if is_primary_melee(weapon.family):
 		var offset := Vector2i(0, -int(weapon.get("y_up", 0)))
 		if current_pose.rotation == 1: offset = Vector2i(-offset.y, offset.x)
 		elif current_pose.rotation == -1: offset = Vector2i(offset.y, -offset.x)
 		return current_pose.grip + offset
-	var offset := BOW_OFFSET if weapon.family == "bow" else Vector2i.ZERO
-	return NON_MELEE_WEAPON_ANCHOR + offset + current_pose.grip - pose("idle", 0, weapon.attack, weapon.family).grip
+	var offset := bow_offset(weapon) if weapon.family == "bow" else Vector2i.ZERO
+	return NON_MELEE_WEAPON_ANCHOR + offset + current_pose.grip - pose("idle", 0, weapon.attack, weapon.equip_type).grip
+
+static func bow_shot_slot(weapon: Dictionary, frame: int) -> int:
+	return (int(weapon.number) - 1) * 12 + frame
+
+static func bow_offset(weapon: Dictionary) -> Vector2i:
+	return BOW_OFFSET - Vector2i(0, int(weapon.y_up))
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon: Dictionary = equipped_weapon(config)
-	var current_pose := pose(animation, frame, weapon.attack, weapon.family)
-	var size := part_rect(data().bow_shot, frame).size if weapon.attack == "bow_shot" and animation == "attack" else part_rect(weapon.sheet, weapon.slot).size
+	var current_pose := pose(animation, frame, weapon.attack, weapon.equip_type)
+	var size := part_rect(data().bow_shot, bow_shot_slot(weapon, frame)).size if weapon.attack == "bow_shot" and animation == "attack" else part_rect(weapon.sheet, weapon.slot).size
 	if is_primary_melee(weapon.family):
 		# Use the same pixel-center rotation as the hand and Image.rotate_90.
 		var pivot := Vector2i(Vector2(size) * PRIMARY_WEAPON_PIVOT)
@@ -258,14 +274,14 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	var base := BODY_ORIGIN
 	# World portraits omit equipment without changing the saved loadout or body parts.
 	var weapon := equipped_weapon(config) if include_weapon else {}
-	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("family", ""))
+	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("equip_type", 0))
 	var head := base + Vector2i(0, current_pose.bob)
 	var race := human_data()
 	var body_index: int = current_pose.body_frame
 	paste(img, data().bodies[config.body], body_index, base)
 	if include_weapon and current_pose.visible:
 		if weapon.attack == "bow_shot" and animation == "attack":
-			paste(img, data().bow_shot, frame, weapon_position(config, animation, frame))
+			paste(img, data().bow_shot, bow_shot_slot(weapon, frame), weapon_position(config, animation, frame))
 		else:
 			paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
 	paste(img, race.heads[config.skin], config.face, head)
@@ -287,7 +303,7 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	if not secondary.is_empty():
 		var grip := Vector2i(secondary.grip[0], secondary.grip[1])
 		paste(img, secondary.sheet, secondary.slot, current_pose.free_hand + Vector2i(8, 8) - grip)
-	if not has_shield and not weapon.get("two_handed", false):
+	if not has_shield and weapon.get("equip_type", 0) in [0, 3]:
 		paste(img, hand_path, config.skin, current_pose.free_hand)
 	if include_weapon and current_pose.effect >= 0:
 		paste_rotated(img, current_pose.effect_sheet, current_pose.effect, current_pose.effect_origin, current_pose.effect_rotation)

@@ -20500,8 +20500,8 @@
     "sprites/weapons/ranged weapons/bow.png": {
       "slots": [
         {
-          "name": "bow_01",
-          "source": "sprites/weapons/ranged weapons/bow/bow_01.png",
+          "name": "1",
+          "source": "sprites/weapons/ranged weapons/bow/1.png",
           "sha256": "0fd8fabb6aa8768271da39e18170f87079d4de69468d48f8ce6c26b52d1d6a17",
           "size": [
             32,
@@ -20517,8 +20517,8 @@
           ]
         },
         {
-          "name": "bow_02",
-          "source": "sprites/weapons/ranged weapons/bow/bow_02.png",
+          "name": "2",
+          "source": "sprites/weapons/ranged weapons/bow/2.png",
           "sha256": "c315a4d71b745b7d674fc8186ea40d00f85d0be5f8d553611dd296981f265e7d",
           "size": [
             32,
@@ -20534,8 +20534,8 @@
           ]
         },
         {
-          "name": "bow_03",
-          "source": "sprites/weapons/ranged weapons/bow/bow_03.png",
+          "name": "3",
+          "source": "sprites/weapons/ranged weapons/bow/3.png",
           "sha256": "877fad5781d7b8233c93776ef2ae0a719243a67a819f6d2f397e0803da0bae7b",
           "size": [
             32,
@@ -20551,8 +20551,8 @@
           ]
         },
         {
-          "name": "bow_04",
-          "source": "sprites/weapons/ranged weapons/bow/bow_04.png",
+          "name": "4",
+          "source": "sprites/weapons/ranged weapons/bow/4.png",
           "sha256": "a0bc6e70d9a3791a545f8302ad1df021d20e8c4e73b3fa52ea03b5330ec19da1",
           "size": [
             32,
@@ -20568,8 +20568,8 @@
           ]
         },
         {
-          "name": "bow_05",
-          "source": "sprites/weapons/ranged weapons/bow/bow_05.png",
+          "name": "5",
+          "source": "sprites/weapons/ranged weapons/bow/5.png",
           "sha256": "eb4f27319254d638ccf5a3767c7798baadc5dc2be01de8dd33cad333cb0c15a4",
           "size": [
             32,
@@ -20585,8 +20585,8 @@
           ]
         },
         {
-          "name": "bow_06",
-          "source": "sprites/weapons/ranged weapons/bow/bow_06.png",
+          "name": "6",
+          "source": "sprites/weapons/ranged weapons/bow/6.png",
           "sha256": "0da0704e7cbfb3b7e6985a154139f4d7ab64e13cb087f8fa6ff22828e88d46d0",
           "size": [
             32,
@@ -20602,8 +20602,8 @@
           ]
         },
         {
-          "name": "bow_07",
-          "source": "sprites/weapons/ranged weapons/bow/bow_07.png",
+          "name": "7",
+          "source": "sprites/weapons/ranged weapons/bow/7.png",
           "sha256": "96e5d0cad5401c0f53652fa315157417ba64e80c1f29e0fedaf12de547a72c0b",
           "size": [
             32,
@@ -21368,6 +21368,1230 @@
             64,
             32
           ]
+        },
+        {
+          "name": "bow_shot_13",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_13.png",
+          "sha256": "c76e2fad357957ca8b2a3391c5fd9d5dd6c37b483a8d12cb6546b3b97a907f42",
+          "size": [
+            64,
+            32
+          ],
+          "id": 13,
+          "atlas": "atlas_01.png",
+          "rect": [
+            331,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_14",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_14.png",
+          "sha256": "18e8b02e9f0c6b9bb557a415bfa9f97f3fff0aedd56da65f58a68df6e27b4cb5",
+          "size": [
+            64,
+            32
+          ],
+          "id": 14,
+          "atlas": "atlas_01.png",
+          "rect": [
+            397,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_15",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_15.png",
+          "sha256": "b1e705818f53fd705b19975c866c9775e3067efc06f1adcd0304a66c6b46e044",
+          "size": [
+            64,
+            32
+          ],
+          "id": 15,
+          "atlas": "atlas_01.png",
+          "rect": [
+            463,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_16",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_16.png",
+          "sha256": "a0f758d56195251dcc192db5321f66b3505934cd55d13d99236075a6decec305",
+          "size": [
+            64,
+            32
+          ],
+          "id": 16,
+          "atlas": "atlas_01.png",
+          "rect": [
+            529,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_17",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_17.png",
+          "sha256": "163963d05675ad5be11c8a4db1c872d82489b3b82a62c9b1b4601451de2ea4b0",
+          "size": [
+            64,
+            32
+          ],
+          "id": 17,
+          "atlas": "atlas_01.png",
+          "rect": [
+            595,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_18",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_18.png",
+          "sha256": "30fe04520ea101677a8ba142b139c8e23c467a9ac1166b5e8adc396b10b0101d",
+          "size": [
+            64,
+            32
+          ],
+          "id": 18,
+          "atlas": "atlas_01.png",
+          "rect": [
+            661,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_19",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_19.png",
+          "sha256": "d1acefc1f0117a36eabb9e9278f199bc21e1b530462bcefd2b5c3ae689a8038f",
+          "size": [
+            64,
+            32
+          ],
+          "id": 19,
+          "atlas": "atlas_01.png",
+          "rect": [
+            727,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_20",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_20.png",
+          "sha256": "6a05e211efe15fa74d152dc4e45acf7521bf65f3617e9e0429f268df367a41a6",
+          "size": [
+            64,
+            32
+          ],
+          "id": 20,
+          "atlas": "atlas_01.png",
+          "rect": [
+            793,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_21",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_21.png",
+          "sha256": "88c0a6bab87ab4c6ba7611eef475bb78cda7e5f14b2c58b8308b1935ecf1b4cd",
+          "size": [
+            64,
+            32
+          ],
+          "id": 21,
+          "atlas": "atlas_01.png",
+          "rect": [
+            859,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_22",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_22.png",
+          "sha256": "15d50335ad219b456355a3738b55eebc8c0031e013d69cd29ed76e24da72ef58",
+          "size": [
+            64,
+            32
+          ],
+          "id": 22,
+          "atlas": "atlas_01.png",
+          "rect": [
+            925,
+            473,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_23",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_23.png",
+          "sha256": "dbb6e95d732dc5ad7d1d94be2a9b68623d805aa5443a6fb65035844718b9dc1c",
+          "size": [
+            64,
+            32
+          ],
+          "id": 23,
+          "atlas": "atlas_01.png",
+          "rect": [
+            1,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_24",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_24.png",
+          "sha256": "621c7544be936ef52610d2e8c6755276f6848856757921f37305c5730a589df5",
+          "size": [
+            64,
+            32
+          ],
+          "id": 24,
+          "atlas": "atlas_01.png",
+          "rect": [
+            67,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_25",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_25.png",
+          "sha256": "e13cc49450ad93ebb4def1700ffdaaaa8415ffcc93733c0a7a8faf9433e50468",
+          "size": [
+            64,
+            32
+          ],
+          "id": 25,
+          "atlas": "atlas_01.png",
+          "rect": [
+            133,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_26",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_26.png",
+          "sha256": "b1de26aeee06ed9a227f0480d2f317e07f5d58627efac3d46bf9f8623388d9a3",
+          "size": [
+            64,
+            32
+          ],
+          "id": 26,
+          "atlas": "atlas_01.png",
+          "rect": [
+            199,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_27",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_27.png",
+          "sha256": "503718d3023e68a00632e4513ec5d134e4bc5177a7a645f54d20d384dac8d7ed",
+          "size": [
+            64,
+            32
+          ],
+          "id": 27,
+          "atlas": "atlas_01.png",
+          "rect": [
+            265,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_28",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_28.png",
+          "sha256": "7c78f8507e9d5e3b53ce51b1a7aa1012671dca5ddabd27b54ee3dd015d5731ed",
+          "size": [
+            64,
+            32
+          ],
+          "id": 28,
+          "atlas": "atlas_01.png",
+          "rect": [
+            331,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_29",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_29.png",
+          "sha256": "0f2fdde9582fb050b3b6a51b9faeecbc85164757759328886c57a532c52b3731",
+          "size": [
+            64,
+            32
+          ],
+          "id": 29,
+          "atlas": "atlas_01.png",
+          "rect": [
+            397,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_30",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_30.png",
+          "sha256": "e82cfe7dbd1c517f944439ccc891ec1b7f449e129ae5d8561b9d33c601e42693",
+          "size": [
+            64,
+            32
+          ],
+          "id": 30,
+          "atlas": "atlas_01.png",
+          "rect": [
+            463,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_31",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_31.png",
+          "sha256": "0a751b26bb0e4083c59e6ff96800115dc585125edb26b45bb1a9e8fe35861874",
+          "size": [
+            64,
+            32
+          ],
+          "id": 31,
+          "atlas": "atlas_01.png",
+          "rect": [
+            529,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_32",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_32.png",
+          "sha256": "b63aaa08f089a1e612679f2e1769530c5f6ab839f1b82972edcf015a6ba7158c",
+          "size": [
+            64,
+            32
+          ],
+          "id": 32,
+          "atlas": "atlas_01.png",
+          "rect": [
+            595,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_33",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_33.png",
+          "sha256": "e762c771bed9bba13ed57ac80be8445185a0aefa64baa6a5d7654cd5564e8f41",
+          "size": [
+            64,
+            32
+          ],
+          "id": 33,
+          "atlas": "atlas_01.png",
+          "rect": [
+            661,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_34",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_34.png",
+          "sha256": "613d2d0683b5cf2c7e96e79b471af1f61d6ce7e6b69fe614da8d6a2f27c52443",
+          "size": [
+            64,
+            32
+          ],
+          "id": 34,
+          "atlas": "atlas_01.png",
+          "rect": [
+            727,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_35",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_35.png",
+          "sha256": "cbd997e97d82fa3d5b56db9755322bb2cb7422cce17707045b8d900d1c2689ff",
+          "size": [
+            64,
+            32
+          ],
+          "id": 35,
+          "atlas": "atlas_01.png",
+          "rect": [
+            793,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_36",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_36.png",
+          "sha256": "b7cd961a5fe0f256f1c7cba4d2ecca2faa6e39648c07c34240f93d1960723cf6",
+          "size": [
+            64,
+            32
+          ],
+          "id": 36,
+          "atlas": "atlas_01.png",
+          "rect": [
+            859,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_37",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_37.png",
+          "sha256": "efa3438585f07b329e4e30d69affc9769869bf8146e7d359593042d3fc498629",
+          "size": [
+            64,
+            32
+          ],
+          "id": 37,
+          "atlas": "atlas_01.png",
+          "rect": [
+            925,
+            507,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_38",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_38.png",
+          "sha256": "45e371150ceda750d9ff364755dd48ac4fa1cc5920375249697eb7e212412aac",
+          "size": [
+            64,
+            32
+          ],
+          "id": 38,
+          "atlas": "atlas_01.png",
+          "rect": [
+            1,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_39",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_39.png",
+          "sha256": "511982a2af9b0881dedc3e1836400a43f5761ba6a140a6da205cc3b883eb08c0",
+          "size": [
+            64,
+            32
+          ],
+          "id": 39,
+          "atlas": "atlas_01.png",
+          "rect": [
+            67,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_40",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_40.png",
+          "sha256": "2525573a36edc26e25e579b6c88aaa35b9ec3485c41dc6ffdac4a6320a3b3c39",
+          "size": [
+            64,
+            32
+          ],
+          "id": 40,
+          "atlas": "atlas_01.png",
+          "rect": [
+            133,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_41",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_41.png",
+          "sha256": "ffe1f6cc01653dad86ad868e3022933e92d78fa6bd936070f82b0d0828c78852",
+          "size": [
+            64,
+            32
+          ],
+          "id": 41,
+          "atlas": "atlas_01.png",
+          "rect": [
+            199,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_42",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_42.png",
+          "sha256": "bd3986a3132aa1a9c99dea173972a49f3bbd45e43106244ac8fb2317b8299280",
+          "size": [
+            64,
+            32
+          ],
+          "id": 42,
+          "atlas": "atlas_01.png",
+          "rect": [
+            265,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_43",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_43.png",
+          "sha256": "ca4813441f30365626aa39b5d80576fb6815cecb3f9cce9d9c7b108bba005aa2",
+          "size": [
+            64,
+            32
+          ],
+          "id": 43,
+          "atlas": "atlas_01.png",
+          "rect": [
+            331,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_44",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_44.png",
+          "sha256": "6a385f20711a069a54f87edcb7c34c8cd34cd74092bd62cbf43b13911c8abbce",
+          "size": [
+            64,
+            32
+          ],
+          "id": 44,
+          "atlas": "atlas_01.png",
+          "rect": [
+            397,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_45",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_45.png",
+          "sha256": "7e9b36e5fbfb69364866950dbfd69862cb6e923528dac4c208dc122d4ff9f819",
+          "size": [
+            64,
+            32
+          ],
+          "id": 45,
+          "atlas": "atlas_01.png",
+          "rect": [
+            463,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_46",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_46.png",
+          "sha256": "8fd13a6a2e42a7e9850f211db0e98456dd6b6b0cdddf7a0041344b90d7445af3",
+          "size": [
+            64,
+            32
+          ],
+          "id": 46,
+          "atlas": "atlas_01.png",
+          "rect": [
+            529,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_47",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_47.png",
+          "sha256": "0987977953e6e691e9ed8101d57638dafaf5d919a92d09cb39dd8a33888c9da0",
+          "size": [
+            64,
+            32
+          ],
+          "id": 47,
+          "atlas": "atlas_01.png",
+          "rect": [
+            595,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_48",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_48.png",
+          "sha256": "63254295a037e7cdc4ff641728452603bd43d7010c875267d10fde7860b66a9e",
+          "size": [
+            64,
+            32
+          ],
+          "id": 48,
+          "atlas": "atlas_01.png",
+          "rect": [
+            661,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_49",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_49.png",
+          "sha256": "ea1fc1aebf348fa3200b7f55011cf868b5aa073a7aa10c6474397d5045194f97",
+          "size": [
+            64,
+            32
+          ],
+          "id": 49,
+          "atlas": "atlas_01.png",
+          "rect": [
+            727,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_50",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_50.png",
+          "sha256": "508febba7722b6ad2efd8ea481a3245ec1a8de7ca1c242314762e04cfbbfb252",
+          "size": [
+            64,
+            32
+          ],
+          "id": 50,
+          "atlas": "atlas_01.png",
+          "rect": [
+            793,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_51",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_51.png",
+          "sha256": "b95b53760efb510adeec43565c3b2cd92e54d314df241e8c375cd2c943cd8175",
+          "size": [
+            64,
+            32
+          ],
+          "id": 51,
+          "atlas": "atlas_01.png",
+          "rect": [
+            859,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_52",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_52.png",
+          "sha256": "f59153bccc3c88650333f1f5c07977416fbf9f6aa1a2765aab674114cb384642",
+          "size": [
+            64,
+            32
+          ],
+          "id": 52,
+          "atlas": "atlas_01.png",
+          "rect": [
+            925,
+            541,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_53",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_53.png",
+          "sha256": "845d635e206180630112342f67bb11da3edac7409d1d26499dd94e0445d1cb92",
+          "size": [
+            64,
+            32
+          ],
+          "id": 53,
+          "atlas": "atlas_01.png",
+          "rect": [
+            1,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_54",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_54.png",
+          "sha256": "14900c93a23bb4f64f9d730efa52ebee00b7090de13e969700c900029f4a577e",
+          "size": [
+            64,
+            32
+          ],
+          "id": 54,
+          "atlas": "atlas_01.png",
+          "rect": [
+            67,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_55",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_55.png",
+          "sha256": "fc5c1a37a410fa0b96f628d862cf39bf7ff509dc982cee732bcf113b4d87fc97",
+          "size": [
+            64,
+            32
+          ],
+          "id": 55,
+          "atlas": "atlas_01.png",
+          "rect": [
+            133,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_56",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_56.png",
+          "sha256": "c916b8a21c7b851e27e7b6ddd4d049b69b0ade5a5252dbea4f24005d8fa84fcd",
+          "size": [
+            64,
+            32
+          ],
+          "id": 56,
+          "atlas": "atlas_01.png",
+          "rect": [
+            199,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_57",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_57.png",
+          "sha256": "4487032e726afa79913f32f72eb7793ca1a434caee71c98bd071a8c5bb9da111",
+          "size": [
+            64,
+            32
+          ],
+          "id": 57,
+          "atlas": "atlas_01.png",
+          "rect": [
+            265,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_58",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_58.png",
+          "sha256": "434738b3926e9559873ab7ad14dd308a54e880641f258487b69871a8db7258ef",
+          "size": [
+            64,
+            32
+          ],
+          "id": 58,
+          "atlas": "atlas_01.png",
+          "rect": [
+            331,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_59",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_59.png",
+          "sha256": "b5d4f2b3eaee8279a38d0c78642e41db011fa7192f220051e275f223d18d5624",
+          "size": [
+            64,
+            32
+          ],
+          "id": 59,
+          "atlas": "atlas_01.png",
+          "rect": [
+            397,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_60",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_60.png",
+          "sha256": "505f05486388432d497d739a0770fd32aa9373fec75e5cffb4549de587f74f61",
+          "size": [
+            64,
+            32
+          ],
+          "id": 60,
+          "atlas": "atlas_01.png",
+          "rect": [
+            463,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_61",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_61.png",
+          "sha256": "db85b96d621eeb9521e3f5ffc8c708ecf1b97965bc218f3d7a0623a60d557460",
+          "size": [
+            64,
+            32
+          ],
+          "id": 61,
+          "atlas": "atlas_01.png",
+          "rect": [
+            529,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_62",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_62.png",
+          "sha256": "825625105d3befbd72195c53df8024061406810cc2455d5a239811aebbed5ce7",
+          "size": [
+            64,
+            32
+          ],
+          "id": 62,
+          "atlas": "atlas_01.png",
+          "rect": [
+            595,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_63",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_63.png",
+          "sha256": "d937320ef83a254609fd4df06e674697484d890d2eca06e2527a894e37d49eac",
+          "size": [
+            64,
+            32
+          ],
+          "id": 63,
+          "atlas": "atlas_01.png",
+          "rect": [
+            661,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_64",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_64.png",
+          "sha256": "3c05c6dea47b39e884ad99c38a2d69216345220ec29d2b47e1c4aba8909754db",
+          "size": [
+            64,
+            32
+          ],
+          "id": 64,
+          "atlas": "atlas_01.png",
+          "rect": [
+            727,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_65",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_65.png",
+          "sha256": "c4288e300ebc7d5d2fa37868225d2c2f4d0ffe0869f0bd79a54a728b0f99d531",
+          "size": [
+            64,
+            32
+          ],
+          "id": 65,
+          "atlas": "atlas_01.png",
+          "rect": [
+            793,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_66",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_66.png",
+          "sha256": "51f278a4eae5dbe2c44ed1a816b5611079126a5618ca473e632b92a6c4ac749e",
+          "size": [
+            64,
+            32
+          ],
+          "id": 66,
+          "atlas": "atlas_01.png",
+          "rect": [
+            859,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_67",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_67.png",
+          "sha256": "8dc57c0032cd0383de790d976bb0bf45eab113cf285084d265216d663e4cc5b8",
+          "size": [
+            64,
+            32
+          ],
+          "id": 67,
+          "atlas": "atlas_01.png",
+          "rect": [
+            925,
+            575,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_68",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_68.png",
+          "sha256": "2f2e94d0f13e3dbb869189d0c56fadec1bcbcb185eae8914e5649eae26e43077",
+          "size": [
+            64,
+            32
+          ],
+          "id": 68,
+          "atlas": "atlas_01.png",
+          "rect": [
+            1,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_69",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_69.png",
+          "sha256": "a80bc714d288903bcce26b7f03acdf9e90c4437f901ff6c25c73ef6a40007de9",
+          "size": [
+            64,
+            32
+          ],
+          "id": 69,
+          "atlas": "atlas_01.png",
+          "rect": [
+            67,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_70",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_70.png",
+          "sha256": "0bbd7f40eb55390fbf43a55511bbf07d3d3bf7f9d32091a223805c3b844e9704",
+          "size": [
+            64,
+            32
+          ],
+          "id": 70,
+          "atlas": "atlas_01.png",
+          "rect": [
+            133,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_71",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_71.png",
+          "sha256": "a90e48b0ee36cff9bef49861e2b47079f7d6a6170f6990bda9e2669aa3825415",
+          "size": [
+            64,
+            32
+          ],
+          "id": 71,
+          "atlas": "atlas_01.png",
+          "rect": [
+            199,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_72",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_72.png",
+          "sha256": "ef7905c081cd0a6ed7357dca524dcb773efcf7d92164dc6a6795c6f740ffc676",
+          "size": [
+            64,
+            32
+          ],
+          "id": 72,
+          "atlas": "atlas_01.png",
+          "rect": [
+            265,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_73",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_73.png",
+          "sha256": "89c9dd7a55db735f5473fc2f0a2d179ea9db1c93ef0b49af0cc6a0d1059ac462",
+          "size": [
+            64,
+            32
+          ],
+          "id": 73,
+          "atlas": "atlas_01.png",
+          "rect": [
+            331,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_74",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_74.png",
+          "sha256": "2f6673c91a746a38dc0267e80c2ca4a724557a2a9fb2fae583a53b791643613d",
+          "size": [
+            64,
+            32
+          ],
+          "id": 74,
+          "atlas": "atlas_01.png",
+          "rect": [
+            397,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_75",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_75.png",
+          "sha256": "9149084b8d9427738d4848c17dbf3c624b6f0224714c2acb254c25f15d14cd32",
+          "size": [
+            64,
+            32
+          ],
+          "id": 75,
+          "atlas": "atlas_01.png",
+          "rect": [
+            463,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_76",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_76.png",
+          "sha256": "5715ac89f5397f81ebd7d3a6914b5f66e654115b8dfa16f1cb1845d955e3586e",
+          "size": [
+            64,
+            32
+          ],
+          "id": 76,
+          "atlas": "atlas_01.png",
+          "rect": [
+            529,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_77",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_77.png",
+          "sha256": "6f95c16be96c67f22512e281600e2f2413e598e7da78bb28b1abf9005c744f79",
+          "size": [
+            64,
+            32
+          ],
+          "id": 77,
+          "atlas": "atlas_01.png",
+          "rect": [
+            595,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_78",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_78.png",
+          "sha256": "68c62359795f87495cf27f0856ca0db4afe62f62c58065c505a12695b3c921c6",
+          "size": [
+            64,
+            32
+          ],
+          "id": 78,
+          "atlas": "atlas_01.png",
+          "rect": [
+            661,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_79",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_79.png",
+          "sha256": "0d47b32fb6ab4c89dfcc128c8fd7890c33fd6184236612df44effb1f26d6c20b",
+          "size": [
+            64,
+            32
+          ],
+          "id": 79,
+          "atlas": "atlas_01.png",
+          "rect": [
+            727,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_80",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_80.png",
+          "sha256": "28616ed4c38ceef40ac9a863f19e680ccdc8965004dc5537b04628f7e78992e6",
+          "size": [
+            64,
+            32
+          ],
+          "id": 80,
+          "atlas": "atlas_01.png",
+          "rect": [
+            793,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_81",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_81.png",
+          "sha256": "7b678024d66414085ef334c9fec01da9ee45f29d4928d2e1d4c01e9f37103a68",
+          "size": [
+            64,
+            32
+          ],
+          "id": 81,
+          "atlas": "atlas_01.png",
+          "rect": [
+            859,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_82",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_82.png",
+          "sha256": "a97113d15d0d9a210c67e68a4c1f2be7fd87bb2a4eb3b6925bae468548d02c9c",
+          "size": [
+            64,
+            32
+          ],
+          "id": 82,
+          "atlas": "atlas_01.png",
+          "rect": [
+            925,
+            609,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_83",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_83.png",
+          "sha256": "23543437f84d7fc7f95ffd6d9a057bedacff4464541c1bed2ba962141244d0e4",
+          "size": [
+            64,
+            32
+          ],
+          "id": 83,
+          "atlas": "atlas_01.png",
+          "rect": [
+            1,
+            643,
+            64,
+            32
+          ]
+        },
+        {
+          "name": "bow_shot_84",
+          "source": "sprites/weapons/ranged weapons/bow_shot/bow_shot_84.png",
+          "sha256": "478b5e137c9357a5202f7cc80c330f4f5aad34a0b457be59725b6f8e605a2b78",
+          "size": [
+            64,
+            32
+          ],
+          "id": 84,
+          "atlas": "atlas_01.png",
+          "rect": [
+            67,
+            643,
+            64,
+            32
+          ]
         }
       ]
     },
@@ -21384,8 +22608,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            331,
-            473,
+            133,
+            643,
             32,
             32
           ]
@@ -21633,13 +22857,13 @@
   },
   "ranged_groups": {
     "bow": [
-      "bow_01",
-      "bow_02",
-      "bow_03",
-      "bow_04",
-      "bow_05",
-      "bow_06",
-      "bow_07"
+      "bow/1",
+      "bow/2",
+      "bow/3",
+      "bow/4",
+      "bow/5",
+      "bow/6",
+      "bow/7"
     ],
     "crossbow": [
       "crossbow_01",
@@ -21654,7 +22878,6 @@
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 0,
-      "two_handed": false,
       "number": 1,
       "grip": [
         16,
@@ -21662,15 +22885,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1201,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1201
+      "two_handed": false
     },
     "one_axe/2": {
       "id": "one_axe/2",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 1,
-      "two_handed": false,
       "number": 2,
       "grip": [
         16,
@@ -21678,15 +22902,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1202,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1202
+      "two_handed": false
     },
     "one_axe/3": {
       "id": "one_axe/3",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 2,
-      "two_handed": false,
       "number": 3,
       "grip": [
         16,
@@ -21694,15 +22919,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1203,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1203
+      "two_handed": false
     },
     "one_axe/4": {
       "id": "one_axe/4",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 3,
-      "two_handed": false,
       "number": 4,
       "grip": [
         16,
@@ -21710,15 +22936,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1204,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1204
+      "two_handed": false
     },
     "one_axe/5": {
       "id": "one_axe/5",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 4,
-      "two_handed": false,
       "number": 5,
       "grip": [
         16,
@@ -21726,15 +22953,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1205,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1205
+      "two_handed": false
     },
     "one_axe/6": {
       "id": "one_axe/6",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 5,
-      "two_handed": false,
       "number": 6,
       "grip": [
         16,
@@ -21742,15 +22970,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1206,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1206
+      "two_handed": false
     },
     "one_axe/7": {
       "id": "one_axe/7",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 6,
-      "two_handed": false,
       "number": 7,
       "grip": [
         16,
@@ -21758,15 +22987,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1207,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1207
+      "two_handed": false
     },
     "one_axe/8": {
       "id": "one_axe/8",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 7,
-      "two_handed": false,
       "number": 8,
       "grip": [
         16,
@@ -21774,15 +23004,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1208,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1208
+      "two_handed": false
     },
     "one_axe/9": {
       "id": "one_axe/9",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 8,
-      "two_handed": false,
       "number": 9,
       "grip": [
         16,
@@ -21790,15 +23021,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1209,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1209
+      "two_handed": false
     },
     "one_axe/10": {
       "id": "one_axe/10",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 9,
-      "two_handed": false,
       "number": 10,
       "grip": [
         16,
@@ -21806,15 +23038,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1210,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1210
+      "two_handed": false
     },
     "one_axe/11": {
       "id": "one_axe/11",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 10,
-      "two_handed": false,
       "number": 11,
       "grip": [
         16,
@@ -21822,15 +23055,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1211,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1211
+      "two_handed": false
     },
     "one_axe/12": {
       "id": "one_axe/12",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 11,
-      "two_handed": false,
       "number": 12,
       "grip": [
         16,
@@ -21838,15 +23072,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1212,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1212
+      "two_handed": false
     },
     "one_axe/13": {
       "id": "one_axe/13",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 12,
-      "two_handed": false,
       "number": 13,
       "grip": [
         16,
@@ -21854,15 +23089,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1213,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1213
+      "two_handed": false
     },
     "one_axe/14": {
       "id": "one_axe/14",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 13,
-      "two_handed": false,
       "number": 14,
       "grip": [
         16,
@@ -21870,15 +23106,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1214,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1214
+      "two_handed": false
     },
     "one_axe/15": {
       "id": "one_axe/15",
       "family": "one_axe",
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 14,
-      "two_handed": false,
       "number": 15,
       "grip": [
         16,
@@ -21886,15 +23123,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1215,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1215
+      "two_handed": false
     },
     "one_blunt/1": {
       "id": "one_blunt/1",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 0,
-      "two_handed": false,
       "number": 1,
       "grip": [
         16,
@@ -21902,15 +23140,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1401,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1401
+      "two_handed": false
     },
     "one_blunt/2": {
       "id": "one_blunt/2",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 1,
-      "two_handed": false,
       "number": 2,
       "grip": [
         16,
@@ -21918,15 +23157,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1402,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1402
+      "two_handed": false
     },
     "one_blunt/3": {
       "id": "one_blunt/3",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 2,
-      "two_handed": false,
       "number": 3,
       "grip": [
         13,
@@ -21934,15 +23174,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 3,
+      "item_id": 1403,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1403
+      "two_handed": false
     },
     "one_blunt/4": {
       "id": "one_blunt/4",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 3,
-      "two_handed": false,
       "number": 4,
       "grip": [
         13,
@@ -21950,15 +23191,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1404,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1404
+      "two_handed": false
     },
     "one_blunt/5": {
       "id": "one_blunt/5",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 4,
-      "two_handed": false,
       "number": 5,
       "grip": [
         15,
@@ -21966,15 +23208,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1405,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1405
+      "two_handed": false
     },
     "one_blunt/6": {
       "id": "one_blunt/6",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 5,
-      "two_handed": false,
       "number": 6,
       "grip": [
         14,
@@ -21982,15 +23225,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1406,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1406
+      "two_handed": false
     },
     "one_blunt/7": {
       "id": "one_blunt/7",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 6,
-      "two_handed": false,
       "number": 7,
       "grip": [
         16,
@@ -21998,15 +23242,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1407,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1407
+      "two_handed": false
     },
     "one_blunt/8": {
       "id": "one_blunt/8",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 7,
-      "two_handed": false,
       "number": 8,
       "grip": [
         16,
@@ -22014,15 +23259,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1408,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1408
+      "two_handed": false
     },
     "one_blunt/9": {
       "id": "one_blunt/9",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 8,
-      "two_handed": false,
       "number": 9,
       "grip": [
         16,
@@ -22030,15 +23276,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1409,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1409
+      "two_handed": false
     },
     "one_blunt/10": {
       "id": "one_blunt/10",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 9,
-      "two_handed": false,
       "number": 10,
       "grip": [
         16,
@@ -22046,15 +23293,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1410,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1410
+      "two_handed": false
     },
     "one_blunt/11": {
       "id": "one_blunt/11",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 10,
-      "two_handed": false,
       "number": 11,
       "grip": [
         16,
@@ -22062,15 +23310,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 4,
+      "item_id": 1411,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1411
+      "two_handed": false
     },
     "one_blunt/12": {
       "id": "one_blunt/12",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 11,
-      "two_handed": false,
       "number": 12,
       "grip": [
         16,
@@ -22078,15 +23327,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1412,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1412
+      "two_handed": false
     },
     "one_blunt/13": {
       "id": "one_blunt/13",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 12,
-      "two_handed": false,
       "number": 13,
       "grip": [
         16,
@@ -22094,15 +23344,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1413,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1413
+      "two_handed": false
     },
     "one_blunt/14": {
       "id": "one_blunt/14",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 13,
-      "two_handed": false,
       "number": 14,
       "grip": [
         16,
@@ -22110,15 +23361,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1414,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1414
+      "two_handed": false
     },
     "one_blunt/15": {
       "id": "one_blunt/15",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 14,
-      "two_handed": false,
       "number": 15,
       "grip": [
         16,
@@ -22126,15 +23378,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1415,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1415
+      "two_handed": false
     },
     "one_blunt/16": {
       "id": "one_blunt/16",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 15,
-      "two_handed": false,
       "number": 16,
       "grip": [
         16,
@@ -22142,15 +23395,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1416,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1416
+      "two_handed": false
     },
     "one_blunt/17": {
       "id": "one_blunt/17",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 16,
-      "two_handed": false,
       "number": 17,
       "grip": [
         16,
@@ -22158,15 +23412,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1417,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1417
+      "two_handed": false
     },
     "one_blunt/18": {
       "id": "one_blunt/18",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 17,
-      "two_handed": false,
       "number": 18,
       "grip": [
         16,
@@ -22174,15 +23429,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1418,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1418
+      "two_handed": false
     },
     "one_blunt/19": {
       "id": "one_blunt/19",
       "family": "one_blunt",
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 18,
-      "two_handed": false,
       "number": 19,
       "grip": [
         16,
@@ -22190,687 +23446,736 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1419,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1419
+      "two_handed": false
     },
     "one_shield/1": {
       "id": "one_shield/1",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 0,
-      "two_handed": false,
       "number": 1,
       "grip": [
         16,
         18
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/2": {
       "id": "one_shield/2",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 1,
-      "two_handed": false,
       "number": 2,
       "grip": [
         16,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/3": {
       "id": "one_shield/3",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 2,
-      "two_handed": false,
       "number": 3,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/4": {
       "id": "one_shield/4",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 3,
-      "two_handed": false,
       "number": 4,
       "grip": [
         15,
         15
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/5": {
       "id": "one_shield/5",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 4,
-      "two_handed": false,
       "number": 5,
       "grip": [
         16,
         15
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/6": {
       "id": "one_shield/6",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 5,
-      "two_handed": false,
       "number": 6,
       "grip": [
         16,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/7": {
       "id": "one_shield/7",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 6,
-      "two_handed": false,
       "number": 7,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/8": {
       "id": "one_shield/8",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 7,
-      "two_handed": false,
       "number": 8,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/9": {
       "id": "one_shield/9",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 8,
-      "two_handed": false,
       "number": 9,
       "grip": [
         15,
         15
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/10": {
       "id": "one_shield/10",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 9,
-      "two_handed": false,
       "number": 10,
       "grip": [
         15,
         15
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/11": {
       "id": "one_shield/11",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 10,
-      "two_handed": false,
       "number": 11,
       "grip": [
         16,
         15
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/12": {
       "id": "one_shield/12",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 11,
-      "two_handed": false,
       "number": 12,
       "grip": [
         16,
         18
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/13": {
       "id": "one_shield/13",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 12,
-      "two_handed": false,
       "number": 13,
       "grip": [
         16,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/14": {
       "id": "one_shield/14",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 13,
-      "two_handed": false,
       "number": 14,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/15": {
       "id": "one_shield/15",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 14,
-      "two_handed": false,
       "number": 15,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/16": {
       "id": "one_shield/16",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 15,
-      "two_handed": false,
       "number": 16,
       "grip": [
         16,
         15
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/17": {
       "id": "one_shield/17",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 16,
-      "two_handed": false,
       "number": 17,
       "grip": [
         16,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/18": {
       "id": "one_shield/18",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 17,
-      "two_handed": false,
       "number": 18,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/19": {
       "id": "one_shield/19",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 18,
-      "two_handed": false,
       "number": 19,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/20": {
       "id": "one_shield/20",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 19,
-      "two_handed": false,
       "number": 20,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/21": {
       "id": "one_shield/21",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 20,
-      "two_handed": false,
       "number": 21,
       "grip": [
         16,
         15
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/22": {
       "id": "one_shield/22",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 21,
-      "two_handed": false,
       "number": 22,
       "grip": [
         15,
         15
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/23": {
       "id": "one_shield/23",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 22,
-      "two_handed": false,
       "number": 23,
       "grip": [
         16,
         18
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/24": {
       "id": "one_shield/24",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 23,
-      "two_handed": false,
       "number": 24,
       "grip": [
         16,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/25": {
       "id": "one_shield/25",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 24,
-      "two_handed": false,
       "number": 25,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/26": {
       "id": "one_shield/26",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 25,
-      "two_handed": false,
       "number": 26,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/27": {
       "id": "one_shield/27",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 26,
-      "two_handed": false,
       "number": 27,
       "grip": [
         16,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/28": {
       "id": "one_shield/28",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 27,
-      "two_handed": false,
       "number": 28,
       "grip": [
         16,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/29": {
       "id": "one_shield/29",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 28,
-      "two_handed": false,
       "number": 29,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/30": {
       "id": "one_shield/30",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 29,
-      "two_handed": false,
       "number": 30,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/31": {
       "id": "one_shield/31",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 30,
-      "two_handed": false,
       "number": 31,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/32": {
       "id": "one_shield/32",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 31,
-      "two_handed": false,
       "number": 32,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/33": {
       "id": "one_shield/33",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 32,
-      "two_handed": false,
       "number": 33,
       "grip": [
         16,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/34": {
       "id": "one_shield/34",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 33,
-      "two_handed": false,
       "number": 34,
       "grip": [
         16,
         18
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/35": {
       "id": "one_shield/35",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 34,
-      "two_handed": false,
       "number": 35,
       "grip": [
         16,
         18
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/36": {
       "id": "one_shield/36",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 35,
-      "two_handed": false,
       "number": 36,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/37": {
       "id": "one_shield/37",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 36,
-      "two_handed": false,
       "number": 37,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/38": {
       "id": "one_shield/38",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 37,
-      "two_handed": false,
       "number": 38,
       "grip": [
         16,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/39": {
       "id": "one_shield/39",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 38,
-      "two_handed": false,
       "number": 39,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/40": {
       "id": "one_shield/40",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 39,
-      "two_handed": false,
       "number": 40,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/41": {
       "id": "one_shield/41",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 40,
-      "two_handed": false,
       "number": 41,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/42": {
       "id": "one_shield/42",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 41,
-      "two_handed": false,
       "number": 42,
       "grip": [
         15,
         14
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/43": {
       "id": "one_shield/43",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 42,
-      "two_handed": false,
       "number": 43,
       "grip": [
         15,
         15
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/44": {
       "id": "one_shield/44",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 43,
-      "two_handed": false,
       "number": 44,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/45": {
       "id": "one_shield/45",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 44,
-      "two_handed": false,
       "number": 45,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/46": {
       "id": "one_shield/46",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 45,
-      "two_handed": false,
       "number": 46,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/47": {
       "id": "one_shield/47",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 46,
-      "two_handed": false,
       "number": 47,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_shield/48": {
       "id": "one_shield/48",
       "family": "one_shield",
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 47,
-      "two_handed": false,
       "number": 48,
       "grip": [
         15,
         17
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 0,
+      "is_unique": false,
+      "two_handed": false
     },
     "one_sword/1": {
       "id": "one_sword/1",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 0,
-      "two_handed": false,
       "number": 1,
       "grip": [
         16,
@@ -22878,15 +24183,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1001,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1001
+      "two_handed": false
     },
     "one_sword/2": {
       "id": "one_sword/2",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 1,
-      "two_handed": false,
       "number": 2,
       "grip": [
         16,
@@ -22894,15 +24200,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "item_id": 1002,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1002
+      "two_handed": false
     },
     "one_sword/3": {
       "id": "one_sword/3",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 2,
-      "two_handed": false,
       "number": 3,
       "grip": [
         16,
@@ -22910,15 +24217,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 11,
+      "item_id": 1003,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1003
+      "two_handed": false
     },
     "one_sword/4": {
       "id": "one_sword/4",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 3,
-      "two_handed": false,
       "number": 4,
       "grip": [
         16,
@@ -22926,15 +24234,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "item_id": 1004,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1004
+      "two_handed": false
     },
     "one_sword/5": {
       "id": "one_sword/5",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 4,
-      "two_handed": false,
       "number": 5,
       "grip": [
         16,
@@ -22942,15 +24251,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "item_id": 1005,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1005
+      "two_handed": false
     },
     "one_sword/6": {
       "id": "one_sword/6",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 5,
-      "two_handed": false,
       "number": 6,
       "grip": [
         16,
@@ -22958,15 +24268,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "item_id": 1006,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1006
+      "two_handed": false
     },
     "one_sword/7": {
       "id": "one_sword/7",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 6,
-      "two_handed": false,
       "number": 7,
       "grip": [
         18,
@@ -22974,15 +24285,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "item_id": 1007,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1007
+      "two_handed": false
     },
     "one_sword/8": {
       "id": "one_sword/8",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 7,
-      "two_handed": false,
       "number": 8,
       "grip": [
         16,
@@ -22990,15 +24302,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 9,
+      "item_id": 1008,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1008
+      "two_handed": false
     },
     "one_sword/9": {
       "id": "one_sword/9",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 8,
-      "two_handed": false,
       "number": 9,
       "grip": [
         16,
@@ -23006,15 +24319,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 9,
+      "item_id": 1009,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1009
+      "two_handed": false
     },
     "one_sword/10": {
       "id": "one_sword/10",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 9,
-      "two_handed": false,
       "number": 10,
       "grip": [
         16,
@@ -23022,15 +24336,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 10,
+      "item_id": 1010,
+      "equip_type": 0,
       "is_unique": false,
-      "item_id": 1010
+      "two_handed": false
     },
     "one_sword/11": {
       "id": "one_sword/11",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 10,
-      "two_handed": false,
       "number": 11,
       "grip": [
         16,
@@ -23038,15 +24353,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 11,
+      "item_id": 1011,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1011
+      "two_handed": false
     },
     "one_sword/12": {
       "id": "one_sword/12",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 11,
-      "two_handed": false,
       "number": 12,
       "grip": [
         16,
@@ -23054,15 +24370,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1012,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1012
+      "two_handed": false
     },
     "one_sword/13": {
       "id": "one_sword/13",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 12,
-      "two_handed": false,
       "number": 13,
       "grip": [
         16,
@@ -23070,15 +24387,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1013,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1013
+      "two_handed": false
     },
     "one_sword/14": {
       "id": "one_sword/14",
       "family": "one_sword",
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 13,
-      "two_handed": false,
       "number": 14,
       "grip": [
         16,
@@ -23086,15 +24404,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 8,
+      "item_id": 1014,
+      "equip_type": 0,
       "is_unique": true,
-      "item_id": 1014
+      "two_handed": false
     },
     "two_axe/1": {
       "id": "two_axe/1",
       "family": "two_axe",
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 0,
-      "two_handed": true,
       "number": 1,
       "grip": [
         16,
@@ -23102,15 +24421,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1301,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1301
+      "two_handed": true
     },
     "two_axe/2": {
       "id": "two_axe/2",
       "family": "two_axe",
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 1,
-      "two_handed": true,
       "number": 2,
       "grip": [
         16,
@@ -23118,15 +24438,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1302,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1302
+      "two_handed": true
     },
     "two_axe/4": {
       "id": "two_axe/4",
       "family": "two_axe",
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 2,
-      "two_handed": true,
       "number": 4,
       "grip": [
         16,
@@ -23134,15 +24455,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1304,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1304
+      "two_handed": true
     },
     "two_axe/11": {
       "id": "two_axe/11",
       "family": "two_axe",
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 3,
-      "two_handed": true,
       "number": 11,
       "grip": [
         16,
@@ -23150,15 +24472,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1311,
+      "equip_type": 2,
       "is_unique": true,
-      "item_id": 1311
+      "two_handed": true
     },
     "two_axe/12": {
       "id": "two_axe/12",
       "family": "two_axe",
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 4,
-      "two_handed": true,
       "number": 12,
       "grip": [
         16,
@@ -23166,15 +24489,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1312,
+      "equip_type": 2,
       "is_unique": true,
-      "item_id": 1312
+      "two_handed": true
     },
     "two_axe/13": {
       "id": "two_axe/13",
       "family": "two_axe",
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 5,
-      "two_handed": true,
       "number": 13,
       "grip": [
         16,
@@ -23182,15 +24506,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1313,
+      "equip_type": 2,
       "is_unique": true,
-      "item_id": 1313
+      "two_handed": true
     },
     "two_axe/14": {
       "id": "two_axe/14",
       "family": "two_axe",
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 6,
-      "two_handed": true,
       "number": 14,
       "grip": [
         16,
@@ -23198,15 +24523,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1314,
+      "equip_type": 2,
       "is_unique": true,
-      "item_id": 1314
+      "two_handed": true
     },
     "two_blunt/1": {
       "id": "two_blunt/1",
       "family": "two_blunt",
       "sheet": "sprites/weapons/melee weapons/two_blunt.png",
       "slot": 0,
-      "two_handed": true,
       "number": 1,
       "grip": [
         16,
@@ -23214,15 +24540,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 5,
+      "item_id": 1501,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1501
+      "two_handed": true
     },
     "two_blunt/2": {
       "id": "two_blunt/2",
       "family": "two_blunt",
       "sheet": "sprites/weapons/melee weapons/two_blunt.png",
       "slot": 1,
-      "two_handed": true,
       "number": 2,
       "grip": [
         16,
@@ -23230,15 +24557,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1502,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1502
+      "two_handed": true
     },
     "two_polearm/1": {
       "id": "two_polearm/1",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 0,
-      "two_handed": true,
       "number": 1,
       "grip": [
         16,
@@ -23246,15 +24574,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 9,
+      "item_id": 1701,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1701
+      "two_handed": true
     },
     "two_polearm/2": {
       "id": "two_polearm/2",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 1,
-      "two_handed": true,
       "number": 2,
       "grip": [
         16,
@@ -23262,15 +24591,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1702,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1702
+      "two_handed": true
     },
     "two_polearm/3": {
       "id": "two_polearm/3",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 2,
-      "two_handed": true,
       "number": 3,
       "grip": [
         16,
@@ -23278,15 +24608,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1703,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1703
+      "two_handed": true
     },
     "two_polearm/4": {
       "id": "two_polearm/4",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 3,
-      "two_handed": true,
       "number": 4,
       "grip": [
         16,
@@ -23294,15 +24625,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1704,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1704
+      "two_handed": true
     },
     "two_polearm/5": {
       "id": "two_polearm/5",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 4,
-      "two_handed": true,
       "number": 5,
       "grip": [
         16,
@@ -23310,15 +24642,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1705,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1705
+      "two_handed": true
     },
     "two_polearm/6": {
       "id": "two_polearm/6",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 5,
-      "two_handed": true,
       "number": 6,
       "grip": [
         16,
@@ -23326,15 +24659,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1706,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1706
+      "two_handed": true
     },
     "two_polearm/7": {
       "id": "two_polearm/7",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 6,
-      "two_handed": true,
       "number": 7,
       "grip": [
         16,
@@ -23342,15 +24676,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 7,
+      "item_id": 1707,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1707
+      "two_handed": true
     },
     "two_polearm/8": {
       "id": "two_polearm/8",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 7,
-      "two_handed": true,
       "number": 8,
       "grip": [
         16,
@@ -23358,15 +24693,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 6,
+      "item_id": 1708,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1708
+      "two_handed": true
     },
     "two_polearm/9": {
       "id": "two_polearm/9",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 8,
-      "two_handed": true,
       "number": 9,
       "grip": [
         16,
@@ -23374,15 +24710,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 9,
+      "item_id": 1709,
+      "equip_type": 2,
       "is_unique": true,
-      "item_id": 1709
+      "two_handed": true
     },
     "two_polearm/10": {
       "id": "two_polearm/10",
       "family": "two_polearm",
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 9,
-      "two_handed": true,
       "number": 10,
       "grip": [
         16,
@@ -23390,15 +24727,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 8,
+      "item_id": 1710,
+      "equip_type": 2,
       "is_unique": true,
-      "item_id": 1710
+      "two_handed": true
     },
     "two_spear/1": {
       "id": "two_spear/1",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 0,
-      "two_handed": true,
       "number": 1,
       "grip": [
         16,
@@ -23406,15 +24744,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 9,
+      "item_id": 1601,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1601
+      "two_handed": true
     },
     "two_spear/2": {
       "id": "two_spear/2",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 1,
-      "two_handed": true,
       "number": 2,
       "grip": [
         16,
@@ -23422,15 +24761,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 9,
+      "item_id": 1602,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1602
+      "two_handed": true
     },
     "two_spear/3": {
       "id": "two_spear/3",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 2,
-      "two_handed": true,
       "number": 3,
       "grip": [
         16,
@@ -23438,15 +24778,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 7,
+      "item_id": 1603,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1603
+      "two_handed": true
     },
     "two_spear/4": {
       "id": "two_spear/4",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 3,
-      "two_handed": true,
       "number": 4,
       "grip": [
         16,
@@ -23454,15 +24795,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 7,
+      "item_id": 1604,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1604
+      "two_handed": true
     },
     "two_spear/5": {
       "id": "two_spear/5",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 4,
-      "two_handed": true,
       "number": 5,
       "grip": [
         16,
@@ -23470,15 +24812,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 5,
+      "item_id": 1605,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1605
+      "two_handed": true
     },
     "two_spear/6": {
       "id": "two_spear/6",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 5,
-      "two_handed": true,
       "number": 6,
       "grip": [
         16,
@@ -23486,15 +24829,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 3,
+      "item_id": 1606,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1606
+      "two_handed": true
     },
     "two_spear/7": {
       "id": "two_spear/7",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 6,
-      "two_handed": true,
       "number": 7,
       "grip": [
         16,
@@ -23502,15 +24846,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 10,
+      "item_id": 1607,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1607
+      "two_handed": true
     },
     "two_spear/8": {
       "id": "two_spear/8",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 7,
-      "two_handed": true,
       "number": 8,
       "grip": [
         16,
@@ -23518,15 +24863,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 10,
+      "item_id": 1608,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1608
+      "two_handed": true
     },
     "two_spear/9": {
       "id": "two_spear/9",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 8,
-      "two_handed": true,
       "number": 9,
       "grip": [
         16,
@@ -23534,15 +24880,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 10,
+      "item_id": 1609,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1609
+      "two_handed": true
     },
     "two_spear/10": {
       "id": "two_spear/10",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 9,
-      "two_handed": true,
       "number": 10,
       "grip": [
         16,
@@ -23550,15 +24897,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 4,
+      "item_id": 1610,
+      "equip_type": 2,
       "is_unique": false,
-      "item_id": 1610
+      "two_handed": true
     },
     "two_spear/11": {
       "id": "two_spear/11",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 10,
-      "two_handed": true,
       "number": 11,
       "grip": [
         16,
@@ -23566,15 +24914,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 6,
+      "item_id": 1611,
+      "equip_type": 2,
       "is_unique": true,
-      "item_id": 1611
+      "two_handed": true
     },
     "two_spear/12": {
       "id": "two_spear/12",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 11,
-      "two_handed": true,
       "number": 12,
       "grip": [
         16,
@@ -23582,15 +24931,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 6,
+      "item_id": 1612,
+      "equip_type": 2,
       "is_unique": true,
-      "item_id": 1612
+      "two_handed": true
     },
     "two_spear/13": {
       "id": "two_spear/13",
       "family": "two_spear",
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 12,
-      "two_handed": true,
       "number": 13,
       "grip": [
         16,
@@ -23598,15 +24948,16 @@
       ],
       "attack": "thrust_attack",
       "y_up": 6,
+      "item_id": 1613,
+      "equip_type": 2,
       "is_unique": true,
-      "item_id": 1613
+      "two_handed": true
     },
     "two_sword/1": {
       "id": "two_sword/1",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 0,
-      "two_handed": true,
       "number": 1,
       "grip": [
         16,
@@ -23614,15 +24965,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "item_id": 1101,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1101
+      "two_handed": true
     },
     "two_sword/2": {
       "id": "two_sword/2",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 1,
-      "two_handed": true,
       "number": 2,
       "grip": [
         16,
@@ -23630,15 +24982,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "item_id": 1102,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1102
+      "two_handed": true
     },
     "two_sword/3": {
       "id": "two_sword/3",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 2,
-      "two_handed": true,
       "number": 3,
       "grip": [
         16,
@@ -23646,15 +24999,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "item_id": 1103,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1103
+      "two_handed": true
     },
     "two_sword/4": {
       "id": "two_sword/4",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 3,
-      "two_handed": true,
       "number": 4,
       "grip": [
         16,
@@ -23662,15 +25016,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1104,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1104
+      "two_handed": true
     },
     "two_sword/5": {
       "id": "two_sword/5",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 4,
-      "two_handed": true,
       "number": 5,
       "grip": [
         16,
@@ -23678,15 +25033,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "item_id": 1105,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1105
+      "two_handed": true
     },
     "two_sword/6": {
       "id": "two_sword/6",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 5,
-      "two_handed": true,
       "number": 6,
       "grip": [
         16,
@@ -23694,15 +25050,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1106,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1106
+      "two_handed": true
     },
     "two_sword/7": {
       "id": "two_sword/7",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 6,
-      "two_handed": true,
       "number": 7,
       "grip": [
         16,
@@ -23710,15 +25067,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1107,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1107
+      "two_handed": true
     },
     "two_sword/8": {
       "id": "two_sword/8",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 7,
-      "two_handed": true,
       "number": 8,
       "grip": [
         16,
@@ -23726,15 +25084,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1108,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1108
+      "two_handed": true
     },
     "two_sword/9": {
       "id": "two_sword/9",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 8,
-      "two_handed": true,
       "number": 9,
       "grip": [
         16,
@@ -23742,15 +25101,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1109,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1109
+      "two_handed": true
     },
     "two_sword/10": {
       "id": "two_sword/10",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 9,
-      "two_handed": true,
       "number": 10,
       "grip": [
         16,
@@ -23758,15 +25118,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1110,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1110
+      "two_handed": true
     },
     "two_sword/11": {
       "id": "two_sword/11",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 10,
-      "two_handed": true,
       "number": 11,
       "grip": [
         18,
@@ -23774,15 +25135,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "item_id": 1111,
+      "equip_type": 1,
       "is_unique": false,
-      "item_id": 1111
+      "two_handed": true
     },
     "two_sword/12": {
       "id": "two_sword/12",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 11,
-      "two_handed": true,
       "number": 12,
       "grip": [
         16,
@@ -23790,15 +25152,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "item_id": 1112,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1112
+      "two_handed": true
     },
     "two_sword/13": {
       "id": "two_sword/13",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 12,
-      "two_handed": true,
       "number": 13,
       "grip": [
         16,
@@ -23806,15 +25169,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 12,
+      "item_id": 1113,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1113
+      "two_handed": true
     },
     "two_sword/14": {
       "id": "two_sword/14",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 13,
-      "two_handed": true,
       "number": 14,
       "grip": [
         16,
@@ -23822,15 +25186,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1114,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1114
+      "two_handed": true
     },
     "two_sword/15": {
       "id": "two_sword/15",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 14,
-      "two_handed": true,
       "number": 15,
       "grip": [
         16,
@@ -23838,15 +25203,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 13,
+      "item_id": 1115,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1115
+      "two_handed": true
     },
     "two_sword/16": {
       "id": "two_sword/16",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 15,
-      "two_handed": true,
       "number": 16,
       "grip": [
         16,
@@ -23854,15 +25220,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1116,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1116
+      "two_handed": true
     },
     "two_sword/17": {
       "id": "two_sword/17",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 16,
-      "two_handed": true,
       "number": 17,
       "grip": [
         16,
@@ -23870,15 +25237,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1117,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1117
+      "two_handed": true
     },
     "two_sword/18": {
       "id": "two_sword/18",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 17,
-      "two_handed": true,
       "number": 18,
       "grip": [
         16,
@@ -23886,15 +25254,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1118,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1118
+      "two_handed": true
     },
     "two_sword/19": {
       "id": "two_sword/19",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 18,
-      "two_handed": true,
       "number": 19,
       "grip": [
         16,
@@ -23902,15 +25271,16 @@
       ],
       "attack": "chop_attack",
       "y_up": 15,
+      "item_id": 1119,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1119
+      "two_handed": true
     },
     "two_sword/20": {
       "id": "two_sword/20",
       "family": "two_sword",
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 19,
-      "two_handed": true,
       "number": 20,
       "grip": [
         17,
@@ -23918,162 +25288,189 @@
       ],
       "attack": "chop_attack",
       "y_up": 14,
+      "item_id": 1120,
+      "equip_type": 1,
       "is_unique": true,
-      "item_id": 1120
+      "two_handed": true
     },
-    "bow_01": {
-      "id": "bow_01",
+    "bow/1": {
+      "id": "bow/1",
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 0,
-      "two_handed": true,
       "number": 1,
       "grip": [
         15,
         16
       ],
       "attack": "bow_shot",
-      "is_unique": false
+      "y_up": 2,
+      "item_id": 1801,
+      "equip_type": 3,
+      "is_unique": false,
+      "two_handed": true
     },
-    "bow_02": {
-      "id": "bow_02",
+    "bow/2": {
+      "id": "bow/2",
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 1,
-      "two_handed": true,
       "number": 2,
       "grip": [
         15,
         16
       ],
-      "attack": "chop_attack",
-      "is_unique": false
+      "attack": "bow_shot",
+      "y_up": 2,
+      "item_id": 1802,
+      "equip_type": 3,
+      "is_unique": false,
+      "two_handed": true
     },
-    "bow_03": {
-      "id": "bow_03",
+    "bow/3": {
+      "id": "bow/3",
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 2,
-      "two_handed": true,
       "number": 3,
       "grip": [
         16,
         16
       ],
-      "attack": "chop_attack",
-      "is_unique": false
+      "attack": "bow_shot",
+      "y_up": 2,
+      "item_id": 1803,
+      "equip_type": 3,
+      "is_unique": false,
+      "two_handed": true
     },
-    "bow_04": {
-      "id": "bow_04",
+    "bow/4": {
+      "id": "bow/4",
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 3,
-      "two_handed": true,
       "number": 4,
       "grip": [
         15,
         16
       ],
-      "attack": "chop_attack",
-      "is_unique": false
+      "attack": "bow_shot",
+      "y_up": 2,
+      "item_id": 1804,
+      "equip_type": 3,
+      "is_unique": false,
+      "two_handed": true
     },
-    "bow_05": {
-      "id": "bow_05",
+    "bow/5": {
+      "id": "bow/5",
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 4,
-      "two_handed": true,
       "number": 5,
       "grip": [
         15,
         16
       ],
-      "attack": "chop_attack",
-      "is_unique": false
+      "attack": "bow_shot",
+      "y_up": 2,
+      "item_id": 1805,
+      "equip_type": 3,
+      "is_unique": false,
+      "two_handed": true
     },
-    "bow_06": {
-      "id": "bow_06",
+    "bow/6": {
+      "id": "bow/6",
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 5,
-      "two_handed": true,
       "number": 6,
       "grip": [
         15,
         16
       ],
-      "attack": "chop_attack",
-      "is_unique": false
+      "attack": "bow_shot",
+      "y_up": 2,
+      "item_id": 1806,
+      "equip_type": 3,
+      "is_unique": false,
+      "two_handed": true
     },
-    "bow_07": {
-      "id": "bow_07",
+    "bow/7": {
+      "id": "bow/7",
       "family": "bow",
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 6,
-      "two_handed": true,
       "number": 7,
       "grip": [
         15,
         16
       ],
-      "attack": "chop_attack",
-      "is_unique": false
+      "attack": "bow_shot",
+      "y_up": 2,
+      "item_id": 1807,
+      "equip_type": 3,
+      "is_unique": false,
+      "two_handed": true
     },
     "crossbow_01": {
       "id": "crossbow_01",
       "family": "crossbow",
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 0,
-      "two_handed": true,
       "number": 1,
       "grip": [
         16,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 1,
+      "is_unique": false,
+      "two_handed": true
     },
     "crossbow_02": {
       "id": "crossbow_02",
       "family": "crossbow",
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 1,
-      "two_handed": true,
       "number": 2,
       "grip": [
         16,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 1,
+      "is_unique": false,
+      "two_handed": true
     },
     "crossbow_03": {
       "id": "crossbow_03",
       "family": "crossbow",
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 2,
-      "two_handed": true,
       "number": 3,
       "grip": [
         16,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 1,
+      "is_unique": false,
+      "two_handed": true
     },
     "crossbow_04": {
       "id": "crossbow_04",
       "family": "crossbow",
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 3,
-      "two_handed": true,
       "number": 4,
       "grip": [
         15,
         16
       ],
       "attack": "chop_attack",
-      "is_unique": false
+      "equip_type": 1,
+      "is_unique": false,
+      "two_handed": true
     }
   },
   "attack_effect": "sprites/VFX/weapon/weaponfx03.png",

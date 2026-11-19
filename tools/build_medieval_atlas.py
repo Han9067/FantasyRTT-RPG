@@ -49,7 +49,7 @@ def load_weapon_offsets(path=ROOT / 'data/weapon_offsets.json'):
         raise ValueError('Unexpected weapon sheet headers')
     families = {'한손검':'one_sword', '한손도끼':'one_axe', '한손둔기':'one_blunt',
                 '양손검':'two_sword', '양손도끼':'two_axe', '양손둔기':'two_blunt',
-                '장병기':'two_polearm', '창':'two_spear', '양손장병기':'two_polearm', '양손창':'two_spear'}
+                '활':'bow', '장병기':'two_polearm', '창':'two_spear', '양손장병기':'two_polearm', '양손창':'two_spear'}
     offsets = {}
     for row in rows[1:]:
         if not row or not any(str(v).strip() for v in row):
@@ -133,7 +133,7 @@ def build(source=SOURCE, dest=DEST):
                 files = [p.name for p in folder.glob('*.png') if f'two_axe/{p.stem}' in offsets]
                 if not files:
                     continue
-            key = add(folder.relative_to(source).as_posix(), prefix, only_files=files, numeric=melee)
+            key = add(folder.relative_to(source).as_posix(), prefix, only_files=files, numeric=melee or family == 'bow')
             slots = catalog['sheets'][key]['slots']
             if melee:
                 catalog['melee_groups'][folder.name] = [f"{folder.name}/{slot['id']}" for slot in slots]
@@ -144,17 +144,19 @@ def build(source=SOURCE, dest=DEST):
             elif family in ('bow', 'crossbow'):
                 # Append to preserve the primary type indices in saved appearances.
                 catalog['primary_types'].append(family)
-                catalog['ranged_groups'][family] = [slot['name'] for slot in slots]
+                catalog['ranged_groups'][family] = []
             for index, slot in enumerate(slots):
                 with Image.open(source / slot['source']) as image:
                     grip = weapon_grip(family, slot['name'], image.convert('RGBA'))
-                equipment_id = f"{folder.name}/{slot['id']}" if melee else slot['name']
+                equipment_id = f"{folder.name}/{slot['id']}" if melee or family == 'bow' else slot['name']
+                if family in catalog['ranged_groups']:
+                    catalog['ranged_groups'][family].append(equipment_id)
                 if equipment_id in catalog['weapon_items']:
                     raise ValueError(f"Duplicate equipment ID: {slot['name']}")
                 catalog['weapon_items'][equipment_id] = {
                     'id': equipment_id, 'family': folder.name, 'sheet': key, 'slot': index,
-                    'two_handed': not melee or hands == 'two', 'number': slot['id'],
-                    'grip': grip, 'attack': 'bow_shot' if slot['name'] == 'bow_01' else ('thrust_attack' if family == 'spear' else 'chop_attack')}
+                    'number': slot['id'],
+                    'grip': grip, 'attack': 'bow_shot' if family == 'bow' else ('thrust_attack' if family == 'spear' else 'chop_attack')}
     for equipment_id, y_up in offsets.items():
         if equipment_id not in catalog['weapon_items']:
             if equipment_id.startswith('two_axe/'):
@@ -162,16 +164,21 @@ def build(source=SOURCE, dest=DEST):
             raise ValueError(f'Sheet weapon missing from source: {equipment_id}')
         catalog['weapon_items'][equipment_id]['y_up'] = y_up
     weapon_data = json.loads((ROOT / 'data/weapon_ids.json').read_text(encoding='utf-8'))
-    sheet_ids = weapon_data['item_ids']
-    unique_ids = set(weapon_data['unique_item_ids'])
-    if not unique_ids.issubset(sheet_ids.values()):
-        raise ValueError('Unique weapon missing from sheet IDs')
-    if any(type(value) is not int or value <= 0 for value in sheet_ids.values()) or len(set(sheet_ids.values())) != len(sheet_ids):
+    sheet_items = weapon_data['items']
+    ids = [row['item_id'] for row in sheet_items.values()]
+    if any(type(i) is not int or i <= 0 for i in ids) or len(set(ids)) != len(ids):
         raise ValueError('Weapon sheet IDs must be unique positive integers')
+    for key, row in sheet_items.items():
+        if type(row['equip_type']) is not int or row['equip_type'] not in range(4) or type(row['is_unique']) is not bool:
+            raise ValueError(f'Invalid sheet equipment data: {key}')
     for key, item in catalog['weapon_items'].items():
-        item['is_unique'] = sheet_ids.get(key) in unique_ids
-        if key in sheet_ids:
-            item['item_id'] = sheet_ids[key]
+        if key in sheet_items:
+            item.update(sheet_items[key])
+        else:
+            # Shields and crossbows have no sheet rows yet. Preserve their old grips.
+            item['equip_type'] = 1 if item['family'] == 'crossbow' else 0
+            item['is_unique'] = False
+        item['two_handed'] = item['equip_type'] != 0
     catalog['attack_effect'] = add('sprites/VFX/weapon/weaponfx03')
     catalog['thrust_effect'] = add('sprites/VFX/weapon/weaponfx02')
     catalog['infantry_helmet'] = add('sprites/wardrobe/metal/metal', only_file='metal_20.png')
@@ -189,8 +196,10 @@ def build(source=SOURCE, dest=DEST):
             'sha256':hashlib.sha256(guide.read_bytes()).hexdigest(),
             'frames':len(durations), 'durations_ms':durations}
 
+    # Each numbered bow has twelve consecutive native shooting frames.
+    shot_count = 12 * len(catalog['ranged_groups']['bow'])
     catalog['bow_shot'] = add('sprites/weapons/ranged weapons/bow_shot',
-                              only_files=[f'bow_shot_{i:02d}.png' for i in range(1,13)])
+                              only_files=[f'bow_shot_{i:02d}.png' for i in range(1, shot_count + 1)])
     catalog['arrow'] = add('sprites/weapons/projectiles/arrow', only_file='arrow_01.png')
     catalog['attack_references']['bow_shot'] = {'frames':12, 'durations_ms':[100]*12,
         'source':'sprites/weapons/ranged weapons/bow_shot', 'release_frame':7}

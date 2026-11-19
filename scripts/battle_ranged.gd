@@ -60,7 +60,7 @@ func predicted_aim(start: Vector2, target: BattleUnit) -> Vector2:
 func fire(unit: BattleUnit, target: BattleUnit) -> BattleArrow:
 	map.combat.face(unit, target.position)
 	var hit := unit.roll_hit()
-	var muzzle := Vector2(-17, -13) + Vector2(CharacterArt.BOW_OFFSET)
+	var muzzle := Vector2(-17, -13) + Vector2(CharacterArt.bow_offset(CharacterArt.data().weapon_items[CharacterArt.ARCHER_BOW]))
 	if unit.flip_h: muzzle.x = -muzzle.x
 	var start := unit.position + muzzle
 	var aim := predicted_aim(start, target)

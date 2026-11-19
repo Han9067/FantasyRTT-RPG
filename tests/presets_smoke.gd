@@ -107,6 +107,16 @@ func run() -> void:
 	restored = Store.new(path)
 	assert(restored.get_appearance(0) == dual)
 	assert(Art.weapon_by_item_id(1613).id == "two_spear/13" and Art.weapon_by_item_id(1303).is_empty())
+	# Existing bow slots stored an index; resaving also records the new sheet ID.
+	legacy.weapon = Art.data().primary_types.find("bow")
+	legacy.weapon_item = 6
+	data.set_value("presets", "0", legacy)
+	assert(data.save(path) == OK)
+	restored = Store.new(path)
+	var bow := restored.get_appearance(0)
+	assert(Art.equipped_weapon(bow).id == "bow/7" and Art.equipped_offhand(bow).is_empty())
+	assert(restored.save_appearance(0, bow) == OK and data.load(path) == OK)
+	assert(data.get_value("presets", "0").primary_item_id == 1807)
 	DirAccess.remove_absolute(path)
 	print("PASS: three disabled empty slots, square popup choices, disk reload, independent appearance/weapon presets, unchanged personal details, preview/dependency refresh, isolated overwrite, cancel/screen cleanup and world continuity")
 	quit()

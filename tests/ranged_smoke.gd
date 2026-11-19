@@ -98,7 +98,7 @@ func art_check() -> void:
 	var infantry := Art.infantry_appearance(true,0)
 	for key in infantry:
 		if key not in ["equipped_weapon", "offhand", "offhand_item"]: assert(config[key] == infantry[key])
-	assert(Art.equipped_weapon(config).id == "bow_01" and config.offhand == -1)
+	assert(Art.equipped_weapon(config).id == "bow/1" and config.offhand == -1)
 	var frames := Art.infantry_frames(config,true)
 	assert(frames.get_frame_count("attack") == 12 and frames.get_animation_speed("attack") == 10)
 	for movement in ["idle", "walk", "run"]:
@@ -106,7 +106,7 @@ func art_check() -> void:
 			assert(Art.weapon_position(config,movement,i) + Vector2i(16,16) == Art.weapon_anchor(config,movement,i))
 	var strip := Image.create(Art.FRAME_SIZE.x*6,Art.FRAME_SIZE.y*2,false,Image.FORMAT_RGBA8)
 	for i in range(12):
-		assert(Art.weapon_anchor(config,"attack",i) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(1, 0))
+		assert(Art.weapon_anchor(config,"attack",i) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(1, -2))
 		var source := Art.part_image(catalog.bow_shot,i)
 		assert(Art.weapon_position(config,"attack",i) + source.get_size()/2 == Art.weapon_anchor(config,"attack",i))
 		var occupied := source.get_used_rect()
@@ -114,10 +114,10 @@ func art_check() -> void:
 		assert(Rect2i(Vector2i.ZERO,Art.FRAME_SIZE).encloses(occupied), "Original bow shot must not be clipped")
 		var actual := frames.get_frame_texture("attack",i).get_image()
 		strip.blit_rect(actual,Rect2i(Vector2i.ZERO,Art.FRAME_SIZE),Vector2i((i%6)*Art.FRAME_SIZE.x,(i/6)*Art.FRAME_SIZE.y))
-		assert(Art.pose("attack",i,"bow_shot").body_frame == 0)
+		assert(Art.pose("attack",i,"bow_shot",3).body_frame == 0)
 	assert(Art.part_image(catalog.arrow,0).get_data() == Image.load_from_file("res://art/medieval/sprites/weapons/projectiles/arrow/arrow_01.png").get_data())
 	strip.save_png("/workspace/outputs/archer-shot-strip.png")
-	print("PASS: infantry appearance, two-handed bow_01, all 12 native bow_shot poses, original arrow_01")
+	print("PASS: infantry appearance, two-handed bow/1, all 12 native bow_shot poses, original arrow_01")
 
 func run() -> void:
 	seed(20261116)
@@ -183,14 +183,14 @@ func run() -> void:
 	shooter.target = shooter.position
 	victim.position = Vector2(900,800)
 	var left_shot: BattleArrow = map.combat.ranged.fire(shooter, victim)
-	assert(not shooter.flip_h and left_shot.launch == shooter.position + Vector2(-16,-13))
+	assert(not shooter.flip_h and left_shot.launch == shooter.position + Vector2(-16,-15))
 	map.combat.ranged.projectiles.erase(left_shot)
 	left_shot.queue_free()
 	victim.position = Vector2(1300,800)
 	victim.target = victim.position+Vector2(1,0) # Explicit move prevents auto retaliation in this fixture.
 	shooter.accuracy = 1.0
 	var arrow: BattleArrow = map.combat.ranged.fire(shooter,victim)
-	assert(shooter.flip_h and arrow.launch == shooter.position + Vector2(16,-13))
+	assert(shooter.flip_h and arrow.launch == shooter.position + Vector2(16,-15))
 	# Keep a visible but low arc at short/long distances in every firing direction.
 	# Compare orientation to actual neighboring positions instead of forcing a down-facing tip.
 	for offset in [Vector2(40,0),Vector2(320,0),Vector2(640,0),Vector2(-640,0),Vector2(0,-640),Vector2(0,640),Vector2(400,-400)]:
