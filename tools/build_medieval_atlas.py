@@ -49,7 +49,7 @@ def load_weapon_offsets(path=ROOT / 'data/weapon_offsets.json'):
         raise ValueError('Unexpected weapon sheet headers')
     families = {'한손검':'one_sword', '한손도끼':'one_axe', '한손둔기':'one_blunt',
                 '양손검':'two_sword', '양손도끼':'two_axe', '양손둔기':'two_blunt',
-                '양손장병기':'two_polearm', '양손창':'two_spear'}
+                '장병기':'two_polearm', '창':'two_spear', '양손장병기':'two_polearm', '양손창':'two_spear'}
     offsets = {}
     for row in rows[1:]:
         if not row or not any(str(v).strip() for v in row):
@@ -161,6 +161,12 @@ def build(source=SOURCE, dest=DEST):
                 continue  # The art may arrive after its spreadsheet row.
             raise ValueError(f'Sheet weapon missing from source: {equipment_id}')
         catalog['weapon_items'][equipment_id]['y_up'] = y_up
+    sheet_ids = json.loads((ROOT / 'data/weapon_ids.json').read_text(encoding='utf-8'))['item_ids']
+    if any(type(value) is not int or value <= 0 for value in sheet_ids.values()) or len(set(sheet_ids.values())) != len(sheet_ids):
+        raise ValueError('Weapon sheet IDs must be unique positive integers')
+    for key, item in catalog['weapon_items'].items():
+        if key in sheet_ids:
+            item['item_id'] = sheet_ids[key]
     catalog['attack_effect'] = add('sprites/VFX/weapon/weaponfx03')
     catalog['thrust_effect'] = add('sprites/VFX/weapon/weaponfx02')
     catalog['infantry_helmet'] = add('sprites/wardrobe/metal/metal', only_file='metal_20.png')

@@ -31,13 +31,13 @@ func run() -> void:
 			assert(original.get_data() == Art.part_image(path, i).get_data(), "Atlas/import changed source pixels")
 			assert(Rect2i(Vector2i.ZERO, Art.atlas_image(slot.atlas).get_size()).encloses(Art.part_rect(path, i)))
 			part_count += 1
-	assert(part_count == 1250)
+	assert(part_count == 1246)
 	var config := Art.defaults()
 	assert(Art.count(config, "face") == 40)
 	assert(Art.count(config, "body") == 12)
 	assert(Art.count(config, "hair") == 31 and Art.count(config, "beard") == 30)
 	assert(Art.count(config, "weapon") == 10 and Art.count(config, "offhand") == 4)
-	assert(catalog.weapon_items.size() == 163)
+	assert(catalog.weapon_items.size() == 159)
 	assert(not catalog.primary_types.has("one_shield"))
 	assert(catalog.secondary_types == ["one_axe", "one_blunt", "one_shield", "one_sword"])
 	assert(Art.PRIMARY_WEAPON_PIVOT == Vector2(0.5,0.5))
@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.45")
+	assert(game.game_version == "0.0.46")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
@@ -221,7 +221,7 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 1250 loose source parts match two atlases byte-for-byte; two weapon slots; 11 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
+	print("PASS: 1246 loose source parts match two atlases byte-for-byte; two weapon slots; 11 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
 	quit()
 
 func verify_shield_layers() -> void:
@@ -247,9 +247,18 @@ func verify_shield_layers() -> void:
 func verify_equipment(catalog: Dictionary) -> void:
 	var config := Art.defaults()
 	var spear_count := 0
-	assert(catalog.weapon_items.has("two_spear/17") and not catalog.weapon_items.has("spear_101"))
+	assert(catalog.weapon_items.has("two_spear/13") and not catalog.weapon_items.has("two_spear/14") and not catalog.weapon_items.has("spear_101"))
 	var expected_offsets := {"two_axe/1": 7, "two_axe/2": 6, "two_axe/4": 7, "two_axe/11": 6, "two_axe/12": 6, "two_axe/13": 6, "two_axe/14": 6}
 	assert(catalog.melee_groups.two_axe == expected_offsets.keys())
+	var two_blunt_offsets := [5, 7]
+	for index in range(two_blunt_offsets.size()):
+		expected_offsets["two_blunt/%d" % (index + 1)] = two_blunt_offsets[index]
+	var two_spear_offsets := [9, 9, 7, 7, 5, 3, 10, 10, 10, 4, 6, 6, 6]
+	for index in range(two_spear_offsets.size()):
+		expected_offsets["two_spear/%d" % (index + 1)] = two_spear_offsets[index]
+	var two_polearm_offsets := [9, 7, 7, 7, 7, 7, 7, 6, 9, 8]
+	for index in range(two_polearm_offsets.size()):
+		expected_offsets["two_polearm/%d" % (index + 1)] = two_polearm_offsets[index]
 	var two_sword_offsets := [13, 13, 13, 14, 13, 14, 14, 14, 14, 14, 13, 13, 12, 14, 13, 14, 14, 14, 15, 14]
 	for index in range(two_sword_offsets.size()):
 		expected_offsets["two_sword/%d" % (index + 1)] = two_sword_offsets[index]
@@ -330,8 +339,8 @@ func verify_equipment(catalog: Dictionary) -> void:
 			var extended := Art.pose("attack",5,weapon.attack)
 			assert(ready.rotation == -1 and extended.rotation == -1)
 			assert(extended.grip.x < ready.grip.x and extended.grip.y == ready.grip.y, "Thrust must extend horizontally")
-	assert(spear_count == 17)
-	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels without clipping and keep the idle contact pixel attached through both attack rotations with unchanged sheet offsets; 17 spears thrust, other melee weapons chop; fixed preview canvas and reference timing")
+	assert(spear_count == 13)
+	print("PASS: all ", catalog.weapon_items.size(), " equipped weapons retain pixels without clipping and keep the idle contact pixel attached through both attack rotations with unchanged sheet offsets; 13 spears thrust, other melee weapons chop; fixed preview canvas and reference timing")
 
 func verify_ui_font(node: Node) -> void:
 	if node is Label or node is Button or node is LineEdit:

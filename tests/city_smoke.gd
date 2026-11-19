@@ -55,7 +55,7 @@ func run() -> void:
 		assert(view.texture == texture and view.size == Vector2(64, 64))
 		var mode := TextureRect.STRETCH_KEEP_ASPECT_CENTERED if dimensions.x > 64 else TextureRect.STRETCH_KEEP_CENTERED
 		assert(view.stretch_mode == mode)
-	# Check the bag path against the equipped icons, including the longest spear.
+	# Check the bag path against the equipped icons, including a two-handed spear.
 	var gear: GridContainer = map.inventory.sheet.find_children("*", "GridContainer", true, false)[0]
 	for i in range(9):
 		var cell := gear.get_child(i) as Panel
@@ -68,7 +68,7 @@ func run() -> void:
 		else:
 			var empty := cell.get_child(0) as Label
 			assert(empty.horizontal_alignment == HORIZONTAL_ALIGNMENT_CENTER and empty.vertical_alignment == VERTICAL_ALIGNMENT_CENTER)
-	map.inventory.set_slot_item(0, CharacterArt.data().weapon_items["two_spear/16"])
+	map.inventory.set_slot_item(0, CharacterArt.data().weapon_items["two_spear/13"])
 	assert(view.texture.get_width() <= 64 and view.texture.get_height() <= 64)
 	map.inventory.set_slot_item(0, {})
 	assert(view.texture == null)

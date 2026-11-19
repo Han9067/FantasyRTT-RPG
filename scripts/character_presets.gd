@@ -20,6 +20,22 @@ func _init(storage_path := "user://appearance_presets.cfg") -> void:
 			var id: String = saved.get("two_axe_id", "two_axe/%d" % (int(saved.weapon_item) + 1))
 			slots[i].weapon_item = maxi(0, Art.data().melee_groups.two_axe.find(id))
 
+		# Numeric sheet IDs take precedence over the older selector positions.
+		restore_weapon(slots[i], saved.get("primary_item_id"), true)
+		restore_weapon(slots[i], saved.get("secondary_item_id"), false)
+		Art.normalize(slots[i])
+
+func restore_weapon(appearance: Dictionary, id: Variant, primary: bool) -> void:
+	if not id is int: return
+	var item := Art.weapon_by_item_id(id)
+	if item.is_empty(): return
+	var types: Array = Art.data().primary_types if primary else Art.data().secondary_types
+	var family := types.find(item.family)
+	if family < 0: return
+	var items: Array = Art.primary_items(item.family) if primary else Art.data().melee_groups[item.family]
+	appearance["weapon" if primary else "offhand"] = family
+	appearance["weapon_item" if primary else "offhand_item"] = items.find(item.id)
+
 func clean_appearance(value: Variant) -> Dictionary:
 	if not value is Dictionary: return {}
 	var result := Art.defaults()
@@ -42,6 +58,11 @@ func save_appearance(slot: int, appearance: Dictionary) -> Error:
 		var record: Dictionary = (snapshot if i == slot else slots[i]).duplicate()
 		if not record.is_empty() and Art.data().primary_types[record.weapon] == "two_axe":
 			record.two_axe_id = Art.equipped_weapon(record).id
+		if not record.is_empty():
+			var primary := Art.equipped_weapon(record)
+			var secondary := Art.equipped_offhand(record)
+			if primary.has("item_id"): record.primary_item_id = primary.item_id
+			if secondary.has("item_id"): record.secondary_item_id = secondary.item_id
 		data.set_value("presets", str(i), record)
 	# Replace only after a complete write, preserving existing slots on failure.
 	var error := data.save(path + ".tmp")

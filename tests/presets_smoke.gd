@@ -95,6 +95,18 @@ func run() -> void:
 	assert(restored.save_appearance(0, late_axe) == OK)
 	restored = Store.new(path)
 	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "two_axe/14")
+	var dual := Art.defaults()
+	dual.offhand = Art.data().secondary_types.find("one_axe")
+	assert(restored.save_appearance(0, dual) == OK and data.load(path) == OK)
+	var record: Dictionary = data.get_value("presets", "0")
+	assert(record.primary_item_id == 1001 and record.secondary_item_id == 1201)
+	record.weapon_item = 5
+	record.offhand_item = 5
+	data.set_value("presets", "0", record)
+	assert(data.save(path) == OK)
+	restored = Store.new(path)
+	assert(restored.get_appearance(0) == dual)
+	assert(Art.weapon_by_item_id(1613).id == "two_spear/13" and Art.weapon_by_item_id(1303).is_empty())
 	DirAccess.remove_absolute(path)
 	print("PASS: three disabled empty slots, square popup choices, disk reload, independent appearance/weapon presets, unchanged personal details, preview/dependency refresh, isolated overwrite, cancel/screen cleanup and world continuity")
 	quit()

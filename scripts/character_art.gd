@@ -28,12 +28,21 @@ const TYPE_LABELS := {"one_axe":"한손 도끼", "one_blunt":"한손 둔기", "o
 	"one_shield":"방패", "two_axe":"양손도끼", "two_blunt":"양손둔기", "two_sword":"양손검",
 	"two_polearm":"장병기", "two_spear":"창", "bow":"활", "crossbow":"석궁"}
 static var catalog: Dictionary = {}
+static var weapons_by_item_id: Dictionary = {}
 static var images: Dictionary = {}
 
 static func data() -> Dictionary:
 	if catalog.is_empty():
 		catalog = JSON.parse_string(FileAccess.get_file_as_string(ROOT + "catalog.json"))
+		for item: Dictionary in catalog.weapon_items.values():
+			if item.has("item_id"):
+				item.item_id = int(item.item_id)
+				weapons_by_item_id[item.item_id] = item
 	return catalog
+
+static func weapon_by_item_id(item_id: int) -> Dictionary:
+	data()
+	return weapons_by_item_id.get(item_id, {})
 
 static func defaults() -> Dictionary:
 	return {"skin": 0, "face": 0, "body": 4, "hair": 1, "hair_color": 1,
