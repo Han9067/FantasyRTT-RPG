@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.42")
+	assert(game.game_version == "0.0.43")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
@@ -311,7 +311,8 @@ func verify_equipment(catalog: Dictionary) -> void:
 						if pose.rotation == 0:
 							assert(position == pose.grip - contact, "Idle/walk placement must remain unchanged")
 					else:
-						assert(position + Art.weapon_pivot_offset(source.get_size(),pose.rotation,Art.NON_MELEE_WEAPON_PIVOT) == Art.weapon_anchor(config,animation,f))
+						var pivot := Vector2(0.5, 1.0) if weapon.family == "one_shield" else Vector2(0.5, 0.5)
+						assert(position + Art.weapon_pivot_offset(source.get_size(),pose.rotation,pivot) == Art.weapon_anchor(config,animation,f))
 				if animation == "attack":
 					var reference: Dictionary = catalog.attack_references[weapon.attack]
 					assert(is_equal_approx(frames.get_frame_duration(animation,f) / frames.get_animation_speed(animation), reference.durations_ms[f] / 1000.0))

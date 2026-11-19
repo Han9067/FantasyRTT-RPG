@@ -101,9 +101,13 @@ func art_check() -> void:
 	assert(Art.equipped_weapon(config).id == "bow_01" and config.offhand == -1)
 	var frames := Art.infantry_frames(config,true)
 	assert(frames.get_frame_count("attack") == 12 and frames.get_animation_speed("attack") == 10)
+	for movement in ["idle", "walk", "run"]:
+		for i in Art.FRAME_COUNTS[movement]:
+			assert(Art.weapon_position(config,movement,i) + Vector2i(16,16) == Art.weapon_anchor(config,movement,i))
 	var strip := Image.create(Art.FRAME_SIZE.x*6,Art.FRAME_SIZE.y*2,false,Image.FORMAT_RGBA8)
 	for i in range(12):
 		var source := Art.part_image(catalog.bow_shot,i)
+		assert(Art.weapon_position(config,"attack",i) + source.get_size()/2 == Art.weapon_anchor(config,"attack",i))
 		var occupied := source.get_used_rect()
 		occupied.position += Art.weapon_position(config,"attack",i)
 		assert(Rect2i(Vector2i.ZERO,Art.FRAME_SIZE).encloses(occupied), "Original bow shot must not be clipped")

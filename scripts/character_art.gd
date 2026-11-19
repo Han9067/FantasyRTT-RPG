@@ -6,7 +6,7 @@ const FRAME_SIZE := Vector2i(136, 104)
 const PREVIEW_REGION := Rect2i(0, 0, 136, 104)
 const PREVIEW_SCALE := 3
 const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 0.5)
-const NON_MELEE_WEAPON_PIVOT := Vector2(0.5, 1.0)
+const SHIELD_WEAPON_PIVOT := Vector2(0.5, 1.0)
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
 const FEET_Y := 80
@@ -197,7 +197,8 @@ static func weapon_position(config: Dictionary, animation: String, frame: int) -
 		# Use the same pixel-center rotation as the hand and Image.rotate_90.
 		var pivot := Vector2i(Vector2(size) * PRIMARY_WEAPON_PIVOT)
 		return weapon_anchor(config, animation, frame) - rotated_point(pivot, size, current_pose.rotation)
-	return weapon_anchor(config, animation, frame) - weapon_pivot_offset(size, current_pose.rotation, NON_MELEE_WEAPON_PIVOT)
+	var pivot := SHIELD_WEAPON_PIVOT if weapon.family == "one_shield" else PRIMARY_WEAPON_PIVOT
+	return weapon_anchor(config, animation, frame) - weapon_pivot_offset(size, current_pose.rotation, pivot)
 
 static func weapon_pivot_offset(size: Vector2i, turns: int, normalized_pivot := PRIMARY_WEAPON_PIVOT) -> Vector2i:
 	# Rotate the original image-boundary pivot with the art, not the rotated AABB's bottom.
