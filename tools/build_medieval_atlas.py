@@ -54,6 +54,8 @@ def load_weapon_offsets(path=ROOT / 'data/weapon_offsets.json'):
     for row in rows[1:]:
         if not row or not any(str(v).strip() for v in row):
             continue
+        if 2 <= len(row) <= 3 and row[1] == '양손도끼' and (len(row) == 2 or row[2] is None or row[2] == ''):
+            continue  # Planned axes have no reviewed Y yet; zero is a valid offset.
         if len(row) != 3:
             raise ValueError(f'Incomplete weapon row: {row}')
         name, kind, y = row
@@ -70,6 +72,7 @@ def load_weapon_offsets(path=ROOT / 'data/weapon_offsets.json'):
 
 def build(source=SOURCE, dest=DEST):
     catalog = {'schema': 6, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'primary_types': [], 'secondary_types': [], 'melee_groups': {}, 'weapon_items': {}}
+    offsets = load_weapon_offsets()
     pending = []
     def add(group, filename_prefix=None, only_file=None, only_files=None, numeric=False):
         key = group + '.png'
@@ -89,7 +92,7 @@ def build(source=SOURCE, dest=DEST):
         ids = [number(path) for path in files]
         if len(ids) != len(set(ids)) or any(i < 1 for i in ids):
             raise ValueError(f'Duplicate or invalid part numbers: {folder}')
-        if numeric and ids != list(range(1, len(ids) + 1)):
+        if numeric and only_files is None and ids != list(range(1, len(ids) + 1)):
             raise ValueError(f'Melee numbering must be sequential from 1: {folder}')
         for path in files:
             raw = path.read_bytes()
@@ -125,7 +128,12 @@ def build(source=SOURCE, dest=DEST):
                 if hands not in ('one', 'two'):
                     raise ValueError(f'Expected one_ or two_ in {folder}')
             prefix = family + '_big' if melee and hands == 'two' and family in ('axe', 'blunt', 'sword') else family
-            key = add(folder.relative_to(source).as_posix(), prefix, numeric=melee)
+            files = None
+            if folder.name == 'two_axe':
+                files = [p.name for p in folder.glob('*.png') if f'two_axe/{p.stem}' in offsets]
+                if not files:
+                    continue
+            key = add(folder.relative_to(source).as_posix(), prefix, only_files=files, numeric=melee)
             slots = catalog['sheets'][key]['slots']
             if melee:
                 catalog['melee_groups'][folder.name] = [f"{folder.name}/{slot['id']}" for slot in slots]
@@ -143,8 +151,10 @@ def build(source=SOURCE, dest=DEST):
                     'id': equipment_id, 'family': folder.name, 'sheet': key, 'slot': index,
                     'two_handed': not melee or hands == 'two', 'number': slot['id'],
                     'grip': grip, 'attack': 'bow_shot' if slot['name'] == 'bow_01' else ('thrust_attack' if family == 'spear' else 'chop_attack')}
-    for equipment_id, y_up in load_weapon_offsets().items():
+    for equipment_id, y_up in offsets.items():
         if equipment_id not in catalog['weapon_items']:
+            if equipment_id.startswith('two_axe/'):
+                continue  # The art may arrive after its spreadsheet row.
             raise ValueError(f'Sheet weapon missing from source: {equipment_id}')
         catalog['weapon_items'][equipment_id]['y_up'] = y_up
     catalog['attack_effect'] = add('sprites/VFX/weapon/weaponfx03')

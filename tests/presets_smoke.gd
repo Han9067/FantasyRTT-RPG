@@ -83,6 +83,18 @@ func run() -> void:
 	restored = Store.new(path)
 	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "one_axe/1")
 	assert(Art.equipped_offhand(restored.get_appearance(0)).id == "one_sword/2")
+	# An old slot index for axe 4 must still select axe 4 after axe 3 is removed.
+	legacy.weapon = Art.data().primary_types.find("two_axe")
+	legacy.weapon_item = 3
+	data.set_value("presets", "0", legacy)
+	assert(data.save(path) == OK)
+	restored = Store.new(path)
+	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "two_axe/4")
+	var late_axe := restored.get_appearance(0)
+	late_axe.weapon_item = Art.data().melee_groups.two_axe.find("two_axe/14")
+	assert(restored.save_appearance(0, late_axe) == OK)
+	restored = Store.new(path)
+	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "two_axe/14")
 	DirAccess.remove_absolute(path)
 	print("PASS: three disabled empty slots, square popup choices, disk reload, independent appearance/weapon presets, unchanged personal details, preview/dependency refresh, isolated overwrite, cancel/screen cleanup and world continuity")
 	quit()
