@@ -23,7 +23,7 @@ func run() -> void:
 	for i in range(3):
 		game.change_part("face", 1)
 		game.change_part("hair", 1)
-		game.change_part("weapon", 1)
+		game.change_part("weapon", -1 if i < 2 else 1)
 		snapshots.append(game.appearance.duplicate(true))
 		game.preset_save_button.pressed.emit()
 		assert(game.preset_popup.visible)

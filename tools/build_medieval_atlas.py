@@ -71,7 +71,7 @@ def load_weapon_offsets(path=ROOT / 'data/weapon_offsets.json'):
 
 
 def build(source=SOURCE, dest=DEST):
-    catalog = {'schema': 6, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'primary_types': [], 'secondary_types': [], 'melee_groups': {}, 'weapon_items': {}}
+    catalog = {'schema': 6, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'primary_types': [], 'secondary_types': [], 'melee_groups': {}, 'ranged_groups': {}, 'weapon_items': {}}
     offsets = load_weapon_offsets()
     pending = []
     def add(group, filename_prefix=None, only_file=None, only_files=None, numeric=False):
@@ -141,6 +141,10 @@ def build(source=SOURCE, dest=DEST):
                     catalog['primary_types'].append(folder.name)
                 if hands == 'one':
                     catalog['secondary_types'].append(folder.name)
+            elif family in ('bow', 'crossbow'):
+                # Append to preserve the primary type indices in saved appearances.
+                catalog['primary_types'].append(family)
+                catalog['ranged_groups'][family] = [slot['name'] for slot in slots]
             for index, slot in enumerate(slots):
                 with Image.open(source / slot['source']) as image:
                     grip = weapon_grip(family, slot['name'], image.convert('RGBA'))

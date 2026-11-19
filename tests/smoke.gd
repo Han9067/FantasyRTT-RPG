@@ -36,7 +36,7 @@ func run() -> void:
 	assert(Art.count(config, "face") == 40)
 	assert(Art.count(config, "body") == 12)
 	assert(Art.count(config, "hair") == 31 and Art.count(config, "beard") == 30)
-	assert(Art.count(config, "weapon") == 8 and Art.count(config, "offhand") == 4)
+	assert(Art.count(config, "weapon") == 10 and Art.count(config, "offhand") == 4)
 	assert(catalog.weapon_items.size() == 163)
 	assert(not catalog.primary_types.has("one_shield"))
 	assert(catalog.secondary_types == ["one_axe", "one_blunt", "one_shield", "one_sword"])
@@ -108,7 +108,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.44")
+	assert(game.game_version == "0.0.45")
 	verify_ui_font(game)
 	game.show_creation()
 	await process_frame
@@ -153,9 +153,9 @@ func run() -> void:
 	for hidden in ["race", "hands", "hat_family", "hat_color", "hat"]:
 		assert(not game.part_controls.has(hidden) and not game.appearance.has(hidden))
 	assert(game.part_controls.weapon.number.text == "한손 검")
-	assert(Art.selection_order(game.appearance,"weapon") == [2,0,1,3,4,5,6,7])
+	assert(Art.selection_order(game.appearance,"weapon") == [2,0,1,7,3,4,6,5,8,9])
 	assert(Art.selection_order(game.appearance,"offhand") == [3,0,1,2])
-	for family in ["one_sword","one_axe","one_blunt","two_axe","two_blunt","two_polearm","two_spear","two_sword"]:
+	for family in ["one_sword","one_axe","one_blunt","two_sword","two_axe","two_blunt","two_spear","two_polearm","bow","crossbow"]:
 		assert(Art.equipped_weapon(game.appearance).family == family)
 		game.change_part("weapon",1)
 	assert(Art.equipped_weapon(game.appearance).family == "one_sword")
@@ -179,7 +179,7 @@ func run() -> void:
 			game.change_part("offhand_item", direction)
 	assert(previous_frame != game.character_frames.get_frame_texture("idle",0).get_image().get_data())
 	game.change_part("weapon", 3)
-	assert(Art.equipped_weapon(game.appearance).id == "two_axe/1")
+	assert(Art.equipped_weapon(game.appearance).id == "two_sword/1")
 	for key in ["offhand", "offhand_item"]:
 		assert(game.part_controls[key].left.disabled and game.part_controls[key].right.disabled)
 		assert(game.part_controls[key].number.text == "미장착")
@@ -248,7 +248,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 	var config := Art.defaults()
 	var spear_count := 0
 	assert(catalog.weapon_items.has("two_spear/17") and not catalog.weapon_items.has("spear_101"))
-	var expected_offsets := {"two_axe/1": 7, "two_axe/2": 6, "two_axe/4": 7, "two_axe/11": 2, "two_axe/12": 6, "two_axe/13": 6, "two_axe/14": 6}
+	var expected_offsets := {"two_axe/1": 7, "two_axe/2": 6, "two_axe/4": 7, "two_axe/11": 6, "two_axe/12": 6, "two_axe/13": 6, "two_axe/14": 6}
 	assert(catalog.melee_groups.two_axe == expected_offsets.keys())
 	var two_sword_offsets := [13, 13, 13, 14, 13, 14, 14, 14, 14, 14, 13, 13, 12, 14, 13, 14, 14, 14, 15, 14]
 	for index in range(two_sword_offsets.size()):
@@ -281,7 +281,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 		var preview := Art.preview_texture(frames.get_frame_texture("idle", 0))
 		var region := preview.region
 		assert(preview.get_size() == Vector2(Art.PREVIEW_REGION.size), "Equipment must not resize the preview canvas")
-		if catalog.primary_types.has(weapon.family):
+		if (catalog.melee_groups.has(weapon.family) and weapon.family != "one_shield"):
 			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack).grip - Vector2i(0,expected_offsets.get(id,0)), "Melee anchor must use the sheet upward offset")
 		else:
 			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR)
@@ -301,7 +301,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 					occupied.position += position
 					assert(Rect2i(Vector2i.ZERO, Art.FRAME_SIZE).encloses(occupied), "Weapon clipped before composition: " + id)
 					assert(Rect2i(region).encloses(occupied), "Weapon clipped by preview crop: " + id)
-					if catalog.primary_types.has(weapon.family):
+					if (catalog.melee_groups.has(weapon.family) and weapon.family != "one_shield"):
 						# Mark the source pixel under the idle hand, then rotate an actual
 						# image to locate it independently of the placement math.
 						var contact := source.get_size() / 2 + Vector2i(0,expected_offsets.get(id,0))

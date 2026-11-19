@@ -25,8 +25,8 @@ const PARTS := [
 	["weapon_item", "무기1 번호"], ["offhand", "무기2 종류"], ["offhand_item", "무기2 형태"]
 ]
 const TYPE_LABELS := {"one_axe":"한손 도끼", "one_blunt":"한손 둔기", "one_sword":"한손 검",
-	"one_shield":"방패", "two_axe":"양손 도끼", "two_blunt":"양손 둔기", "two_sword":"양손 검",
-	"two_polearm":"양손 장병기", "two_spear":"양손 창"}
+	"one_shield":"방패", "two_axe":"양손도끼", "two_blunt":"양손둔기", "two_sword":"양손검",
+	"two_polearm":"장병기", "two_spear":"창", "bow":"활", "crossbow":"석궁"}
 static var catalog: Dictionary = {}
 static var images: Dictionary = {}
 
@@ -75,6 +75,13 @@ static func infantry_frames(config: Dictionary, can_walk: bool) -> SpriteFrames:
 			frames.add_frame(animation, ImageTexture.create_from_image(compose(config, animation, i)))
 	return frames
 
+static func primary_items(family: String) -> Array:
+	if data().ranged_groups.has(family): return data().ranged_groups[family]
+	return data().melee_groups[family]
+
+static func is_primary_melee(family: String) -> bool:
+	return family != "one_shield" and data().melee_groups.has(family)
+
 static func count(config: Dictionary, key: String) -> int:
 	var human := human_data()
 	match key:
@@ -86,7 +93,7 @@ static func count(config: Dictionary, key: String) -> int:
 		"beard": return 1 + data().sheets[human.beard[config.beard_color]].slots.size()
 		"beard_color": return human.beard.size()
 		"weapon": return data().primary_types.size()
-		"weapon_item": return data().melee_groups[data().primary_types[config.weapon]].size()
+		"weapon_item": return primary_items(data().primary_types[config.weapon]).size()
 		"offhand": return data().secondary_types.size() if not equipped_weapon(config).two_handed else 0
 		"offhand_item":
 			if count(config, "offhand") == 0: return 0
@@ -99,7 +106,7 @@ static func selection_order(config: Dictionary, key: String) -> Array:
 	if key not in ["weapon", "offhand"] or order.is_empty(): return order
 	var types: Array = data().primary_types if key == "weapon" else data().secondary_types
 	order.clear()
-	for family in ["one_sword", "one_axe", "one_blunt"]:
+	for family in ["one_sword", "one_axe", "one_blunt", "two_sword", "two_axe", "two_blunt", "two_spear", "two_polearm", "bow", "crossbow"]:
 		var index := types.find(family)
 		if index >= 0: order.append(index)
 	for index in range(types.size()):
@@ -129,7 +136,7 @@ static func description(config: Dictionary, key: String) -> String:
 static func equipped_weapon(config: Dictionary) -> Dictionary:
 	if data().weapon_items.has(config.get("equipped_weapon", "")):
 		return data().weapon_items[config.equipped_weapon]
-	var ids: Array = data().melee_groups[data().primary_types[config.weapon]]
+	var ids: Array = primary_items(data().primary_types[config.weapon])
 	return data().weapon_items[ids[config.get("weapon_item", 0)]]
 
 static func equipped_offhand(config: Dictionary) -> Dictionary:
@@ -182,7 +189,7 @@ static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> 
 	var weapon := equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
 	# Rotate the sheet adjustment with the weapon around the gripping hand.
-	if data().primary_types.has(weapon.family):
+	if is_primary_melee(weapon.family):
 		var offset := Vector2i(0, -int(weapon.get("y_up", 0)))
 		if current_pose.rotation == 1: offset = Vector2i(-offset.y, offset.x)
 		elif current_pose.rotation == -1: offset = Vector2i(offset.y, -offset.x)
@@ -193,7 +200,7 @@ static func weapon_position(config: Dictionary, animation: String, frame: int) -
 	var weapon: Dictionary = equipped_weapon(config)
 	var current_pose := pose(animation, frame, weapon.attack)
 	var size := part_rect(data().bow_shot, frame).size if weapon.attack == "bow_shot" and animation == "attack" else part_rect(weapon.sheet, weapon.slot).size
-	if data().primary_types.has(weapon.family):
+	if is_primary_melee(weapon.family):
 		# Use the same pixel-center rotation as the hand and Image.rotate_90.
 		var pivot := Vector2i(Vector2(size) * PRIMARY_WEAPON_PIVOT)
 		return weapon_anchor(config, animation, frame) - rotated_point(pivot, size, current_pose.rotation)

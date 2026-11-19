@@ -21521,7 +21521,9 @@
     "two_blunt",
     "two_polearm",
     "two_spear",
-    "two_sword"
+    "two_sword",
+    "bow",
+    "crossbow"
   ],
   "secondary_types": [
     "one_axe",
@@ -21699,6 +21701,23 @@
       "two_sword/18",
       "two_sword/19",
       "two_sword/20"
+    ]
+  },
+  "ranged_groups": {
+    "bow": [
+      "bow_01",
+      "bow_02",
+      "bow_03",
+      "bow_04",
+      "bow_05",
+      "bow_06",
+      "bow_07"
+    ],
+    "crossbow": [
+      "crossbow_01",
+      "crossbow_02",
+      "crossbow_03",
+      "crossbow_04"
     ]
   },
   "weapon_items": {
@@ -23052,7 +23071,7 @@
         36
       ],
       "attack": "chop_attack",
-      "y_up": 2
+      "y_up": 6
     },
     "two_axe/12": {
       "id": "two_axe/12",

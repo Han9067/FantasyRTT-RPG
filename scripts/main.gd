@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.44")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.45")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -214,9 +214,14 @@ func show_creation() -> void:
 	name_input.text_changed.connect(func(value: String): player_name = value)
 	inputs.add_child(name_input)
 	inputs.add_child(label_text("성별", 16))
+	var selected_style := GameUITheme.button_style("normal")
+	selected_style.texture = GameUITheme.paper_texture(GameUITheme.PAUSE, GameUITheme.BUTTON_BORDER)
 	for i in range(2):
 		var b := button(["남", "여"][i], select_gender.bind(i))
 		b.toggle_mode = true
+		b.add_theme_stylebox_override("hover", GameUITheme.build().get_stylebox("normal", "Button"))
+		for state in ["pressed", "hover_pressed"]:
+			b.add_theme_stylebox_override(state, selected_style)
 		inputs.add_child(b)
 		genders.append(b)
 	var ages := HBoxContainer.new()
