@@ -1,5 +1,7 @@
 extends HBoxContainer
 ## Campaign time advances only while the world map is active.
+signal pause_changed(paused: bool)
+
 const SECONDS_PER_DAY := 120.0
 const SPEEDS := [0, 1, 2, 4]
 const DATE_WIDTH := 172
@@ -94,6 +96,7 @@ func speed_icon(index: int) -> ImageTexture:
 func set_speed(rate: int) -> void:
 	speed = rate
 	speed_buttons[SPEEDS.find(rate)].set_pressed_no_signal(true)
+	pause_changed.emit(rate == 0)
 
 func advance(simulation_delta: float) -> void:
 	elapsed += simulation_delta

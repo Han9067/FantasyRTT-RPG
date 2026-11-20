@@ -91,6 +91,26 @@ func create_world_menu() -> void:
 	city_overlay.add_child(inventory)
 	inventory.setup(character_appearance)
 
+func place_battle_button(action: Button) -> void:
+	action.theme = GameUITheme.build()
+	action.focus_mode = Control.FOCUS_NONE
+	city_overlay.add_child(action)
+	city_overlay.move_child(action, inventory.get_index())
+	action.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	action.offset_left = -80
+	action.offset_right = 80
+	action.offset_top = -66
+	action.offset_bottom = -18
+	var layout_menu := func() -> void:
+		if not is_inside_tree(): return
+		var width := get_viewport_rect().size.x
+		var menu_left := width - 18 - menu_bar.get_combined_minimum_size().x
+		var bottom := -18 if width * 0.5 + action.size.x * 0.5 + 8 <= menu_left else -74
+		menu_bar.offset_top = bottom - menu_bar.get_combined_minimum_size().y
+		menu_bar.offset_bottom = bottom
+	get_viewport().size_changed.connect(layout_menu)
+	layout_menu.call()
+
 func open_inventory() -> void:
 	pan_keys.clear()
 	city_popup.hide()

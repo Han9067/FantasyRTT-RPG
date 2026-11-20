@@ -86,6 +86,10 @@ func run() -> void:
 	map.player_sprite.flip_h = false
 	map.update_sprite()
 	var clock = map.clock
+	var notice: Label = game.battle_hud.find_child("PauseNotice", true, false)
+	assert(notice.mouse_filter == Control.MOUSE_FILTER_IGNORE and notice.get_parent().layer > map.city_overlay.layer)
+	assert(notice.get_global_rect().get_center().distance_to(Vector2(640,352)) < 1)
+	assert(game.battle_button.get_global_rect().get_center() == Vector2(640,758))
 	assert(clock.date_label.text == "[436년 3월 1일]" and clock.time_label.text == "현재 시간 | 12 AM")
 	assert(clock.date_label.get_global_rect().get_center().x == 640 and clock.gauge.size.y >= 22)
 	assert(not clock.get_global_rect().intersects(game.battle_button.get_global_rect()))
@@ -99,6 +103,7 @@ func run() -> void:
 		var previous := map.unit_position
 		var elapsed: float = clock.elapsed
 		map._physics_process(0.1)
+		assert(notice.visible == (rate == 0))
 		assert(clock.speed == rate and clock.speed_buttons[index].button_pressed)
 		assert(is_equal_approx(clock.elapsed - elapsed, rate * 0.1))
 		assert(is_equal_approx(map.unit_position.distance_to(previous), rate * 0.1 * map.MOVE_SPEED))
@@ -232,6 +237,8 @@ func run() -> void:
 	inside(map)
 	assert(map.terrain.get_child(0).texture == texture and map.map_size == Vector2(2560,1280))
 	assert(absf(clock.date_label.get_global_rect().get_center().x-480)<1)
+	assert(game.battle_button.get_global_rect().get_center() == Vector2(480,678))
+	assert(not map.menu_bar.get_global_rect().intersects(game.battle_button.get_global_rect()))
 	map.zoom_level = 1.0
 	root.size = Vector2i(6400,4320)
 	await process_frame
@@ -260,6 +267,7 @@ func run() -> void:
 		assert(is_equal_approx(map.camera.position.x-initial.x,420))
 	# Grab offset prevents a snap. Zoomed dragging maps mini pixels to world distance.
 	var mini = game.world_overview
+	assert(mini.map_bounds().grow(mini.FRAME) == Rect2(Vector2.ZERO,mini.size))
 	assert(is_equal_approx(mini.map_bounds().size.x/mini.map_bounds().size.y,2.0), "Minimap must retain the new 2:1 map ratio")
 	for zoom in [1.0,3.0]:
 		map.zoom_level = zoom

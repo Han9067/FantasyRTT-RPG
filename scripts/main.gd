@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.54")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.55")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -467,35 +467,37 @@ func show_world() -> void:
 	move_child(world,0)
 	if not travel_state.is_empty():
 		world.restore_travel(travel_state.position,travel_state.camera,travel_state.zoom,travel_state.get("city_id",""))
-	var header := Control.new()
-	header.custom_minimum_size.y = 50
-	screen.add_child(header)
 	battle_button = button("전투맵 이동", enter_battle_from_world)
-	header.add_child(battle_button)
-	battle_button.focus_mode = Control.FOCUS_NONE
-	battle_button.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	battle_button.offset_left = -160
-	battle_button.offset_right = 0
-	battle_button.offset_bottom = 48
-	spacer(screen)
+	world.place_battle_button(battle_button)
 	var overview := preload("res://scripts/world_overview.gd").new()
 	overview.world = world
 	world_overview = overview
-	# Kept outside container layout; a draggable camera overview in the upper right.
 	battle_hud.add_child(overview)
-	overview.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	overview.offset_left = -244
-	overview.offset_right = -24
-	var layout_navigation := func() -> void:
-		var compact := get_viewport_rect().size.x < 920
-		overview.offset_top = 112 if compact else 92
-		overview.offset_bottom = overview.offset_top + 168
-		battle_button.offset_top = overview.offset_bottom - screen.offset_top + 6 if compact else 0
-		battle_button.offset_bottom = battle_button.offset_top + 48
-	header.resized.connect(layout_navigation)
-	layout_navigation.call()
+	var notice := create_pause_notice()
+	notice.visible = world.clock.speed == 0
+	world.clock.pause_changed.connect(notice.set_visible)
 	world.hud_controls.assign([battle_button,overview])
 	ignore_battle_overlay_input(screen)
+
+func create_pause_notice() -> Label:
+	var overlay := CanvasLayer.new()
+	overlay.layer = 20
+	battle_hud.add_child(overlay)
+	var notice := label_text("일시 정지", 64)
+	notice.name = "PauseNotice"
+	notice.theme = theme
+	notice.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	notice.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	notice.add_theme_color_override("font_color", GameUITheme.IVORY)
+	notice.add_theme_color_override("font_outline_color", GameUITheme.BORDER)
+	notice.add_theme_constant_override("outline_size", 8)
+	overlay.add_child(notice)
+	notice.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	notice.anchor_top = 0.44
+	notice.anchor_bottom = 0.44
+	notice.hide()
+	return notice
 
 func enter_battle_from_world() -> void:
 	if is_instance_valid(world):
@@ -536,6 +538,7 @@ func show_battle() -> void:
 	header.add_child(pause_button)
 	pause_button.toggled.connect(battle.set_battle_paused)
 	battle.pause_changed.connect(pause_button.show_pause_state)
+	battle.pause_changed.connect(create_pause_notice().set_visible)
 	var title := label_text("서부 초원  /  전투 시험장", 22)
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.add_theme_color_override("font_color",GameUITheme.IVORY)

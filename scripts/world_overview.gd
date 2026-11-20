@@ -1,6 +1,8 @@
 extends Control
 ## Drag the viewport rectangle with a stable grab offset; never orders the party.
-var frame_style := GameUITheme.panel_style(6)
+const FRAME := 5.0
+const MAP_WIDTH := 210.0
+var frame_style := GameUITheme.panel_style(FRAME)
 var world: WorldMap
 var camera_dragging := false
 var grab_offset := Vector2.ZERO
@@ -10,14 +12,19 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	tooltip_text = "사각형 내부를 잡아 끌면 카메라가 이동합니다."
+	set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	layout_minimap()
+	get_viewport().size_changed.connect(layout_minimap)
+
+func layout_minimap() -> void:
+	if not is_inside_tree(): return
+	offset_right = -24
+	offset_left = offset_right - MAP_WIDTH - 2 * FRAME
+	offset_top = 112 if get_viewport_rect().size.x < 920 else 92
+	offset_bottom = offset_top + MAP_WIDTH * world.map_size.y / world.map_size.x + 2 * FRAME
 
 func map_bounds() -> Rect2:
-	var available := (size-Vector2(12,12)).max(Vector2.ONE)
-	if not is_instance_valid(world): return Rect2(Vector2(6,6),available)
-	# Preserve the uploaded map's aspect ratio instead of stretching it to the panel.
-	var factor := minf(available.x/world.map_size.x,available.y/world.map_size.y)
-	var fitted := world.map_size*factor
-	return Rect2((size-fitted)*0.5,fitted)
+	return Rect2(Vector2.ZERO, size).grow(-FRAME)
 
 func camera_rect() -> Rect2:
 	var bounds := map_bounds()
