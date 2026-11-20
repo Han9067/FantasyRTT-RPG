@@ -33,10 +33,10 @@ var crowns := STARTING_CROWNS:
 		crowns = value
 		if is_node_ready():
 			balance_label.text = str(crowns)
-			layout_footer()
 var hero_hp := BattleUnit.HERO_HP
-var footer := Panel.new()
-var purse := PanelContainer.new()
+var status_panel := PanelContainer.new()
+var battle_link: Button
+var minimap: Control
 var hp_label := Label.new()
 var menu_bar := HBoxContainer.new()
 var clock := preload("res://scripts/world_clock.gd").new()
@@ -89,67 +89,108 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(resize_map)
 
 func create_world_menu() -> void:
-	footer.theme = GameUITheme.build()
-	footer.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	footer.mouse_filter = Control.MOUSE_FILTER_STOP
-	city_overlay.add_child(footer)
-	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	footer.add_child(menu_bar)
-	for title in ["캐릭터", "인벤토리", "부대", "저널"]:
+	status_panel.theme = GameUITheme.build()
+	status_panel.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	status_panel.add_theme_stylebox_override("panel", GameUITheme.panel_style(8))
+	city_overlay.add_child(status_panel)
+	var stats := HBoxContainer.new()
+	status_panel.add_child(stats)
+	hp_label.text = str(hero_hp)
+	balance_label.text = str(crowns)
+	add_status_value(stats, hp_label, preload("res://assets/ui/world/heart.png"), "HP")
+	add_status_value(stats, balance_label, preload("res://assets/ui/silver_crown.png"), "크라운")
+
+	menu_bar.theme = status_panel.theme
+	menu_bar.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	menu_bar.add_theme_constant_override("separation", 4)
+	city_overlay.add_child(menu_bar)
+	var icons := {
+		"캐릭터": preload("res://assets/ui/world/character.png"),
+		"인벤토리": preload("res://assets/ui/world/inventory.png"),
+		"부대": preload("res://assets/ui/world/troops.png"),
+		"저널": preload("res://assets/ui/world/journal.png"),
+	}
+	for title: String in icons:
 		var action := Button.new()
-		action.text = title
-		action.custom_minimum_size = Vector2(116, 48)
+		action.icon = icons[title]
+		action.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		action.custom_minimum_size = Vector2(48, 48)
 		action.focus_mode = Control.FOCUS_NONE
+		action.tooltip_text = title
+		action.accessibility_name = title
+		for state in ["normal", "hover", "pressed", "hover_pressed", "disabled"]:
+			var style := GameUITheme.button_style(state)
+			style.set_content_margin_all(6)
+			action.add_theme_stylebox_override(state, style)
+			action.add_theme_color_override("icon_" + state + "_color", Color.WHITE)
 		menu_bar.add_child(action)
 		if title == "인벤토리":
 			action.tooltip_text = "인벤토리 (I)"
+			action.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 			action.pressed.connect(open_inventory)
-	footer.add_child(hp_label)
-	hp_label.text = "HP : %d" % hero_hp
-	footer.add_child(purse)
-	purse.add_theme_stylebox_override("panel", GameUITheme.panel_style(9))
-	var balance := HBoxContainer.new()
-	balance.add_theme_constant_override("separation", 8)
-	purse.add_child(balance)
-	var coin := TextureRect.new()
-	coin.texture = preload("res://assets/ui/silver_crown.png")
-	coin.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
-	balance.add_child(coin)
-	balance_label.text = str(crowns)
-	balance.add_child(balance_label)
-	layout_footer()
-	get_viewport().size_changed.connect(layout_footer)
 	city_overlay.add_child(inventory)
 	inventory.setup(character_appearance, hero_hp)
 
-func layout_footer() -> void:
-	if not is_inside_tree(): return
-	var width := get_viewport_rect().size.x
-	var menu_size := menu_bar.get_combined_minimum_size()
-	var menu_scale := minf(1.0, (width - 36) / menu_size.x)
-	var menu_left := width - 18 - menu_size.x * menu_scale
-	var wallet_size := purse.get_combined_minimum_size()
-	var hp_size := hp_label.get_combined_minimum_size()
-	var stacked := menu_left < hp_size.x + wallet_size.x + 48
-	var height := 132.0 if stacked else 84.0
-	footer.offset_top = -height
-	menu_bar.scale = Vector2.ONE * menu_scale
-	menu_bar.position = Vector2(menu_left, height - 18 - menu_size.y * menu_scale).round()
-	var wallet_x := (width - wallet_size.x) * 0.5
-	if not stacked:
-		wallet_x = minf(wallet_x, menu_left - 12 - wallet_size.x)
-	var center_y := 34.0 if stacked else height * 0.5
-	purse.position = Vector2(wallet_x, center_y - wallet_size.y * 0.5).round()
-	hp_label.position = Vector2(wallet_x - hp_size.x - 18, center_y - hp_size.y * 0.5).round()
-	layout_city_panel()
+func add_status_value(row: HBoxContainer, label: Label, texture: Texture2D, title: String) -> void:
+	var group := HBoxContainer.new()
+	group.alignment = BoxContainer.ALIGNMENT_CENTER
+	group.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	group.add_theme_constant_override("separation", 8)
+	group.tooltip_text = title
+	row.add_child(group)
+	var icon := TextureRect.new()
+	icon.texture = texture
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	group.add_child(icon)
+	label.accessibility_name = title
+	group.add_child(label)
 
-func place_battle_button(action: Button) -> void:
+func setup_navigation(action: Button, overview: Control) -> void:
+	battle_link = action
+	minimap = overview
 	action.theme = GameUITheme.build()
 	action.focus_mode = Control.FOCUS_NONE
 	city_overlay.add_child(action)
 	city_overlay.move_child(action, inventory.get_index())
-	action.position = Vector2(18,18)
-	action.size = Vector2(160,48)
+	hud_controls.assign([clock, status_panel, menu_bar, action, overview])
+	get_viewport().size_changed.connect(layout_world_hud)
+	layout_world_hud()
+
+func layout_world_hud() -> void:
+	if not is_inside_tree(): return
+	var viewport := get_viewport_rect().size
+	if viewport.x <= 0 or viewport.y <= 0: return
+	var factor := minf(1.0, viewport.x / 640.0)
+	var width := viewport.x / factor
+	var margin := 18.0
+	var gap := 8.0
+	var menu_x := width - margin - menu_bar.get_combined_minimum_size().x
+	var clock_width := clock.get_combined_minimum_size().x
+	var centered_x := roundf((width - clock.DATE_WIDTH) / 2)
+	var clock_x := minf(centered_x, menu_x - gap - clock_width)
+	var mini_y := margin + 52 + gap
+	var clock_y := margin
+	var status_width := minf(400, clock_x - margin - gap)
+	if status_width < minimap.size.x:
+		status_width = minf(400, menu_x - margin - gap)
+		clock_y = mini_y
+		clock_x = clampf(centered_x, margin + minimap.size.x + gap, width - margin - clock_width)
+	for control in hud_controls:
+		control.scale = Vector2.ONE * factor
+	menu_bar.position = Vector2(menu_x, margin) * factor
+	status_panel.position = Vector2(margin, margin) * factor
+	status_panel.size = Vector2(status_width, 52)
+	minimap.position = Vector2(margin, mini_y) * factor
+	clock.position = Vector2(clock_x, clock_y) * factor
+	var time_offset := clock_width - clock.time_panel.custom_minimum_size.x
+	battle_link.size = Vector2(clock.time_panel.custom_minimum_size.x, 44)
+	battle_link.position = clock.position + Vector2(time_offset, clock.get_combined_minimum_size().y + 4) * factor
+	var city_top := minimap.get_global_rect().end.y + gap * factor
+	for control in [clock, battle_link]:
+		if control.position.x < (margin + 400) * factor:
+			city_top = maxf(city_top, control.get_global_rect().end.y + gap * factor)
+	layout_city_panel(Vector2(margin * factor, city_top), viewport.y - margin * factor - city_top, factor)
 
 func open_inventory() -> void:
 	pan_keys.clear()
@@ -320,8 +361,7 @@ func restore_travel(position_in_world: Vector2, camera_position: Vector2, zoom: 
 		if city.id == city_id and city_bounds(city).has_point(unit_position): enter_city(city)
 
 func can_interact_at(point: Vector2) -> bool:
-	if clock.get_global_rect().has_point(point): return false
-	if inventory.visible or footer.get_global_rect().has_point(point): return false
+	if inventory.visible: return false
 	if not screen_playable_rect().has_point(point): return false
 	if is_instance_valid(city_panel) and city_panel.visible and city_panel.get_global_rect().has_point(point): return false
 	for control in hud_controls:
@@ -436,7 +476,6 @@ func enter_city(city: Dictionary) -> void:
 	party_marker.hide()
 	city_popup.hide()
 	city_panel_title.text = display_city_name(city)
-	layout_city_panel()
 	city_panel.show()
 	queue_redraw()
 
@@ -471,13 +510,13 @@ func create_city_panel() -> void:
 		city_actions.append(action)
 		if caption == "나가기": action.pressed.connect(exit_city)
 	# The first three actions remain placeholders; only Exit has a callback.
-	layout_city_panel()
 	city_panel.hide()
 
-func layout_city_panel() -> void:
-	if not is_inside_tree() or not is_instance_valid(city_panel): return
-	city_panel.position = Vector2(18,78)
-	city_panel.size = Vector2(400,maxf(1,get_viewport_rect().size.y + footer.offset_top - 90))
+func layout_city_panel(origin: Vector2, height: float, hud_scale: float) -> void:
+	var factor := minf(hud_scale, maxf(1, height) / city_panel.get_combined_minimum_size().y)
+	city_panel.scale = Vector2.ONE * factor
+	city_panel.position = origin
+	city_panel.size = Vector2(400, maxf(1, height) / factor)
 	var frame := city_panel.get_theme_stylebox("panel")
 	var content_width := city_panel.size.x-frame.get_content_margin(SIDE_LEFT)-frame.get_content_margin(SIDE_RIGHT)
 	for action in city_actions: action.custom_minimum_size.x = roundf(content_width*0.8)

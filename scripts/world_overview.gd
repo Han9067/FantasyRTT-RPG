@@ -12,20 +12,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	tooltip_text = "사각형 내부를 잡아 끌면 카메라가 이동합니다."
-	set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	layout_minimap()
-	get_viewport().size_changed.connect(layout_minimap)
-
-func layout_minimap() -> void:
-	if not is_inside_tree(): return
-	var width := get_viewport_rect().size.x
-	var clock_right := (width - world.clock.DATE_WIDTH) * 0.5 + world.clock.get_combined_minimum_size().x
-	offset_top = 18
-	offset_right = -18
-	var map_width := clampf(floorf(width + offset_right - clock_right - 8 - 2 * FRAME), 110, MAP_WIDTH)
-	offset_left = offset_right - map_width - 2 * FRAME
-	offset_bottom = offset_top + map_width * world.map_size.y / world.map_size.x + 2 * FRAME
-	world.clock.layout_clock(get_global_rect())
+	size = Vector2(MAP_WIDTH, MAP_WIDTH * world.map_size.y / world.map_size.x) + Vector2.ONE * FRAME * 2
 
 func map_bounds() -> Rect2:
 	return Rect2(Vector2.ZERO, size).grow(-FRAME)

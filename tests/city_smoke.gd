@@ -33,8 +33,9 @@ func run() -> void:
 	assert(not map.city_panel.visible and map.current_city.is_empty())
 	for index in range(4):
 		var action: Button = map.menu_bar.get_child(index)
-		assert(action.text == ["캐릭터", "인벤토리", "부대", "저널"][index])
-		assert(action.size == Vector2(116, 48))
+		assert(action.text.is_empty() and action.icon != null)
+		assert(action.accessibility_name == ["캐릭터", "인벤토리", "부대", "저널"][index])
+		assert(action.size == Vector2(48, 48))
 		assert(not map.can_interact_at(action.get_global_rect().get_center()))
 		if index != 1:
 			action.pressed.emit()
@@ -124,7 +125,7 @@ func run() -> void:
 			walk_to_city(map)
 			assert(map.current_city.id == city.id and not map.party_marker.visible and map.city_panel.visible)
 			assert(not map.moving and map.pending_city.is_empty() and not map.city_popup.visible)
-			assert(map.city_panel.size == Vector2(400,626) and map.city_panel.position == Vector2(18,78))
+			assert(map.city_panel.size.x == 400 and map.city_panel.position == Vector2(18, game.world_overview.get_global_rect().end.y + 8))
 			assert(map.city_panel_title.text == map.display_city_name(city))
 			map.update_city_hover(point)
 			map.update_world_cursor(point)
@@ -154,7 +155,7 @@ func run() -> void:
 	root.size = Vector2i(960,720)
 	await process_frame
 	await process_frame
-	assert(map.city_panel.size == Vector2(400,546))
+	assert(map.city_panel.size.x == 400 and map.city_panel.get_global_rect().end.y == 702)
 	for action in map.city_actions: assert(action.size.x == 285)
 	# A battle round trip preserves the occupied city and hidden party.
 	game.enter_battle_from_world()

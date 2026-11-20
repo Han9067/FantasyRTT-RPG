@@ -85,19 +85,21 @@ func run() -> void:
 		assert(map.player_sprite.position+Vector2(anchor_x,Art.FEET_Y) == WorldPartyMarker.PORTRAIT_FEET)
 	map.player_sprite.flip_h = false
 	map.update_sprite()
-	assert(map.crowns == 300 and map.hp_label.text == "HP : 100")
-	assert(map.menu_bar.get_parent() == map.footer and map.menu_bar.get_global_rect().end.x == 1262)
-	assert(absf(map.purse.get_global_rect().get_center().x - 640) <= 0.5 and map.balance_label.text == "300")
+	assert(map.crowns == 300 and map.hp_label.text == "100")
+	assert(map.status_panel.get_global_rect() == Rect2(18,18,400,52))
+	assert(map.menu_bar.get_global_rect().end.x == 1262 and map.menu_bar.position.y == 18)
+	assert(map.status_panel.is_ancestor_of(map.hp_label) and map.status_panel.is_ancestor_of(map.balance_label))
+	assert(map.hp_label.global_position.x < map.balance_label.global_position.x and map.balance_label.text == "300")
 	var clock = map.clock
 	var notice: Label = game.battle_hud.find_child("PauseNotice", true, false)
 	assert(notice.mouse_filter == Control.MOUSE_FILTER_IGNORE and notice.get_parent().layer > map.city_overlay.layer)
 	assert(notice.get_global_rect().get_center().distance_to(Vector2(640,352)) < 1)
-	assert(game.battle_button.get_global_rect().get_center() == Vector2(98,42))
+	assert(game.battle_button.global_position.is_equal_approx(Vector2(clock.time_panel.global_position.x, clock.time_panel.get_global_rect().end.y + 4)))
 	assert(clock.date_label.text == "436년 3월 1일" and clock.time_label.text == "12 AM")
 	assert(clock.date_label.get_global_rect().get_center().x == 640 and clock.gauge.size.y >= 22)
 	assert(not clock.get_global_rect().intersects(game.battle_button.get_global_rect()))
-	assert(game.world_overview.get_global_rect().position.y == 18)
-	assert(game.world_overview.get_global_rect().end.x == map.viewport_size.x - 18)
+	assert(game.world_overview.position.y == map.status_panel.get_global_rect().end.y + 8)
+	assert(game.world_overview.position.x == map.status_panel.position.x)
 	assert(not clock.get_global_rect().intersects(game.world_overview.get_global_rect()))
 	for action in clock.speed_buttons:
 		assert(action.size == Vector2(40,40) and not map.can_interact_at(action.get_global_rect().get_center()))
@@ -153,7 +155,7 @@ func run() -> void:
 	assert(Rect2(Vector2.ZERO,map.viewport_size).encloses(map.city_popup.get_global_rect()))
 	map.update_city_hover(Vector2(640,42))
 	assert(not map.city_popup.visible, "HUD must not trigger city hover")
-	assert(not map.can_interact_at(Vector2(200,790)), "Footer must consume map clicks")
+	assert(map.can_interact_at(Vector2(200,790)), "The bottom edge must accept map orders")
 	map.restore_travel(map.spawn_position,map.spawn_position,3)
 	# Cursor and orders share the exact same blocked/reachable predicate.
 	var river := Vector2(1264,624)
@@ -242,10 +244,18 @@ func run() -> void:
 	await process_frame
 	inside(map)
 	assert(map.terrain.get_child(0).texture == texture and map.map_size == Vector2(2560,1280))
-	assert(absf(clock.date_label.get_global_rect().get_center().x-480)<1)
+	assert(not clock.get_global_rect().intersects(map.status_panel.get_global_rect()))
 	assert(not clock.get_global_rect().intersects(game.world_overview.get_global_rect()))
-	assert(game.battle_button.get_global_rect().get_center() == Vector2(98,42))
+	assert(game.battle_button.global_position.is_equal_approx(Vector2(clock.time_panel.global_position.x, clock.time_panel.get_global_rect().end.y + 4)))
 	assert(not map.menu_bar.get_global_rect().intersects(game.battle_button.get_global_rect()))
+	root.size = Vector2i(640,480)
+	await process_frame
+	await process_frame
+	for control in map.hud_controls:
+		assert(Rect2(Vector2.ZERO, map.viewport_size).encloses(control.get_global_rect()))
+		assert(not map.can_interact_at(control.get_global_rect().get_center()))
+		for other in map.hud_controls:
+			if control != other: assert(not control.get_global_rect().intersects(other.get_global_rect()))
 	map.zoom_level = 1.0
 	root.size = Vector2i(6400,4320)
 	await process_frame
@@ -337,7 +347,7 @@ func run() -> void:
 	game.battle.hero_group[0].hp = 72
 	game.show_world()
 	await process_frame
-	assert(game.world.crowns == 217 and game.world.hp_label.text == "HP : 72")
+	assert(game.world.crowns == 217 and game.world.hp_label.text == "72")
 	assert(game.world.clock.speed == 0 and game.world.clock.elapsed == saved_elapsed)
 	assert(game.world.unit_position == saved_position and game.world.camera.position == saved_camera and game.world.zoom_level == saved_zoom)
 	assert(get_nodes_in_group("allied_infantry").is_empty() and get_nodes_in_group("enemy_infantry").is_empty())
@@ -349,7 +359,7 @@ func run() -> void:
 	game.create_button.pressed.emit()
 	await process_frame
 	assert(game.world.unit_position == game.world.spawn_position and game.world.zoom_level == 3)
-	assert(game.world.crowns == 300 and game.world.hp_label.text == "HP : 100")
+	assert(game.world.crowns == 300 and game.world.hp_label.text == "100")
 	assert(game.world.clock.speed == 1 and game.world.clock.date_label.text == "436년 3월 1일")
 	print("PASS: creation -> world, 4 native cities with bounded camera-aware hover cards, cleared HUD, persistent selection, fixed idle-first-frame portrait during travel, camera bounds/zoom/resize, calendar, time controls, world/battle continuity and return state")
 	quit()

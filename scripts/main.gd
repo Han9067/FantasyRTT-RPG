@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.59")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.60")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -473,7 +473,6 @@ func show_world() -> void:
 	if not travel_state.is_empty():
 		world.restore_travel(travel_state.position,travel_state.camera,travel_state.zoom,travel_state.get("city_id",""))
 	battle_button = button("전투맵 이동", enter_battle_from_world)
-	world.place_battle_button(battle_button)
 	var overview := preload("res://scripts/world_overview.gd").new()
 	overview.world = world
 	world_overview = overview
@@ -481,7 +480,7 @@ func show_world() -> void:
 	var notice := create_pause_notice()
 	notice.visible = world.clock.speed == 0
 	world.clock.pause_changed.connect(notice.set_visible)
-	world.hud_controls.assign([battle_button,overview])
+	world.setup_navigation(battle_button, overview)
 	ignore_battle_overlay_input(screen)
 
 func create_pause_notice() -> Label:

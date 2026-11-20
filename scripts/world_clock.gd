@@ -9,6 +9,7 @@ const DATE_WIDTH := 172
 var elapsed := 0.0
 var speed := 1
 var date_label := Label.new()
+var time_panel := PanelContainer.new()
 var time_label := Label.new()
 var gauge := ProgressBar.new()
 var speed_buttons: Array[Button] = []
@@ -61,34 +62,31 @@ func _ready() -> void:
 		style.bg_color = Color("c4a777") if part == "background" else Color("896125")
 		gauge.add_theme_stylebox_override(part, style)
 	frame.add_child(gauge)
+	time_panel.custom_minimum_size = Vector2(DATE_WIDTH, 40)
+	time_panel.add_theme_stylebox_override("panel", GameUITheme.panel_style(6))
+	day.add_child(time_panel)
 	var time_row := HBoxContainer.new()
-	time_row.add_theme_constant_override("separation", 4)
-	day.add_child(time_row)
+	time_row.add_theme_constant_override("separation", 0)
+	time_panel.add_child(time_row)
 	var time_title := Label.new()
 	time_title.text = "현재 시간"
-	time_row.add_child(label_panel(time_title, 92, 40, Color("d5b681")))
-	time_row.add_child(label_panel(time_label, 76, 40, GameUITheme.IVORY))
-	layout_clock()
+	time_row.add_child(time_title)
+	var divider := ColorRect.new()
+	divider.custom_minimum_size.x = 2
+	divider.color = GameUITheme.BUTTON_BORDER
+	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	time_row.add_child(divider)
+	time_row.add_child(time_label)
+	for label in [time_title, time_label]:
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	set_speed(speed)
 	refresh_time()
 
-func layout_clock(minimap := Rect2()) -> void:
-	if not is_inside_tree(): return
-	var width := get_viewport_rect().size.x
-	var right := width - 4
-	var top := 18.0
-	var clock_width := get_combined_minimum_size().x
-	if minimap.has_area():
-		if minimap.position.x >= clock_width + 8 + 186:
-			right = minimap.position.x - 8
-		else:
-			top = minimap.end.y + 8
-	position = Vector2(clampf(roundf((width - DATE_WIDTH) / 2), 0, maxf(0, right - clock_width)), top)
-
-func label_panel(label: Label, width: int, height: int, fill := GameUITheme.PAPER) -> PanelContainer:
+func label_panel(label: Label, width: int, height: int) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.custom_minimum_size = Vector2(width, height)
-	panel.add_theme_stylebox_override("panel", GameUITheme.paper_style(fill, GameUITheme.BORDER, 5))
+	panel.add_theme_stylebox_override("panel", GameUITheme.panel_style(5))
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	panel.add_child(label)
