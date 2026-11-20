@@ -93,6 +93,9 @@ func run() -> void:
 	assert(clock.date_label.text == "[436년 3월 1일]" and clock.time_label.text == "현재 시간 | 12 AM")
 	assert(clock.date_label.get_global_rect().get_center().x == 640 and clock.gauge.size.y >= 22)
 	assert(not clock.get_global_rect().intersects(game.battle_button.get_global_rect()))
+	assert(game.world_overview.get_global_rect().position.y == 18)
+	assert(game.world_overview.get_global_rect().end.x == map.viewport_size.x - 18)
+	assert(not clock.get_global_rect().intersects(game.world_overview.get_global_rect()))
 	for action in clock.speed_buttons:
 		assert(action.size == Vector2(40,40) and not map.can_interact_at(action.get_global_rect().get_center()))
 	var route_start := map.unit_position
@@ -237,6 +240,7 @@ func run() -> void:
 	inside(map)
 	assert(map.terrain.get_child(0).texture == texture and map.map_size == Vector2(2560,1280))
 	assert(absf(clock.date_label.get_global_rect().get_center().x-480)<1)
+	assert(not clock.get_global_rect().intersects(game.world_overview.get_global_rect()))
 	assert(game.battle_button.get_global_rect().get_center() == Vector2(480,678))
 	assert(not map.menu_bar.get_global_rect().intersects(game.battle_button.get_global_rect()))
 	map.zoom_level = 1.0

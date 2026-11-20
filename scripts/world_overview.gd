@@ -18,10 +18,14 @@ func _ready() -> void:
 
 func layout_minimap() -> void:
 	if not is_inside_tree(): return
-	offset_right = -24
-	offset_left = offset_right - MAP_WIDTH - 2 * FRAME
-	offset_top = 112 if get_viewport_rect().size.x < 920 else 92
-	offset_bottom = offset_top + MAP_WIDTH * world.map_size.y / world.map_size.x + 2 * FRAME
+	var width := get_viewport_rect().size.x
+	var clock_right := (width - world.clock.DATE_WIDTH) * 0.5 + world.clock.get_combined_minimum_size().x
+	offset_top = 18
+	offset_right = -18
+	var map_width := clampf(floorf(width + offset_right - clock_right - 8 - 2 * FRAME), 110, MAP_WIDTH)
+	offset_left = offset_right - map_width - 2 * FRAME
+	offset_bottom = offset_top + map_width * world.map_size.y / world.map_size.x + 2 * FRAME
+	world.clock.layout_clock(get_global_rect())
 
 func map_bounds() -> Rect2:
 	return Rect2(Vector2.ZERO, size).grow(-FRAME)

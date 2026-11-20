@@ -63,14 +63,21 @@ func _ready() -> void:
 	frame.add_child(gauge)
 	day.add_child(label_panel(time_label, 172, 40))
 	layout_clock()
-	get_viewport().size_changed.connect(layout_clock)
 	set_speed(speed)
 	refresh_time()
 
-func layout_clock() -> void:
+func layout_clock(minimap := Rect2()) -> void:
 	if not is_inside_tree(): return
 	var width := get_viewport_rect().size.x
-	position = Vector2(clampf(roundf((width - DATE_WIDTH) / 2), 0, maxf(0, width - get_combined_minimum_size().x - 4)), 18)
+	var right := width - 4
+	var top := 18.0
+	var clock_width := get_combined_minimum_size().x
+	if minimap.has_area():
+		if minimap.position.x >= clock_width + 8:
+			right = minimap.position.x - 8
+		else:
+			top = minimap.end.y + 8
+	position = Vector2(clampf(roundf((width - DATE_WIDTH) / 2), 0, maxf(0, right - clock_width)), top)
 
 func label_panel(label: Label, width: int, height: int) -> PanelContainer:
 	var panel := PanelContainer.new()

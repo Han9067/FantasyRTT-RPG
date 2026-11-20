@@ -186,7 +186,7 @@ func inventory_item_texture(item: Dictionary) -> Texture2D:
 	if item_textures.has(item.id): return item_textures[item.id]
 	var art := CharacterArt.part_image(item.sheet, item.slot)
 	var shield: bool = item.family == "one_shield"
-	if shield or CharacterArt.is_primary_melee(item.family):
+	if shield or CharacterArt.is_primary_melee(item.family) or item.family in ["bow", "crossbow"]:
 		art = weapon_icon_image(art, 0.0 if shield else PI / 4.0)
 	var texture := ImageTexture.create_from_image(art)
 	item_textures[item.id] = texture

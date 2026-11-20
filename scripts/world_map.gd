@@ -86,7 +86,9 @@ func create_world_menu() -> void:
 		action.custom_minimum_size = Vector2(116, 48)
 		action.focus_mode = Control.FOCUS_NONE
 		menu_bar.add_child(action)
-		if title == "인벤토리": action.pressed.connect(open_inventory)
+		if title == "인벤토리":
+			action.tooltip_text = "인벤토리 (I)"
+			action.pressed.connect(open_inventory)
 	menu_bar.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, 18)
 	city_overlay.add_child(inventory)
 	inventory.setup(character_appearance)
@@ -231,6 +233,14 @@ func pan_camera(direction: Vector2, delta: float) -> void:
 	clamp_camera()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if (event.keycode == KEY_I or event.physical_keycode == KEY_I) and not (event.ctrl_pressed or event.alt_pressed or event.meta_pressed):
+			if inventory.visible:
+				inventory.hide()
+			else:
+				open_inventory()
+			get_viewport().set_input_as_handled()
+			return
 	if inventory.visible:
 		if event.is_action_pressed("ui_cancel"): inventory.hide()
 		get_viewport().set_input_as_handled()

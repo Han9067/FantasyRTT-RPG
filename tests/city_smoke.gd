@@ -61,6 +61,11 @@ func run() -> void:
 			assert(slot.item.is_empty() and not map.inventory.item_popup.visible)
 		slot.mouse_exited.emit()
 		assert(not map.inventory.item_popup.visible)
+	for index in [7, 8]:
+		var ranged_slot = map.inventory.slot_grid.get_child(index)
+		var art := CharacterArt.part_image(ranged_slot.item.sheet, ranged_slot.item.slot)
+		var diagonal := map.inventory.weapon_icon_image(art, PI / 4)
+		assert(ranged_slot.get_child(0).texture.get_image().get_data() == diagonal.get_data())
 	var view: TextureRect = map.inventory.slot_grid.get_child(0).get_child(0)
 	for dimensions in [Vector2i(32, 32), Vector2i(32, 64), Vector2i(96, 48)]:
 		var texture := ImageTexture.create_from_image(Image.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8))
