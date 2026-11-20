@@ -38,7 +38,7 @@ var window_title := Label.new()
 var bag_title := Label.new()
 var trade_hint := Label.new()
 var quantity_text := Label.new()
-var quantity_rule := HSeparator.new()
+var price_text := Label.new()
 var sheet := PanelContainer.new()
 var slot_style := GameUITheme.paper_style(GameUITheme.IVORY, GameUITheme.BUTTON_BORDER, 5)
 var section_style := GameUITheme.panel_style(10)
@@ -204,9 +204,22 @@ func build_item_popup() -> void:
 	space.custom_minimum_size.y = 30
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(space)
-	quantity_rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	quantity_rule.add_theme_stylebox_override("separator", line)
-	content.add_child(quantity_rule)
+	var price_rule := HSeparator.new()
+	price_rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	price_rule.add_theme_stylebox_override("separator", line)
+	content.add_child(price_rule)
+	var price_row := HBoxContainer.new()
+	price_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	price_row.add_theme_constant_override("separation", 8)
+	content.add_child(price_row)
+	var crown := TextureRect.new()
+	crown.texture = preload("res://assets/ui/silver_crown.png")
+	crown.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	crown.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	price_row.add_child(crown)
+	price_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	price_text.accessibility_name = "가격"
+	price_row.add_child(price_text)
 	quantity_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(quantity_text)
 	item_popup.hide()
@@ -226,12 +239,15 @@ func update_item_popup() -> void:
 		var type_name: String = CharacterArt.TYPE_LABELS.get(item.get("family", ""), "장비")
 		item_title.text = "%s%d" % [type_name.replace(" ", ""), int(item.get("number", 1))]
 	quantity_text.visible = is_stackable(item)
-	quantity_rule.visible = quantity_text.visible
 	quantity_text.text = "수량 : %d" % hovered_slot.quantity
-	if not market_city.is_empty() and item.has("price"):
+	if not market_city.is_empty() and goods_by_id.has(item.id):
+		var buy_price := economy.quote(market_city, item.id, true)
+		var sell_price := economy.quote(market_city, item.id, false)
+		price_text.text = str(buy_price if hovered_slot.get_parent() == market_grid else sell_price)
 		trade_hint.text = "%s · 기본 %d · 구매 %d / 판매 %d 크라운" % [
-			item_title.text, int(item.price), economy.quote(market_city, item.id, true),
-			economy.quote(market_city, item.id, false)]
+			item_title.text, int(item.price), buy_price, sell_price]
+	else:
+		price_text.text = str(int(item.price)) if item.has("price") else "미정"
 	item_popup.size = item_popup.get_combined_minimum_size()
 	item_popup.scale = sheet.scale
 	var bounds := hovered_slot.get_global_rect()
