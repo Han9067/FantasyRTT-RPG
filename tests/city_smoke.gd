@@ -159,25 +159,30 @@ func run() -> void:
 	assert(not inv.people_section.visible and not inv.middle.visible)
 	for i in current.products.size():
 		var cell = inv.market_grid.get_child(i)
-		assert(cell.item.id == current.products[i] and cell.quantity == 10 and cell.count_text.text == "10")
+		assert(cell.item.id == current.products[i] and cell.quantity == map.economy.markets[current.id].stock[cell.item.id] and cell.count_text.text == str(cell.quantity))
 	var first = inv.market_grid.get_child(0)
 	var bag_slot = inv.slot_grid.get_child(0)
-	var price := int(first.item.price)
+	var initial_stock: int = first.quantity
+	var balance := 300
+	var price := map.economy.quote(current.id, first.item.id, true, map.economy.skill())
 	var click := InputEventMouseButton.new()
 	click.button_index = MOUSE_BUTTON_LEFT
 	click.pressed = true
+	balance -= price
 	first.gui_input.emit(click)
+	balance -= map.economy.quote(current.id, first.item.id, true, map.economy.skill())
 	first.gui_input.emit(click)
-	assert(map.crowns == 300 - price * 2 and first.quantity == 8 and bag_slot.quantity == 2)
+	assert(map.crowns == balance and first.quantity == initial_stock - 2 and bag_slot.quantity == 2)
+	balance += map.economy.quote(current.id, bag_slot.item.id, false, map.economy.skill())
 	bag_slot.gui_input.emit(click)
-	assert(map.crowns == 300 - price and first.quantity == 9 and bag_slot.quantity == 1)
+	assert(map.crowns == balance and first.quantity == initial_stock - 1 and bag_slot.quantity == 1)
 	first.mouse_entered.emit()
-	assert(inv.item_popup.visible and inv.item_title.text == first.item.name and inv.quantity_text.text == "수량 : 9")
+	assert(inv.item_popup.visible and inv.item_title.text == first.item.name and inv.quantity_text.text == "수량 : %d" % (initial_stock - 1))
 	assert(inv.quantity_rule.visible and inv.quantity_text.visible)
 	map.crowns = 0
 	first.gui_input.emit(click)
-	assert(map.crowns == 0 and first.quantity == 9 and bag_slot.quantity == 1)
-	map.crowns = 300 - price
+	assert(map.crowns == 0 and first.quantity == initial_stock - 1 and bag_slot.quantity == 1)
+	map.crowns = balance
 	map._unhandled_input(cancel)
 	assert(not inv.visible and map.current_city.id == current.id)
 	map.open_inventory()
@@ -207,8 +212,8 @@ func run() -> void:
 	map.set_physics_process(false)
 	assert(map.current_city.id == current.id and map.city_panel.visible and not map.party_marker.visible)
 	map.open_market()
-	assert(map.inventory.market_grid.get_child(0).quantity == 9 and map.inventory.slot_grid.get_child(0).quantity == 1)
-	assert(map.crowns == 300 - price)
+	assert(map.inventory.market_grid.get_child(0).quantity == initial_stock - 1 and map.inventory.slot_grid.get_child(0).quantity == 1)
+	assert(map.crowns == balance)
 	map.inventory.hide()
 	print("PASS: city stock, shared bag and tooltip quantities, purchase/sale prices, insufficient funds and battle continuity")
 	var escape := InputEventKey.new()

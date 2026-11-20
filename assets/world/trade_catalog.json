@@ -1,6 +1,8 @@
 {
   "cities": {
     "city_01": {
+      "population": 6400,
+      "prosperity": 1.1,
       "name": "가",
       "lord": "러셀",
       "products": [
@@ -12,6 +14,8 @@
       ]
     },
     "city_02": {
+      "population": 8600,
+      "prosperity": 1.0,
       "name": "나",
       "lord": "에이넬",
       "products": [
@@ -26,6 +30,8 @@
       ]
     },
     "city_03": {
+      "population": 7200,
+      "prosperity": 1.2,
       "name": "다",
       "lord": "니콜라스",
       "products": [
@@ -39,6 +45,8 @@
       ]
     },
     "city_04": {
+      "population": 5100,
+      "prosperity": 0.95,
       "name": "라",
       "lord": "윌러",
       "products": [

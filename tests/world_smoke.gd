@@ -141,7 +141,7 @@ func run() -> void:
 			map.clamp_camera()
 			var city_point := map.world_to_screen(Vector2(city.position[0],city.position[1]))
 			map.update_city_hover(city_point)
-			assert(map.city_popup.visible and map.city_title.text == city.name and map.city_lord.text == "영주 : "+city.lord)
+			assert(map.city_popup.visible and map.city_title.text == city.name and map.city_lord.text.begins_with("영주 : "+city.lord))
 			assert(Rect2(Vector2.ZERO,map.viewport_size).encloses(map.city_popup.get_global_rect()))
 			assert(map.city_popup.mouse_filter == Control.MOUSE_FILTER_IGNORE)
 			map.update_city_hover(city_point,true)

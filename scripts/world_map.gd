@@ -7,6 +7,9 @@ const PartyMarker = preload("res://scripts/world_party_marker.gd")
 var party_marker: WorldPartyMarker
 var character_appearance: Dictionary = CharacterArt.defaults()
 var terrain: Node2D
+const Economy = preload("res://scripts/campaign_economy.gd")
+const WAGON = preload("res://assets/world/party/caravan.png")
+var economy: Economy
 var cities: Array = []
 var spawn_position := Vector2.ZERO
 var navigation := WorldNavigation.new()
@@ -86,6 +89,12 @@ func _ready() -> void:
 	resize_map()
 	unit_position = spawn_position
 	destination = unit_position
+	if economy == null:
+		economy = Economy.new()
+		var entries := {}
+		for city: Dictionary in cities: entries[city.id] = city_entry_point(city)
+		economy.initialize(cities, inventory.goods_by_id, entries, navigation)
+	inventory.economy = economy
 	update_sprite()
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	Input.set_custom_mouse_cursor(make_entrance_cursor(),Input.CURSOR_CROSS,Vector2(24,16))
@@ -248,6 +257,11 @@ func _physics_process(delta: float) -> void:
 	var simulation_delta := delta * clock.speed
 	if simulation_delta <= 0: return
 	clock.advance(simulation_delta)
+	var hours := clock.elapsed * 24.0 / clock.SECONDS_PER_DAY
+	if floori(hours) > economy.hour:
+		economy.advance_to(hours)
+		if inventory.visible and not inventory.market_city.is_empty(): inventory.refresh_market()
+	queue_redraw()
 	var remaining := MOVE_SPEED * simulation_delta
 	while moving and remaining>0:
 		var target := route_points[route_index]
@@ -303,6 +317,12 @@ func _exit_tree() -> void:
 	Input.set_custom_mouse_cursor(null,Input.CURSOR_CROSS)
 
 func _draw() -> void:
+	if economy != null:
+		var fraction := fposmod(clock.elapsed * 24.0 / clock.SECONDS_PER_DAY, 1.0)
+		for caravan in economy.caravans:
+			if caravan.to != "":
+				var pos := economy.caravan_position(caravan, fraction)
+				draw_texture(WAGON, pos.round() - Vector2(10, 14))
 	# The portrait token replaces the battlefield body, ground shadow and selection ring.
 	if marker_time > 0:
 		var color := Color("f0dfaa")
@@ -426,6 +446,8 @@ func update_city_hover(screen_point: Vector2, over_ui := false) -> void:
 		return
 	city_title.text = display_city_name(hovered_city)
 	city_lord.text = "영주 : %s" % hovered_city.lord
+	var condition: String = economy.markets[hovered_city.id].condition
+	if condition != "peace": city_lord.text += "\n" + Economy.CONDITION_NAMES[condition]
 	city_popup.size = city_popup.get_combined_minimum_size()
 	var position := screen_point+Vector2(18,18)
 	if position.x+city_popup.size.x > viewport_size.x-8: position.x = screen_point.x-city_popup.size.x-18

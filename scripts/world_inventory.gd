@@ -25,10 +25,10 @@ const WEAPON_ICON_SCALE := 1.4
 var item_textures: Dictionary = {}
 const GOODS_ART := preload("res://assets/world/trade_icons.png")
 const GRID_SIDE := 8
-const STARTING_STOCK := 10
+const Economy = preload("res://scripts/campaign_economy.gd")
 
 var goods_by_id: Dictionary = {}
-var city_stocks: Dictionary = {}
+var economy: Economy
 var market_city := ""
 var market_grid := GridContainer.new()
 var market_section: PanelContainer
@@ -229,8 +229,9 @@ func update_item_popup() -> void:
 	quantity_rule.visible = quantity_text.visible
 	quantity_text.text = "수량 : %d" % hovered_slot.quantity
 	if not market_city.is_empty() and item.has("price"):
-		var verb := "구매" if hovered_slot.get_parent() == market_grid else "판매"
-		trade_hint.text = "%s 1개 %s · %d 크라운" % [item_title.text, verb, int(item.price)]
+		trade_hint.text = "%s · 기본 %d · 구매 %d / 판매 %d 크라운" % [
+			item_title.text, int(item.price), economy.quote(market_city, item.id, true, economy.skill()),
+			economy.quote(market_city, item.id, false, economy.skill())]
 	item_popup.size = item_popup.get_combined_minimum_size()
 	item_popup.scale = sheet.scale
 	var bounds := hovered_slot.get_global_rect()
@@ -326,20 +327,25 @@ func open() -> void:
 
 func open_market(city: Dictionary, crowns: int) -> void:
 	set_market_mode(city.id)
-	window_title.text = "%s 시장" % city.name
 	trade_hint.text = "아이템을 클릭하면 1개씩 거래합니다"
 	update_balance(crowns)
-	if not city_stocks.has(city.id):
-		var stock := {}
-		for id in city.products:
-			stock[stock.size()] = {"item": goods_by_id[int(id)], "count": STARTING_STOCK}
-		city_stocks[city.id] = stock
-	restore_slots(market_grid, city_stocks[city.id])
+	refresh_market()
 	show()
 	layout_sheet()
 
+func refresh_market() -> void:
+	var market: Dictionary = economy.markets[market_city]
+	window_title.text = "%s 시장 · %s" % [market.name, Economy.CONDITION_NAMES[market.condition]]
+	for i in market_grid.get_child_count():
+		var cell: ItemSlot = market_grid.get_child(i)
+		var id := int(market.order[i]) if i < market.order.size() else -1
+		var count := int(market.stock.get(id, 0))
+		if cell.quantity != count or (count > 0 and cell.item.get("id") != id):
+			fill_slot(cell, goods_by_id.get(id, {}), count)
+	if hovered_slot != null: update_item_popup()
+
 func update_balance(crowns: int) -> void:
-	bag_title.text = "소지품 · %d 크라운" % crowns
+	bag_title.text = "소지품 · %d 크라운 · 교역 Lv.%d" % [crowns, economy.skill()]
 
 func snapshot(grid: GridContainer) -> Dictionary:
 	var entries := {}
@@ -359,30 +365,35 @@ func restore_slots(grid: GridContainer, entries: Dictionary) -> void:
 func trade_one(source: ItemSlot, crowns: int) -> int:
 	if not is_visible_in_tree() or market_city.is_empty() or source.item.is_empty(): return 0
 	var buying := source.get_parent() == market_grid
-	var target_grid := slot_grid if buying else market_grid
-	if not source.item.has("price"):
+	var item := source.item
+	if not goods_by_id.has(item.id):
 		trade_hint.text = "이 품목은 거래할 수 없습니다"
 		return 0
-	var price := int(source.item.price)
-	if buying and crowns < price:
-		trade_hint.text = "크라운이 부족합니다"
-		return 0
-	var destination: ItemSlot
-	for cell: ItemSlot in target_grid.get_children():
-		if is_stackable(source.item) and cell.item.get("id") == source.item.id:
-			destination = cell
-			break
-		if destination == null and cell.item.is_empty(): destination = cell
-	if destination == null:
-		trade_hint.text = "빈 슬롯이 없습니다"
-		return 0
-	var name_text: String = source.item.name
-	fill_slot(destination, source.item, destination.quantity + 1)
-	fill_slot(source, source.item, source.quantity - 1)
-	city_stocks[market_city] = snapshot(market_grid)
+	var price := economy.quote(market_city, item.id, buying, economy.skill())
+	if buying:
+		if crowns < price:
+			trade_hint.text = "크라운이 부족합니다"
+			return 0
+		if economy.markets[market_city].stock[item.id] <= 0: return 0
+		var destination: ItemSlot
+		for cell: ItemSlot in slot_grid.get_children():
+			if cell.item.get("id") == item.id:
+				destination = cell
+				break
+			if destination == null and cell.item.is_empty(): destination = cell
+		if destination == null:
+			trade_hint.text = "빈 슬롯이 없습니다"
+			return 0
+		fill_slot(destination, item, destination.quantity + 1)
+	else:
+		fill_slot(source, item, source.quantity - 1)
+	economy.change_stock(market_city, item.id, -1 if buying else 1)
+	economy.trade_experience += 1
+	refresh_market()
 	var change := -price if buying else price
 	update_balance(crowns + change)
-	trade_hint.text = "%s 1개 %s · %d 크라운" % [name_text, "구매" if buying else "판매", price]
+	if hovered_slot == null or hovered_slot.item.is_empty():
+		trade_hint.text = "%s 1개 %s · %d 크라운" % [item.name, "구매" if buying else "판매", price]
 	return change
 
 func layout_sheet() -> void:

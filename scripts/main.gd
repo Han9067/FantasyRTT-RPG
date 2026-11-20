@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.61")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.62")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -461,6 +461,7 @@ func show_world() -> void:
 	screen.offset_top = 18
 	screen.offset_bottom = -14
 	world = WorldMapScene.new()
+	world.economy = travel_state.get("economy")
 	world.hero_hp = current_hp
 	world.crowns = travel_state.get("crowns", WorldMap.STARTING_CROWNS)
 	world.character_name = player_name if not player_name.is_empty() else "여행자"
@@ -471,7 +472,6 @@ func show_world() -> void:
 	add_child(world)
 	move_child(world,0)
 	if not travel_state.is_empty():
-		world.inventory.city_stocks = travel_state.get("markets", {})
 		world.inventory.restore_slots(world.inventory.slot_grid, travel_state.get("bag", {}))
 		world.restore_travel(travel_state.position,travel_state.camera,travel_state.zoom,travel_state.get("city_id",""))
 	battle_button = button("전투맵 이동", enter_battle_from_world)
@@ -509,7 +509,7 @@ func enter_battle_from_world() -> void:
 	if is_instance_valid(world):
 		travel_state = {"position":world.unit_position,"camera":world.camera.position,"zoom":world.zoom_level,"city_id":world.current_city.get("id",""),
 			"elapsed":world.clock.elapsed, "speed":world.clock.speed, "crowns":world.crowns,
-			"markets":world.inventory.city_stocks, "bag":world.inventory.snapshot(world.inventory.slot_grid)}
+			"economy":world.economy, "bag":world.inventory.snapshot(world.inventory.slot_grid)}
 	show_battle()
 
 
