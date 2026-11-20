@@ -27,6 +27,7 @@ var city_panel_title: Label
 var city_actions: Array[Button] = []
 var inventory := preload("res://scripts/world_inventory.gd").new()
 var menu_bar := HBoxContainer.new()
+var clock := preload("res://scripts/world_clock.gd").new()
 var city_overlay: CanvasLayer
 
 func _ready() -> void:
@@ -69,6 +70,7 @@ func _ready() -> void:
 	update_sprite()
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	Input.set_custom_mouse_cursor(make_entrance_cursor(),Input.CURSOR_CROSS,Vector2(24,16))
+	city_overlay.add_child(clock)
 	create_city_panel()
 	create_world_menu()
 	Input.set_custom_mouse_cursor(make_blocked_cursor(),Input.CURSOR_FORBIDDEN,Vector2(12,12))
@@ -128,7 +130,10 @@ func issue_move(point: Vector2) -> void:
 func _physics_process(delta: float) -> void:
 	var direction := Vector2(int(pan_keys.get(KEY_D,false))-int(pan_keys.get(KEY_A,false)),int(pan_keys.get(KEY_S,false))-int(pan_keys.get(KEY_W,false)))
 	pan_camera(direction,delta)
-	var remaining := MOVE_SPEED*delta
+	var simulation_delta := delta * clock.speed
+	if simulation_delta <= 0: return
+	clock.advance(simulation_delta)
+	var remaining := MOVE_SPEED * simulation_delta
 	while moving and remaining>0:
 		var target := route_points[route_index]
 		var distance := unit_position.distance_to(target)
@@ -144,7 +149,7 @@ func _physics_process(delta: float) -> void:
 		queue_redraw()
 	finish_city_arrival()
 	if marker_time>0:
-		marker_time = maxf(0,marker_time-delta)
+		marker_time = maxf(0,marker_time-simulation_delta)
 		queue_redraw()
 
 static func make_blocked_cursor() -> ImageTexture:
@@ -247,6 +252,7 @@ func restore_travel(position_in_world: Vector2, camera_position: Vector2, zoom: 
 		if city.id == city_id and city_bounds(city).has_point(unit_position): enter_city(city)
 
 func can_interact_at(point: Vector2) -> bool:
+	if clock.get_global_rect().has_point(point): return false
 	if inventory.visible or menu_bar.get_global_rect().has_point(point): return false
 	if not screen_playable_rect().has_point(point): return false
 	if is_instance_valid(city_panel) and city_panel.visible and city_panel.get_global_rect().has_point(point): return false

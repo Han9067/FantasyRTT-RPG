@@ -85,7 +85,32 @@ func run() -> void:
 		assert(map.player_sprite.position+Vector2(anchor_x,Art.FEET_Y) == WorldPartyMarker.PORTRAIT_FEET)
 	map.player_sprite.flip_h = false
 	map.update_sprite()
-	assert(game.battle_button.get_global_rect().get_center().x == 640, "Battle link must be centered")
+	var clock = map.clock
+	assert(clock.date_label.text == "[436년 3월 1일]" and clock.time_label.text == "현재 시간 | 12 AM")
+	assert(clock.date_label.get_global_rect().get_center().x == 640 and clock.gauge.size.y >= 22)
+	assert(not clock.get_global_rect().intersects(game.battle_button.get_global_rect()))
+	for action in clock.speed_buttons:
+		assert(action.size == Vector2(40,40) and not map.can_interact_at(action.get_global_rect().get_center()))
+	var route_start := map.unit_position
+	map.issue_move(route_start + Vector2(150,0))
+	for index in [0,1,2,3]:
+		clock.speed_buttons[index].pressed.emit()
+		var rate: int = [0,1,2,4][index]
+		var previous := map.unit_position
+		var elapsed: float = clock.elapsed
+		map._physics_process(0.1)
+		assert(clock.speed == rate and clock.speed_buttons[index].button_pressed)
+		assert(is_equal_approx(clock.elapsed - elapsed, rate * 0.1))
+		assert(is_equal_approx(map.unit_position.distance_to(previous), rate * 0.1 * map.MOVE_SPEED))
+	clock.elapsed = 0.0
+	clock.advance(clock.SECONDS_PER_DAY / 2)
+	assert(clock.time_label.text == "현재 시간 | 12 PM" and is_equal_approx(clock.gauge.ratio, 0.5))
+	clock.advance(clock.SECONDS_PER_DAY / 2)
+	assert(clock.time_label.text == "현재 시간 | 12 AM" and clock.date_label.text == "[436년 3월 2일]" and clock.gauge.value == 0)
+	clock.advance(clock.SECONDS_PER_DAY * 30)
+	assert(clock.date_label.text == "[436년 4월 1일]")
+	clock.set_speed(1)
+	map.restore_travel(map.spawn_position, map.spawn_position, 3)
 	for city in map.cities:
 		assert(city["size"] == [96.0,96.0])
 		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(Vector2(city.position[0]-48,city.position[1]-48),Vector2(96,96))))
@@ -206,7 +231,7 @@ func run() -> void:
 	await process_frame
 	inside(map)
 	assert(map.terrain.get_child(0).texture == texture and map.map_size == Vector2(2560,1280))
-	assert(absf(game.battle_button.get_global_rect().get_center().x-480)<1)
+	assert(absf(clock.date_label.get_global_rect().get_center().x-480)<1)
 	map.zoom_level = 1.0
 	root.size = Vector2i(6400,4320)
 	await process_frame
@@ -281,6 +306,8 @@ func run() -> void:
 	var saved_position := map.unit_position
 	var saved_camera := map.camera.position
 	var saved_zoom := map.zoom_level
+	clock.set_speed(0)
+	var saved_elapsed: float = clock.elapsed
 	game.battle_button.pressed.emit()
 	await process_frame
 	assert(game.current_screen == "battle" and not is_instance_valid(game.world))
@@ -292,6 +319,7 @@ func run() -> void:
 	assert(game.battle.player_sprite.sprite_frames.get_frame_texture("idle",0).get_image().get_data() == Art.compose(game.appearance).get_data())
 	game.show_world()
 	await process_frame
+	assert(game.world.clock.speed == 0 and game.world.clock.elapsed == saved_elapsed)
 	assert(game.world.unit_position == saved_position and game.world.camera.position == saved_camera and game.world.zoom_level == saved_zoom)
 	assert(get_nodes_in_group("allied_infantry").is_empty() and get_nodes_in_group("enemy_infantry").is_empty())
 	assert(game.world.selected and not game.world.moving)
@@ -302,5 +330,6 @@ func run() -> void:
 	game.create_button.pressed.emit()
 	await process_frame
 	assert(game.world.unit_position == game.world.spawn_position and game.world.zoom_level == 3)
-	print("PASS: creation -> world, 4 native cities with bounded camera-aware hover cards, cleared HUD, persistent selection, fixed idle-first-frame portrait during travel, camera bounds/zoom/resize, centered battle button, world/battle continuity and return state")
+	assert(game.world.clock.speed == 1 and game.world.clock.date_label.text == "[436년 3월 1일]")
+	print("PASS: creation -> world, 4 native cities with bounded camera-aware hover cards, cleared HUD, persistent selection, fixed idle-first-frame portrait during travel, camera bounds/zoom/resize, calendar, time controls, world/battle continuity and return state")
 	quit()

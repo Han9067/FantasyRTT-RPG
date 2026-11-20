@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.53")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.54")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -459,6 +459,8 @@ func show_world() -> void:
 	screen.offset_bottom = -14
 	world = WorldMapScene.new()
 	world.character_name = player_name if not player_name.is_empty() else "여행자"
+	world.clock.elapsed = travel_state.get("elapsed", 0.0)
+	world.clock.speed = travel_state.get("speed", 1)
 	world.character_frames = character_frames
 	world.character_appearance = appearance.duplicate(true)
 	add_child(world)
@@ -471,19 +473,10 @@ func show_world() -> void:
 	battle_button = button("전투맵 이동", enter_battle_from_world)
 	header.add_child(battle_button)
 	battle_button.focus_mode = Control.FOCUS_NONE
-	battle_button.anchor_left = 0.5
-	battle_button.anchor_right = 0.5
-	battle_button.offset_left = -100
-	battle_button.offset_right = 100
+	battle_button.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	battle_button.offset_left = -160
+	battle_button.offset_right = 0
 	battle_button.offset_bottom = 48
-	var back := button("← 캐릭터",show_creation)
-	header.add_child(back)
-	back.focus_mode = Control.FOCUS_NONE
-	back.anchor_left = 1.0
-	back.anchor_right = 1.0
-	back.offset_left = -160
-	back.offset_right = 0
-	back.offset_bottom = 48
 	spacer(screen)
 	var overview := preload("res://scripts/world_overview.gd").new()
 	overview.world = world
@@ -493,14 +486,21 @@ func show_world() -> void:
 	overview.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
 	overview.offset_left = -244
 	overview.offset_right = -24
-	overview.offset_top = 92
-	overview.offset_bottom = 260
-	world.hud_controls.assign([battle_button,back,overview])
+	var layout_navigation := func() -> void:
+		var compact := get_viewport_rect().size.x < 920
+		overview.offset_top = 112 if compact else 92
+		overview.offset_bottom = overview.offset_top + 168
+		battle_button.offset_top = overview.offset_bottom - screen.offset_top + 6 if compact else 0
+		battle_button.offset_bottom = battle_button.offset_top + 48
+	header.resized.connect(layout_navigation)
+	layout_navigation.call()
+	world.hud_controls.assign([battle_button,overview])
 	ignore_battle_overlay_input(screen)
 
 func enter_battle_from_world() -> void:
 	if is_instance_valid(world):
-		travel_state = {"position":world.unit_position,"camera":world.camera.position,"zoom":world.zoom_level,"city_id":world.current_city.get("id","")}
+		travel_state = {"position":world.unit_position,"camera":world.camera.position,"zoom":world.zoom_level,"city_id":world.current_city.get("id",""),
+			"elapsed":world.clock.elapsed, "speed":world.clock.speed}
 	show_battle()
 
 
