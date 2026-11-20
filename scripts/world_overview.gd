@@ -9,6 +9,8 @@ var grab_offset := Vector2.ZERO
 
 func _ready() -> void:
 	theme = GameUITheme.build()
+	self_modulate.a = 0.7
+	frame_style.draw_center = false
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	tooltip_text = "사각형 내부를 잡아 끌면 카메라가 이동합니다."

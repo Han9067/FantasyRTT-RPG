@@ -7,7 +7,10 @@ const SPEEDS := [0, 1, 2, 4]
 const DATE_WIDTH := 172
 
 var elapsed := 0.0
-var speed := 1
+var travel_speed := 1
+var city_paused := false
+var speed: int:
+	get: return 0 if city_paused else travel_speed
 var date_label := Label.new()
 var time_panel := PanelContainer.new()
 var time_label := Label.new()
@@ -80,7 +83,7 @@ func _ready() -> void:
 	for label in [time_title, time_label]:
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	set_speed(speed)
+	refresh_speed_controls()
 	refresh_time()
 
 func label_panel(label: Label, width: int, height: int) -> PanelContainer:
@@ -105,9 +108,19 @@ func speed_icon(index: int) -> ImageTexture:
 	return ImageTexture.create_from_image(image)
 
 func set_speed(rate: int) -> void:
-	speed = rate
-	speed_buttons[SPEEDS.find(rate)].set_pressed_no_signal(true)
-	pause_changed.emit(rate == 0)
+	if city_paused: return
+	travel_speed = rate
+	refresh_speed_controls()
+
+func set_city_paused(value: bool) -> void:
+	if city_paused == value: return
+	city_paused = value
+	refresh_speed_controls()
+
+func refresh_speed_controls() -> void:
+	for action in speed_buttons: action.disabled = city_paused
+	speed_buttons[SPEEDS.find(speed)].set_pressed_no_signal(true)
+	pause_changed.emit(speed == 0)
 
 func advance(simulation_delta: float) -> void:
 	elapsed += simulation_delta

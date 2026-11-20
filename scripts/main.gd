@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.67")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.68")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -466,7 +466,7 @@ func show_world() -> void:
 	world.crowns = travel_state.get("crowns", WorldMap.STARTING_CROWNS)
 	world.character_name = player_name if not player_name.is_empty() else "여행자"
 	world.clock.elapsed = travel_state.get("elapsed", 0.0)
-	world.clock.speed = travel_state.get("speed", 1)
+	world.clock.travel_speed = travel_state.get("speed", 1)
 	world.character_frames = character_frames
 	world.character_appearance = appearance.duplicate(true)
 	add_child(world)
@@ -480,8 +480,12 @@ func show_world() -> void:
 	world_overview = overview
 	battle_hud.add_child(overview)
 	var notice := create_pause_notice()
-	notice.visible = world.clock.speed == 0
-	world.clock.pause_changed.connect(notice.set_visible)
+	var update_notice := func(paused: bool):
+		# Keep city dialogs above the automatic pause notice.
+		notice.get_parent().layer = battle_hud.layer if world.clock.city_paused else 20
+		notice.visible = paused
+	world.clock.pause_changed.connect(update_notice)
+	update_notice.call(world.clock.speed == 0)
 	world.setup_navigation(battle_button, overview)
 	ignore_battle_overlay_input(screen)
 
@@ -508,7 +512,7 @@ func create_pause_notice() -> Label:
 func enter_battle_from_world() -> void:
 	if is_instance_valid(world):
 		travel_state = {"position":world.unit_position,"camera":world.camera.position,"zoom":world.zoom_level,"city_id":world.current_city.get("id",""),
-			"elapsed":world.clock.elapsed, "speed":world.clock.speed, "crowns":world.crowns,
+			"elapsed":world.clock.elapsed, "speed":world.clock.travel_speed, "crowns":world.crowns,
 			"economy":world.economy, "bag":world.inventory.snapshot(world.inventory.slot_grid)}
 	show_battle()
 

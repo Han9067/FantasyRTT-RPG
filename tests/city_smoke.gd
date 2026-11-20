@@ -112,6 +112,17 @@ func run() -> void:
 	assert(not map.inventory.visible and map.current_city == map.cities[0])
 	map.exit_city()
 
+	for rate in [0, 1, 2, 4]:
+		map.clock.set_speed(rate)
+		map.enter_city(map.cities[0])
+		var elapsed := map.clock.elapsed
+		map.clock.speed_buttons[1].pressed.emit()
+		map._physics_process(1.0)
+		assert(map.clock.speed == 0 and map.clock.elapsed == elapsed and map.clock.speed_buttons[0].button_pressed)
+		for action in map.clock.speed_buttons: assert(action.disabled)
+		map.city_actions[3].pressed.emit()
+		assert(map.clock.speed == rate)
+		for action in map.clock.speed_buttons: assert(not action.disabled)
 	# The drawn frame has exactly three extra native pixels, not a scaled texture.
 	var frame := GameUITheme.panel_style().texture.get_image()
 	for y in range(5): assert(frame.get_pixel(16,y) == GameUITheme.BORDER)
@@ -135,16 +146,16 @@ func run() -> void:
 			walk_to_city(map)
 			assert(map.current_city.id == city.id and not map.party_marker.visible and map.city_panel.visible)
 			assert(not map.moving and map.pending_city.is_empty() and not map.city_popup.visible)
-			assert(map.city_panel.size.x == 400 and map.city_panel.position == Vector2(18, game.world_overview.get_global_rect().end.y + 8))
+			assert(map.city_panel.size.x == 320 and map.city_panel.position == Vector2(18, map.status_panel.get_global_rect().end.y + 8))
 			assert(map.city_panel_title.text == map.display_city_name(city))
 			map.update_city_hover(point)
 			map.update_world_cursor(point)
 			assert(not map.city_popup.visible and not map.entrance_cursor_active)
-	print("PASS: all four cities at 1x/3x, entrance cursor, walkable routes, arrival-only entry and 400px panel")
+	print("PASS: all four cities at 1x/3x, entrance cursor, walkable routes, arrival-only entry and 320px panel")
 	await process_frame
 	assert(map.city_actions.size() == 4)
 	for action in map.city_actions:
-		assert(action.size.x == 285, "City buttons must use 80% of the original 356px content width")
+		assert(action.size.x == 228, "City buttons must use 80% of their previous 285px width")
 		assert(absf(action.get_global_rect().get_center().x - map.city_panel.get_global_rect().get_center().x) <= 0.5, "Centering may round by half a pixel for an odd button width")
 	assert(map.city_actions[3].text == "나가기" and map.city_actions[3].position.y > map.city_actions[2].position.y)
 	var original := map.unit_position
@@ -214,8 +225,8 @@ func run() -> void:
 	root.size = Vector2i(960,720)
 	await process_frame
 	await process_frame
-	assert(map.city_panel.size.x == 400 and map.city_panel.get_global_rect().end.y == 702)
-	for action in map.city_actions: assert(action.size.x == 285)
+	assert(map.city_panel.size.x == 320 and map.city_panel.get_global_rect().end.y == 702)
+	for action in map.city_actions: assert(action.size.x == 228)
 	# A battle round trip preserves the occupied city and hidden party.
 	game.enter_battle_from_world()
 	await process_frame
@@ -225,6 +236,7 @@ func run() -> void:
 	map.set_process(false)
 	map.set_physics_process(false)
 	assert(map.current_city.id == current.id and map.city_panel.visible and not map.party_marker.visible)
+	assert(map.clock.speed == 0 and map.clock.travel_speed == 4)
 	map.open_market()
 	assert(map.inventory.market_grid.get_child(0).quantity == initial_stock - 1 and map.inventory.slot_grid.get_child(0).quantity == 1)
 	assert(map.crowns == balance)
@@ -234,6 +246,7 @@ func run() -> void:
 	escape.keycode = KEY_ESCAPE
 	escape.pressed = true
 	map._unhandled_input(escape)
+	assert(map.clock.speed == 4)
 	assert(map.current_city.is_empty() and map.party_marker.visible and not map.city_panel.visible)
 	print("PASS: 80%-width centered buttons, Exit button/Escape parity, placeholder button order/no effects, UI input isolation, panel resize, battle return and Escape exit")
 	# A new valid travel order cancels entry; invalid terrain preserves the valid order.

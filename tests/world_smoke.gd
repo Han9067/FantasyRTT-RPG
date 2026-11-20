@@ -98,8 +98,9 @@ func run() -> void:
 	assert(clock.date_label.text == "436년 3월 1일" and clock.time_label.text == "12 AM")
 	assert(clock.date_label.get_global_rect().get_center().x == 640 and clock.gauge.size.y >= 22)
 	assert(not clock.get_global_rect().intersects(game.battle_button.get_global_rect()))
-	assert(game.world_overview.position.y == map.status_panel.get_global_rect().end.y + 8)
-	assert(game.world_overview.position.x == map.status_panel.position.x)
+	assert(game.world_overview.position.y == map.menu_bar.get_global_rect().end.y + 8)
+	assert(game.world_overview.get_global_rect().end.x == map.menu_bar.get_global_rect().end.x)
+	assert(is_equal_approx(game.world_overview.self_modulate.a, 0.7))
 	assert(not clock.get_global_rect().intersects(game.world_overview.get_global_rect()))
 	for action in clock.speed_buttons:
 		assert(action.size == Vector2(40,40) and not map.can_interact_at(action.get_global_rect().get_center()))

@@ -29,6 +29,8 @@ var city_panel: PanelContainer
 var city_panel_title: Label
 var city_actions: Array[Button] = []
 var inventory := preload("res://scripts/world_inventory.gd").new()
+const CITY_PANEL_WIDTH := 320
+const CITY_BUTTON_WIDTH := 228
 const STARTING_CROWNS := 300
 var balance_label := Label.new()
 var crowns := STARTING_CROWNS:
@@ -182,27 +184,27 @@ func layout_world_hud() -> void:
 	var menu_x := width - margin - menu_bar.get_combined_minimum_size().x
 	var clock_width := clock.get_combined_minimum_size().x
 	var centered_x := roundf((width - clock.DATE_WIDTH) / 2)
-	var clock_x := minf(centered_x, menu_x - gap - clock_width)
-	var mini_y := margin + 52 + gap
+	var mini_x := width - margin - minimap.size.x
+	var clock_x := minf(centered_x, minf(menu_x, mini_x) - gap - clock_width)
+	var mini_y := margin + menu_bar.get_combined_minimum_size().y + gap
 	var clock_y := margin
 	var status_width := minf(400, clock_x - margin - gap)
 	if status_width < minimap.size.x:
 		status_width = minf(400, menu_x - margin - gap)
-		clock_y = mini_y
-		clock_x = clampf(centered_x, margin + minimap.size.x + gap, width - margin - clock_width)
+		clock_y = margin + 52 + gap
 	for control in hud_controls:
 		control.scale = Vector2.ONE * factor
 	menu_bar.position = Vector2(menu_x, margin) * factor
 	status_panel.position = Vector2(margin, margin) * factor
 	status_panel.size = Vector2(status_width, 52)
-	minimap.position = Vector2(margin, mini_y) * factor
+	minimap.position = Vector2(mini_x, mini_y) * factor
 	clock.position = Vector2(clock_x, clock_y) * factor
 	var time_offset := clock_width - clock.time_panel.custom_minimum_size.x
 	battle_link.size = Vector2(clock.time_panel.custom_minimum_size.x, 44)
 	battle_link.position = clock.position + Vector2(time_offset, clock.get_combined_minimum_size().y + 4) * factor
-	var city_top := minimap.get_global_rect().end.y + gap * factor
+	var city_top := status_panel.get_global_rect().end.y + gap * factor
 	for control in [clock, battle_link]:
-		if control.position.x < (margin + 400) * factor:
+		if control.position.x < (margin + CITY_PANEL_WIDTH) * factor:
 			city_top = maxf(city_top, control.get_global_rect().end.y + gap * factor)
 	layout_city_panel(Vector2(margin * factor, city_top), viewport.y - margin * factor - city_top, factor)
 
@@ -491,6 +493,7 @@ func finish_city_arrival() -> void:
 
 func enter_city(city: Dictionary) -> void:
 	current_city = city
+	clock.set_city_paused(true)
 	marker_time = 0.0
 	party_marker.hide()
 	city_popup.hide()
@@ -500,6 +503,7 @@ func enter_city(city: Dictionary) -> void:
 
 func exit_city() -> void:
 	current_city = {}
+	clock.set_city_paused(false)
 	if is_instance_valid(city_panel): city_panel.hide()
 	if is_instance_valid(party_marker): party_marker.show()
 
@@ -521,7 +525,7 @@ func create_city_panel() -> void:
 	for caption in ["내성","길드","시장","나가기"]:
 		var action := Button.new()
 		action.text = caption
-		action.custom_minimum_size.y = 52
+		action.custom_minimum_size = Vector2(CITY_BUTTON_WIDTH, 52)
 		action.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		action.focus_mode = Control.FOCUS_NONE
 		action.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -535,10 +539,7 @@ func layout_city_panel(origin: Vector2, height: float, hud_scale: float) -> void
 	var factor := minf(hud_scale, maxf(1, height) / city_panel.get_combined_minimum_size().y)
 	city_panel.scale = Vector2.ONE * factor
 	city_panel.position = origin
-	city_panel.size = Vector2(400, maxf(1, height) / factor)
-	var frame := city_panel.get_theme_stylebox("panel")
-	var content_width := city_panel.size.x-frame.get_content_margin(SIDE_LEFT)-frame.get_content_margin(SIDE_RIGHT)
-	for action in city_actions: action.custom_minimum_size.x = roundf(content_width*0.8)
+	city_panel.size = Vector2(CITY_PANEL_WIDTH, maxf(1, height) / factor)
 
 func refresh_attack_cursor() -> void:
 	# World hover owns its cursor; inherited mouse handling must not restore the arrow.
