@@ -108,8 +108,9 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.64")
+	assert(game.game_version == "0.0.65")
 	for item: Dictionary in Art.data().weapon_items.values():
+		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
 	assert(Art.weapon_by_item_id(1011).is_unique and not Art.weapon_by_item_id(1001).is_unique)
 	verify_ui_font(game)

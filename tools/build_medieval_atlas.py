@@ -155,7 +155,7 @@ def build(source=SOURCE, dest=DEST):
                     raise ValueError(f"Duplicate equipment ID: {slot['name']}")
                 catalog['weapon_items'][equipment_id] = {
                     'id': equipment_id, 'family': folder.name, 'sheet': key, 'slot': index,
-                    'number': slot['id'],
+                    'number': slot['id'], 'price': 100,
                     'grip': grip, 'attack': 'bow_shot' if family == 'bow' else ('thrust_attack' if family == 'spear' else 'chop_attack')}
     for equipment_id, y_up in offsets.items():
         if equipment_id not in catalog['weapon_items']:

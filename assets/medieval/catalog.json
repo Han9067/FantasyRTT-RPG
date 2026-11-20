@@ -22879,6 +22879,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         21
@@ -22896,6 +22897,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         24
@@ -22913,6 +22915,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 2,
       "number": 3,
+      "price": 100,
       "grip": [
         16,
         25
@@ -22930,6 +22933,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 3,
       "number": 4,
+      "price": 100,
       "grip": [
         16,
         25
@@ -22947,6 +22951,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 4,
       "number": 5,
+      "price": 100,
       "grip": [
         16,
         23
@@ -22964,6 +22969,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 5,
       "number": 6,
+      "price": 100,
       "grip": [
         16,
         24
@@ -22981,6 +22987,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 6,
       "number": 7,
+      "price": 100,
       "grip": [
         16,
         25
@@ -22998,6 +23005,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 7,
       "number": 8,
+      "price": 100,
       "grip": [
         16,
         23
@@ -23015,6 +23023,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 8,
       "number": 9,
+      "price": 100,
       "grip": [
         16,
         23
@@ -23032,6 +23041,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 9,
       "number": 10,
+      "price": 100,
       "grip": [
         16,
         24
@@ -23049,6 +23059,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 10,
       "number": 11,
+      "price": 100,
       "grip": [
         16,
         24
@@ -23066,6 +23077,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 11,
       "number": 12,
+      "price": 100,
       "grip": [
         16,
         23
@@ -23083,6 +23095,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 12,
       "number": 13,
+      "price": 100,
       "grip": [
         16,
         26
@@ -23100,6 +23113,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 13,
       "number": 14,
+      "price": 100,
       "grip": [
         16,
         26
@@ -23117,6 +23131,7 @@
       "sheet": "sprites/weapons/melee weapons/one_axe.png",
       "slot": 14,
       "number": 15,
+      "price": 100,
       "grip": [
         16,
         26
@@ -23134,6 +23149,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         24
@@ -23151,6 +23167,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         24
@@ -23168,6 +23185,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 2,
       "number": 3,
+      "price": 100,
       "grip": [
         13,
         22
@@ -23185,6 +23203,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 3,
       "number": 4,
+      "price": 100,
       "grip": [
         13,
         23
@@ -23202,6 +23221,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 4,
       "number": 5,
+      "price": 100,
       "grip": [
         15,
         24
@@ -23219,6 +23239,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 5,
       "number": 6,
+      "price": 100,
       "grip": [
         14,
         23
@@ -23236,6 +23257,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 6,
       "number": 7,
+      "price": 100,
       "grip": [
         16,
         24
@@ -23253,6 +23275,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 7,
       "number": 8,
+      "price": 100,
       "grip": [
         16,
         24
@@ -23270,6 +23293,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 8,
       "number": 9,
+      "price": 100,
       "grip": [
         16,
         26
@@ -23287,6 +23311,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 9,
       "number": 10,
+      "price": 100,
       "grip": [
         16,
         26
@@ -23304,6 +23329,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 10,
       "number": 11,
+      "price": 100,
       "grip": [
         16,
         25
@@ -23321,6 +23347,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 11,
       "number": 12,
+      "price": 100,
       "grip": [
         16,
         26
@@ -23338,6 +23365,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 12,
       "number": 13,
+      "price": 100,
       "grip": [
         16,
         25
@@ -23355,6 +23383,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 13,
       "number": 14,
+      "price": 100,
       "grip": [
         16,
         25
@@ -23372,6 +23401,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 14,
       "number": 15,
+      "price": 100,
       "grip": [
         16,
         26
@@ -23389,6 +23419,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 15,
       "number": 16,
+      "price": 100,
       "grip": [
         16,
         25
@@ -23406,6 +23437,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 16,
       "number": 17,
+      "price": 100,
       "grip": [
         16,
         25
@@ -23423,6 +23455,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 17,
       "number": 18,
+      "price": 100,
       "grip": [
         16,
         25
@@ -23440,6 +23473,7 @@
       "sheet": "sprites/weapons/melee weapons/one_blunt.png",
       "slot": 18,
       "number": 19,
+      "price": 100,
       "grip": [
         16,
         26
@@ -23457,6 +23491,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         18
@@ -23472,6 +23507,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         17
@@ -23487,6 +23523,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 2,
       "number": 3,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23502,6 +23539,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 3,
       "number": 4,
+      "price": 100,
       "grip": [
         15,
         15
@@ -23517,6 +23555,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 4,
       "number": 5,
+      "price": 100,
       "grip": [
         16,
         15
@@ -23532,6 +23571,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 5,
       "number": 6,
+      "price": 100,
       "grip": [
         16,
         16
@@ -23547,6 +23587,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 6,
       "number": 7,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23562,6 +23603,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 7,
       "number": 8,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23577,6 +23619,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 8,
       "number": 9,
+      "price": 100,
       "grip": [
         15,
         15
@@ -23592,6 +23635,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 9,
       "number": 10,
+      "price": 100,
       "grip": [
         15,
         15
@@ -23607,6 +23651,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 10,
       "number": 11,
+      "price": 100,
       "grip": [
         16,
         15
@@ -23622,6 +23667,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 11,
       "number": 12,
+      "price": 100,
       "grip": [
         16,
         18
@@ -23637,6 +23683,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 12,
       "number": 13,
+      "price": 100,
       "grip": [
         16,
         17
@@ -23652,6 +23699,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 13,
       "number": 14,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23667,6 +23715,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 14,
       "number": 15,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23682,6 +23731,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 15,
       "number": 16,
+      "price": 100,
       "grip": [
         16,
         15
@@ -23697,6 +23747,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 16,
       "number": 17,
+      "price": 100,
       "grip": [
         16,
         16
@@ -23712,6 +23763,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 17,
       "number": 18,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23727,6 +23779,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 18,
       "number": 19,
+      "price": 100,
       "grip": [
         15,
         17
@@ -23742,6 +23795,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 19,
       "number": 20,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23757,6 +23811,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 20,
       "number": 21,
+      "price": 100,
       "grip": [
         16,
         15
@@ -23772,6 +23827,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 21,
       "number": 22,
+      "price": 100,
       "grip": [
         15,
         15
@@ -23787,6 +23843,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 22,
       "number": 23,
+      "price": 100,
       "grip": [
         16,
         18
@@ -23802,6 +23859,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 23,
       "number": 24,
+      "price": 100,
       "grip": [
         16,
         17
@@ -23817,6 +23875,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 24,
       "number": 25,
+      "price": 100,
       "grip": [
         15,
         17
@@ -23832,6 +23891,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 25,
       "number": 26,
+      "price": 100,
       "grip": [
         15,
         17
@@ -23847,6 +23907,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 26,
       "number": 27,
+      "price": 100,
       "grip": [
         16,
         17
@@ -23862,6 +23923,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 27,
       "number": 28,
+      "price": 100,
       "grip": [
         16,
         17
@@ -23877,6 +23939,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 28,
       "number": 29,
+      "price": 100,
       "grip": [
         15,
         17
@@ -23892,6 +23955,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 29,
       "number": 30,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23907,6 +23971,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 30,
       "number": 31,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23922,6 +23987,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 31,
       "number": 32,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23937,6 +24003,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 32,
       "number": 33,
+      "price": 100,
       "grip": [
         16,
         17
@@ -23952,6 +24019,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 33,
       "number": 34,
+      "price": 100,
       "grip": [
         16,
         18
@@ -23967,6 +24035,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 34,
       "number": 35,
+      "price": 100,
       "grip": [
         16,
         18
@@ -23982,6 +24051,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 35,
       "number": 36,
+      "price": 100,
       "grip": [
         15,
         16
@@ -23997,6 +24067,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 36,
       "number": 37,
+      "price": 100,
       "grip": [
         15,
         17
@@ -24012,6 +24083,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 37,
       "number": 38,
+      "price": 100,
       "grip": [
         16,
         17
@@ -24027,6 +24099,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 38,
       "number": 39,
+      "price": 100,
       "grip": [
         15,
         17
@@ -24042,6 +24115,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 39,
       "number": 40,
+      "price": 100,
       "grip": [
         15,
         16
@@ -24057,6 +24131,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 40,
       "number": 41,
+      "price": 100,
       "grip": [
         15,
         16
@@ -24072,6 +24147,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 41,
       "number": 42,
+      "price": 100,
       "grip": [
         15,
         14
@@ -24087,6 +24163,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 42,
       "number": 43,
+      "price": 100,
       "grip": [
         15,
         15
@@ -24102,6 +24179,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 43,
       "number": 44,
+      "price": 100,
       "grip": [
         15,
         16
@@ -24117,6 +24195,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 44,
       "number": 45,
+      "price": 100,
       "grip": [
         15,
         17
@@ -24132,6 +24211,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 45,
       "number": 46,
+      "price": 100,
       "grip": [
         15,
         17
@@ -24147,6 +24227,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 46,
       "number": 47,
+      "price": 100,
       "grip": [
         15,
         17
@@ -24162,6 +24243,7 @@
       "sheet": "sprites/weapons/melee weapons/one_shield.png",
       "slot": 47,
       "number": 48,
+      "price": 100,
       "grip": [
         15,
         17
@@ -24177,6 +24259,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         24
@@ -24194,6 +24277,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         28
@@ -24211,6 +24295,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 2,
       "number": 3,
+      "price": 100,
       "grip": [
         16,
         28
@@ -24228,6 +24313,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 3,
       "number": 4,
+      "price": 100,
       "grip": [
         16,
         28
@@ -24245,6 +24331,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 4,
       "number": 5,
+      "price": 100,
       "grip": [
         16,
         28
@@ -24262,6 +24349,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 5,
       "number": 6,
+      "price": 100,
       "grip": [
         16,
         28
@@ -24279,6 +24367,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 6,
       "number": 7,
+      "price": 100,
       "grip": [
         18,
         27
@@ -24296,6 +24385,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 7,
       "number": 8,
+      "price": 100,
       "grip": [
         16,
         27
@@ -24313,6 +24403,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 8,
       "number": 9,
+      "price": 100,
       "grip": [
         16,
         28
@@ -24330,6 +24421,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 9,
       "number": 10,
+      "price": 100,
       "grip": [
         16,
         28
@@ -24347,6 +24439,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 10,
       "number": 11,
+      "price": 100,
       "grip": [
         16,
         28
@@ -24364,6 +24457,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 11,
       "number": 12,
+      "price": 100,
       "grip": [
         16,
         27
@@ -24381,6 +24475,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 12,
       "number": 13,
+      "price": 100,
       "grip": [
         16,
         23
@@ -24398,6 +24493,7 @@
       "sheet": "sprites/weapons/melee weapons/one_sword.png",
       "slot": 13,
       "number": 14,
+      "price": 100,
       "grip": [
         16,
         25
@@ -24415,6 +24511,7 @@
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         37
@@ -24432,6 +24529,7 @@
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         37
@@ -24449,6 +24547,7 @@
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 2,
       "number": 4,
+      "price": 100,
       "grip": [
         16,
         37
@@ -24466,6 +24565,7 @@
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 3,
       "number": 11,
+      "price": 100,
       "grip": [
         16,
         36
@@ -24483,6 +24583,7 @@
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 4,
       "number": 12,
+      "price": 100,
       "grip": [
         16,
         36
@@ -24500,6 +24601,7 @@
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 5,
       "number": 13,
+      "price": 100,
       "grip": [
         16,
         36
@@ -24517,6 +24619,7 @@
       "sheet": "sprites/weapons/melee weapons/two_axe.png",
       "slot": 6,
       "number": 14,
+      "price": 100,
       "grip": [
         16,
         37
@@ -24534,6 +24637,7 @@
       "sheet": "sprites/weapons/melee weapons/two_blunt.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         34
@@ -24551,6 +24655,7 @@
       "sheet": "sprites/weapons/melee weapons/two_blunt.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         35
@@ -24568,6 +24673,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         45
@@ -24585,6 +24691,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         44
@@ -24602,6 +24709,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 2,
       "number": 3,
+      "price": 100,
       "grip": [
         16,
         44
@@ -24619,6 +24727,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 3,
       "number": 4,
+      "price": 100,
       "grip": [
         16,
         45
@@ -24636,6 +24745,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 4,
       "number": 5,
+      "price": 100,
       "grip": [
         16,
         44
@@ -24653,6 +24763,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 5,
       "number": 6,
+      "price": 100,
       "grip": [
         16,
         44
@@ -24670,6 +24781,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 6,
       "number": 7,
+      "price": 100,
       "grip": [
         16,
         44
@@ -24687,6 +24799,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 7,
       "number": 8,
+      "price": 100,
       "grip": [
         16,
         42
@@ -24704,6 +24817,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 8,
       "number": 9,
+      "price": 100,
       "grip": [
         16,
         46
@@ -24721,6 +24835,7 @@
       "sheet": "sprites/weapons/melee weapons/two_polearm.png",
       "slot": 9,
       "number": 10,
+      "price": 100,
       "grip": [
         16,
         44
@@ -24738,6 +24853,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         46
@@ -24755,6 +24871,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         46
@@ -24772,6 +24889,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 2,
       "number": 3,
+      "price": 100,
       "grip": [
         16,
         45
@@ -24789,6 +24907,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 3,
       "number": 4,
+      "price": 100,
       "grip": [
         16,
         45
@@ -24806,6 +24925,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 4,
       "number": 5,
+      "price": 100,
       "grip": [
         16,
         41
@@ -24823,6 +24943,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 5,
       "number": 6,
+      "price": 100,
       "grip": [
         16,
         41
@@ -24840,6 +24961,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 6,
       "number": 7,
+      "price": 100,
       "grip": [
         16,
         45
@@ -24857,6 +24979,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 7,
       "number": 8,
+      "price": 100,
       "grip": [
         16,
         46
@@ -24874,6 +24997,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 8,
       "number": 9,
+      "price": 100,
       "grip": [
         16,
         44
@@ -24891,6 +25015,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 9,
       "number": 10,
+      "price": 100,
       "grip": [
         16,
         40
@@ -24908,6 +25033,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 10,
       "number": 11,
+      "price": 100,
       "grip": [
         16,
         45
@@ -24925,6 +25051,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 11,
       "number": 12,
+      "price": 100,
       "grip": [
         16,
         41
@@ -24942,6 +25069,7 @@
       "sheet": "sprites/weapons/melee weapons/two_spear.png",
       "slot": 12,
       "number": 13,
+      "price": 100,
       "grip": [
         16,
         43
@@ -24959,6 +25087,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         39
@@ -24976,6 +25105,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         40
@@ -24993,6 +25123,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 2,
       "number": 3,
+      "price": 100,
       "grip": [
         16,
         41
@@ -25010,6 +25141,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 3,
       "number": 4,
+      "price": 100,
       "grip": [
         16,
         40
@@ -25027,6 +25159,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 4,
       "number": 5,
+      "price": 100,
       "grip": [
         16,
         41
@@ -25044,6 +25177,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 5,
       "number": 6,
+      "price": 100,
       "grip": [
         16,
         40
@@ -25061,6 +25195,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 6,
       "number": 7,
+      "price": 100,
       "grip": [
         16,
         41
@@ -25078,6 +25213,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 7,
       "number": 8,
+      "price": 100,
       "grip": [
         16,
         41
@@ -25095,6 +25231,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 8,
       "number": 9,
+      "price": 100,
       "grip": [
         16,
         40
@@ -25112,6 +25249,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 9,
       "number": 10,
+      "price": 100,
       "grip": [
         16,
         41
@@ -25129,6 +25267,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 10,
       "number": 11,
+      "price": 100,
       "grip": [
         18,
         38
@@ -25146,6 +25285,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 11,
       "number": 12,
+      "price": 100,
       "grip": [
         16,
         39
@@ -25163,6 +25303,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 12,
       "number": 13,
+      "price": 100,
       "grip": [
         16,
         41
@@ -25180,6 +25321,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 13,
       "number": 14,
+      "price": 100,
       "grip": [
         16,
         42
@@ -25197,6 +25339,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 14,
       "number": 15,
+      "price": 100,
       "grip": [
         16,
         42
@@ -25214,6 +25357,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 15,
       "number": 16,
+      "price": 100,
       "grip": [
         16,
         41
@@ -25231,6 +25375,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 16,
       "number": 17,
+      "price": 100,
       "grip": [
         16,
         41
@@ -25248,6 +25393,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 17,
       "number": 18,
+      "price": 100,
       "grip": [
         16,
         42
@@ -25265,6 +25411,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 18,
       "number": 19,
+      "price": 100,
       "grip": [
         16,
         43
@@ -25282,6 +25429,7 @@
       "sheet": "sprites/weapons/melee weapons/two_sword.png",
       "slot": 19,
       "number": 20,
+      "price": 100,
       "grip": [
         17,
         41
@@ -25299,6 +25447,7 @@
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         15,
         16
@@ -25316,6 +25465,7 @@
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         15,
         16
@@ -25333,6 +25483,7 @@
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 2,
       "number": 3,
+      "price": 100,
       "grip": [
         16,
         16
@@ -25350,6 +25501,7 @@
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 3,
       "number": 4,
+      "price": 100,
       "grip": [
         15,
         16
@@ -25367,6 +25519,7 @@
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 4,
       "number": 5,
+      "price": 100,
       "grip": [
         15,
         16
@@ -25384,6 +25537,7 @@
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 5,
       "number": 6,
+      "price": 100,
       "grip": [
         15,
         16
@@ -25401,6 +25555,7 @@
       "sheet": "sprites/weapons/ranged weapons/bow.png",
       "slot": 6,
       "number": 7,
+      "price": 100,
       "grip": [
         15,
         16
@@ -25418,6 +25573,7 @@
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 0,
       "number": 1,
+      "price": 100,
       "grip": [
         16,
         16
@@ -25433,6 +25589,7 @@
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 1,
       "number": 2,
+      "price": 100,
       "grip": [
         16,
         16
@@ -25448,6 +25605,7 @@
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 2,
       "number": 3,
+      "price": 100,
       "grip": [
         16,
         16
@@ -25463,6 +25621,7 @@
       "sheet": "sprites/weapons/ranged weapons/crossbow.png",
       "slot": 3,
       "number": 4,
+      "price": 100,
       "grip": [
         15,
         16
