@@ -1,5 +1,7 @@
 extends ColorRect
 ## Screen-space inventory. Layout uses native pixels and scales down on small viewports.
+signal trade_requested(slot: ItemSlot)
+
 class ItemIcon extends TextureRect:
 	func _ready() -> void:
 		expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -15,10 +17,28 @@ class ItemIcon extends TextureRect:
 
 class ItemSlot extends Panel:
 	var item: Dictionary = {}
+	var quantity := 0
+	var count_text: Label
 
 const EQUIPMENT_SIZE := Vector2(64, 64)
 const WEAPON_ICON_SCALE := 1.4
 var item_textures: Dictionary = {}
+const GOODS_ART := preload("res://assets/world/trade_icons.png")
+const GRID_SIDE := 8
+const STARTING_STOCK := 10
+
+var goods_by_id: Dictionary = {}
+var city_stocks: Dictionary = {}
+var market_city := ""
+var market_grid := GridContainer.new()
+var market_section: PanelContainer
+var people_section: PanelContainer
+var middle := VBoxContainer.new()
+var window_title := Label.new()
+var bag_title := Label.new()
+var trade_hint := Label.new()
+var quantity_text := Label.new()
+var quantity_rule := HSeparator.new()
 var sheet := PanelContainer.new()
 var slot_style := GameUITheme.paper_style(GameUITheme.IVORY, GameUITheme.BUTTON_BORDER, 5)
 var section_style := GameUITheme.panel_style(10)
@@ -41,9 +61,11 @@ func setup(appearance: Dictionary, hero_hp := BattleUnit.HERO_HP) -> void:
 	var header := Control.new()
 	header.custom_minimum_size.y = 44
 	content.add_child(header)
-	var title := caption("인벤토리", 26)
-	header.add_child(title)
-	title.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	window_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	window_title.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	window_title.add_theme_font_size_override("font_size", 26)
+	header.add_child(window_title)
+	window_title.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var close := Button.new()
 	close.text = "닫기"
 	close.focus_mode = Control.FOCUS_NONE
@@ -57,7 +79,7 @@ func setup(appearance: Dictionary, hero_hp := BattleUnit.HERO_HP) -> void:
 	content.add_child(columns)
 
 	var people := VBoxContainer.new()
-	section(columns, people)
+	people_section = section(columns, people)
 	var card := PanelContainer.new()
 	card.custom_minimum_size = Vector2(60, 60)
 	card.add_theme_stylebox_override("panel", slot_style)
@@ -69,7 +91,6 @@ func setup(appearance: Dictionary, hero_hp := BattleUnit.HERO_HP) -> void:
 	var closeup := Rect2i(face_center - Vector2i(12, 12), Vector2i(25, 25))
 	card.add_child(portrait_icon(avatar.get_region(closeup)))
 
-	var middle := VBoxContainer.new()
 	middle.add_theme_constant_override("separation", 10)
 	columns.add_child(middle)
 	var gear := GridContainer.new()
@@ -83,6 +104,7 @@ func setup(appearance: Dictionary, hero_hp := BattleUnit.HERO_HP) -> void:
 		if label == "무기1": item = primary
 		if label == "무기2": item = secondary
 		cell.item = item
+		cell.quantity = 0 if item.is_empty() else 1
 		var contents: Control
 		if item.is_empty():
 			var empty_label := caption(label, 15)
@@ -105,18 +127,47 @@ func setup(appearance: Dictionary, hero_hp := BattleUnit.HERO_HP) -> void:
 		stat.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		stats.add_child(stat)
 
-	slot_grid.columns = 8
-	slot_grid.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
-	section(columns, slot_grid)
-	for index in range(64):
-		var slot := add_item_slot(slot_grid)
-		var item_icon := ItemIcon.new()
-		slot.add_child(item_icon)
-		item_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var stock := VBoxContainer.new()
+	market_section = section(columns, stock)
+	stock.add_child(caption("시장 재고", 18))
+	build_grid(stock, market_grid)
+	var bag := VBoxContainer.new()
+	section(columns, bag)
+	bag_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	bag.add_child(bag_title)
+	build_grid(bag, slot_grid)
+	trade_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content.add_child(trade_hint)
+	set_market_mode("")
 	build_item_popup()
 	visibility_changed.connect(clear_hover)
 	resized.connect(layout_sheet)
 	hide()
+
+func build_grid(parent: Control, grid: GridContainer) -> void:
+	grid.columns = GRID_SIDE
+	grid.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	parent.add_child(grid)
+	for index in GRID_SIDE * GRID_SIDE:
+		var slot := add_item_slot(grid)
+		var icon := ItemIcon.new()
+		slot.add_child(icon)
+		icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		slot.count_text = caption("", 16)
+		slot.count_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		slot.count_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		slot.count_text.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+		slot.count_text.add_theme_color_override("font_color", GameUITheme.IVORY)
+		slot.count_text.add_theme_color_override("font_outline_color", GameUITheme.INK)
+		slot.count_text.add_theme_constant_override("outline_size", 4)
+		slot.add_child(slot.count_text)
+		slot.count_text.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		slot.count_text.offset_right = -6
+		slot.count_text.offset_bottom = -4
+		slot.gui_input.connect(func(event: InputEvent):
+			if not market_city.is_empty() and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and not slot.item.is_empty():
+				slot.accept_event()
+				trade_requested.emit(slot))
 
 func add_item_slot(grid: GridContainer) -> ItemSlot:
 	var slot := ItemSlot.new()
@@ -149,6 +200,15 @@ func build_item_popup() -> void:
 	line.thickness = 1
 	divider.add_theme_stylebox_override("separator", line)
 	content.add_child(divider)
+	var space := Control.new()
+	space.custom_minimum_size.y = 30
+	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(space)
+	quantity_rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	quantity_rule.add_theme_stylebox_override("separator", line)
+	content.add_child(quantity_rule)
+	quantity_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(quantity_text)
 	item_popup.hide()
 
 func clear_hover() -> void:
@@ -160,8 +220,17 @@ func update_item_popup() -> void:
 		item_popup.hide()
 		return
 	var item := hovered_slot.item
-	var type_name: String = CharacterArt.TYPE_LABELS[item.family]
-	item_title.text = "%s%d" % [type_name.replace(" ", ""), int(item.number)]
+	if item.has("name"):
+		item_title.text = item.name
+	else:
+		var type_name: String = CharacterArt.TYPE_LABELS.get(item.get("family", ""), "장비")
+		item_title.text = "%s%d" % [type_name.replace(" ", ""), int(item.get("number", 1))]
+	quantity_text.visible = is_stackable(item)
+	quantity_rule.visible = quantity_text.visible
+	quantity_text.text = "수량 : %d" % hovered_slot.quantity
+	if not market_city.is_empty() and item.has("price"):
+		var verb := "구매" if hovered_slot.get_parent() == market_grid else "판매"
+		trade_hint.text = "%s 1개 %s · %d 크라운" % [item_title.text, verb, int(item.price)]
 	item_popup.size = item_popup.get_combined_minimum_size()
 	item_popup.scale = sheet.scale
 	var bounds := hovered_slot.get_global_rect()
@@ -174,11 +243,29 @@ func update_item_popup() -> void:
 	item_popup.show()
 
 # The bag and equipment slots share the same catalog art. Cache only visited items.
-func set_slot_item(index: int, item: Dictionary) -> void:
-	set_slot_texture(index, null if item.is_empty() else inventory_item_texture(item), item)
+static func is_stackable(item: Dictionary) -> bool:
+	if item.is_empty(): return false
+	if item.get("family", "") == "arrow": return true
+	return item.has("image") or item.get("stackable", false)
+
+func set_slot_item(index: int, item: Dictionary, count := 1) -> void:
+	if index < 0 or index >= slot_grid.get_child_count(): return
+	fill_slot(slot_grid.get_child(index), item, count)
+
+func fill_slot(slot: ItemSlot, item: Dictionary, count: int) -> void:
+	var occupied := not item.is_empty() and count > 0
+	var texture: Texture2D = inventory_item_texture(item) if occupied else null
+	write_slot(slot, texture, item if occupied else {}, count)
 
 func inventory_item_texture(item: Dictionary) -> Texture2D:
 	if item_textures.has(item.id): return item_textures[item.id]
+	if item.has("image"):
+		var atlas := AtlasTexture.new()
+		atlas.atlas = GOODS_ART
+		var index := int(item.slot)
+		atlas.region = Rect2((index % 8) * 32, floori(index / 8.0) * 32, 32, 32)
+		item_textures[item.id] = atlas
+		return atlas
 	var art := CharacterArt.part_image(item.sheet, item.slot)
 	var shield: bool = item.family == "one_shield"
 	if shield or CharacterArt.is_primary_melee(item.family) or item.family in ["bow", "crossbow"]:
@@ -205,16 +292,98 @@ func weapon_icon_image(source: Image, angle: float) -> Image:
 
 func set_slot_texture(index: int, texture: Texture2D, item: Dictionary = {}) -> void:
 	if index < 0 or index >= slot_grid.get_child_count(): return
-	var slot: ItemSlot = slot_grid.get_child(index)
+	write_slot(slot_grid.get_child(index), texture, item, 1)
+
+func write_slot(slot: ItemSlot, texture: Texture2D, item: Dictionary, count: int) -> void:
 	slot.item = item
+	if item.is_empty():
+		slot.quantity = 0
+	elif is_stackable(item):
+		slot.quantity = count
+	else:
+		slot.quantity = 1
+	slot.count_text.text = str(slot.quantity) if is_stackable(item) else ""
 	var view: ItemIcon = slot.get_child(0)
 	view.texture = texture
 	view.update_fit()
 	if slot == hovered_slot: update_item_popup()
 
+func set_market_mode(city_id: String) -> void:
+	market_city = city_id
+	var trading := not city_id.is_empty()
+	market_section.visible = trading
+	bag_title.visible = trading
+	trade_hint.visible = trading
+	people_section.visible = not trading
+	middle.visible = not trading
+	clear_hover()
+
 func open() -> void:
+	set_market_mode("")
+	window_title.text = "인벤토리"
 	show()
 	layout_sheet()
+
+func open_market(city: Dictionary, crowns: int) -> void:
+	set_market_mode(city.id)
+	window_title.text = "%s 시장" % city.name
+	trade_hint.text = "아이템을 클릭하면 1개씩 거래합니다"
+	update_balance(crowns)
+	if not city_stocks.has(city.id):
+		var stock := {}
+		for id in city.products:
+			stock[stock.size()] = {"item": goods_by_id[int(id)], "count": STARTING_STOCK}
+		city_stocks[city.id] = stock
+	restore_slots(market_grid, city_stocks[city.id])
+	show()
+	layout_sheet()
+
+func update_balance(crowns: int) -> void:
+	bag_title.text = "소지품 · %d 크라운" % crowns
+
+func snapshot(grid: GridContainer) -> Dictionary:
+	var entries := {}
+	for cell: ItemSlot in grid.get_children():
+		if not cell.item.is_empty():
+			entries[cell.get_index()] = {"item": cell.item, "count": cell.quantity}
+	return entries
+
+func restore_slots(grid: GridContainer, entries: Dictionary) -> void:
+	for cell: ItemSlot in grid.get_children():
+		var entry: Dictionary = entries.get(cell.get_index(), {})
+		if entry.is_empty():
+			fill_slot(cell, {}, 0)
+		else:
+			fill_slot(cell, entry.item, int(entry.count))
+
+func trade_one(source: ItemSlot, crowns: int) -> int:
+	if not is_visible_in_tree() or market_city.is_empty() or source.item.is_empty(): return 0
+	var buying := source.get_parent() == market_grid
+	var target_grid := slot_grid if buying else market_grid
+	if not source.item.has("price"):
+		trade_hint.text = "이 품목은 거래할 수 없습니다"
+		return 0
+	var price := int(source.item.price)
+	if buying and crowns < price:
+		trade_hint.text = "크라운이 부족합니다"
+		return 0
+	var destination: ItemSlot
+	for cell: ItemSlot in target_grid.get_children():
+		if is_stackable(source.item) and cell.item.get("id") == source.item.id:
+			destination = cell
+			break
+		if destination == null and cell.item.is_empty(): destination = cell
+	if destination == null:
+		trade_hint.text = "빈 슬롯이 없습니다"
+		return 0
+	var name_text: String = source.item.name
+	fill_slot(destination, source.item, destination.quantity + 1)
+	fill_slot(source, source.item, source.quantity - 1)
+	city_stocks[market_city] = snapshot(market_grid)
+	var change := -price if buying else price
+	update_balance(crowns + change)
+	trade_hint.text = "%s 1개 %s · %d 크라운" % [name_text, "구매" if buying else "판매", price]
+	return change
 
 func layout_sheet() -> void:
 	sheet.size = sheet.get_combined_minimum_size()
@@ -231,11 +400,12 @@ func caption(value: String, font_size: int) -> Label:
 	label.add_theme_font_size_override("font_size", font_size)
 	return label
 
-func section(parent: Control, contents: Control) -> void:
+func section(parent: Control, contents: Control) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.add_theme_stylebox_override("panel", section_style)
 	parent.add_child(panel)
 	panel.add_child(contents)
+	return panel
 
 func portrait_icon(image: Image) -> TextureRect:
 	var view := TextureRect.new()

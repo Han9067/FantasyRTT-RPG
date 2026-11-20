@@ -1,6 +1,6 @@
 # Project conventions
 
-- Current Web release: 0.0.60 (continues the user-requested reset at 0.0.1). Continue from this reset version; increment only the patch once per delivered game update. Never change the first two components unless asked.
+- Current Web release: 0.0.61 (continues the user-requested reset at 0.0.1). Continue from this reset version; increment only the patch once per delivered game update. Never change the first two components unless asked.
 - Web is the default delivery target. Run tools/build-web.sh, verify the browser flow, commit validated source on main and push to origin/main. Publish builds/web to the existing gh-pages branch and verify its GitHub Pages deployment at https://han9067.github.io/FantasyRTT-RPG/. Share the cache-busting test_url from builds/web/build-info.json (?v=version-build timestamp). Build assets must use that unique build ID even when a version is reused. Keep existing downloadable review documents. Do not generate or commit Windows test executables unless explicitly requested; the Windows preset is optional.
 - The visual source of truth is the purchased user-supplied MedievalFantasyCharacters.zip. Read docs/character-design.md before changing characters.
 - Preserve loose source PNGs in art/medieval (.gdignore). Build assets/medieval atlases/catalog with tools/build_medieval_atlas.py; do not hand-edit generated images. Runtime uses only needed parts. Preserve original RGBA; no AI redraws, recolouring or resampling.

@@ -16,6 +16,7 @@ var blocked_cursor := false
 var pointer_inside := true
 var hud_controls: Array[Control] = []
 var city_popup: PanelContainer
+var city_lord := Label.new()
 var city_title: Label
 var hovered_city: Dictionary = {}
 var pending_city: Dictionary = {}
@@ -60,6 +61,12 @@ func _ready() -> void:
 		tile.position = Vector2(chunk.position[0],chunk.position[1])
 		terrain.add_child(tile)
 	cities = layout.cities
+	var catalog: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://assets/world/trade_catalog.json"))
+	for city: Dictionary in cities:
+		city.merge(catalog.cities[city.id], true)
+	for goods: Dictionary in catalog.goods:
+		goods.id = int(goods.id)
+		inventory.goods_by_id[goods.id] = goods
 	create_city_popup()
 	party_marker = PartyMarker.new()
 	party_marker.name = "PartyMarker"
@@ -130,6 +137,7 @@ func create_world_menu() -> void:
 			action.pressed.connect(open_inventory)
 	city_overlay.add_child(inventory)
 	inventory.setup(character_appearance, hero_hp)
+	inventory.trade_requested.connect(func(slot): crowns += inventory.trade_one(slot, crowns))
 
 func add_status_value(row: HBoxContainer, label: Label, texture: Texture2D, title: String) -> void:
 	var group := HBoxContainer.new()
@@ -191,6 +199,12 @@ func layout_world_hud() -> void:
 		if control.position.x < (margin + 400) * factor:
 			city_top = maxf(city_top, control.get_global_rect().end.y + gap * factor)
 	layout_city_panel(Vector2(margin * factor, city_top), viewport.y - margin * factor - city_top, factor)
+
+func open_market() -> void:
+	if current_city.is_empty(): return
+	pan_keys.clear()
+	city_popup.hide()
+	inventory.open_market(current_city, crowns)
 
 func open_inventory() -> void:
 	pan_keys.clear()
@@ -396,12 +410,10 @@ func create_city_popup() -> void:
 	line.thickness = 1
 	rule.add_theme_stylebox_override("separator",line)
 	content.add_child(rule)
-	var lord := Label.new()
-	lord.name = "Lord"
-	lord.text = "영주 : 없음"
-	lord.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	lord.add_theme_color_override("font_color",GameUITheme.INK)
-	content.add_child(lord)
+	city_lord.name = "Lord"
+	city_lord.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	city_lord.add_theme_color_override("font_color",GameUITheme.INK)
+	content.add_child(city_lord)
 	city_popup.hide()
 
 func update_city_hover(screen_point: Vector2, over_ui := false) -> void:
@@ -413,6 +425,7 @@ func update_city_hover(screen_point: Vector2, over_ui := false) -> void:
 		city_popup.hide()
 		return
 	city_title.text = display_city_name(hovered_city)
+	city_lord.text = "영주 : %s" % hovered_city.lord
 	city_popup.size = city_popup.get_combined_minimum_size()
 	var position := screen_point+Vector2(18,18)
 	if position.x+city_popup.size.x > viewport_size.x-8: position.x = screen_point.x-city_popup.size.x-18
@@ -509,7 +522,7 @@ func create_city_panel() -> void:
 		content.add_child(action)
 		city_actions.append(action)
 		if caption == "나가기": action.pressed.connect(exit_city)
-	# The first three actions remain placeholders; only Exit has a callback.
+		if caption == "시장": action.pressed.connect(open_market)
 	city_panel.hide()
 
 func layout_city_panel(origin: Vector2, height: float, hud_scale: float) -> void:

@@ -1,0 +1,449 @@
+{
+  "cities": {
+    "city_01": {
+      "name": "가",
+      "lord": "러셀",
+      "products": [
+        5023,
+        5026,
+        5024,
+        5025,
+        5022
+      ]
+    },
+    "city_02": {
+      "name": "나",
+      "lord": "에이넬",
+      "products": [
+        5001,
+        5003,
+        5005,
+        5009,
+        5010,
+        5029,
+        5013,
+        5101
+      ]
+    },
+    "city_03": {
+      "name": "다",
+      "lord": "니콜라스",
+      "products": [
+        5001,
+        5002,
+        5006,
+        5034,
+        5035,
+        5105,
+        5101
+      ]
+    },
+    "city_04": {
+      "name": "라",
+      "lord": "윌러",
+      "products": [
+        5016,
+        5103,
+        5102,
+        5020,
+        5031,
+        5014,
+        5019
+      ]
+    }
+  },
+  "goods": [
+    {
+      "id": 5001,
+      "name": "밀",
+      "image": "wheat",
+      "price": 5,
+      "slot": 0
+    },
+    {
+      "id": 5002,
+      "name": "보리",
+      "image": "barley",
+      "price": 4,
+      "slot": 1
+    },
+    {
+      "id": 5003,
+      "name": "호밀",
+      "image": "rye",
+      "price": 4,
+      "slot": 2
+    },
+    {
+      "id": 5004,
+      "name": "쌀",
+      "image": "rice",
+      "price": 7,
+      "slot": 3
+    },
+    {
+      "id": 5005,
+      "name": "사과",
+      "image": "apple",
+      "price": 6,
+      "slot": 4
+    },
+    {
+      "id": 5006,
+      "name": "포도",
+      "image": "grapes",
+      "price": 9,
+      "slot": 5
+    },
+    {
+      "id": 5007,
+      "name": "올리브",
+      "image": "olives",
+      "price": 10,
+      "slot": 6
+    },
+    {
+      "id": 5008,
+      "name": "감자",
+      "image": "potato",
+      "price": 3,
+      "slot": 7
+    },
+    {
+      "id": 5009,
+      "name": "양배추",
+      "image": "cabbage",
+      "price": 4,
+      "slot": 8
+    },
+    {
+      "id": 5010,
+      "name": "양파",
+      "image": "onion",
+      "price": 3,
+      "slot": 9
+    },
+    {
+      "id": 5011,
+      "name": "당근",
+      "image": "carrot",
+      "price": 4,
+      "slot": 10
+    },
+    {
+      "id": 5012,
+      "name": "돼지고기",
+      "image": "pork",
+      "price": 16,
+      "slot": 11
+    },
+    {
+      "id": 5013,
+      "name": "닭고기",
+      "image": "chicken",
+      "price": 12,
+      "slot": 12
+    },
+    {
+      "id": 5014,
+      "name": "소고기",
+      "image": "beef",
+      "price": 22,
+      "slot": 13
+    },
+    {
+      "id": 5015,
+      "name": "생선",
+      "image": "fish",
+      "price": 10,
+      "slot": 14
+    },
+    {
+      "id": 5016,
+      "name": "우유",
+      "image": "milk",
+      "price": 7,
+      "slot": 15
+    },
+    {
+      "id": 5017,
+      "name": "물",
+      "image": "water",
+      "price": 1,
+      "slot": 16
+    },
+    {
+      "id": 5018,
+      "name": "소금",
+      "image": "salt",
+      "price": 8,
+      "slot": 17
+    },
+    {
+      "id": 5019,
+      "name": "아마",
+      "image": "flax",
+      "price": 10,
+      "slot": 18
+    },
+    {
+      "id": 5020,
+      "name": "양모",
+      "image": "wool",
+      "price": 14,
+      "slot": 19
+    },
+    {
+      "id": 5021,
+      "name": "생가죽",
+      "image": "rawhide",
+      "price": 15,
+      "slot": 20
+    },
+    {
+      "id": 5022,
+      "name": "점토",
+      "image": "clay",
+      "price": 4,
+      "slot": 21
+    },
+    {
+      "id": 5023,
+      "name": "철광석",
+      "image": "iron_ore",
+      "price": 18,
+      "slot": 22
+    },
+    {
+      "id": 5024,
+      "name": "은광석",
+      "image": "silver_ore",
+      "price": 55,
+      "slot": 23
+    },
+    {
+      "id": 5025,
+      "name": "금광석",
+      "image": "gold_ore",
+      "price": 110,
+      "slot": 24
+    },
+    {
+      "id": 5026,
+      "name": "석탄",
+      "image": "coal",
+      "price": 9,
+      "slot": 25
+    },
+    {
+      "id": 5027,
+      "name": "꿀",
+      "image": "honey",
+      "price": 20,
+      "slot": 26
+    },
+    {
+      "id": 5028,
+      "name": "콩",
+      "image": "bean",
+      "price": 5,
+      "slot": 27
+    },
+    {
+      "id": 5029,
+      "name": "계란",
+      "image": "egg",
+      "price": 3,
+      "slot": 28
+    },
+    {
+      "id": 5030,
+      "name": "체리",
+      "image": "cherry",
+      "price": 10,
+      "slot": 29
+    },
+    {
+      "id": 5031,
+      "name": "양고기",
+      "image": "lamb",
+      "price": 19,
+      "slot": 30
+    },
+    {
+      "id": 5032,
+      "name": "순무",
+      "image": "turnip",
+      "price": 3,
+      "slot": 31
+    },
+    {
+      "id": 5033,
+      "name": "사프란",
+      "image": "saffron",
+      "price": 85,
+      "slot": 32
+    },
+    {
+      "id": 5034,
+      "name": "라즈베리",
+      "image": "raspberry",
+      "price": 11,
+      "slot": 33
+    },
+    {
+      "id": 5035,
+      "name": "블루베리",
+      "image": "blueberry",
+      "price": 12,
+      "slot": 34
+    },
+    {
+      "id": 5101,
+      "name": "빵",
+      "image": "bread",
+      "price": 9,
+      "slot": 35
+    },
+    {
+      "id": 5102,
+      "name": "버터",
+      "image": "butter",
+      "price": 18,
+      "slot": 36
+    },
+    {
+      "id": 5103,
+      "name": "치즈",
+      "image": "cheese",
+      "price": 23,
+      "slot": 37
+    },
+    {
+      "id": 5104,
+      "name": "맥주",
+      "image": "beer",
+      "price": 14,
+      "slot": 38
+    },
+    {
+      "id": 5105,
+      "name": "포도주",
+      "image": "grape_wine",
+      "price": 32,
+      "slot": 39
+    },
+    {
+      "id": 5106,
+      "name": "사과주",
+      "image": "apple_cider",
+      "price": 21,
+      "slot": 40
+    },
+    {
+      "id": 5107,
+      "name": "도자기",
+      "image": "pottery",
+      "price": 18,
+      "slot": 41
+    },
+    {
+      "id": 5108,
+      "name": "목재",
+      "image": "timber",
+      "price": 12,
+      "slot": 42
+    },
+    {
+      "id": 5109,
+      "name": "철",
+      "image": "iron",
+      "price": 36,
+      "slot": 43
+    },
+    {
+      "id": 5110,
+      "name": "강철",
+      "image": "steel",
+      "price": 58,
+      "slot": 44
+    },
+    {
+      "id": 5111,
+      "name": "은",
+      "image": "silver",
+      "price": 115,
+      "slot": 45
+    },
+    {
+      "id": 5112,
+      "name": "금",
+      "image": "gold",
+      "price": 240,
+      "slot": 46
+    },
+    {
+      "id": 5113,
+      "name": "가죽",
+      "image": "leather",
+      "price": 30,
+      "slot": 47
+    },
+    {
+      "id": 5114,
+      "name": "모직물",
+      "image": "wool_cloth",
+      "price": 35,
+      "slot": 48
+    },
+    {
+      "id": 5115,
+      "name": "아마포",
+      "image": "linen",
+      "price": 28,
+      "slot": 49
+    },
+    {
+      "id": 5116,
+      "name": "비단",
+      "image": "silk",
+      "price": 95,
+      "slot": 50
+    },
+    {
+      "id": 5117,
+      "name": "올리브 오일",
+      "image": "olive_oil",
+      "price": 29,
+      "slot": 51
+    },
+    {
+      "id": 5118,
+      "name": "콩기름",
+      "image": "soybean_oil",
+      "price": 17,
+      "slot": 52
+    },
+    {
+      "id": 5119,
+      "name": "훈제 돼지고기",
+      "image": "smoked_pork",
+      "price": 32,
+      "slot": 53
+    },
+    {
+      "id": 5120,
+      "name": "훈제 닭고기",
+      "image": "smoked_chicken",
+      "price": 26,
+      "slot": 54
+    },
+    {
+      "id": 5121,
+      "name": "훈제 소고기",
+      "image": "smoked_beef",
+      "price": 42,
+      "slot": 55
+    }
+  ]
+}

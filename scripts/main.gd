@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.60")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.61")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -471,6 +471,8 @@ func show_world() -> void:
 	add_child(world)
 	move_child(world,0)
 	if not travel_state.is_empty():
+		world.inventory.city_stocks = travel_state.get("markets", {})
+		world.inventory.restore_slots(world.inventory.slot_grid, travel_state.get("bag", {}))
 		world.restore_travel(travel_state.position,travel_state.camera,travel_state.zoom,travel_state.get("city_id",""))
 	battle_button = button("전투맵 이동", enter_battle_from_world)
 	var overview := preload("res://scripts/world_overview.gd").new()
@@ -506,7 +508,8 @@ func create_pause_notice() -> Label:
 func enter_battle_from_world() -> void:
 	if is_instance_valid(world):
 		travel_state = {"position":world.unit_position,"camera":world.camera.position,"zoom":world.zoom_level,"city_id":world.current_city.get("id",""),
-			"elapsed":world.clock.elapsed, "speed":world.clock.speed, "crowns":world.crowns}
+			"elapsed":world.clock.elapsed, "speed":world.clock.speed, "crowns":world.crowns,
+			"markets":world.inventory.city_stocks, "bag":world.inventory.snapshot(world.inventory.slot_grid)}
 	show_battle()
 
 

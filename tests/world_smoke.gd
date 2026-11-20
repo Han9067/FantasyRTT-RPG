@@ -129,7 +129,7 @@ func run() -> void:
 		assert(Rect2(Vector2.ZERO,map.map_size).encloses(Rect2(Vector2(city.position[0]-48,city.position[1]-48),Vector2(96,96))))
 	for i in range(map.cities.size()):
 		var city: Dictionary = map.cities[i]
-		assert(city.name == str(i+1), "City names must be consecutive numbers")
+		assert(city.name == ["가","나","다","라"][i] and city.lord == ["러셀","에이넬","니콜라스","윌러"][i])
 		assert(Vector2(city.position[0],city.position[1]) == Vector2(city.tile_position[0]*32+48,city.tile_position[1]*32+48))
 		assert(not map.has_node("CityLabel_"+city.name))
 	# Hover follows camera/zoom and leaves the newly cleared bottom area playable.
@@ -141,7 +141,7 @@ func run() -> void:
 			map.clamp_camera()
 			var city_point := map.world_to_screen(Vector2(city.position[0],city.position[1]))
 			map.update_city_hover(city_point)
-			assert(map.city_popup.visible and map.city_title.text == "도시 "+city.name)
+			assert(map.city_popup.visible and map.city_title.text == city.name and map.city_lord.text == "영주 : "+city.lord)
 			assert(Rect2(Vector2.ZERO,map.viewport_size).encloses(map.city_popup.get_global_rect()))
 			assert(map.city_popup.mouse_filter == Control.MOUSE_FILTER_IGNORE)
 			map.update_city_hover(city_point,true)

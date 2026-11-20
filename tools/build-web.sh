@@ -7,6 +7,7 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/workspace/.godot-runtime/cache}"
 mkdir -p builds
 touch builds/.gdignore
 python tools/build_medieval_atlas.py
+python tools/build_trade_icons.py
 python tools/build_world_map.py
 python tests/world_plan_check.py
 godot --headless --editor --import --quit
