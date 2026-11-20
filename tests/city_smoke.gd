@@ -156,6 +156,7 @@ func run() -> void:
 		assert(map.current_city == current and map.unit_position == original and not map.party_marker.visible)
 	assert(map.inventory.visible and map.inventory.market_city == current.id)
 	var inv = map.inventory
+	assert(inv.window_title.text == "시장" and map.city_title.horizontal_alignment == HORIZONTAL_ALIGNMENT_LEFT)
 	assert(inv.market_grid.columns == 8 and inv.market_grid.get_child_count() == 64)
 	assert(not inv.people_section.visible and not inv.middle.visible)
 	for i in current.products.size():
@@ -164,6 +165,15 @@ func run() -> void:
 	var first = inv.market_grid.get_child(0)
 	var bag_slot = inv.slot_grid.get_child(0)
 	var initial_stock: int = first.quantity
+	var stock: Dictionary = map.economy.markets[current.id].stock
+	var id: int = first.item.id
+	first.mouse_entered.emit()
+	for example in [[250, inv.PRICE_BELOW_BASE], [129, Color.WHITE], [5, inv.PRICE_ABOVE_BASE]]:
+		stock[id] = example[0]
+		inv.refresh_market()
+		assert(inv.price_text.get_theme_color("font_color") == example[1])
+	stock[id] = initial_stock
+	inv.refresh_market()
 	var balance := 300
 	var price := map.economy.quote(current.id, first.item.id, true)
 	var click := InputEventMouseButton.new()

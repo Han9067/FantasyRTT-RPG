@@ -405,7 +405,7 @@ func create_city_popup() -> void:
 	content.add_theme_constant_override("separation",10)
 	city_popup.add_child(content)
 	city_title = Label.new()
-	city_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	city_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	city_title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	city_title.add_theme_color_override("font_color",GameUITheme.INK)
 	content.add_child(city_title)

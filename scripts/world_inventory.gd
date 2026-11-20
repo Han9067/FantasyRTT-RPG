@@ -25,6 +25,8 @@ const WEAPON_ICON_SCALE := 1.4
 var item_textures: Dictionary = {}
 const GOODS_ART := preload("res://assets/world/trade_icons.png")
 const GRID_SIDE := 8
+const PRICE_BELOW_BASE := Color("#4cda76")
+const PRICE_ABOVE_BASE := Color("#ff6860")
 const Economy = preload("res://scripts/campaign_economy.gd")
 
 var goods_by_id: Dictionary = {}
@@ -240,10 +242,21 @@ func update_item_popup() -> void:
 		item_title.text = "%s%d" % [type_name.replace(" ", ""), int(item.get("number", 1))]
 	quantity_text.visible = is_stackable(item)
 	quantity_text.text = "수량 : %d" % hovered_slot.quantity
+	var compare_price := hovered_slot.get_parent() == market_grid and goods_by_id.has(item.id)
+	if not compare_price:
+		price_text.remove_theme_color_override("font_color")
+		price_text.remove_theme_constant_override("outline_size")
 	if not market_city.is_empty() and goods_by_id.has(item.id):
 		var buy_price := economy.quote(market_city, item.id, true)
 		var sell_price := economy.quote(market_city, item.id, false)
-		price_text.text = str(buy_price if hovered_slot.get_parent() == market_grid else sell_price)
+		price_text.text = str(buy_price if compare_price else sell_price)
+		if compare_price:
+			var color := Color.WHITE
+			if buy_price < int(item.price): color = PRICE_BELOW_BASE
+			elif buy_price > int(item.price): color = PRICE_ABOVE_BASE
+			price_text.add_theme_color_override("font_color", color)
+			price_text.add_theme_color_override("font_outline_color", GameUITheme.INK)
+			price_text.add_theme_constant_override("outline_size", 3)
 		trade_hint.text = "%s · 기본 %d · 구매 %d / 판매 %d 크라운" % [
 			item_title.text, int(item.price), buy_price, sell_price]
 	else:
@@ -343,6 +356,7 @@ func open() -> void:
 
 func open_market(city: Dictionary, crowns: int) -> void:
 	set_market_mode(city.id)
+	window_title.text = "시장"
 	trade_hint.text = "아이템을 클릭하면 1개씩 거래합니다"
 	update_balance(crowns)
 	refresh_market()
@@ -351,7 +365,6 @@ func open_market(city: Dictionary, crowns: int) -> void:
 
 func refresh_market() -> void:
 	var market: Dictionary = economy.markets[market_city]
-	window_title.text = "%s 시장" % market.name
 	for i in market_grid.get_child_count():
 		var cell: ItemSlot = market_grid.get_child(i)
 		var id := int(market.order[i]) if i < market.order.size() else -1
