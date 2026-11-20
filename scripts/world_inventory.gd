@@ -38,7 +38,6 @@ var people_section: PanelContainer
 var middle := VBoxContainer.new()
 var window_title := Label.new()
 var bag_title := Label.new()
-var trade_hint := Label.new()
 var quantity_text := Label.new()
 var price_text := Label.new()
 var sheet := PanelContainer.new()
@@ -138,8 +137,6 @@ func setup(appearance: Dictionary, hero_hp := BattleUnit.HERO_HP) -> void:
 	bag_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	bag.add_child(bag_title)
 	build_grid(bag, slot_grid)
-	trade_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	content.add_child(trade_hint)
 	set_market_mode("")
 	build_item_popup()
 	visibility_changed.connect(clear_hover)
@@ -247,18 +244,15 @@ func update_item_popup() -> void:
 		price_text.remove_theme_color_override("font_color")
 		price_text.remove_theme_constant_override("outline_size")
 	if not market_city.is_empty() and goods_by_id.has(item.id):
-		var buy_price := economy.quote(market_city, item.id, true)
-		var sell_price := economy.quote(market_city, item.id, false)
-		price_text.text = str(buy_price if compare_price else sell_price)
+		var price := economy.quote(market_city, item.id, compare_price)
+		price_text.text = str(price)
 		if compare_price:
 			var color := Color.WHITE
-			if buy_price < int(item.price): color = PRICE_BELOW_BASE
-			elif buy_price > int(item.price): color = PRICE_ABOVE_BASE
+			if price < int(item.price): color = PRICE_BELOW_BASE
+			elif price > int(item.price): color = PRICE_ABOVE_BASE
 			price_text.add_theme_color_override("font_color", color)
 			price_text.add_theme_color_override("font_outline_color", GameUITheme.INK)
 			price_text.add_theme_constant_override("outline_size", 3)
-		trade_hint.text = "%s · 기본 %d · 구매 %d / 판매 %d 크라운" % [
-			item_title.text, int(item.price), buy_price, sell_price]
 	else:
 		price_text.text = str(int(item.price)) if item.has("price") else "미정"
 	item_popup.size = item_popup.get_combined_minimum_size()
@@ -343,7 +337,6 @@ func set_market_mode(city_id: String) -> void:
 	var trading := not city_id.is_empty()
 	market_section.visible = trading
 	bag_title.visible = trading
-	trade_hint.visible = trading
 	people_section.visible = not trading
 	middle.visible = not trading
 	clear_hover()
@@ -357,7 +350,6 @@ func open() -> void:
 func open_market(city: Dictionary, crowns: int) -> void:
 	set_market_mode(city.id)
 	window_title.text = "시장"
-	trade_hint.text = "아이템을 클릭하면 1개씩 거래합니다"
 	update_balance(crowns)
 	refresh_market()
 	show()
@@ -373,8 +365,9 @@ func refresh_market() -> void:
 			fill_slot(cell, goods_by_id.get(id, {}), count)
 	if hovered_slot != null: update_item_popup()
 
-func update_balance(crowns: int) -> void:
+func update_balance(crowns: int, notice := "") -> void:
 	bag_title.text = "소지품 · %d 크라운" % crowns
+	if not notice.is_empty(): bag_title.text += " · " + notice
 
 func snapshot(grid: GridContainer) -> Dictionary:
 	var entries := {}
@@ -396,12 +389,12 @@ func trade_one(source: ItemSlot, crowns: int) -> int:
 	var buying := source.get_parent() == market_grid
 	var item := source.item
 	if not goods_by_id.has(item.id):
-		trade_hint.text = "이 품목은 거래할 수 없습니다"
+		update_balance(crowns, "이 품목은 거래할 수 없습니다")
 		return 0
 	var price := economy.quote(market_city, item.id, buying)
 	if buying:
 		if crowns < price:
-			trade_hint.text = "크라운이 부족합니다"
+			update_balance(crowns, "크라운이 부족합니다")
 			return 0
 		if economy.markets[market_city].stock[item.id] <= 0: return 0
 		var destination: ItemSlot
@@ -411,7 +404,7 @@ func trade_one(source: ItemSlot, crowns: int) -> int:
 				break
 			if destination == null and cell.item.is_empty(): destination = cell
 		if destination == null:
-			trade_hint.text = "빈 슬롯이 없습니다"
+			update_balance(crowns, "빈 슬롯이 없습니다")
 			return 0
 		fill_slot(destination, item, destination.quantity + 1)
 	else:
@@ -420,8 +413,6 @@ func trade_one(source: ItemSlot, crowns: int) -> int:
 	refresh_market()
 	var change := -price if buying else price
 	update_balance(crowns + change)
-	if hovered_slot == null or hovered_slot.item.is_empty():
-		trade_hint.text = "%s 1개 %s · %d 크라운" % [item.name, "구매" if buying else "판매", price]
 	return change
 
 func layout_sheet() -> void:
