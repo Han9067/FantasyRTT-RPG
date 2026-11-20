@@ -32,7 +32,7 @@ var crowns := STARTING_CROWNS:
 	set(value):
 		crowns = value
 		if is_node_ready():
-			balance_label.text = "%d 크라운" % crowns
+			balance_label.text = str(crowns)
 			layout_footer()
 var hero_hp := BattleUnit.HERO_HP
 var footer := Panel.new()
@@ -115,7 +115,7 @@ func create_world_menu() -> void:
 	coin.texture = preload("res://assets/ui/silver_crown.png")
 	coin.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
 	balance.add_child(coin)
-	balance_label.text = "%d 크라운" % crowns
+	balance_label.text = str(crowns)
 	balance.add_child(balance_label)
 	layout_footer()
 	get_viewport().size_changed.connect(layout_footer)

@@ -61,7 +61,13 @@ func _ready() -> void:
 		style.bg_color = Color("c4a777") if part == "background" else Color("896125")
 		gauge.add_theme_stylebox_override(part, style)
 	frame.add_child(gauge)
-	day.add_child(label_panel(time_label, 172, 40))
+	var time_row := HBoxContainer.new()
+	time_row.add_theme_constant_override("separation", 4)
+	day.add_child(time_row)
+	var time_title := Label.new()
+	time_title.text = "현재 시간"
+	time_row.add_child(label_panel(time_title, 92, 40, Color("d5b681")))
+	time_row.add_child(label_panel(time_label, 76, 40, GameUITheme.IVORY))
 	layout_clock()
 	set_speed(speed)
 	refresh_time()
@@ -79,10 +85,10 @@ func layout_clock(minimap := Rect2()) -> void:
 			top = minimap.end.y + 8
 	position = Vector2(clampf(roundf((width - DATE_WIDTH) / 2), 0, maxf(0, right - clock_width)), top)
 
-func label_panel(label: Label, width: int, height: int) -> PanelContainer:
+func label_panel(label: Label, width: int, height: int, fill := GameUITheme.PAPER) -> PanelContainer:
 	var panel := PanelContainer.new()
 	panel.custom_minimum_size = Vector2(width, height)
-	panel.add_theme_stylebox_override("panel", GameUITheme.panel_style(5))
+	panel.add_theme_stylebox_override("panel", GameUITheme.paper_style(fill, GameUITheme.BORDER, 5))
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	panel.add_child(label)
@@ -121,4 +127,4 @@ func refresh_time() -> void:
 		date_label.text = "%d년 %d월 %d일" % [date.year, date.month, date.day]
 	shown_hour = hour
 	var hour_24 := hour % 24
-	time_label.text = "현재 시간 | %d %s" % [(hour_24 + 11) % 12 + 1, "AM" if hour_24 < 12 else "PM"]
+	time_label.text = "%d %s" % [(hour_24 + 11) % 12 + 1, "AM" if hour_24 < 12 else "PM"]

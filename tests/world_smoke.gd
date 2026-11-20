@@ -87,13 +87,13 @@ func run() -> void:
 	map.update_sprite()
 	assert(map.crowns == 300 and map.hp_label.text == "HP : 100")
 	assert(map.menu_bar.get_parent() == map.footer and map.menu_bar.get_global_rect().end.x == 1262)
-	assert(map.purse.get_global_rect().get_center().x == 640)
+	assert(absf(map.purse.get_global_rect().get_center().x - 640) <= 0.5 and map.balance_label.text == "300")
 	var clock = map.clock
 	var notice: Label = game.battle_hud.find_child("PauseNotice", true, false)
 	assert(notice.mouse_filter == Control.MOUSE_FILTER_IGNORE and notice.get_parent().layer > map.city_overlay.layer)
 	assert(notice.get_global_rect().get_center().distance_to(Vector2(640,352)) < 1)
 	assert(game.battle_button.get_global_rect().get_center() == Vector2(98,42))
-	assert(clock.date_label.text == "436년 3월 1일" and clock.time_label.text == "현재 시간 | 12 AM")
+	assert(clock.date_label.text == "436년 3월 1일" and clock.time_label.text == "12 AM")
 	assert(clock.date_label.get_global_rect().get_center().x == 640 and clock.gauge.size.y >= 22)
 	assert(not clock.get_global_rect().intersects(game.battle_button.get_global_rect()))
 	assert(game.world_overview.get_global_rect().position.y == 18)
@@ -115,9 +115,9 @@ func run() -> void:
 		assert(is_equal_approx(map.unit_position.distance_to(previous), rate * 0.1 * map.MOVE_SPEED))
 	clock.elapsed = 0.0
 	clock.advance(clock.SECONDS_PER_DAY / 2)
-	assert(clock.time_label.text == "현재 시간 | 12 PM" and is_equal_approx(clock.gauge.ratio, 0.5))
+	assert(clock.time_label.text == "12 PM" and is_equal_approx(clock.gauge.ratio, 0.5))
 	clock.advance(clock.SECONDS_PER_DAY / 2)
-	assert(clock.time_label.text == "현재 시간 | 12 AM" and clock.date_label.text == "436년 3월 2일" and clock.gauge.value == 0)
+	assert(clock.time_label.text == "12 AM" and clock.date_label.text == "436년 3월 2일" and clock.gauge.value == 0)
 	clock.advance(clock.SECONDS_PER_DAY * 30)
 	assert(clock.date_label.text == "436년 4월 1일")
 	clock.set_speed(1)
@@ -323,7 +323,7 @@ func run() -> void:
 	var saved_zoom := map.zoom_level
 	clock.set_speed(0)
 	map.crowns = 217
-	assert(map.balance_label.text == "217 크라운")
+	assert(map.balance_label.text == "217")
 	var saved_elapsed: float = clock.elapsed
 	game.battle_button.pressed.emit()
 	await process_frame
