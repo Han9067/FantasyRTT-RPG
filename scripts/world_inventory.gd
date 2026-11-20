@@ -16,8 +16,6 @@ class ItemIcon extends TextureRect:
 class ItemSlot extends Panel:
 	var item: Dictionary = {}
 
-const INITIAL_FAMILIES := ["one_axe", "one_blunt", "two_sword", "two_axe", "two_blunt",
-	"two_spear", "two_polearm", "bow", "crossbow"]
 const EQUIPMENT_SIZE := Vector2(64, 64)
 const WEAPON_ICON_SCALE := 1.4
 var item_textures: Dictionary = {}
@@ -115,9 +113,6 @@ func setup(appearance: Dictionary) -> void:
 		var item_icon := ItemIcon.new()
 		slot.add_child(item_icon)
 		item_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	for index in INITIAL_FAMILIES.size():
-		var id: String = CharacterArt.primary_items(INITIAL_FAMILIES[index])[0]
-		set_slot_item(index, CharacterArt.data().weapon_items[id])
 	build_item_popup()
 	visibility_changed.connect(clear_hover)
 	resized.connect(layout_sheet)

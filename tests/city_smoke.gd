@@ -48,24 +48,24 @@ func run() -> void:
 	for slot in map.inventory.slot_grid.get_children(): assert(slot.size == Vector2(64, 64))
 	assert(map.inventory.sheet.get_global_rect().get_center().distance_to(Vector2(640, 400)) < 1)
 	assert(not map.can_interact_at(Vector2(640, 400)))
-	var initial_ids := ["one_axe/1", "one_blunt/1", "two_sword/1", "two_axe/1", "two_blunt/1",
-		"two_spear/1", "two_polearm/1", "bow/1", "crossbow_01"]
-	for i in 64:
-		var slot = map.inventory.slot_grid.get_child(i)
+	for slot in map.inventory.slot_grid.get_children():
+		assert(slot.item.is_empty() and slot.get_child(0).texture == null)
 		slot.mouse_entered.emit()
-		if i < initial_ids.size():
-			assert(slot.item.id == initial_ids[i] and slot.get_child(0).texture != null)
-			assert(map.inventory.item_popup.visible and not map.inventory.item_title.text.is_empty())
-			assert(map.inventory.get_global_rect().encloses(map.inventory.item_popup.get_global_rect()))
-		else:
-			assert(slot.item.is_empty() and not map.inventory.item_popup.visible)
-		slot.mouse_exited.emit()
 		assert(not map.inventory.item_popup.visible)
-	for index in [7, 8]:
-		var ranged_slot = map.inventory.slot_grid.get_child(index)
-		var art := CharacterArt.part_image(ranged_slot.item.sheet, ranged_slot.item.slot)
+		slot.mouse_exited.emit()
+	# Exercise populated slots explicitly without giving the player test weapons.
+	for id in ["bow/1", "crossbow_01"]:
+		var item: Dictionary = CharacterArt.data().weapon_items[id]
+		map.inventory.set_slot_item(0, item)
+		var ranged_slot = map.inventory.slot_grid.get_child(0)
+		var art := CharacterArt.part_image(item.sheet, item.slot)
 		var diagonal := map.inventory.weapon_icon_image(art, PI / 4)
 		assert(ranged_slot.get_child(0).texture.get_image().get_data() == diagonal.get_data())
+		ranged_slot.mouse_entered.emit()
+		assert(map.inventory.item_popup.visible and not map.inventory.item_title.text.is_empty())
+		assert(map.inventory.get_global_rect().encloses(map.inventory.item_popup.get_global_rect()))
+		ranged_slot.mouse_exited.emit()
+		assert(not map.inventory.item_popup.visible)
 	var view: TextureRect = map.inventory.slot_grid.get_child(0).get_child(0)
 	for dimensions in [Vector2i(32, 32), Vector2i(32, 64), Vector2i(96, 48)]:
 		var texture := ImageTexture.create_from_image(Image.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8))
