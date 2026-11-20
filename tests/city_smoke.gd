@@ -179,10 +179,10 @@ func run() -> void:
 	var stock: Dictionary = map.economy.markets[current.id].stock
 	var id: int = first.item.id
 	first.mouse_entered.emit()
-	for example in [[250, inv.PRICE_BELOW_BASE], [129, Color.WHITE], [5, inv.PRICE_ABOVE_BASE]]:
-		stock[id] = example[0]
+	for quantity in [250, 129, 5]:
+		stock[id] = quantity
 		inv.refresh_market()
-		assert(inv.price_text.get_theme_color("font_color") == example[1])
+		assert(inv.price_text.get_theme_color("font_color") == Color.WHITE)
 	stock[id] = initial_stock
 	inv.refresh_market()
 	var balance := 300
@@ -202,6 +202,7 @@ func run() -> void:
 	assert(inv.item_popup.visible and inv.item_title.text == first.item.name and inv.quantity_text.text == "수량 : %d" % (initial_stock - 1))
 	assert(inv.quantity_text.visible and inv.price_text.text == str(map.economy.quote(current.id, first.item.id, true)))
 	bag_slot.mouse_entered.emit()
+	assert(inv.price_text.get_theme_color("font_color") == Color.WHITE)
 	assert(inv.price_text.text == str(map.economy.quote(current.id, first.item.id, false)))
 	map.crowns = 0
 	first.gui_input.emit(click)

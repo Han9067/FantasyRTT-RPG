@@ -25,8 +25,6 @@ const WEAPON_ICON_SCALE := 1.4
 var item_textures: Dictionary = {}
 const GOODS_ART := preload("res://assets/world/trade_icons.png")
 const GRID_SIDE := 8
-const PRICE_BELOW_BASE := Color("#4cda76")
-const PRICE_ABOVE_BASE := Color("#ff6860")
 const Economy = preload("res://scripts/campaign_economy.gd")
 
 var goods_by_id: Dictionary = {}
@@ -239,20 +237,9 @@ func update_item_popup() -> void:
 		item_title.text = "%s%d" % [type_name.replace(" ", ""), int(item.get("number", 1))]
 	quantity_text.visible = is_stackable(item)
 	quantity_text.text = "수량 : %d" % hovered_slot.quantity
-	var compare_price := hovered_slot.get_parent() == market_grid and goods_by_id.has(item.id)
-	if not compare_price:
-		price_text.remove_theme_color_override("font_color")
-		price_text.remove_theme_constant_override("outline_size")
 	if not market_city.is_empty() and goods_by_id.has(item.id):
-		var price := economy.quote(market_city, item.id, compare_price)
-		price_text.text = str(price)
-		if compare_price:
-			var color := Color.WHITE
-			if price < int(item.price): color = PRICE_BELOW_BASE
-			elif price > int(item.price): color = PRICE_ABOVE_BASE
-			price_text.add_theme_color_override("font_color", color)
-			price_text.add_theme_color_override("font_outline_color", GameUITheme.INK)
-			price_text.add_theme_constant_override("outline_size", 3)
+		var buying := hovered_slot.get_parent() == market_grid
+		price_text.text = str(economy.quote(market_city, item.id, buying))
 	else:
 		price_text.text = str(int(item.price)) if item.has("price") else "미정"
 	item_popup.size = item_popup.get_combined_minimum_size()
@@ -335,6 +322,14 @@ func write_slot(slot: ItemSlot, texture: Texture2D, item: Dictionary, count: int
 func set_market_mode(city_id: String) -> void:
 	market_city = city_id
 	var trading := not city_id.is_empty()
+	if trading:
+		price_text.add_theme_color_override("font_color", Color.WHITE)
+		price_text.add_theme_color_override("font_outline_color", GameUITheme.INK)
+		price_text.add_theme_constant_override("outline_size", 3)
+	else:
+		price_text.remove_theme_color_override("font_color")
+		price_text.remove_theme_color_override("font_outline_color")
+		price_text.remove_theme_constant_override("outline_size")
 	market_section.visible = trading
 	bag_title.visible = trading
 	people_section.visible = not trading
