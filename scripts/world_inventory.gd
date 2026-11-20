@@ -230,8 +230,8 @@ func update_item_popup() -> void:
 	quantity_text.text = "수량 : %d" % hovered_slot.quantity
 	if not market_city.is_empty() and item.has("price"):
 		trade_hint.text = "%s · 기본 %d · 구매 %d / 판매 %d 크라운" % [
-			item_title.text, int(item.price), economy.quote(market_city, item.id, true, economy.skill()),
-			economy.quote(market_city, item.id, false, economy.skill())]
+			item_title.text, int(item.price), economy.quote(market_city, item.id, true),
+			economy.quote(market_city, item.id, false)]
 	item_popup.size = item_popup.get_combined_minimum_size()
 	item_popup.scale = sheet.scale
 	var bounds := hovered_slot.get_global_rect()
@@ -335,7 +335,7 @@ func open_market(city: Dictionary, crowns: int) -> void:
 
 func refresh_market() -> void:
 	var market: Dictionary = economy.markets[market_city]
-	window_title.text = "%s 시장 · %s" % [market.name, Economy.CONDITION_NAMES[market.condition]]
+	window_title.text = "%s 시장" % market.name
 	for i in market_grid.get_child_count():
 		var cell: ItemSlot = market_grid.get_child(i)
 		var id := int(market.order[i]) if i < market.order.size() else -1
@@ -345,7 +345,7 @@ func refresh_market() -> void:
 	if hovered_slot != null: update_item_popup()
 
 func update_balance(crowns: int) -> void:
-	bag_title.text = "소지품 · %d 크라운 · 교역 Lv.%d" % [crowns, economy.skill()]
+	bag_title.text = "소지품 · %d 크라운" % crowns
 
 func snapshot(grid: GridContainer) -> Dictionary:
 	var entries := {}
@@ -369,7 +369,7 @@ func trade_one(source: ItemSlot, crowns: int) -> int:
 	if not goods_by_id.has(item.id):
 		trade_hint.text = "이 품목은 거래할 수 없습니다"
 		return 0
-	var price := economy.quote(market_city, item.id, buying, economy.skill())
+	var price := economy.quote(market_city, item.id, buying)
 	if buying:
 		if crowns < price:
 			trade_hint.text = "크라운이 부족합니다"
@@ -388,7 +388,6 @@ func trade_one(source: ItemSlot, crowns: int) -> int:
 	else:
 		fill_slot(source, item, source.quantity - 1)
 	economy.change_stock(market_city, item.id, -1 if buying else 1)
-	economy.trade_experience += 1
 	refresh_market()
 	var change := -price if buying else price
 	update_balance(crowns + change)

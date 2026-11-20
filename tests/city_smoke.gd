@@ -164,16 +164,16 @@ func run() -> void:
 	var bag_slot = inv.slot_grid.get_child(0)
 	var initial_stock: int = first.quantity
 	var balance := 300
-	var price := map.economy.quote(current.id, first.item.id, true, map.economy.skill())
+	var price := map.economy.quote(current.id, first.item.id, true)
 	var click := InputEventMouseButton.new()
 	click.button_index = MOUSE_BUTTON_LEFT
 	click.pressed = true
 	balance -= price
 	first.gui_input.emit(click)
-	balance -= map.economy.quote(current.id, first.item.id, true, map.economy.skill())
+	balance -= map.economy.quote(current.id, first.item.id, true)
 	first.gui_input.emit(click)
 	assert(map.crowns == balance and first.quantity == initial_stock - 2 and bag_slot.quantity == 2)
-	balance += map.economy.quote(current.id, bag_slot.item.id, false, map.economy.skill())
+	balance += map.economy.quote(current.id, bag_slot.item.id, false)
 	bag_slot.gui_input.emit(click)
 	assert(map.crowns == balance and first.quantity == initial_stock - 1 and bag_slot.quantity == 1)
 	first.mouse_entered.emit()
