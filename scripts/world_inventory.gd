@@ -1,6 +1,6 @@
 extends ColorRect
 ## Screen-space inventory. Layout uses native pixels and scales down on small viewports.
-signal trade_requested(slot: ItemSlot)
+signal trade_requested(slot: ItemSlot, count: int)
 
 class ItemIcon extends TextureRect:
 	func _ready() -> void:
@@ -30,6 +30,13 @@ const Economy = preload("res://scripts/campaign_economy.gd")
 var goods_by_id: Dictionary = {}
 var economy: Economy
 var market_city := ""
+var balance := 0
+var trade_menu := preload("res://scripts/market_trade_menu.gd").new()
+var selected_slot: ItemSlot
+var selected_id: Variant
+var toast := Label.new()
+var toast_timer := Timer.new()
+const LOW_FUNDS := "크라운이 부족하여 구매할 수 없습니다."
 var market_grid := GridContainer.new()
 var market_section: PanelContainer
 var people_section: PanelContainer
@@ -137,7 +144,14 @@ func setup(appearance: Dictionary, hero_hp := BattleUnit.HERO_HP) -> void:
 	build_grid(bag, slot_grid)
 	set_market_mode("")
 	build_item_popup()
-	visibility_changed.connect(clear_hover)
+	add_child(trade_menu)
+	trade_menu.action_chosen.connect(select_trade_action)
+	trade_menu.quantity_chosen.connect(confirm_trade)
+	build_toast()
+	visibility_changed.connect(func():
+		clear_hover()
+		trade_menu.hide()
+		toast.hide())
 	resized.connect(layout_sheet)
 	hide()
 
@@ -161,10 +175,65 @@ func build_grid(parent: Control, grid: GridContainer) -> void:
 		slot.count_text.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		slot.count_text.offset_right = -6
 		slot.count_text.offset_bottom = -4
-		slot.gui_input.connect(func(event: InputEvent):
-			if not market_city.is_empty() and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and not slot.item.is_empty():
-				slot.accept_event()
-				trade_requested.emit(slot))
+		slot.gui_input.connect(handle_slot_input.bind(slot))
+
+func handle_slot_input(event: InputEvent, slot: ItemSlot) -> void:
+	if market_city.is_empty() or slot.item.is_empty() or trade_menu.visible: return
+	if not event is InputEventMouseButton or not event.pressed: return
+	match event.button_index:
+		MOUSE_BUTTON_RIGHT:
+			slot.accept_event()
+			trade_requested.emit(slot, 1)
+		MOUSE_BUTTON_LEFT:
+			slot.accept_event()
+			selected_slot = slot
+			selected_id = slot.item.id
+			clear_hover()
+			var verb := "구매" if slot.get_parent() == market_grid else "판매"
+			trade_menu.show_actions(get_local_mouse_position(), verb)
+
+func select_trade_action() -> void:
+	if not is_same(selected_slot.item.get("id"), selected_id):
+		trade_menu.hide()
+		return
+	if not is_stackable(selected_slot.item):
+		confirm_trade(1)
+		return
+	var totals := trade_totals(selected_slot, balance, selected_slot.quantity)
+	if totals.is_empty():
+		trade_menu.hide()
+		return
+	trade_menu.show_quantity(item_name(selected_slot.item), totals.size())
+
+func confirm_trade(count: int) -> void:
+	trade_menu.hide()
+	if is_same(selected_slot.item.get("id"), selected_id):
+		trade_requested.emit(selected_slot, count)
+
+func build_toast() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 120
+	add_child(layer)
+	layer.add_child(toast)
+	toast.theme = theme
+	toast.add_theme_stylebox_override("normal", GameUITheme.panel_style(12))
+	toast.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	toast.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	toast.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	toast.offset_top = 24
+	toast_timer.one_shot = true
+	toast_timer.wait_time = 2.0
+	add_child(toast_timer)
+	toast_timer.timeout.connect(toast.hide)
+	toast.hide()
+
+func show_notice(message: String) -> void:
+	toast.text = message
+	toast.reset_size()
+	toast.position.x = (get_viewport_rect().size.x - toast.size.x) * 0.5
+	toast.show()
+	toast_timer.start()
 
 func add_item_slot(grid: GridContainer) -> ItemSlot:
 	var slot := ItemSlot.new()
@@ -226,20 +295,18 @@ func clear_hover() -> void:
 	item_popup.hide()
 
 func update_item_popup() -> void:
-	if hovered_slot == null or hovered_slot.item.is_empty() or not is_visible_in_tree():
+	if trade_menu.visible or hovered_slot == null or hovered_slot.item.is_empty() or not is_visible_in_tree():
 		item_popup.hide()
 		return
 	var item := hovered_slot.item
-	if item.has("name"):
-		item_title.text = item.name
-	else:
-		var type_name: String = CharacterArt.TYPE_LABELS.get(item.get("family", ""), "장비")
-		item_title.text = "%s%d" % [type_name.replace(" ", ""), int(item.get("number", 1))]
+	item_title.text = item_name(item)
 	quantity_text.visible = is_stackable(item)
 	quantity_text.text = "수량 : %d" % hovered_slot.quantity
-	if not market_city.is_empty() and goods_by_id.has(item.id):
+	if not market_city.is_empty():
 		var buying := hovered_slot.get_parent() == market_grid
-		price_text.text = str(economy.quote(market_city, item.id, buying))
+		var price := unit_price(item, buying)
+		price_text.text = str(price)
+		price_text.add_theme_color_override("font_color", Color("#ff6860") if buying and price > balance else Color.WHITE)
 	else:
 		price_text.text = str(int(item.price)) if item.has("price") else "미정"
 	item_popup.size = item_popup.get_combined_minimum_size()
@@ -254,6 +321,11 @@ func update_item_popup() -> void:
 	item_popup.show()
 
 # The bag and equipment slots share the same catalog art. Cache only visited items.
+static func item_name(item: Dictionary) -> String:
+	if item.has("name"): return item.name
+	var family: String = CharacterArt.TYPE_LABELS.get(item.get("family", ""), "장비")
+	return "%s%d" % [family.replace(" ", ""), int(item.get("number", 1))]
+
 static func is_stackable(item: Dictionary) -> bool:
 	if item.is_empty(): return false
 	if item.get("family", "") == "arrow": return true
@@ -354,15 +426,24 @@ func refresh_market() -> void:
 	var market: Dictionary = economy.markets[market_city]
 	for i in market_grid.get_child_count():
 		var cell: ItemSlot = market_grid.get_child(i)
-		var id := int(market.order[i]) if i < market.order.size() else -1
-		var count := int(market.stock.get(id, 0))
-		if cell.quantity != count or (count > 0 and cell.item.get("id") != id):
-			fill_slot(cell, goods_by_id.get(id, {}), count)
+		var item: Dictionary = {}
+		var count := 0
+		if i < market.order.size():
+			var id := int(market.order[i])
+			item = goods_by_id[id]
+			count = int(market.stock[id])
+		elif i - market.order.size() < market.equipment.size():
+			var entry: Dictionary = market.equipment[i - market.order.size()]
+			item = entry.item
+			count = entry.count
+		if cell.quantity != count or (count > 0 and not is_same(cell.item.get("id"), item.id)):
+			fill_slot(cell, item, count)
 	if hovered_slot != null: update_item_popup()
 
-func update_balance(crowns: int, notice := "") -> void:
+func update_balance(crowns: int) -> void:
+	balance = crowns
 	bag_title.text = "소지품 · %d 크라운" % crowns
-	if not notice.is_empty(): bag_title.text += " · " + notice
+	if hovered_slot != null: update_item_popup()
 
 func snapshot(grid: GridContainer) -> Dictionary:
 	var entries := {}
@@ -379,36 +460,75 @@ func restore_slots(grid: GridContainer, entries: Dictionary) -> void:
 		else:
 			fill_slot(cell, entry.item, int(entry.count))
 
-func trade_one(source: ItemSlot, crowns: int) -> int:
-	if not is_visible_in_tree() or market_city.is_empty() or source.item.is_empty(): return 0
+func unit_price(item: Dictionary, buying: bool, stock_delta := 0) -> int:
+	if goods_by_id.has(item.id):
+		var stock: Dictionary = economy.markets[market_city].stock
+		return economy.quote_at_stock(item.id, buying, int(stock.get(item.id, 0)) + stock_delta)
+	return maxi(1, int(item.get("price", 100)))
+
+func bag_destination(item: Dictionary) -> ItemSlot:
+	var empty: ItemSlot
+	for cell: ItemSlot in slot_grid.get_children():
+		if is_stackable(item) and is_same(cell.item.get("id"), item.id): return cell
+		if empty == null and cell.item.is_empty(): empty = cell
+	return empty
+
+func equipment_stack(entries: Array, item: Dictionary) -> int:
+	if is_stackable(item):
+		for i in entries.size():
+			if is_same(entries[i].item.id, item.id): return i
+	return -1
+
+# Each entry is the total cost or proceeds for that many units (index + 1).
+func trade_totals(source: ItemSlot, crowns: int, limit: int) -> Array[int]:
+	var totals: Array[int] = []
+	if not is_visible_in_tree() or market_city.is_empty() or source.item.is_empty(): return totals
+	var buying := source.get_parent() == market_grid
+	var market: Dictionary = economy.markets[market_city]
+	var item := source.item
+	if buying and unit_price(item, true) > crowns:
+		show_notice(LOW_FUNDS)
+		return totals
+	if buying and bag_destination(item) == null:
+		show_notice("소지품에 빈 슬롯이 없습니다.")
+		return totals
+	if not buying and market.order.size() + market.equipment.size() >= market_grid.get_child_count():
+		if not market.stock.has(item.id) and equipment_stack(market.equipment, item) < 0:
+			show_notice("시장에 빈 슬롯이 없습니다.")
+			return totals
+	var total := 0
+	for i in mini(source.quantity, limit):
+		total += unit_price(item, buying, -i if buying else i)
+		if buying and total > crowns: break
+		totals.append(total)
+	return totals
+
+func trade(source: ItemSlot, crowns: int, count: int) -> int:
+	if count <= 0: return 0
+	var totals := trade_totals(source, crowns, count)
+	if totals.size() != count: return 0
 	var buying := source.get_parent() == market_grid
 	var item := source.item
-	if not goods_by_id.has(item.id):
-		update_balance(crowns, "이 품목은 거래할 수 없습니다")
-		return 0
-	var price := economy.quote(market_city, item.id, buying)
-	if buying:
-		if crowns < price:
-			update_balance(crowns, "크라운이 부족합니다")
-			return 0
-		if economy.markets[market_city].stock[item.id] <= 0: return 0
-		var destination: ItemSlot
-		for cell: ItemSlot in slot_grid.get_children():
-			if cell.item.get("id") == item.id:
-				destination = cell
-				break
-			if destination == null and cell.item.is_empty(): destination = cell
-		if destination == null:
-			update_balance(crowns, "빈 슬롯이 없습니다")
-			return 0
-		fill_slot(destination, item, destination.quantity + 1)
+	var market: Dictionary = economy.markets[market_city]
+	if goods_by_id.has(item.id):
+		economy.change_stock(market_city, item.id, -count if buying else count)
+	elif buying:
+		var index := source.get_index() - int(market.order.size())
+		market.equipment[index].count -= count
+		if market.equipment[index].count == 0: market.equipment.remove_at(index)
 	else:
-		fill_slot(source, item, source.quantity - 1)
-	economy.change_stock(market_city, item.id, -1 if buying else 1)
+		var index := equipment_stack(market.equipment, item)
+		if index >= 0:
+			market.equipment[index].count += count
+		else:
+			market.equipment.append({"item": item, "count": count})
+	if buying:
+		var dest := bag_destination(item)
+		fill_slot(dest, item, dest.quantity + count)
+	else:
+		fill_slot(source, item, source.quantity - count)
 	refresh_market()
-	var change := -price if buying else price
-	update_balance(crowns + change)
-	return change
+	return -totals.back() if buying else totals.back()
 
 func layout_sheet() -> void:
 	sheet.size = sheet.get_combined_minimum_size()

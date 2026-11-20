@@ -188,7 +188,7 @@ func run() -> void:
 	var balance := 300
 	var price := map.economy.quote(current.id, first.item.id, true)
 	var click := InputEventMouseButton.new()
-	click.button_index = MOUSE_BUTTON_LEFT
+	click.button_index = MOUSE_BUTTON_RIGHT
 	click.pressed = true
 	balance -= price
 	first.gui_input.emit(click)
@@ -205,8 +205,60 @@ func run() -> void:
 	assert(inv.price_text.get_theme_color("font_color") == Color.WHITE)
 	assert(inv.price_text.text == str(map.economy.quote(current.id, first.item.id, false)))
 	map.crowns = 0
+	first.mouse_entered.emit()
+	assert(inv.price_text.get_theme_color("font_color") == Color("#ff6860"))
 	first.gui_input.emit(click)
 	assert(map.crowns == 0 and first.quantity == initial_stock - 1 and bag_slot.quantity == 1)
+	assert(inv.toast.visible and inv.toast.text == inv.LOW_FUNDS)
+	map.crowns = balance
+	assert(inv.price_text.get_theme_color("font_color") == Color.WHITE)
+	var menu = inv.trade_menu
+	var single_cost := map.economy.quote(current.id, id, true)
+	var next_cost := map.economy.quote_at_stock(id, true, first.quantity - 1)
+	map.crowns = single_cost + next_cost
+	click.button_index = MOUSE_BUTTON_LEFT
+	first.gui_input.emit(click)
+	assert(menu.actions.is_visible_in_tree() and menu.action_button.text == "구매")
+	menu.action_button.pressed.emit()
+	assert(menu.quantity_panel.is_visible_in_tree() and menu.slider.max_value == 2)
+	menu.slider.value = 2
+	assert(menu.amount.text == "2")
+	menu.confirm_button.pressed.emit()
+	assert(map.crowns == 0 and bag_slot.quantity == 3)
+	bag_slot.gui_input.emit(click)
+	menu.action_button.pressed.emit()
+	assert(menu.slider.max_value == 3 and menu.confirm_button.text == "판매")
+	menu.slider.value = 2
+	menu.confirm_button.pressed.emit()
+	assert(first.quantity == initial_stock - 1 and bag_slot.quantity == 1)
+	var sword = CharacterArt.data().weapon_items["one_sword/1"]
+	var equipment_slot = inv.slot_grid.get_child(1)
+	inv.set_slot_item(1, sword)
+	equipment_slot.gui_input.emit(click)
+	map._unhandled_input(cancel)
+	assert(equipment_slot.item == sword and not menu.visible and inv.visible)
+	equipment_slot.gui_input.emit(click)
+	menu.action_button.pressed.emit()
+	assert(not menu.visible and equipment_slot.item.is_empty())
+	var resale = inv.market_grid.get_child(map.economy.markets[current.id].order.size())
+	assert(resale.item == sword and resale.quantity == 1)
+	resale.gui_input.emit(click)
+	menu.action_button.pressed.emit()
+	assert(equipment_slot.item == sword and resale.item.is_empty())
+	inv.set_slot_item(1, arrow, 4)
+	equipment_slot.gui_input.emit(click)
+	menu.action_button.pressed.emit()
+	assert(menu.slider.max_value == 4)
+	menu.slider.value = 4
+	menu.confirm_button.pressed.emit()
+	assert(resale.item == arrow and resale.quantity == 4)
+	resale.gui_input.emit(click)
+	menu.action_button.pressed.emit()
+	assert(menu.slider.max_value == 4)
+	menu.slider.value = 4
+	menu.confirm_button.pressed.emit()
+	assert(equipment_slot.quantity == 4 and resale.item.is_empty())
+	inv.set_slot_item(1, {})
 	map.crowns = balance
 	map._unhandled_input(cancel)
 	assert(not inv.visible and map.current_city.id == current.id)

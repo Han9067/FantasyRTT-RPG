@@ -25,11 +25,13 @@ func initialize(cities: Array, catalog: Dictionary) -> void:
 			if stock.has(id): continue
 			order.append(id)
 			stock[id] = rng.randi_range(1, 20)
-		markets[city.id] = {"name": city.name, "order": order, "stock": stock}
+		markets[city.id] = {"name": city.name, "order": order, "stock": stock, "equipment": []}
 
 func quote(city: String, id: int, buying: bool) -> int:
 	# Buying a unit and selling it back use the same stock midpoint.
-	var count := int(markets[city].stock.get(id, 0))
+	return quote_at_stock(id, buying, int(markets[city].stock.get(id, 0)))
+
+func quote_at_stock(id: int, buying: bool, count: int) -> int:
 	var stock := maxf(0.0, count + (-0.5 if buying else 0.5))
 	var value := float(goods[id].price) * (0.40 + 2.35 * REFERENCE_STOCK / (REFERENCE_STOCK + stock))
 	if buying: return maxi(2, ceili(value * (1 + TRADE_MARGIN)))

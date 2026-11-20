@@ -38,6 +38,7 @@ var crowns := STARTING_CROWNS:
 		crowns = value
 		if is_node_ready():
 			balance_label.text = str(crowns)
+			if not inventory.market_city.is_empty(): inventory.update_balance(crowns)
 var hero_hp := BattleUnit.HERO_HP
 var status_panel := PanelContainer.new()
 var battle_link: Button
@@ -145,7 +146,7 @@ func create_world_menu() -> void:
 			action.pressed.connect(open_inventory)
 	city_overlay.add_child(inventory)
 	inventory.setup(character_appearance, hero_hp)
-	inventory.trade_requested.connect(func(slot): crowns += inventory.trade_one(slot, crowns))
+	inventory.trade_requested.connect(func(slot, count): crowns += inventory.trade(slot, crowns, count))
 
 func add_status_value(row: HBoxContainer, label: Label, texture: Texture2D, title: String) -> void:
 	var group := HBoxContainer.new()
@@ -343,7 +344,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			return
 	if inventory.visible:
-		if event.is_action_pressed("ui_cancel"): inventory.hide()
+		if event.is_action_pressed("ui_cancel"):
+			if inventory.trade_menu.visible: inventory.trade_menu.hide()
+			else: inventory.hide()
 		get_viewport().set_input_as_handled()
 		return
 	if event is InputEventMouse and not can_interact_at(event.position): return
