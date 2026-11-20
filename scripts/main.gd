@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.57")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.58")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -444,6 +444,9 @@ func start_journey() -> void:
 	show_world()
 
 func show_world() -> void:
+	var current_hp := BattleUnit.HERO_HP
+	if is_instance_valid(battle):
+		current_hp = battle.hero_group[0].hp
 	clear_screen()
 	current_screen = "world"
 	battle_hud = CanvasLayer.new()
@@ -458,6 +461,8 @@ func show_world() -> void:
 	screen.offset_top = 18
 	screen.offset_bottom = -14
 	world = WorldMapScene.new()
+	world.hero_hp = current_hp
+	world.crowns = travel_state.get("crowns", WorldMap.STARTING_CROWNS)
 	world.character_name = player_name if not player_name.is_empty() else "여행자"
 	world.clock.elapsed = travel_state.get("elapsed", 0.0)
 	world.clock.speed = travel_state.get("speed", 1)
@@ -502,7 +507,7 @@ func create_pause_notice() -> Label:
 func enter_battle_from_world() -> void:
 	if is_instance_valid(world):
 		travel_state = {"position":world.unit_position,"camera":world.camera.position,"zoom":world.zoom_level,"city_id":world.current_city.get("id",""),
-			"elapsed":world.clock.elapsed, "speed":world.clock.speed}
+			"elapsed":world.clock.elapsed, "speed":world.clock.speed, "crowns":world.crowns}
 	show_battle()
 
 

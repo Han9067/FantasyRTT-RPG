@@ -27,7 +27,7 @@ var item_popup := PanelContainer.new()
 var item_title := Label.new()
 var hovered_slot: ItemSlot
 
-func setup(appearance: Dictionary) -> void:
+func setup(appearance: Dictionary, hero_hp := BattleUnit.HERO_HP) -> void:
 	theme = GameUITheme.build()
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	color = Color(0.12, 0.08, 0.04, 0.48)
@@ -99,7 +99,7 @@ func setup(appearance: Dictionary) -> void:
 	section(middle, stats)
 	stats.add_child(caption("능력치", 19))
 	stats.add_child(HSeparator.new())
-	for line in ["HP  %d" % BattleUnit.HERO_HP, "공격력  %d" % BattleUnit.HERO_DAMAGE,
+	for line in ["HP  %d" % hero_hp, "공격력  %d" % BattleUnit.HERO_DAMAGE,
 			"명중률  %d%%" % roundi(BattleUnit.HERO_ACCURACY * 100)]:
 		var stat := caption(line, 18)
 		stat.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT

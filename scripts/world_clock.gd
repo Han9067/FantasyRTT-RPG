@@ -73,7 +73,7 @@ func layout_clock(minimap := Rect2()) -> void:
 	var top := 18.0
 	var clock_width := get_combined_minimum_size().x
 	if minimap.has_area():
-		if minimap.position.x >= clock_width + 8:
+		if minimap.position.x >= clock_width + 8 + 186:
 			right = minimap.position.x - 8
 		else:
 			top = minimap.end.y + 8
@@ -118,7 +118,7 @@ func refresh_time() -> void:
 	@warning_ignore("integer_division")
 	if shown_hour < 0 or day != shown_hour / 24:
 		var date := Time.get_date_dict_from_unix_time(first_midnight + day * 86400)
-		date_label.text = "[%d년 %d월 %d일]" % [date.year, date.month, date.day]
+		date_label.text = "%d년 %d월 %d일" % [date.year, date.month, date.day]
 	shown_hour = hour
 	var hour_24 := hour % 24
 	time_label.text = "현재 시간 | %d %s" % [(hour_24 + 11) % 12 + 1, "AM" if hour_24 < 12 else "PM"]

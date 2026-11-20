@@ -26,6 +26,18 @@ var city_panel: PanelContainer
 var city_panel_title: Label
 var city_actions: Array[Button] = []
 var inventory := preload("res://scripts/world_inventory.gd").new()
+const STARTING_CROWNS := 300
+var balance_label := Label.new()
+var crowns := STARTING_CROWNS:
+	set(value):
+		crowns = value
+		if is_node_ready():
+			balance_label.text = "%d 크라운" % crowns
+			layout_footer()
+var hero_hp := BattleUnit.HERO_HP
+var footer := Panel.new()
+var purse := PanelContainer.new()
+var hp_label := Label.new()
 var menu_bar := HBoxContainer.new()
 var clock := preload("res://scripts/world_clock.gd").new()
 var city_overlay: CanvasLayer
@@ -75,11 +87,14 @@ func _ready() -> void:
 	create_world_menu()
 	Input.set_custom_mouse_cursor(make_blocked_cursor(),Input.CURSOR_FORBIDDEN,Vector2(12,12))
 	get_viewport().size_changed.connect(resize_map)
-	get_viewport().size_changed.connect(layout_city_panel)
 
 func create_world_menu() -> void:
-	menu_bar.theme = GameUITheme.build()
-	city_overlay.add_child(menu_bar)
+	footer.theme = GameUITheme.build()
+	footer.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	footer.mouse_filter = Control.MOUSE_FILTER_STOP
+	city_overlay.add_child(footer)
+	footer.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	footer.add_child(menu_bar)
 	for title in ["캐릭터", "인벤토리", "부대", "저널"]:
 		var action := Button.new()
 		action.text = title
@@ -89,29 +104,52 @@ func create_world_menu() -> void:
 		if title == "인벤토리":
 			action.tooltip_text = "인벤토리 (I)"
 			action.pressed.connect(open_inventory)
-	menu_bar.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_MINSIZE, 18)
+	footer.add_child(hp_label)
+	hp_label.text = "HP : %d" % hero_hp
+	footer.add_child(purse)
+	purse.add_theme_stylebox_override("panel", GameUITheme.panel_style(9))
+	var balance := HBoxContainer.new()
+	balance.add_theme_constant_override("separation", 8)
+	purse.add_child(balance)
+	var coin := TextureRect.new()
+	coin.texture = preload("res://assets/ui/silver_crown.png")
+	coin.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	balance.add_child(coin)
+	balance_label.text = "%d 크라운" % crowns
+	balance.add_child(balance_label)
+	layout_footer()
+	get_viewport().size_changed.connect(layout_footer)
 	city_overlay.add_child(inventory)
-	inventory.setup(character_appearance)
+	inventory.setup(character_appearance, hero_hp)
+
+func layout_footer() -> void:
+	if not is_inside_tree(): return
+	var width := get_viewport_rect().size.x
+	var menu_size := menu_bar.get_combined_minimum_size()
+	var menu_scale := minf(1.0, (width - 36) / menu_size.x)
+	var menu_left := width - 18 - menu_size.x * menu_scale
+	var wallet_size := purse.get_combined_minimum_size()
+	var hp_size := hp_label.get_combined_minimum_size()
+	var stacked := menu_left < hp_size.x + wallet_size.x + 48
+	var height := 132.0 if stacked else 84.0
+	footer.offset_top = -height
+	menu_bar.scale = Vector2.ONE * menu_scale
+	menu_bar.position = Vector2(menu_left, height - 18 - menu_size.y * menu_scale).round()
+	var wallet_x := (width - wallet_size.x) * 0.5
+	if not stacked:
+		wallet_x = minf(wallet_x, menu_left - 12 - wallet_size.x)
+	var center_y := 34.0 if stacked else height * 0.5
+	purse.position = Vector2(wallet_x, center_y - wallet_size.y * 0.5).round()
+	hp_label.position = Vector2(wallet_x - hp_size.x - 18, center_y - hp_size.y * 0.5).round()
+	layout_city_panel()
 
 func place_battle_button(action: Button) -> void:
 	action.theme = GameUITheme.build()
 	action.focus_mode = Control.FOCUS_NONE
 	city_overlay.add_child(action)
 	city_overlay.move_child(action, inventory.get_index())
-	action.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
-	action.offset_left = -80
-	action.offset_right = 80
-	action.offset_top = -66
-	action.offset_bottom = -18
-	var layout_menu := func() -> void:
-		if not is_inside_tree(): return
-		var width := get_viewport_rect().size.x
-		var menu_left := width - 18 - menu_bar.get_combined_minimum_size().x
-		var bottom := -18 if width * 0.5 + action.size.x * 0.5 + 8 <= menu_left else -74
-		menu_bar.offset_top = bottom - menu_bar.get_combined_minimum_size().y
-		menu_bar.offset_bottom = bottom
-	get_viewport().size_changed.connect(layout_menu)
-	layout_menu.call()
+	action.position = Vector2(18,18)
+	action.size = Vector2(160,48)
 
 func open_inventory() -> void:
 	pan_keys.clear()
@@ -283,7 +321,7 @@ func restore_travel(position_in_world: Vector2, camera_position: Vector2, zoom: 
 
 func can_interact_at(point: Vector2) -> bool:
 	if clock.get_global_rect().has_point(point): return false
-	if inventory.visible or menu_bar.get_global_rect().has_point(point): return false
+	if inventory.visible or footer.get_global_rect().has_point(point): return false
 	if not screen_playable_rect().has_point(point): return false
 	if is_instance_valid(city_panel) and city_panel.visible and city_panel.get_global_rect().has_point(point): return false
 	for control in hud_controls:
@@ -438,8 +476,8 @@ func create_city_panel() -> void:
 
 func layout_city_panel() -> void:
 	if not is_inside_tree() or not is_instance_valid(city_panel): return
-	city_panel.position = Vector2(18,18)
-	city_panel.size = Vector2(400,maxf(1,get_viewport_rect().size.y-36))
+	city_panel.position = Vector2(18,78)
+	city_panel.size = Vector2(400,maxf(1,get_viewport_rect().size.y + footer.offset_top - 90))
 	var frame := city_panel.get_theme_stylebox("panel")
 	var content_width := city_panel.size.x-frame.get_content_margin(SIDE_LEFT)-frame.get_content_margin(SIDE_RIGHT)
 	for action in city_actions: action.custom_minimum_size.x = roundf(content_width*0.8)

@@ -124,7 +124,7 @@ func run() -> void:
 			walk_to_city(map)
 			assert(map.current_city.id == city.id and not map.party_marker.visible and map.city_panel.visible)
 			assert(not map.moving and map.pending_city.is_empty() and not map.city_popup.visible)
-			assert(map.city_panel.size == Vector2(400,764) and map.city_panel.position == Vector2(18,18))
+			assert(map.city_panel.size == Vector2(400,626) and map.city_panel.position == Vector2(18,78))
 			assert(map.city_panel_title.text == map.display_city_name(city))
 			map.update_city_hover(point)
 			map.update_world_cursor(point)
@@ -154,7 +154,7 @@ func run() -> void:
 	root.size = Vector2i(960,720)
 	await process_frame
 	await process_frame
-	assert(map.city_panel.size == Vector2(400,684))
+	assert(map.city_panel.size == Vector2(400,546))
 	for action in map.city_actions: assert(action.size.x == 285)
 	# A battle round trip preserves the occupied city and hidden party.
 	game.enter_battle_from_world()
