@@ -161,7 +161,7 @@ func run() -> void:
 	var original := map.unit_position
 	var current := map.current_city
 	for i in range(3):
-		assert(map.city_actions[i].text == ["내성","길드","시장"][i])
+		assert(map.city_actions[i].text == ["내성","주점","시장"][i])
 		if i>0: assert(map.city_actions[i].position.y > map.city_actions[i-1].position.y)
 		map.city_actions[i].pressed.emit()
 		assert(map.current_city == current and map.unit_position == original and not map.party_marker.visible)

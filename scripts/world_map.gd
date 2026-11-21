@@ -525,7 +525,7 @@ func create_city_panel() -> void:
 	city_panel_title.add_theme_font_size_override("font_size",24)
 	content.add_child(city_panel_title)
 	content.add_child(HSeparator.new())
-	for caption in ["내성","길드","시장","나가기"]:
+	for caption in ["내성","주점","시장","나가기"]:
 		var action := Button.new()
 		action.text = caption
 		action.custom_minimum_size = Vector2(CITY_BUTTON_WIDTH, 52)
