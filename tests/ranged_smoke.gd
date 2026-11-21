@@ -101,7 +101,7 @@ func art_check() -> void:
 	assert(Art.equipped_weapon(config).id == "bow/1" and config.offhand == -1)
 	var frames := Art.infantry_frames(config,true)
 	assert(frames.get_frame_count("attack") == 12 and frames.get_animation_speed("attack") == 10)
-	for movement in ["idle", "walk", "run"]:
+	for movement in ["idle", "walk"]:
 		for i in Art.FRAME_COUNTS[movement]:
 			assert(Art.weapon_position(config,movement,i) + Vector2i(16,16) == Art.weapon_anchor(config,movement,i))
 	var strip := Image.create(Art.FRAME_SIZE.x*6,Art.FRAME_SIZE.y*2,false,Image.FORMAT_RGBA8)

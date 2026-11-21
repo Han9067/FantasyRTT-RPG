@@ -114,7 +114,10 @@ def build(source=SOURCE, dest=DEST):
         'hair':[add(f'{human}/hair/hairstyle/human_hair_{i}') for i in range(1,9)],
         'beard':[add(f'{human}/hair/facial hair/human_facialhair_{i}') for i in range(1,9)],
         'hand':add(f'{human}/hand/human_hand')}
-    catalog['bodies'] = [add(f'sprites/Characters/body/body_{c}') for c in BODY_COLORS]
+    for color in BODY_COLORS:
+        name = f'body_{color}'
+        frames = [f'{name}_{i:02d}.png' for i in range(1, 13)]
+        catalog['bodies'].append(add(f'sprites/Characters/body/{name}', only_files=frames))
     # Register every held weapon by filename, not its position in a sheet.
     # Projectile/shot PNGs remain editable sources, not separate equipped weapons.
     for category in ['melee weapons', 'ranged weapons']:

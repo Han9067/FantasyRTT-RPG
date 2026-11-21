@@ -13206,210 +13206,6 @@
             32,
             32
           ]
-        },
-        {
-          "name": "body_black_13",
-          "source": "sprites/Characters/body/body_black/body_black_13.png",
-          "sha256": "26c0b87008aaea133246fbeb9089a04b41db867dc2e4d2639b15d92559371c85",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_00.png",
-          "rect": [
-            603,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_14",
-          "source": "sprites/Characters/body/body_black/body_black_14.png",
-          "sha256": "89ffd6627f36c1e0d545e01d3c824f4ec597e51da7ded5c674ae38457d47b69c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_00.png",
-          "rect": [
-            637,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_15",
-          "source": "sprites/Characters/body/body_black/body_black_15.png",
-          "sha256": "21e6469f10f90fab6995c2bec7a25e6572a6996894dc13814f3e54f32f0215d8",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_00.png",
-          "rect": [
-            671,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_16",
-          "source": "sprites/Characters/body/body_black/body_black_16.png",
-          "sha256": "cf777ad07ce419593cd02ba26e989e6c28b5f1453c8ca50581e7eee486951e36",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_00.png",
-          "rect": [
-            705,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_17",
-          "source": "sprites/Characters/body/body_black/body_black_17.png",
-          "sha256": "4d7bb2dde8d7d02385f4c2f508fe0417f5dfc249f8a86e1b21b3b6cdc3c2906a",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_00.png",
-          "rect": [
-            739,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_18",
-          "source": "sprites/Characters/body/body_black/body_black_18.png",
-          "sha256": "88b4bc34e37f636c01d8b221085251ef5d4a42fcdd355d3d2927823865e1e730",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_00.png",
-          "rect": [
-            773,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_19",
-          "source": "sprites/Characters/body/body_black/body_black_19.png",
-          "sha256": "cc1e79dfe39df0b47bf42f57aea840e2d1ca7f6ae7175048adde9d8c9dddb01e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_00.png",
-          "rect": [
-            807,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_20",
-          "source": "sprites/Characters/body/body_black/body_black_20.png",
-          "sha256": "cf777ad07ce419593cd02ba26e989e6c28b5f1453c8ca50581e7eee486951e36",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_00.png",
-          "rect": [
-            841,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_21",
-          "source": "sprites/Characters/body/body_black/body_black_21.png",
-          "sha256": "801788ff9ec58cd84db7bd2c6062bc4cb8ed70afc124c0017f525a0eaad5ad99",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_00.png",
-          "rect": [
-            875,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_22",
-          "source": "sprites/Characters/body/body_black/body_black_22.png",
-          "sha256": "6ed2a141d12ced65c2fa8f7c44781e5968cf0e3d4cb94901ac125dbf72fe1893",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_00.png",
-          "rect": [
-            909,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_23",
-          "source": "sprites/Characters/body/body_black/body_black_23.png",
-          "sha256": "0ff0f17adae37137599cae49083841b9ae3d82d613e4a3056f61b4636d58af7e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_00.png",
-          "rect": [
-            943,
-            851,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_black_24",
-          "source": "sprites/Characters/body/body_black/body_black_24.png",
-          "sha256": "da20698231e39098a6b42c46a5c7ffb51d24510110b38dbc21cc22c7d1ce3a93",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_00.png",
-          "rect": [
-            977,
-            851,
-            32,
-            32
-          ]
         }
       ]
     },
@@ -13426,8 +13222,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            885,
+            603,
+            851,
             32,
             32
           ]
@@ -13443,8 +13239,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            35,
-            885,
+            637,
+            851,
             32,
             32
           ]
@@ -13460,8 +13256,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            69,
-            885,
+            671,
+            851,
             32,
             32
           ]
@@ -13477,8 +13273,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            103,
-            885,
+            705,
+            851,
             32,
             32
           ]
@@ -13494,8 +13290,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            137,
-            885,
+            739,
+            851,
             32,
             32
           ]
@@ -13511,8 +13307,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            171,
-            885,
+            773,
+            851,
             32,
             32
           ]
@@ -13528,8 +13324,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            205,
-            885,
+            807,
+            851,
             32,
             32
           ]
@@ -13545,8 +13341,8 @@
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            239,
-            885,
+            841,
+            851,
             32,
             32
           ]
@@ -13562,8 +13358,8 @@
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
-            273,
-            885,
+            875,
+            851,
             32,
             32
           ]
@@ -13579,8 +13375,8 @@
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            307,
-            885,
+            909,
+            851,
             32,
             32
           ]
@@ -13596,8 +13392,8 @@
           "id": 11,
           "atlas": "atlas_00.png",
           "rect": [
-            341,
-            885,
+            943,
+            851,
             32,
             32
           ]
@@ -13613,212 +13409,8 @@
           "id": 12,
           "atlas": "atlas_00.png",
           "rect": [
-            375,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_13",
-          "source": "sprites/Characters/body/body_blue/body_blue_13.png",
-          "sha256": "23318f65432db031293ac0b86f1ad6994b1c41f5eea87d8af8f7a0ab9e55380e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_00.png",
-          "rect": [
-            409,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_14",
-          "source": "sprites/Characters/body/body_blue/body_blue_14.png",
-          "sha256": "1182f91f3bdaef471c8a46ac8229922fb56b337f3a79f7c10f0e60dba034c554",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_00.png",
-          "rect": [
-            443,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_15",
-          "source": "sprites/Characters/body/body_blue/body_blue_15.png",
-          "sha256": "738b7af09215be108f3f74e9a4c950217dcf60abc208b29fecf914fc34d29e42",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_00.png",
-          "rect": [
-            477,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_16",
-          "source": "sprites/Characters/body/body_blue/body_blue_16.png",
-          "sha256": "d42b0e53964c928064b7b1ad9af74ac886e1595314ca61034a52538aa8cb3e3c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_00.png",
-          "rect": [
-            511,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_17",
-          "source": "sprites/Characters/body/body_blue/body_blue_17.png",
-          "sha256": "d2ef0bbf2993158434ea62cf1cff97d5d760bac9bb868a100ca8eed753a6a652",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_00.png",
-          "rect": [
-            545,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_18",
-          "source": "sprites/Characters/body/body_blue/body_blue_18.png",
-          "sha256": "4250ce2966e4078578c9c2efc830d93a5342abdfacaa851c842115d74851ac11",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_00.png",
-          "rect": [
-            579,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_19",
-          "source": "sprites/Characters/body/body_blue/body_blue_19.png",
-          "sha256": "6da4ec2583105788177a0b0b4439380a8f6a2b6df0eacb8b885b347e50a1a255",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_00.png",
-          "rect": [
-            613,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_20",
-          "source": "sprites/Characters/body/body_blue/body_blue_20.png",
-          "sha256": "d42b0e53964c928064b7b1ad9af74ac886e1595314ca61034a52538aa8cb3e3c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_00.png",
-          "rect": [
-            647,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_21",
-          "source": "sprites/Characters/body/body_blue/body_blue_21.png",
-          "sha256": "4f02c80d7e7e71ab72c271dbcedf78ea5983d2ac0389117ea19e84fe54a7c400",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_00.png",
-          "rect": [
-            681,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_22",
-          "source": "sprites/Characters/body/body_blue/body_blue_22.png",
-          "sha256": "fbe65bb3da18873321e5959f92d6ad3b99d76efaecd9c2276fd7e10a7671ade1",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_00.png",
-          "rect": [
-            715,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_23",
-          "source": "sprites/Characters/body/body_blue/body_blue_23.png",
-          "sha256": "2a1bf8dd09e84ab98a7dabae5c268dedb95f864fd0438871084bd9e18d50e12b",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_00.png",
-          "rect": [
-            749,
-            885,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_blue_24",
-          "source": "sprites/Characters/body/body_blue/body_blue_24.png",
-          "sha256": "824b7f00a32df6471798a8e14968f74af82e80ab9f8a39cf3ef91f8a898f8e02",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_00.png",
-          "rect": [
-            783,
-            885,
+            977,
+            851,
             32,
             32
           ]
@@ -13838,7 +13430,7 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            817,
+            1,
             885,
             32,
             32
@@ -13855,7 +13447,7 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            851,
+            35,
             885,
             32,
             32
@@ -13872,7 +13464,7 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            885,
+            69,
             885,
             32,
             32
@@ -13889,7 +13481,7 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            919,
+            103,
             885,
             32,
             32
@@ -13906,7 +13498,7 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            953,
+            137,
             885,
             32,
             32
@@ -13923,7 +13515,7 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            987,
+            171,
             885,
             32,
             32
@@ -13940,8 +13532,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            919,
+            205,
+            885,
             32,
             32
           ]
@@ -13957,8 +13549,8 @@
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            35,
-            919,
+            239,
+            885,
             32,
             32
           ]
@@ -13974,8 +13566,8 @@
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
-            69,
-            919,
+            273,
+            885,
             32,
             32
           ]
@@ -13991,8 +13583,8 @@
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            103,
-            919,
+            307,
+            885,
             32,
             32
           ]
@@ -14008,8 +13600,8 @@
           "id": 11,
           "atlas": "atlas_00.png",
           "rect": [
-            137,
-            919,
+            341,
+            885,
             32,
             32
           ]
@@ -14025,212 +13617,8 @@
           "id": 12,
           "atlas": "atlas_00.png",
           "rect": [
-            171,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_13",
-          "source": "sprites/Characters/body/body_brown/body_brown_13.png",
-          "sha256": "7f0b3c54a3e73d20df64461654f82de4580eabbeb323cfb5d30f5860bfc7fa45",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_00.png",
-          "rect": [
-            205,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_14",
-          "source": "sprites/Characters/body/body_brown/body_brown_14.png",
-          "sha256": "dc6c5cca533b906604b472b9c9d87c5cd8057efb21b40da851e7e6a908a31f52",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_00.png",
-          "rect": [
-            239,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_15",
-          "source": "sprites/Characters/body/body_brown/body_brown_15.png",
-          "sha256": "09c67d891b7bb76bcd261ce0f9fb1df38f6af81e4ffd39aac8b71d08dc8fc399",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_00.png",
-          "rect": [
-            273,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_16",
-          "source": "sprites/Characters/body/body_brown/body_brown_16.png",
-          "sha256": "b84d7d3c561fa07a8a439700da98ee9ea3d43bea4d9890ddd7f3144dbb89bce0",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_00.png",
-          "rect": [
-            307,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_17",
-          "source": "sprites/Characters/body/body_brown/body_brown_17.png",
-          "sha256": "388ab63252c586de69edbd7b5a07689ec25cb43ef7a0bbe807f1631cf1836c8a",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_00.png",
-          "rect": [
-            341,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_18",
-          "source": "sprites/Characters/body/body_brown/body_brown_18.png",
-          "sha256": "87568b713c9a916ccacbcb82259c61ed8d3ec2af8b754af98baf0d2707dfc5a4",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_00.png",
-          "rect": [
             375,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_19",
-          "source": "sprites/Characters/body/body_brown/body_brown_19.png",
-          "sha256": "ae591bb5cfb10b0011286b8fa7ce516007c8da1afe90060eedbedc0adc6930c2",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_00.png",
-          "rect": [
-            409,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_20",
-          "source": "sprites/Characters/body/body_brown/body_brown_20.png",
-          "sha256": "b84d7d3c561fa07a8a439700da98ee9ea3d43bea4d9890ddd7f3144dbb89bce0",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_00.png",
-          "rect": [
-            443,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_21",
-          "source": "sprites/Characters/body/body_brown/body_brown_21.png",
-          "sha256": "3338e8c5aeedd340e9f57efa55111425023c754f79bd02998c9295c08bd745c0",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_00.png",
-          "rect": [
-            477,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_22",
-          "source": "sprites/Characters/body/body_brown/body_brown_22.png",
-          "sha256": "c099d3fb0f86582f0de8c586cccb73f03c4c9f6fe877be856d0e11c39f7d1e31",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_00.png",
-          "rect": [
-            511,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_23",
-          "source": "sprites/Characters/body/body_brown/body_brown_23.png",
-          "sha256": "e4447b10e3cbc21274e5a866d2e8aee71cefeede651997ef728ea2fc98867f8c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_00.png",
-          "rect": [
-            545,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_brown_24",
-          "source": "sprites/Characters/body/body_brown/body_brown_24.png",
-          "sha256": "760b4659c49bc4555dce6dbc6a7b78586c6fd4c607694e3ae42907260e4d1a17",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_00.png",
-          "rect": [
-            579,
-            919,
+            885,
             32,
             32
           ]
@@ -14250,8 +13638,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            613,
-            919,
+            409,
+            885,
             32,
             32
           ]
@@ -14267,8 +13655,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            647,
-            919,
+            443,
+            885,
             32,
             32
           ]
@@ -14284,8 +13672,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            681,
-            919,
+            477,
+            885,
             32,
             32
           ]
@@ -14301,8 +13689,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            715,
-            919,
+            511,
+            885,
             32,
             32
           ]
@@ -14318,8 +13706,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            749,
-            919,
+            545,
+            885,
             32,
             32
           ]
@@ -14335,8 +13723,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            783,
-            919,
+            579,
+            885,
             32,
             32
           ]
@@ -14352,8 +13740,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            817,
-            919,
+            613,
+            885,
             32,
             32
           ]
@@ -14369,8 +13757,8 @@
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            851,
-            919,
+            647,
+            885,
             32,
             32
           ]
@@ -14386,8 +13774,8 @@
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
+            681,
             885,
-            919,
             32,
             32
           ]
@@ -14403,8 +13791,8 @@
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            919,
-            919,
+            715,
+            885,
             32,
             32
           ]
@@ -14420,8 +13808,8 @@
           "id": 11,
           "atlas": "atlas_00.png",
           "rect": [
-            953,
-            919,
+            749,
+            885,
             32,
             32
           ]
@@ -14437,212 +13825,8 @@
           "id": 12,
           "atlas": "atlas_00.png",
           "rect": [
-            987,
-            919,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_13",
-          "source": "sprites/Characters/body/body_gold/body_gold_13.png",
-          "sha256": "c0e99d002900c75826009591921804aff494b9e3f5ebfbd5497ca90b208039e5",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_00.png",
-          "rect": [
-            1,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_14",
-          "source": "sprites/Characters/body/body_gold/body_gold_14.png",
-          "sha256": "1ea2945df531205ad75650102d7d72b0b289e4cda9b9432fa7d1c2ab48867148",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_00.png",
-          "rect": [
-            35,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_15",
-          "source": "sprites/Characters/body/body_gold/body_gold_15.png",
-          "sha256": "799ec05af49a3d2f7fc2a14c347d0e64be2871703590a15344ee3da00705700a",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_00.png",
-          "rect": [
-            69,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_16",
-          "source": "sprites/Characters/body/body_gold/body_gold_16.png",
-          "sha256": "9a33a5da08b67764e9ca0a6c88f9d0a51300dddf737daf5bba6b5e0f4716a48f",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_00.png",
-          "rect": [
-            103,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_17",
-          "source": "sprites/Characters/body/body_gold/body_gold_17.png",
-          "sha256": "e82ac9d40cb362325f5d5c6f16b1570d5fdc225c6b46199a472f5d21f329338b",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_00.png",
-          "rect": [
-            137,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_18",
-          "source": "sprites/Characters/body/body_gold/body_gold_18.png",
-          "sha256": "3aa9f336b3880e7d696e810d95684752f67d8f82149947d0312a671cbac98707",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_00.png",
-          "rect": [
-            171,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_19",
-          "source": "sprites/Characters/body/body_gold/body_gold_19.png",
-          "sha256": "5c589ee955113123aa189281473398b2aebbae90e67afdfa48ef52606ac5df52",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_00.png",
-          "rect": [
-            205,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_20",
-          "source": "sprites/Characters/body/body_gold/body_gold_20.png",
-          "sha256": "9a33a5da08b67764e9ca0a6c88f9d0a51300dddf737daf5bba6b5e0f4716a48f",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_00.png",
-          "rect": [
-            239,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_21",
-          "source": "sprites/Characters/body/body_gold/body_gold_21.png",
-          "sha256": "f74a0624691a95819a329cccb5e0cb1cfeadde433ece4d7bdafc304e136f6a21",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_00.png",
-          "rect": [
-            273,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_22",
-          "source": "sprites/Characters/body/body_gold/body_gold_22.png",
-          "sha256": "4f60987db43cd69f14bf63a6285013f1a3fa9e7c552cc2e9ace0c1686553d321",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_00.png",
-          "rect": [
-            307,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_23",
-          "source": "sprites/Characters/body/body_gold/body_gold_23.png",
-          "sha256": "5cd1a645297fadc1733bd31038bcc6616ee3e31ecf18e31f7e2bbbfae6da33a9",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_00.png",
-          "rect": [
-            341,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_gold_24",
-          "source": "sprites/Characters/body/body_gold/body_gold_24.png",
-          "sha256": "194448a93c6180430e45fdfc404d92973ca0baaaa633ede1392fcc84fba6aeff",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_00.png",
-          "rect": [
-            375,
-            953,
+            783,
+            885,
             32,
             32
           ]
@@ -14662,8 +13846,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            409,
-            953,
+            817,
+            885,
             32,
             32
           ]
@@ -14679,8 +13863,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            443,
-            953,
+            851,
+            885,
             32,
             32
           ]
@@ -14696,8 +13880,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            477,
-            953,
+            885,
+            885,
             32,
             32
           ]
@@ -14713,8 +13897,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            511,
-            953,
+            919,
+            885,
             32,
             32
           ]
@@ -14730,8 +13914,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            545,
             953,
+            885,
             32,
             32
           ]
@@ -14747,8 +13931,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            579,
-            953,
+            987,
+            885,
             32,
             32
           ]
@@ -14764,8 +13948,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            613,
-            953,
+            1,
+            919,
             32,
             32
           ]
@@ -14781,8 +13965,8 @@
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            647,
-            953,
+            35,
+            919,
             32,
             32
           ]
@@ -14798,8 +13982,8 @@
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
-            681,
-            953,
+            69,
+            919,
             32,
             32
           ]
@@ -14815,8 +13999,8 @@
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            715,
-            953,
+            103,
+            919,
             32,
             32
           ]
@@ -14832,8 +14016,8 @@
           "id": 11,
           "atlas": "atlas_00.png",
           "rect": [
-            749,
-            953,
+            137,
+            919,
             32,
             32
           ]
@@ -14849,212 +14033,8 @@
           "id": 12,
           "atlas": "atlas_00.png",
           "rect": [
-            783,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_13",
-          "source": "sprites/Characters/body/body_green/body_green_13.png",
-          "sha256": "dbb262d8449a1f8f06939bcbe014b05974ca4b88d53dc96b73eede0437dbb76f",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_00.png",
-          "rect": [
-            817,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_14",
-          "source": "sprites/Characters/body/body_green/body_green_14.png",
-          "sha256": "cf54d171ae1becb8380fa505fa619f0fcd5f3b85b2f4decccebe776379ee6720",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_00.png",
-          "rect": [
-            851,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_15",
-          "source": "sprites/Characters/body/body_green/body_green_15.png",
-          "sha256": "93b1edfaec777ea1540ba06f071c3f1e6c41de780e6b2d890b47b25aeaa0106b",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_00.png",
-          "rect": [
-            885,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_16",
-          "source": "sprites/Characters/body/body_green/body_green_16.png",
-          "sha256": "a0653547a55f86fc439b7de870cca80278cbaded8e50c7c425a023594d25efb6",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_00.png",
-          "rect": [
-            919,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_17",
-          "source": "sprites/Characters/body/body_green/body_green_17.png",
-          "sha256": "0411a52660b5981b7b82701b8d2cda5242456972d0d148580ef652909b8aa63e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_00.png",
-          "rect": [
-            953,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_18",
-          "source": "sprites/Characters/body/body_green/body_green_18.png",
-          "sha256": "64f8ae6512dfb2f496f7049e1c94dd85b4e8e4a437e5031fa2dd463a66ad53aa",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_00.png",
-          "rect": [
-            987,
-            953,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_19",
-          "source": "sprites/Characters/body/body_green/body_green_19.png",
-          "sha256": "b12afa15af38713cd74c6972d76f832f7c19939fd9f95e3fa3244d15407ab66a",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_00.png",
-          "rect": [
-            1,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_20",
-          "source": "sprites/Characters/body/body_green/body_green_20.png",
-          "sha256": "a0653547a55f86fc439b7de870cca80278cbaded8e50c7c425a023594d25efb6",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_00.png",
-          "rect": [
-            35,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_21",
-          "source": "sprites/Characters/body/body_green/body_green_21.png",
-          "sha256": "10af2d57d1d9908046b4f6672079689596d5a4a85e5a203ae88ca8a5e48187f1",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_00.png",
-          "rect": [
-            69,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_22",
-          "source": "sprites/Characters/body/body_green/body_green_22.png",
-          "sha256": "fd0bcac372191d9179bbf7f59c352f0b66e1f54a4a91d53c84c6d7078fbe5adf",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_00.png",
-          "rect": [
-            103,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_23",
-          "source": "sprites/Characters/body/body_green/body_green_23.png",
-          "sha256": "528cf835d1359f5d3258ea4069ef6f790794251e34702e6dea0bb2782869afad",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_00.png",
-          "rect": [
-            137,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_green_24",
-          "source": "sprites/Characters/body/body_green/body_green_24.png",
-          "sha256": "494851d4a37bbdf33737440272f68ad35f7c2fc6de1a1e1a9098f7bfbf35eafe",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_00.png",
-          "rect": [
             171,
-            987,
+            919,
             32,
             32
           ]
@@ -15075,7 +14055,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            987,
+            919,
             32,
             32
           ]
@@ -15092,7 +14072,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            987,
+            919,
             32,
             32
           ]
@@ -15109,7 +14089,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            987,
+            919,
             32,
             32
           ]
@@ -15126,7 +14106,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            987,
+            919,
             32,
             32
           ]
@@ -15143,7 +14123,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            987,
+            919,
             32,
             32
           ]
@@ -15160,7 +14140,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            987,
+            919,
             32,
             32
           ]
@@ -15177,7 +14157,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            987,
+            919,
             32,
             32
           ]
@@ -15194,7 +14174,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            987,
+            919,
             32,
             32
           ]
@@ -15211,7 +14191,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            987,
+            919,
             32,
             32
           ]
@@ -15228,7 +14208,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            987,
+            919,
             32,
             32
           ]
@@ -15245,7 +14225,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            987,
+            919,
             32,
             32
           ]
@@ -15262,211 +14242,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_13",
-          "source": "sprites/Characters/body/body_grey/body_grey_13.png",
-          "sha256": "fe66255e10759b0c43f4c8def10f0cdc725f7390fcb4fd2c9da8469c3fff41aa",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_00.png",
-          "rect": [
-            613,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_14",
-          "source": "sprites/Characters/body/body_grey/body_grey_14.png",
-          "sha256": "87d91f3e0636a1335f44e0396a5665a684c8897fb27c38d9814ed9893ec39893",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_00.png",
-          "rect": [
-            647,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_15",
-          "source": "sprites/Characters/body/body_grey/body_grey_15.png",
-          "sha256": "8baa44e63dad96e3375a1fa09bc3ddf64fee2bab9e9011a9ce9feeef517a1a74",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_00.png",
-          "rect": [
-            681,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_16",
-          "source": "sprites/Characters/body/body_grey/body_grey_16.png",
-          "sha256": "57cc7cb8ee947e1140eff15c9f94b298c8709f83d0b70c7703feb367f89661e3",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_00.png",
-          "rect": [
-            715,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_17",
-          "source": "sprites/Characters/body/body_grey/body_grey_17.png",
-          "sha256": "0284c7d94ab9923fb361471dcc50b0ee9aa7e8ae44e3bff9ac819f1c7dd435c4",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_00.png",
-          "rect": [
-            749,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_18",
-          "source": "sprites/Characters/body/body_grey/body_grey_18.png",
-          "sha256": "8511050f90bc1487c14b01c9648f5a6c67fecfec01c660fa9fd19aa2719ab481",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_00.png",
-          "rect": [
-            783,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_19",
-          "source": "sprites/Characters/body/body_grey/body_grey_19.png",
-          "sha256": "5b107b8b484535722ffd6441586235f9a6709bafbfd3dfa0fd0addbe75ba15bb",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_00.png",
-          "rect": [
-            817,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_20",
-          "source": "sprites/Characters/body/body_grey/body_grey_20.png",
-          "sha256": "57cc7cb8ee947e1140eff15c9f94b298c8709f83d0b70c7703feb367f89661e3",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_00.png",
-          "rect": [
-            851,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_21",
-          "source": "sprites/Characters/body/body_grey/body_grey_21.png",
-          "sha256": "5209a486e19745eeb9c72a9d48cd58559642273c70d5798c42502ab7fb33732e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_00.png",
-          "rect": [
-            885,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_22",
-          "source": "sprites/Characters/body/body_grey/body_grey_22.png",
-          "sha256": "e87b260c750a7786f5f27a08ed2593e2ab0b0f7613fa46cdeb0b506df9fccec1",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_00.png",
-          "rect": [
             919,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_23",
-          "source": "sprites/Characters/body/body_grey/body_grey_23.png",
-          "sha256": "a92cc98c2cd0ad94ee10580ec941d977c0a26857373c4e4209cf63365c5831e1",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_00.png",
-          "rect": [
-            953,
-            987,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_grey_24",
-          "source": "sprites/Characters/body/body_grey/body_grey_24.png",
-          "sha256": "183235eac67cdd8f0c83fdb6c98eb2e41fe3eb9f3c28f44fb1267b648af2b72e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_00.png",
-          "rect": [
-            987,
-            987,
             32,
             32
           ]
@@ -15484,10 +14260,10 @@
             32
           ],
           "id": 1,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            1,
-            1,
+            613,
+            919,
             32,
             32
           ]
@@ -15501,10 +14277,10 @@
             32
           ],
           "id": 2,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            35,
-            1,
+            647,
+            919,
             32,
             32
           ]
@@ -15518,10 +14294,10 @@
             32
           ],
           "id": 3,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            69,
-            1,
+            681,
+            919,
             32,
             32
           ]
@@ -15535,10 +14311,10 @@
             32
           ],
           "id": 4,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            103,
-            1,
+            715,
+            919,
             32,
             32
           ]
@@ -15552,10 +14328,10 @@
             32
           ],
           "id": 5,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            137,
-            1,
+            749,
+            919,
             32,
             32
           ]
@@ -15569,10 +14345,10 @@
             32
           ],
           "id": 6,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            171,
-            1,
+            783,
+            919,
             32,
             32
           ]
@@ -15586,10 +14362,10 @@
             32
           ],
           "id": 7,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            205,
-            1,
+            817,
+            919,
             32,
             32
           ]
@@ -15603,10 +14379,10 @@
             32
           ],
           "id": 8,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            239,
-            1,
+            851,
+            919,
             32,
             32
           ]
@@ -15620,10 +14396,10 @@
             32
           ],
           "id": 9,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            273,
-            1,
+            885,
+            919,
             32,
             32
           ]
@@ -15637,10 +14413,10 @@
             32
           ],
           "id": 10,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            307,
-            1,
+            919,
+            919,
             32,
             32
           ]
@@ -15654,10 +14430,10 @@
             32
           ],
           "id": 11,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            341,
-            1,
+            953,
+            919,
             32,
             32
           ]
@@ -15671,214 +14447,10 @@
             32
           ],
           "id": 12,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            375,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_13",
-          "source": "sprites/Characters/body/body_orange/body_orange_13.png",
-          "sha256": "51011efc068a26579d6c89ba8383d041e975c0ebebd57c79ae3b0b1b980bffa3",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_01.png",
-          "rect": [
-            409,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_14",
-          "source": "sprites/Characters/body/body_orange/body_orange_14.png",
-          "sha256": "bd2821ffa4df00d8683e82c618245984c8cadfe001811da9de7cf8d47fc84126",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_01.png",
-          "rect": [
-            443,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_15",
-          "source": "sprites/Characters/body/body_orange/body_orange_15.png",
-          "sha256": "e3fcd1ffd1511492c12e4e9cf3284b99719f15e66a263cdbc71ec5f17a56edca",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_01.png",
-          "rect": [
-            477,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_16",
-          "source": "sprites/Characters/body/body_orange/body_orange_16.png",
-          "sha256": "56a2ddde1ac83705f9cc8824f8ee646dbc6583e31a9d5398911f76f64df60c67",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_01.png",
-          "rect": [
-            511,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_17",
-          "source": "sprites/Characters/body/body_orange/body_orange_17.png",
-          "sha256": "65b26330556ccda2e7978465bef14f6e6c79a9423cc9d97cd3ec06b91bc6264c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_01.png",
-          "rect": [
-            545,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_18",
-          "source": "sprites/Characters/body/body_orange/body_orange_18.png",
-          "sha256": "95de90877ce44810847e2be048079ff609c0ea04d750a9f1cb68bbdc9eceb2e3",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_01.png",
-          "rect": [
-            579,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_19",
-          "source": "sprites/Characters/body/body_orange/body_orange_19.png",
-          "sha256": "93503edf5906707a0502ce96d54775b9f17cfdf55e142b47236fd436f3f85bae",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_01.png",
-          "rect": [
-            613,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_20",
-          "source": "sprites/Characters/body/body_orange/body_orange_20.png",
-          "sha256": "56a2ddde1ac83705f9cc8824f8ee646dbc6583e31a9d5398911f76f64df60c67",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_01.png",
-          "rect": [
-            647,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_21",
-          "source": "sprites/Characters/body/body_orange/body_orange_21.png",
-          "sha256": "1deb149c64f3734e843041a74d49b454d960deea8de2abe649e1481dc9a230b3",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_01.png",
-          "rect": [
-            681,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_22",
-          "source": "sprites/Characters/body/body_orange/body_orange_22.png",
-          "sha256": "23b4e0b87d30cf4630c9b830db7e3738c7b05af8c657e84adff714f0ce1e9859",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_01.png",
-          "rect": [
-            715,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_23",
-          "source": "sprites/Characters/body/body_orange/body_orange_23.png",
-          "sha256": "66870eb5a6a26d735635756421dcf101574004dc010da4b06b22b22b81d8c905",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_01.png",
-          "rect": [
-            749,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_orange_24",
-          "source": "sprites/Characters/body/body_orange/body_orange_24.png",
-          "sha256": "94ac18ab20307d781451c44ba2b22484e963fd59afa3685386743ff5284e6b6c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_01.png",
-          "rect": [
-            783,
-            1,
+            987,
+            919,
             32,
             32
           ]
@@ -15896,10 +14468,10 @@
             32
           ],
           "id": 1,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            817,
             1,
+            953,
             32,
             32
           ]
@@ -15913,10 +14485,10 @@
             32
           ],
           "id": 2,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            851,
-            1,
+            35,
+            953,
             32,
             32
           ]
@@ -15930,10 +14502,10 @@
             32
           ],
           "id": 3,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            885,
-            1,
+            69,
+            953,
             32,
             32
           ]
@@ -15947,10 +14519,10 @@
             32
           ],
           "id": 4,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            919,
-            1,
+            103,
+            953,
             32,
             32
           ]
@@ -15964,10 +14536,10 @@
             32
           ],
           "id": 5,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
+            137,
             953,
-            1,
             32,
             32
           ]
@@ -15981,10 +14553,10 @@
             32
           ],
           "id": 6,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            987,
-            1,
+            171,
+            953,
             32,
             32
           ]
@@ -15998,10 +14570,10 @@
             32
           ],
           "id": 7,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            1,
-            35,
+            205,
+            953,
             32,
             32
           ]
@@ -16015,10 +14587,10 @@
             32
           ],
           "id": 8,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            35,
-            35,
+            239,
+            953,
             32,
             32
           ]
@@ -16032,10 +14604,10 @@
             32
           ],
           "id": 9,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            69,
-            35,
+            273,
+            953,
             32,
             32
           ]
@@ -16049,10 +14621,10 @@
             32
           ],
           "id": 10,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            103,
-            35,
+            307,
+            953,
             32,
             32
           ]
@@ -16066,10 +14638,10 @@
             32
           ],
           "id": 11,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            137,
-            35,
+            341,
+            953,
             32,
             32
           ]
@@ -16083,214 +14655,10 @@
             32
           ],
           "id": 12,
-          "atlas": "atlas_01.png",
-          "rect": [
-            171,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_13",
-          "source": "sprites/Characters/body/body_pink/body_pink_13.png",
-          "sha256": "3761c6063d9dd93ebec199145fcdcd56f76f74f9708887d0488c1c2db068be6f",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_01.png",
-          "rect": [
-            205,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_14",
-          "source": "sprites/Characters/body/body_pink/body_pink_14.png",
-          "sha256": "fc4e2edd8baa035a79b7a790d310362eb5af5fd3c096a7ec30c96277281b28c9",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_01.png",
-          "rect": [
-            239,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_15",
-          "source": "sprites/Characters/body/body_pink/body_pink_15.png",
-          "sha256": "c1cff135a4a381e0fb3f593e9d480912373b2877f0073c9e05b3bdf26d061aee",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_01.png",
-          "rect": [
-            273,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_16",
-          "source": "sprites/Characters/body/body_pink/body_pink_16.png",
-          "sha256": "40dac0c0962151feac74b514abedca6a6bf6f7939a956da388bad7e61cca3dde",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_01.png",
-          "rect": [
-            307,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_17",
-          "source": "sprites/Characters/body/body_pink/body_pink_17.png",
-          "sha256": "81b773e8d688f16f5ccb8b458c2ae86c6fba30996acc44465e964134c411a81a",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_01.png",
-          "rect": [
-            341,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_18",
-          "source": "sprites/Characters/body/body_pink/body_pink_18.png",
-          "sha256": "f96062b845eac0ec14eb497264f466e5fbb910d1282b59700e9b351d0aa2b29f",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             375,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_19",
-          "source": "sprites/Characters/body/body_pink/body_pink_19.png",
-          "sha256": "88eb3361516d1e589395ff92b7ff51d60dbd4280ee5278669826d7685dc1c441",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_01.png",
-          "rect": [
-            409,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_20",
-          "source": "sprites/Characters/body/body_pink/body_pink_20.png",
-          "sha256": "40dac0c0962151feac74b514abedca6a6bf6f7939a956da388bad7e61cca3dde",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_01.png",
-          "rect": [
-            443,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_21",
-          "source": "sprites/Characters/body/body_pink/body_pink_21.png",
-          "sha256": "f07f1aebdcf80772acdc04c8055fed2518a7bebf2b7ee6017668e6d4e1d9c54c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_01.png",
-          "rect": [
-            477,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_22",
-          "source": "sprites/Characters/body/body_pink/body_pink_22.png",
-          "sha256": "6469f1f7a1c81eae200a6d4999233d1b1a40d39d8f70f8b89b53cb44999f6174",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_01.png",
-          "rect": [
-            511,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_23",
-          "source": "sprites/Characters/body/body_pink/body_pink_23.png",
-          "sha256": "0f30bfe76bfea6f29b46494a6f3171ada8c348838abd97be6643efc65a468fd1",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_01.png",
-          "rect": [
-            545,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_pink_24",
-          "source": "sprites/Characters/body/body_pink/body_pink_24.png",
-          "sha256": "6aa2636b5002a0e726290c8baae308058d3d8084bb53f67a5a42016b5a169c74",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_01.png",
-          "rect": [
-            579,
-            35,
+            953,
             32,
             32
           ]
@@ -16308,10 +14676,10 @@
             32
           ],
           "id": 1,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            613,
-            35,
+            409,
+            953,
             32,
             32
           ]
@@ -16325,10 +14693,10 @@
             32
           ],
           "id": 2,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            647,
-            35,
+            443,
+            953,
             32,
             32
           ]
@@ -16342,10 +14710,10 @@
             32
           ],
           "id": 3,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            681,
-            35,
+            477,
+            953,
             32,
             32
           ]
@@ -16359,10 +14727,10 @@
             32
           ],
           "id": 4,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            715,
-            35,
+            511,
+            953,
             32,
             32
           ]
@@ -16376,10 +14744,10 @@
             32
           ],
           "id": 5,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            749,
-            35,
+            545,
+            953,
             32,
             32
           ]
@@ -16393,10 +14761,10 @@
             32
           ],
           "id": 6,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            783,
-            35,
+            579,
+            953,
             32,
             32
           ]
@@ -16410,10 +14778,10 @@
             32
           ],
           "id": 7,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            817,
-            35,
+            613,
+            953,
             32,
             32
           ]
@@ -16427,10 +14795,10 @@
             32
           ],
           "id": 8,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            851,
-            35,
+            647,
+            953,
             32,
             32
           ]
@@ -16444,10 +14812,10 @@
             32
           ],
           "id": 9,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            885,
-            35,
+            681,
+            953,
             32,
             32
           ]
@@ -16461,10 +14829,10 @@
             32
           ],
           "id": 10,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            919,
-            35,
+            715,
+            953,
             32,
             32
           ]
@@ -16478,10 +14846,10 @@
             32
           ],
           "id": 11,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
+            749,
             953,
-            35,
             32,
             32
           ]
@@ -16495,214 +14863,10 @@
             32
           ],
           "id": 12,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            987,
-            35,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_13",
-          "source": "sprites/Characters/body/body_purple/body_purple_13.png",
-          "sha256": "ba13267e0e9ee9d43235a2f70594ad9182543cf78e786ff5fb0493abc9654db7",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_01.png",
-          "rect": [
-            1,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_14",
-          "source": "sprites/Characters/body/body_purple/body_purple_14.png",
-          "sha256": "e91f0ff0b6682476434039b58fe8a8e5c8aa1b3ed70401dafd8c4523ff5ac07a",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_01.png",
-          "rect": [
-            35,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_15",
-          "source": "sprites/Characters/body/body_purple/body_purple_15.png",
-          "sha256": "9290840a3f6446bebf29ee23c5aec54d5c024c99db8ecdf0eae790fc92cfe7ab",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_01.png",
-          "rect": [
-            69,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_16",
-          "source": "sprites/Characters/body/body_purple/body_purple_16.png",
-          "sha256": "2a8b1481726d16034adbb710167842f85d399b9022fc9e8f3376139ed3d74e01",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_01.png",
-          "rect": [
-            103,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_17",
-          "source": "sprites/Characters/body/body_purple/body_purple_17.png",
-          "sha256": "8b8075f4c6204abcc90ca54e6418a9ca2b83322ab54bcf7fdbc51253fb74ae8c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_01.png",
-          "rect": [
-            137,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_18",
-          "source": "sprites/Characters/body/body_purple/body_purple_18.png",
-          "sha256": "19d41e6174fc9dc801d7cf8d5f7177e3d6f5a57ff4fbf5b86d25ea59f34513a0",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_01.png",
-          "rect": [
-            171,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_19",
-          "source": "sprites/Characters/body/body_purple/body_purple_19.png",
-          "sha256": "8ae3d51c8ec0a565a59ff8dd1684833402210d361c0bf8895c49c39337d1bf0b",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_01.png",
-          "rect": [
-            205,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_20",
-          "source": "sprites/Characters/body/body_purple/body_purple_20.png",
-          "sha256": "2a8b1481726d16034adbb710167842f85d399b9022fc9e8f3376139ed3d74e01",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_01.png",
-          "rect": [
-            239,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_21",
-          "source": "sprites/Characters/body/body_purple/body_purple_21.png",
-          "sha256": "f246b90c6f5f48b069d45dfd94fcbb43f6803b502671b5440e92db0acc3bf44d",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_01.png",
-          "rect": [
-            273,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_22",
-          "source": "sprites/Characters/body/body_purple/body_purple_22.png",
-          "sha256": "27a48bec7903484401d2013c2058bb0da163b96a5a1d5575dd52e503dd81f273",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_01.png",
-          "rect": [
-            307,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_23",
-          "source": "sprites/Characters/body/body_purple/body_purple_23.png",
-          "sha256": "52e3d43f020956aa7c57a1f7986045520140f03e6cdc3425178445cf1a55fc07",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_01.png",
-          "rect": [
-            341,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_purple_24",
-          "source": "sprites/Characters/body/body_purple/body_purple_24.png",
-          "sha256": "ed386ce700c765354b063a655da9fa7a30882ed41222bf1a0702985fbf550b8e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_01.png",
-          "rect": [
-            375,
-            69,
+            783,
+            953,
             32,
             32
           ]
@@ -16720,10 +14884,10 @@
             32
           ],
           "id": 1,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            409,
-            69,
+            817,
+            953,
             32,
             32
           ]
@@ -16737,10 +14901,10 @@
             32
           ],
           "id": 2,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            443,
-            69,
+            851,
+            953,
             32,
             32
           ]
@@ -16754,10 +14918,10 @@
             32
           ],
           "id": 3,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            477,
-            69,
+            885,
+            953,
             32,
             32
           ]
@@ -16771,10 +14935,10 @@
             32
           ],
           "id": 4,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            511,
-            69,
+            919,
+            953,
             32,
             32
           ]
@@ -16788,10 +14952,10 @@
             32
           ],
           "id": 5,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            545,
-            69,
+            953,
+            953,
             32,
             32
           ]
@@ -16805,10 +14969,10 @@
             32
           ],
           "id": 6,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            579,
-            69,
+            987,
+            953,
             32,
             32
           ]
@@ -16822,10 +14986,10 @@
             32
           ],
           "id": 7,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            613,
-            69,
+            1,
+            987,
             32,
             32
           ]
@@ -16839,10 +15003,10 @@
             32
           ],
           "id": 8,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            647,
-            69,
+            35,
+            987,
             32,
             32
           ]
@@ -16856,10 +15020,10 @@
             32
           ],
           "id": 9,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            681,
             69,
+            987,
             32,
             32
           ]
@@ -16873,10 +15037,10 @@
             32
           ],
           "id": 10,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            715,
-            69,
+            103,
+            987,
             32,
             32
           ]
@@ -16890,10 +15054,10 @@
             32
           ],
           "id": 11,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            749,
-            69,
+            137,
+            987,
             32,
             32
           ]
@@ -16907,214 +15071,10 @@
             32
           ],
           "id": 12,
-          "atlas": "atlas_01.png",
-          "rect": [
-            783,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_13",
-          "source": "sprites/Characters/body/body_red/body_red_13.png",
-          "sha256": "fb8c063e3a1cad76ef5cb1460899169e446e5d193d8041d5e40cb7dc757b03df",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_01.png",
-          "rect": [
-            817,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_14",
-          "source": "sprites/Characters/body/body_red/body_red_14.png",
-          "sha256": "e1e3f416abe0d0ee2fd4278290d8ec05bc455182f627db1ebec39478f7e29177",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_01.png",
-          "rect": [
-            851,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_15",
-          "source": "sprites/Characters/body/body_red/body_red_15.png",
-          "sha256": "9ffef043a1de18d9d2b51b6256b8269e97261db1ea23bbdd59bf858a3a28dfd1",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_01.png",
-          "rect": [
-            885,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_16",
-          "source": "sprites/Characters/body/body_red/body_red_16.png",
-          "sha256": "3852bf0a246072e8e913a9c1dae8122936538d3dcee6e5a1a6fa7ed86481bff0",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_01.png",
-          "rect": [
-            919,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_17",
-          "source": "sprites/Characters/body/body_red/body_red_17.png",
-          "sha256": "247dcccbc59288a7fb4d62d76ff63ef444592f2d8029cd977838475f1c46fee4",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_01.png",
-          "rect": [
-            953,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_18",
-          "source": "sprites/Characters/body/body_red/body_red_18.png",
-          "sha256": "4d1e8c84f819d0b618ef5444265c7e6c786beeb60df14c5b6f9d7598d3237f81",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_01.png",
-          "rect": [
-            987,
-            69,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_19",
-          "source": "sprites/Characters/body/body_red/body_red_19.png",
-          "sha256": "afff4ad1fd8c5c0f2e58acb990e61f3248c3a577c3a885e75127df6da2a99897",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_01.png",
-          "rect": [
-            1,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_20",
-          "source": "sprites/Characters/body/body_red/body_red_20.png",
-          "sha256": "3852bf0a246072e8e913a9c1dae8122936538d3dcee6e5a1a6fa7ed86481bff0",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_01.png",
-          "rect": [
-            35,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_21",
-          "source": "sprites/Characters/body/body_red/body_red_21.png",
-          "sha256": "83860cda1e7315dc4565ffacdfd2ae9b61b1adc9254fa9b5ab81b72616c0856e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_01.png",
-          "rect": [
-            69,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_22",
-          "source": "sprites/Characters/body/body_red/body_red_22.png",
-          "sha256": "4d4f4d132cce126a1dd2f411c8c3e8bd88d0fd9e19eba3cd707bf0d88122b88c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_01.png",
-          "rect": [
-            103,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_23",
-          "source": "sprites/Characters/body/body_red/body_red_23.png",
-          "sha256": "3378298612f0bd1ffc7fc2e734e317a60eb8212f01119f52b6381ecc60d29b9b",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_01.png",
-          "rect": [
-            137,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_red_24",
-          "source": "sprites/Characters/body/body_red/body_red_24.png",
-          "sha256": "9a91789d0c2f0513b0f217a2bf423fe1b6c9a14b2b7af56b036570d723234efc",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             171,
-            103,
+            987,
             32,
             32
           ]
@@ -17132,10 +15092,10 @@
             32
           ],
           "id": 1,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             205,
-            103,
+            987,
             32,
             32
           ]
@@ -17149,10 +15109,10 @@
             32
           ],
           "id": 2,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             239,
-            103,
+            987,
             32,
             32
           ]
@@ -17166,10 +15126,10 @@
             32
           ],
           "id": 3,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             273,
-            103,
+            987,
             32,
             32
           ]
@@ -17183,10 +15143,10 @@
             32
           ],
           "id": 4,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             307,
-            103,
+            987,
             32,
             32
           ]
@@ -17200,10 +15160,10 @@
             32
           ],
           "id": 5,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             341,
-            103,
+            987,
             32,
             32
           ]
@@ -17217,10 +15177,10 @@
             32
           ],
           "id": 6,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             375,
-            103,
+            987,
             32,
             32
           ]
@@ -17234,10 +15194,10 @@
             32
           ],
           "id": 7,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             409,
-            103,
+            987,
             32,
             32
           ]
@@ -17251,10 +15211,10 @@
             32
           ],
           "id": 8,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             443,
-            103,
+            987,
             32,
             32
           ]
@@ -17268,10 +15228,10 @@
             32
           ],
           "id": 9,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             477,
-            103,
+            987,
             32,
             32
           ]
@@ -17285,10 +15245,10 @@
             32
           ],
           "id": 10,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             511,
-            103,
+            987,
             32,
             32
           ]
@@ -17302,10 +15262,10 @@
             32
           ],
           "id": 11,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             545,
-            103,
+            987,
             32,
             32
           ]
@@ -17319,214 +15279,10 @@
             32
           ],
           "id": 12,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
             579,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_13",
-          "source": "sprites/Characters/body/body_silver/body_silver_13.png",
-          "sha256": "aeb3f0dd3229749ade5b783d66d0d57d69c41186f44791651fcd9c556c705c3a",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_01.png",
-          "rect": [
-            613,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_14",
-          "source": "sprites/Characters/body/body_silver/body_silver_14.png",
-          "sha256": "57ece2f8aaf73bd76bb0150d221299bd817345cb1395a2b9c3d61312baf5a0a1",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_01.png",
-          "rect": [
-            647,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_15",
-          "source": "sprites/Characters/body/body_silver/body_silver_15.png",
-          "sha256": "9d67b7cae5b0753e806aacfe2946539a0086df2bffd994154c34c24b19fd4f5b",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_01.png",
-          "rect": [
-            681,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_16",
-          "source": "sprites/Characters/body/body_silver/body_silver_16.png",
-          "sha256": "f2cc1176803232e3316b153b63ebfee0412e0cab28503ed9d153f90997e1338d",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_01.png",
-          "rect": [
-            715,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_17",
-          "source": "sprites/Characters/body/body_silver/body_silver_17.png",
-          "sha256": "e63a2925b1b43435120da6502888a8c908b8c210d1a510016a42619072dc2d3d",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_01.png",
-          "rect": [
-            749,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_18",
-          "source": "sprites/Characters/body/body_silver/body_silver_18.png",
-          "sha256": "afe6221ff5f42da89f4b8a1e04ed4e610c50cbbcae02b63981f79ea9b908f259",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_01.png",
-          "rect": [
-            783,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_19",
-          "source": "sprites/Characters/body/body_silver/body_silver_19.png",
-          "sha256": "42045180af5971435ce07937ef870bcc941cd43c7ead2cb527ce951368aad34a",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_01.png",
-          "rect": [
-            817,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_20",
-          "source": "sprites/Characters/body/body_silver/body_silver_20.png",
-          "sha256": "f2cc1176803232e3316b153b63ebfee0412e0cab28503ed9d153f90997e1338d",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_01.png",
-          "rect": [
-            851,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_21",
-          "source": "sprites/Characters/body/body_silver/body_silver_21.png",
-          "sha256": "c29e2e5db2b37d822f9090770bca6936b81a2ef08acbcf3ad343d8b8896f6697",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_01.png",
-          "rect": [
-            885,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_22",
-          "source": "sprites/Characters/body/body_silver/body_silver_22.png",
-          "sha256": "38791cc9b977dae1c3487583a724e055cc67cd7b16284d3cb1579c22c9e7c26c",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_01.png",
-          "rect": [
-            919,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_23",
-          "source": "sprites/Characters/body/body_silver/body_silver_23.png",
-          "sha256": "140f851123fa8038487b66dc772bc4bbbb01213e6fab2e8f2dcc76655afb4d5f",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_01.png",
-          "rect": [
-            953,
-            103,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_silver_24",
-          "source": "sprites/Characters/body/body_silver/body_silver_24.png",
-          "sha256": "c2f0fae434e3491e2ebdf9fc8282a4ec357a2a69d61cccd8bf61b8b7f98ebc9d",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_01.png",
-          "rect": [
             987,
-            103,
             32,
             32
           ]
@@ -17544,10 +15300,10 @@
             32
           ],
           "id": 1,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            1,
-            137,
+            613,
+            987,
             32,
             32
           ]
@@ -17561,10 +15317,10 @@
             32
           ],
           "id": 2,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            35,
-            137,
+            647,
+            987,
             32,
             32
           ]
@@ -17578,10 +15334,10 @@
             32
           ],
           "id": 3,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            69,
-            137,
+            681,
+            987,
             32,
             32
           ]
@@ -17595,10 +15351,10 @@
             32
           ],
           "id": 4,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            103,
-            137,
+            715,
+            987,
             32,
             32
           ]
@@ -17612,10 +15368,10 @@
             32
           ],
           "id": 5,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            137,
-            137,
+            749,
+            987,
             32,
             32
           ]
@@ -17629,10 +15385,10 @@
             32
           ],
           "id": 6,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            171,
-            137,
+            783,
+            987,
             32,
             32
           ]
@@ -17646,10 +15402,10 @@
             32
           ],
           "id": 7,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            205,
-            137,
+            817,
+            987,
             32,
             32
           ]
@@ -17663,10 +15419,10 @@
             32
           ],
           "id": 8,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            239,
-            137,
+            851,
+            987,
             32,
             32
           ]
@@ -17680,10 +15436,10 @@
             32
           ],
           "id": 9,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            273,
-            137,
+            885,
+            987,
             32,
             32
           ]
@@ -17697,10 +15453,10 @@
             32
           ],
           "id": 10,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            307,
-            137,
+            919,
+            987,
             32,
             32
           ]
@@ -17714,10 +15470,10 @@
             32
           ],
           "id": 11,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            341,
-            137,
+            953,
+            987,
             32,
             32
           ]
@@ -17731,214 +15487,10 @@
             32
           ],
           "id": 12,
-          "atlas": "atlas_01.png",
+          "atlas": "atlas_00.png",
           "rect": [
-            375,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_13",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_13.png",
-          "sha256": "7bdc339912b032fc07d1c02eaf0b43ab0a7395dc2152f29ef3bec4ca5aa7a4b0",
-          "size": [
-            32,
-            32
-          ],
-          "id": 13,
-          "atlas": "atlas_01.png",
-          "rect": [
-            409,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_14",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_14.png",
-          "sha256": "d512952157c1aaecf43326beae8405763da1c9beb7f872eb9982020857084fa7",
-          "size": [
-            32,
-            32
-          ],
-          "id": 14,
-          "atlas": "atlas_01.png",
-          "rect": [
-            443,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_15",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_15.png",
-          "sha256": "2834d26f0ac8fcc1ab9a36d14cb556f9b0d8f84df23d67ef3657b4a7c007270e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 15,
-          "atlas": "atlas_01.png",
-          "rect": [
-            477,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_16",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_16.png",
-          "sha256": "6afeb8223c48d9ed9e2f04f43be287dfae5ba43bfa51cac3ed4d76a61a35977e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 16,
-          "atlas": "atlas_01.png",
-          "rect": [
-            511,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_17",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_17.png",
-          "sha256": "9447fc16b0ffd0a23384669168702433991641e5838ab2fa992c076244bc6977",
-          "size": [
-            32,
-            32
-          ],
-          "id": 17,
-          "atlas": "atlas_01.png",
-          "rect": [
-            545,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_18",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_18.png",
-          "sha256": "7fe2960d2fd840c13156ec1f308dfb455bf08318475578887ccb3a87c8a79680",
-          "size": [
-            32,
-            32
-          ],
-          "id": 18,
-          "atlas": "atlas_01.png",
-          "rect": [
-            579,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_19",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_19.png",
-          "sha256": "41209279e0020ea398987381355487ca61c4d43a42cfd1b8fa20c65830e4bf0e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 19,
-          "atlas": "atlas_01.png",
-          "rect": [
-            613,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_20",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_20.png",
-          "sha256": "6afeb8223c48d9ed9e2f04f43be287dfae5ba43bfa51cac3ed4d76a61a35977e",
-          "size": [
-            32,
-            32
-          ],
-          "id": 20,
-          "atlas": "atlas_01.png",
-          "rect": [
-            647,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_21",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_21.png",
-          "sha256": "1afe161cd050dfae22d4a90e8d4c13f68a5b3cdcf33ca5cc900cc9535c6cec88",
-          "size": [
-            32,
-            32
-          ],
-          "id": 21,
-          "atlas": "atlas_01.png",
-          "rect": [
-            681,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_22",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_22.png",
-          "sha256": "e80bbff88c7612135247f90b6f6a63fda395bbe0a6c98be697081db36bd9b169",
-          "size": [
-            32,
-            32
-          ],
-          "id": 22,
-          "atlas": "atlas_01.png",
-          "rect": [
-            715,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_23",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_23.png",
-          "sha256": "325b69c0511e88d0c42b433c6c8c989f82b3bf057d2b6598afd5b25d864d5d04",
-          "size": [
-            32,
-            32
-          ],
-          "id": 23,
-          "atlas": "atlas_01.png",
-          "rect": [
-            749,
-            137,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "body_yellow_24",
-          "source": "sprites/Characters/body/body_yellow/body_yellow_24.png",
-          "sha256": "cce3b741f5f9654d8dcba74def39756e3021e20273e733a2678af1e673219b25",
-          "size": [
-            32,
-            32
-          ],
-          "id": 24,
-          "atlas": "atlas_01.png",
-          "rect": [
-            783,
-            137,
+            987,
+            987,
             32,
             32
           ]
@@ -17958,8 +15510,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            817,
-            137,
+            1,
+            1,
             32,
             32
           ]
@@ -17975,8 +15527,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            851,
-            137,
+            35,
+            1,
             32,
             32
           ]
@@ -17992,8 +15544,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
-            137,
+            69,
+            1,
             32,
             32
           ]
@@ -18009,8 +15561,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
-            137,
+            103,
+            1,
             32,
             32
           ]
@@ -18026,8 +15578,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            953,
             137,
+            1,
             32,
             32
           ]
@@ -18043,8 +15595,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            987,
-            137,
+            171,
+            1,
             32,
             32
           ]
@@ -18060,8 +15612,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
+            205,
             1,
-            171,
             32,
             32
           ]
@@ -18077,8 +15629,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            35,
-            171,
+            239,
+            1,
             32,
             32
           ]
@@ -18094,8 +15646,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            69,
-            171,
+            273,
+            1,
             32,
             32
           ]
@@ -18111,8 +15663,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            171,
+            307,
+            1,
             32,
             32
           ]
@@ -18128,8 +15680,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            171,
+            341,
+            1,
             32,
             32
           ]
@@ -18145,8 +15697,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            171,
+            375,
+            1,
             32,
             32
           ]
@@ -18162,8 +15714,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            205,
-            171,
+            409,
+            1,
             32,
             32
           ]
@@ -18179,8 +15731,8 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            239,
-            171,
+            443,
+            1,
             32,
             32
           ]
@@ -18196,8 +15748,8 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            273,
-            171,
+            477,
+            1,
             32,
             32
           ]
@@ -18217,8 +15769,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            307,
-            171,
+            511,
+            1,
             32,
             32
           ]
@@ -18234,8 +15786,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            341,
-            171,
+            545,
+            1,
             32,
             32
           ]
@@ -18251,8 +15803,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            375,
-            171,
+            579,
+            1,
             32,
             32
           ]
@@ -18268,8 +15820,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            409,
-            171,
+            613,
+            1,
             32,
             32
           ]
@@ -18285,8 +15837,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            443,
-            171,
+            647,
+            1,
             32,
             32
           ]
@@ -18302,8 +15854,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            477,
-            171,
+            681,
+            1,
             32,
             32
           ]
@@ -18319,8 +15871,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            511,
-            171,
+            715,
+            1,
             32,
             32
           ]
@@ -18336,8 +15888,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            545,
-            171,
+            749,
+            1,
             32,
             32
           ]
@@ -18353,8 +15905,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            579,
-            171,
+            783,
+            1,
             32,
             32
           ]
@@ -18370,8 +15922,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            613,
-            171,
+            817,
+            1,
             32,
             32
           ]
@@ -18387,8 +15939,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            647,
-            171,
+            851,
+            1,
             32,
             32
           ]
@@ -18404,8 +15956,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            681,
-            171,
+            885,
+            1,
             32,
             32
           ]
@@ -18421,8 +15973,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            715,
-            171,
+            919,
+            1,
             32,
             32
           ]
@@ -18438,8 +15990,8 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            749,
-            171,
+            953,
+            1,
             32,
             32
           ]
@@ -18455,8 +16007,8 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            783,
-            171,
+            987,
+            1,
             32,
             32
           ]
@@ -18472,8 +16024,8 @@
           "id": 16,
           "atlas": "atlas_01.png",
           "rect": [
-            817,
-            171,
+            1,
+            35,
             32,
             32
           ]
@@ -18489,8 +16041,8 @@
           "id": 17,
           "atlas": "atlas_01.png",
           "rect": [
-            851,
-            171,
+            35,
+            35,
             32,
             32
           ]
@@ -18506,8 +16058,8 @@
           "id": 18,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
-            171,
+            69,
+            35,
             32,
             32
           ]
@@ -18523,8 +16075,8 @@
           "id": 19,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
-            171,
+            103,
+            35,
             32,
             32
           ]
@@ -18544,8 +16096,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            953,
-            171,
+            137,
+            35,
             32,
             32
           ]
@@ -18561,8 +16113,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            987,
             171,
+            35,
             32,
             32
           ]
@@ -18578,8 +16130,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
             205,
+            35,
             32,
             32
           ]
@@ -18595,8 +16147,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
+            239,
             35,
-            205,
             32,
             32
           ]
@@ -18612,8 +16164,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            69,
-            205,
+            273,
+            35,
             32,
             32
           ]
@@ -18629,8 +16181,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            205,
+            307,
+            35,
             32,
             32
           ]
@@ -18646,8 +16198,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            205,
+            341,
+            35,
             32,
             32
           ]
@@ -18663,8 +16215,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            205,
+            375,
+            35,
             32,
             32
           ]
@@ -18680,8 +16232,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            205,
-            205,
+            409,
+            35,
             32,
             32
           ]
@@ -18697,8 +16249,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            239,
-            205,
+            443,
+            35,
             32,
             32
           ]
@@ -18714,8 +16266,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            273,
-            205,
+            477,
+            35,
             32,
             32
           ]
@@ -18731,8 +16283,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            307,
-            205,
+            511,
+            35,
             32,
             32
           ]
@@ -18748,8 +16300,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            341,
-            205,
+            545,
+            35,
             32,
             32
           ]
@@ -18765,8 +16317,8 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            375,
-            205,
+            579,
+            35,
             32,
             32
           ]
@@ -18782,8 +16334,8 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            409,
-            205,
+            613,
+            35,
             32,
             32
           ]
@@ -18799,8 +16351,8 @@
           "id": 16,
           "atlas": "atlas_01.png",
           "rect": [
-            443,
-            205,
+            647,
+            35,
             32,
             32
           ]
@@ -18816,8 +16368,8 @@
           "id": 17,
           "atlas": "atlas_01.png",
           "rect": [
-            477,
-            205,
+            681,
+            35,
             32,
             32
           ]
@@ -18833,8 +16385,8 @@
           "id": 18,
           "atlas": "atlas_01.png",
           "rect": [
-            511,
-            205,
+            715,
+            35,
             32,
             32
           ]
@@ -18850,8 +16402,8 @@
           "id": 19,
           "atlas": "atlas_01.png",
           "rect": [
-            545,
-            205,
+            749,
+            35,
             32,
             32
           ]
@@ -18867,8 +16419,8 @@
           "id": 20,
           "atlas": "atlas_01.png",
           "rect": [
-            579,
-            205,
+            783,
+            35,
             32,
             32
           ]
@@ -18884,8 +16436,8 @@
           "id": 21,
           "atlas": "atlas_01.png",
           "rect": [
-            613,
-            205,
+            817,
+            35,
             32,
             32
           ]
@@ -18901,8 +16453,8 @@
           "id": 22,
           "atlas": "atlas_01.png",
           "rect": [
-            647,
-            205,
+            851,
+            35,
             32,
             32
           ]
@@ -18918,8 +16470,8 @@
           "id": 23,
           "atlas": "atlas_01.png",
           "rect": [
-            681,
-            205,
+            885,
+            35,
             32,
             32
           ]
@@ -18935,8 +16487,8 @@
           "id": 24,
           "atlas": "atlas_01.png",
           "rect": [
-            715,
-            205,
+            919,
+            35,
             32,
             32
           ]
@@ -18952,8 +16504,8 @@
           "id": 25,
           "atlas": "atlas_01.png",
           "rect": [
-            749,
-            205,
+            953,
+            35,
             32,
             32
           ]
@@ -18969,8 +16521,8 @@
           "id": 26,
           "atlas": "atlas_01.png",
           "rect": [
-            783,
-            205,
+            987,
+            35,
             32,
             32
           ]
@@ -18986,8 +16538,8 @@
           "id": 27,
           "atlas": "atlas_01.png",
           "rect": [
-            817,
-            205,
+            1,
+            69,
             32,
             32
           ]
@@ -19003,8 +16555,8 @@
           "id": 28,
           "atlas": "atlas_01.png",
           "rect": [
-            851,
-            205,
+            35,
+            69,
             32,
             32
           ]
@@ -19020,8 +16572,8 @@
           "id": 29,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
-            205,
+            69,
+            69,
             32,
             32
           ]
@@ -19037,8 +16589,8 @@
           "id": 30,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
-            205,
+            103,
+            69,
             32,
             32
           ]
@@ -19054,8 +16606,8 @@
           "id": 31,
           "atlas": "atlas_01.png",
           "rect": [
-            953,
-            205,
+            137,
+            69,
             32,
             32
           ]
@@ -19071,8 +16623,8 @@
           "id": 32,
           "atlas": "atlas_01.png",
           "rect": [
-            987,
-            205,
+            171,
+            69,
             32,
             32
           ]
@@ -19088,8 +16640,8 @@
           "id": 33,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            239,
+            205,
+            69,
             32,
             32
           ]
@@ -19105,8 +16657,8 @@
           "id": 34,
           "atlas": "atlas_01.png",
           "rect": [
-            35,
             239,
+            69,
             32,
             32
           ]
@@ -19122,8 +16674,8 @@
           "id": 35,
           "atlas": "atlas_01.png",
           "rect": [
+            273,
             69,
-            239,
             32,
             32
           ]
@@ -19139,8 +16691,8 @@
           "id": 36,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            239,
+            307,
+            69,
             32,
             32
           ]
@@ -19156,8 +16708,8 @@
           "id": 37,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            239,
+            341,
+            69,
             32,
             32
           ]
@@ -19173,8 +16725,8 @@
           "id": 38,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            239,
+            375,
+            69,
             32,
             32
           ]
@@ -19190,8 +16742,8 @@
           "id": 39,
           "atlas": "atlas_01.png",
           "rect": [
-            205,
-            239,
+            409,
+            69,
             32,
             32
           ]
@@ -19207,8 +16759,8 @@
           "id": 40,
           "atlas": "atlas_01.png",
           "rect": [
-            239,
-            239,
+            443,
+            69,
             32,
             32
           ]
@@ -19224,8 +16776,8 @@
           "id": 41,
           "atlas": "atlas_01.png",
           "rect": [
-            273,
-            239,
+            477,
+            69,
             32,
             32
           ]
@@ -19241,8 +16793,8 @@
           "id": 42,
           "atlas": "atlas_01.png",
           "rect": [
-            307,
-            239,
+            511,
+            69,
             32,
             32
           ]
@@ -19258,8 +16810,8 @@
           "id": 43,
           "atlas": "atlas_01.png",
           "rect": [
-            341,
-            239,
+            545,
+            69,
             32,
             32
           ]
@@ -19275,8 +16827,8 @@
           "id": 44,
           "atlas": "atlas_01.png",
           "rect": [
-            375,
-            239,
+            579,
+            69,
             32,
             32
           ]
@@ -19292,8 +16844,8 @@
           "id": 45,
           "atlas": "atlas_01.png",
           "rect": [
-            409,
-            239,
+            613,
+            69,
             32,
             32
           ]
@@ -19309,8 +16861,8 @@
           "id": 46,
           "atlas": "atlas_01.png",
           "rect": [
-            443,
-            239,
+            647,
+            69,
             32,
             32
           ]
@@ -19326,8 +16878,8 @@
           "id": 47,
           "atlas": "atlas_01.png",
           "rect": [
-            477,
-            239,
+            681,
+            69,
             32,
             32
           ]
@@ -19343,8 +16895,8 @@
           "id": 48,
           "atlas": "atlas_01.png",
           "rect": [
-            511,
-            239,
+            715,
+            69,
             32,
             32
           ]
@@ -19364,8 +16916,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            545,
-            239,
+            749,
+            69,
             32,
             32
           ]
@@ -19381,8 +16933,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            579,
-            239,
+            783,
+            69,
             32,
             32
           ]
@@ -19398,8 +16950,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            613,
-            239,
+            817,
+            69,
             32,
             32
           ]
@@ -19415,8 +16967,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            647,
-            239,
+            851,
+            69,
             32,
             32
           ]
@@ -19432,8 +16984,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            681,
-            239,
+            885,
+            69,
             32,
             32
           ]
@@ -19449,8 +17001,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            715,
-            239,
+            919,
+            69,
             32,
             32
           ]
@@ -19466,8 +17018,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            749,
-            239,
+            953,
+            69,
             32,
             32
           ]
@@ -19483,8 +17035,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            783,
-            239,
+            987,
+            69,
             32,
             32
           ]
@@ -19500,8 +17052,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            817,
-            239,
+            1,
+            103,
             32,
             32
           ]
@@ -19517,8 +17069,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            851,
-            239,
+            35,
+            103,
             32,
             32
           ]
@@ -19534,8 +17086,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
-            239,
+            69,
+            103,
             32,
             32
           ]
@@ -19551,8 +17103,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
-            239,
+            103,
+            103,
             32,
             32
           ]
@@ -19568,8 +17120,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            953,
-            239,
+            137,
+            103,
             32,
             32
           ]
@@ -19585,8 +17137,8 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            987,
-            239,
+            171,
+            103,
             32,
             32
           ]
@@ -19606,8 +17158,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            273,
+            205,
+            103,
             32,
             48
           ]
@@ -19623,8 +17175,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            35,
-            273,
+            239,
+            103,
             32,
             48
           ]
@@ -19640,8 +17192,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            69,
             273,
+            103,
             32,
             48
           ]
@@ -19657,8 +17209,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
+            307,
             103,
-            273,
             32,
             48
           ]
@@ -19674,8 +17226,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            273,
+            341,
+            103,
             32,
             48
           ]
@@ -19691,8 +17243,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            273,
+            375,
+            103,
             32,
             48
           ]
@@ -19708,8 +17260,8 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            205,
-            273,
+            409,
+            103,
             32,
             48
           ]
@@ -19729,8 +17281,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            239,
-            273,
+            443,
+            103,
             32,
             48
           ]
@@ -19746,8 +17298,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            273,
-            273,
+            477,
+            103,
             32,
             48
           ]
@@ -19767,8 +17319,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            307,
-            273,
+            511,
+            103,
             32,
             64
           ]
@@ -19784,8 +17336,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            341,
-            273,
+            545,
+            103,
             32,
             64
           ]
@@ -19801,8 +17353,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            375,
-            273,
+            579,
+            103,
             32,
             64
           ]
@@ -19818,8 +17370,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            409,
-            273,
+            613,
+            103,
             32,
             64
           ]
@@ -19835,8 +17387,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            443,
-            273,
+            647,
+            103,
             32,
             64
           ]
@@ -19852,8 +17404,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            477,
-            273,
+            681,
+            103,
             32,
             64
           ]
@@ -19869,8 +17421,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            511,
-            273,
+            715,
+            103,
             32,
             64
           ]
@@ -19886,8 +17438,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            545,
-            273,
+            749,
+            103,
             32,
             64
           ]
@@ -19903,8 +17455,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            579,
-            273,
+            783,
+            103,
             32,
             64
           ]
@@ -19920,8 +17472,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            613,
-            273,
+            817,
+            103,
             32,
             64
           ]
@@ -19941,8 +17493,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            647,
-            273,
+            851,
+            103,
             32,
             64
           ]
@@ -19958,8 +17510,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            681,
-            273,
+            885,
+            103,
             32,
             64
           ]
@@ -19975,8 +17527,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            715,
-            273,
+            919,
+            103,
             32,
             64
           ]
@@ -19992,8 +17544,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            749,
-            273,
+            953,
+            103,
             32,
             64
           ]
@@ -20009,8 +17561,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            783,
-            273,
+            987,
+            103,
             32,
             64
           ]
@@ -20026,8 +17578,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            817,
-            273,
+            1,
+            169,
             32,
             64
           ]
@@ -20043,8 +17595,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            851,
-            273,
+            35,
+            169,
             32,
             64
           ]
@@ -20060,8 +17612,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
-            273,
+            69,
+            169,
             32,
             64
           ]
@@ -20077,8 +17629,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
-            273,
+            103,
+            169,
             32,
             64
           ]
@@ -20094,8 +17646,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            953,
-            273,
+            137,
+            169,
             32,
             64
           ]
@@ -20111,8 +17663,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            987,
-            273,
+            171,
+            169,
             32,
             64
           ]
@@ -20128,8 +17680,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            339,
+            205,
+            169,
             32,
             64
           ]
@@ -20145,8 +17697,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            35,
-            339,
+            239,
+            169,
             32,
             64
           ]
@@ -20166,8 +17718,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            69,
-            339,
+            273,
+            169,
             32,
             48
           ]
@@ -20183,8 +17735,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            339,
+            307,
+            169,
             32,
             48
           ]
@@ -20200,8 +17752,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            137,
-            339,
+            341,
+            169,
             32,
             48
           ]
@@ -20217,8 +17769,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            171,
-            339,
+            375,
+            169,
             32,
             48
           ]
@@ -20234,8 +17786,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            205,
-            339,
+            409,
+            169,
             32,
             48
           ]
@@ -20251,8 +17803,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            239,
-            339,
+            443,
+            169,
             32,
             48
           ]
@@ -20268,8 +17820,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            273,
-            339,
+            477,
+            169,
             32,
             48
           ]
@@ -20285,8 +17837,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            307,
-            339,
+            511,
+            169,
             32,
             48
           ]
@@ -20302,8 +17854,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            341,
-            339,
+            545,
+            169,
             32,
             48
           ]
@@ -20319,8 +17871,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            375,
-            339,
+            579,
+            169,
             32,
             48
           ]
@@ -20336,8 +17888,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            409,
-            339,
+            613,
+            169,
             32,
             48
           ]
@@ -20353,8 +17905,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            443,
-            339,
+            647,
+            169,
             32,
             48
           ]
@@ -20370,8 +17922,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            477,
-            339,
+            681,
+            169,
             32,
             48
           ]
@@ -20387,8 +17939,8 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            511,
-            339,
+            715,
+            169,
             32,
             48
           ]
@@ -20404,8 +17956,8 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            545,
-            339,
+            749,
+            169,
             32,
             48
           ]
@@ -20421,8 +17973,8 @@
           "id": 16,
           "atlas": "atlas_01.png",
           "rect": [
-            579,
-            339,
+            783,
+            169,
             32,
             48
           ]
@@ -20438,8 +17990,8 @@
           "id": 17,
           "atlas": "atlas_01.png",
           "rect": [
-            613,
-            339,
+            817,
+            169,
             32,
             48
           ]
@@ -20455,8 +18007,8 @@
           "id": 18,
           "atlas": "atlas_01.png",
           "rect": [
-            647,
-            339,
+            851,
+            169,
             32,
             48
           ]
@@ -20472,8 +18024,8 @@
           "id": 19,
           "atlas": "atlas_01.png",
           "rect": [
-            681,
-            339,
+            885,
+            169,
             32,
             48
           ]
@@ -20489,8 +18041,8 @@
           "id": 20,
           "atlas": "atlas_01.png",
           "rect": [
-            715,
-            339,
+            919,
+            169,
             32,
             48
           ]
@@ -20510,8 +18062,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            749,
-            339,
+            953,
+            169,
             32,
             32
           ]
@@ -20527,8 +18079,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            783,
-            339,
+            987,
+            169,
             32,
             32
           ]
@@ -20544,8 +18096,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            817,
-            339,
+            1,
+            235,
             32,
             32
           ]
@@ -20561,8 +18113,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            851,
-            339,
+            35,
+            235,
             32,
             32
           ]
@@ -20578,8 +18130,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            885,
-            339,
+            69,
+            235,
             32,
             32
           ]
@@ -20595,8 +18147,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            919,
-            339,
+            103,
+            235,
             32,
             32
           ]
@@ -20612,8 +18164,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            953,
-            339,
+            137,
+            235,
             32,
             32
           ]
@@ -20633,8 +18185,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            987,
-            339,
+            171,
+            235,
             32,
             32
           ]
@@ -20650,8 +18202,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            405,
+            205,
+            235,
             32,
             32
           ]
@@ -20667,8 +18219,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            35,
-            405,
+            239,
+            235,
             32,
             32
           ]
@@ -20684,8 +18236,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            69,
-            405,
+            273,
+            235,
             32,
             32
           ]
@@ -20705,8 +18257,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            103,
-            405,
+            307,
+            235,
             64,
             32
           ]
@@ -20722,8 +18274,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            169,
-            405,
+            373,
+            235,
             64,
             32
           ]
@@ -20739,8 +18291,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
+            439,
             235,
-            405,
             64,
             32
           ]
@@ -20756,8 +18308,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            301,
-            405,
+            505,
+            235,
             64,
             32
           ]
@@ -20773,8 +18325,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            367,
-            405,
+            571,
+            235,
             64,
             32
           ]
@@ -20790,8 +18342,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            433,
-            405,
+            637,
+            235,
             64,
             32
           ]
@@ -20807,8 +18359,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            499,
-            405,
+            703,
+            235,
             64,
             32
           ]
@@ -20824,8 +18376,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            565,
-            405,
+            769,
+            235,
             64,
             32
           ]
@@ -20841,8 +18393,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            631,
-            405,
+            835,
+            235,
             64,
             32
           ]
@@ -20858,8 +18410,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            697,
-            405,
+            901,
+            235,
             64,
             32
           ]
@@ -20875,8 +18427,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            763,
-            405,
+            1,
+            269,
             64,
             32
           ]
@@ -20892,8 +18444,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            829,
-            405,
+            67,
+            269,
             64,
             32
           ]
@@ -20909,8 +18461,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            895,
-            405,
+            133,
+            269,
             64,
             32
           ]
@@ -20926,8 +18478,8 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            439,
+            199,
+            269,
             64,
             32
           ]
@@ -20943,8 +18495,8 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            67,
-            439,
+            265,
+            269,
             64,
             32
           ]
@@ -20964,8 +18516,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            133,
-            439,
+            331,
+            269,
             32,
             32
           ]
@@ -20981,8 +18533,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            167,
-            439,
+            365,
+            269,
             32,
             32
           ]
@@ -20998,8 +18550,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            201,
-            439,
+            399,
+            269,
             32,
             32
           ]
@@ -21015,8 +18567,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            235,
-            439,
+            433,
+            269,
             32,
             32
           ]
@@ -21032,8 +18584,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
+            467,
             269,
-            439,
             32,
             32
           ]
@@ -21049,8 +18601,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            303,
-            439,
+            501,
+            269,
             32,
             32
           ]
@@ -21066,8 +18618,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            337,
-            439,
+            535,
+            269,
             32,
             32
           ]
@@ -21083,8 +18635,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            371,
-            439,
+            569,
+            269,
             32,
             32
           ]
@@ -21100,8 +18652,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            405,
-            439,
+            603,
+            269,
             32,
             32
           ]
@@ -21117,8 +18669,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            439,
-            439,
+            637,
+            269,
             32,
             32
           ]
@@ -21134,8 +18686,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            473,
-            439,
+            671,
+            269,
             32,
             32
           ]
@@ -21155,8 +18707,8 @@
           "id": 20,
           "atlas": "atlas_01.png",
           "rect": [
-            507,
-            439,
+            705,
+            269,
             32,
             32
           ]
@@ -21176,8 +18728,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            541,
-            439,
+            739,
+            269,
             64,
             32
           ]
@@ -21193,8 +18745,8 @@
           "id": 2,
           "atlas": "atlas_01.png",
           "rect": [
-            607,
-            439,
+            805,
+            269,
             64,
             32
           ]
@@ -21210,8 +18762,8 @@
           "id": 3,
           "atlas": "atlas_01.png",
           "rect": [
-            673,
-            439,
+            871,
+            269,
             64,
             32
           ]
@@ -21227,8 +18779,8 @@
           "id": 4,
           "atlas": "atlas_01.png",
           "rect": [
-            739,
-            439,
+            937,
+            269,
             64,
             32
           ]
@@ -21244,8 +18796,8 @@
           "id": 5,
           "atlas": "atlas_01.png",
           "rect": [
-            805,
-            439,
+            1,
+            303,
             64,
             32
           ]
@@ -21261,8 +18813,8 @@
           "id": 6,
           "atlas": "atlas_01.png",
           "rect": [
-            871,
-            439,
+            67,
+            303,
             64,
             32
           ]
@@ -21278,8 +18830,8 @@
           "id": 7,
           "atlas": "atlas_01.png",
           "rect": [
-            937,
-            439,
+            133,
+            303,
             64,
             32
           ]
@@ -21295,8 +18847,8 @@
           "id": 8,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            473,
+            199,
+            303,
             64,
             32
           ]
@@ -21312,8 +18864,8 @@
           "id": 9,
           "atlas": "atlas_01.png",
           "rect": [
-            67,
-            473,
+            265,
+            303,
             64,
             32
           ]
@@ -21329,8 +18881,8 @@
           "id": 10,
           "atlas": "atlas_01.png",
           "rect": [
-            133,
-            473,
+            331,
+            303,
             64,
             32
           ]
@@ -21346,8 +18898,8 @@
           "id": 11,
           "atlas": "atlas_01.png",
           "rect": [
-            199,
-            473,
+            397,
+            303,
             64,
             32
           ]
@@ -21363,8 +18915,8 @@
           "id": 12,
           "atlas": "atlas_01.png",
           "rect": [
-            265,
-            473,
+            463,
+            303,
             64,
             32
           ]
@@ -21380,8 +18932,8 @@
           "id": 13,
           "atlas": "atlas_01.png",
           "rect": [
-            331,
-            473,
+            529,
+            303,
             64,
             32
           ]
@@ -21397,8 +18949,8 @@
           "id": 14,
           "atlas": "atlas_01.png",
           "rect": [
-            397,
-            473,
+            595,
+            303,
             64,
             32
           ]
@@ -21414,8 +18966,8 @@
           "id": 15,
           "atlas": "atlas_01.png",
           "rect": [
-            463,
-            473,
+            661,
+            303,
             64,
             32
           ]
@@ -21431,8 +18983,8 @@
           "id": 16,
           "atlas": "atlas_01.png",
           "rect": [
-            529,
-            473,
+            727,
+            303,
             64,
             32
           ]
@@ -21448,8 +19000,8 @@
           "id": 17,
           "atlas": "atlas_01.png",
           "rect": [
-            595,
-            473,
+            793,
+            303,
             64,
             32
           ]
@@ -21465,8 +19017,8 @@
           "id": 18,
           "atlas": "atlas_01.png",
           "rect": [
-            661,
-            473,
+            859,
+            303,
             64,
             32
           ]
@@ -21482,8 +19034,8 @@
           "id": 19,
           "atlas": "atlas_01.png",
           "rect": [
-            727,
-            473,
+            925,
+            303,
             64,
             32
           ]
@@ -21499,8 +19051,8 @@
           "id": 20,
           "atlas": "atlas_01.png",
           "rect": [
-            793,
-            473,
+            1,
+            337,
             64,
             32
           ]
@@ -21516,8 +19068,8 @@
           "id": 21,
           "atlas": "atlas_01.png",
           "rect": [
-            859,
-            473,
+            67,
+            337,
             64,
             32
           ]
@@ -21533,8 +19085,8 @@
           "id": 22,
           "atlas": "atlas_01.png",
           "rect": [
-            925,
-            473,
+            133,
+            337,
             64,
             32
           ]
@@ -21550,8 +19102,8 @@
           "id": 23,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            507,
+            199,
+            337,
             64,
             32
           ]
@@ -21567,8 +19119,8 @@
           "id": 24,
           "atlas": "atlas_01.png",
           "rect": [
-            67,
-            507,
+            265,
+            337,
             64,
             32
           ]
@@ -21584,8 +19136,8 @@
           "id": 25,
           "atlas": "atlas_01.png",
           "rect": [
-            133,
-            507,
+            331,
+            337,
             64,
             32
           ]
@@ -21601,8 +19153,8 @@
           "id": 26,
           "atlas": "atlas_01.png",
           "rect": [
-            199,
-            507,
+            397,
+            337,
             64,
             32
           ]
@@ -21618,8 +19170,8 @@
           "id": 27,
           "atlas": "atlas_01.png",
           "rect": [
-            265,
-            507,
+            463,
+            337,
             64,
             32
           ]
@@ -21635,8 +19187,8 @@
           "id": 28,
           "atlas": "atlas_01.png",
           "rect": [
-            331,
-            507,
+            529,
+            337,
             64,
             32
           ]
@@ -21652,8 +19204,8 @@
           "id": 29,
           "atlas": "atlas_01.png",
           "rect": [
-            397,
-            507,
+            595,
+            337,
             64,
             32
           ]
@@ -21669,8 +19221,8 @@
           "id": 30,
           "atlas": "atlas_01.png",
           "rect": [
-            463,
-            507,
+            661,
+            337,
             64,
             32
           ]
@@ -21686,8 +19238,8 @@
           "id": 31,
           "atlas": "atlas_01.png",
           "rect": [
-            529,
-            507,
+            727,
+            337,
             64,
             32
           ]
@@ -21703,8 +19255,8 @@
           "id": 32,
           "atlas": "atlas_01.png",
           "rect": [
-            595,
-            507,
+            793,
+            337,
             64,
             32
           ]
@@ -21720,8 +19272,8 @@
           "id": 33,
           "atlas": "atlas_01.png",
           "rect": [
-            661,
-            507,
+            859,
+            337,
             64,
             32
           ]
@@ -21737,8 +19289,8 @@
           "id": 34,
           "atlas": "atlas_01.png",
           "rect": [
-            727,
-            507,
+            925,
+            337,
             64,
             32
           ]
@@ -21754,8 +19306,8 @@
           "id": 35,
           "atlas": "atlas_01.png",
           "rect": [
-            793,
-            507,
+            1,
+            371,
             64,
             32
           ]
@@ -21771,8 +19323,8 @@
           "id": 36,
           "atlas": "atlas_01.png",
           "rect": [
-            859,
-            507,
+            67,
+            371,
             64,
             32
           ]
@@ -21788,8 +19340,8 @@
           "id": 37,
           "atlas": "atlas_01.png",
           "rect": [
-            925,
-            507,
+            133,
+            371,
             64,
             32
           ]
@@ -21805,8 +19357,8 @@
           "id": 38,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            541,
+            199,
+            371,
             64,
             32
           ]
@@ -21822,8 +19374,8 @@
           "id": 39,
           "atlas": "atlas_01.png",
           "rect": [
-            67,
-            541,
+            265,
+            371,
             64,
             32
           ]
@@ -21839,8 +19391,8 @@
           "id": 40,
           "atlas": "atlas_01.png",
           "rect": [
-            133,
-            541,
+            331,
+            371,
             64,
             32
           ]
@@ -21856,8 +19408,8 @@
           "id": 41,
           "atlas": "atlas_01.png",
           "rect": [
-            199,
-            541,
+            397,
+            371,
             64,
             32
           ]
@@ -21873,8 +19425,8 @@
           "id": 42,
           "atlas": "atlas_01.png",
           "rect": [
-            265,
-            541,
+            463,
+            371,
             64,
             32
           ]
@@ -21890,8 +19442,8 @@
           "id": 43,
           "atlas": "atlas_01.png",
           "rect": [
-            331,
-            541,
+            529,
+            371,
             64,
             32
           ]
@@ -21907,8 +19459,8 @@
           "id": 44,
           "atlas": "atlas_01.png",
           "rect": [
-            397,
-            541,
+            595,
+            371,
             64,
             32
           ]
@@ -21924,8 +19476,8 @@
           "id": 45,
           "atlas": "atlas_01.png",
           "rect": [
-            463,
-            541,
+            661,
+            371,
             64,
             32
           ]
@@ -21941,8 +19493,8 @@
           "id": 46,
           "atlas": "atlas_01.png",
           "rect": [
-            529,
-            541,
+            727,
+            371,
             64,
             32
           ]
@@ -21958,8 +19510,8 @@
           "id": 47,
           "atlas": "atlas_01.png",
           "rect": [
-            595,
-            541,
+            793,
+            371,
             64,
             32
           ]
@@ -21975,8 +19527,8 @@
           "id": 48,
           "atlas": "atlas_01.png",
           "rect": [
-            661,
-            541,
+            859,
+            371,
             64,
             32
           ]
@@ -21992,8 +19544,8 @@
           "id": 49,
           "atlas": "atlas_01.png",
           "rect": [
-            727,
-            541,
+            925,
+            371,
             64,
             32
           ]
@@ -22009,8 +19561,8 @@
           "id": 50,
           "atlas": "atlas_01.png",
           "rect": [
-            793,
-            541,
+            1,
+            405,
             64,
             32
           ]
@@ -22026,8 +19578,8 @@
           "id": 51,
           "atlas": "atlas_01.png",
           "rect": [
-            859,
-            541,
+            67,
+            405,
             64,
             32
           ]
@@ -22043,8 +19595,8 @@
           "id": 52,
           "atlas": "atlas_01.png",
           "rect": [
-            925,
-            541,
+            133,
+            405,
             64,
             32
           ]
@@ -22060,8 +19612,8 @@
           "id": 53,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            575,
+            199,
+            405,
             64,
             32
           ]
@@ -22077,8 +19629,8 @@
           "id": 54,
           "atlas": "atlas_01.png",
           "rect": [
-            67,
-            575,
+            265,
+            405,
             64,
             32
           ]
@@ -22094,8 +19646,8 @@
           "id": 55,
           "atlas": "atlas_01.png",
           "rect": [
-            133,
-            575,
+            331,
+            405,
             64,
             32
           ]
@@ -22111,8 +19663,8 @@
           "id": 56,
           "atlas": "atlas_01.png",
           "rect": [
-            199,
-            575,
+            397,
+            405,
             64,
             32
           ]
@@ -22128,8 +19680,8 @@
           "id": 57,
           "atlas": "atlas_01.png",
           "rect": [
-            265,
-            575,
+            463,
+            405,
             64,
             32
           ]
@@ -22145,8 +19697,8 @@
           "id": 58,
           "atlas": "atlas_01.png",
           "rect": [
-            331,
-            575,
+            529,
+            405,
             64,
             32
           ]
@@ -22162,8 +19714,8 @@
           "id": 59,
           "atlas": "atlas_01.png",
           "rect": [
-            397,
-            575,
+            595,
+            405,
             64,
             32
           ]
@@ -22179,8 +19731,8 @@
           "id": 60,
           "atlas": "atlas_01.png",
           "rect": [
-            463,
-            575,
+            661,
+            405,
             64,
             32
           ]
@@ -22196,8 +19748,8 @@
           "id": 61,
           "atlas": "atlas_01.png",
           "rect": [
-            529,
-            575,
+            727,
+            405,
             64,
             32
           ]
@@ -22213,8 +19765,8 @@
           "id": 62,
           "atlas": "atlas_01.png",
           "rect": [
-            595,
-            575,
+            793,
+            405,
             64,
             32
           ]
@@ -22230,8 +19782,8 @@
           "id": 63,
           "atlas": "atlas_01.png",
           "rect": [
-            661,
-            575,
+            859,
+            405,
             64,
             32
           ]
@@ -22247,8 +19799,8 @@
           "id": 64,
           "atlas": "atlas_01.png",
           "rect": [
-            727,
-            575,
+            925,
+            405,
             64,
             32
           ]
@@ -22264,8 +19816,8 @@
           "id": 65,
           "atlas": "atlas_01.png",
           "rect": [
-            793,
-            575,
+            1,
+            439,
             64,
             32
           ]
@@ -22281,8 +19833,8 @@
           "id": 66,
           "atlas": "atlas_01.png",
           "rect": [
-            859,
-            575,
+            67,
+            439,
             64,
             32
           ]
@@ -22298,8 +19850,8 @@
           "id": 67,
           "atlas": "atlas_01.png",
           "rect": [
-            925,
-            575,
+            133,
+            439,
             64,
             32
           ]
@@ -22315,8 +19867,8 @@
           "id": 68,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            609,
+            199,
+            439,
             64,
             32
           ]
@@ -22332,8 +19884,8 @@
           "id": 69,
           "atlas": "atlas_01.png",
           "rect": [
-            67,
-            609,
+            265,
+            439,
             64,
             32
           ]
@@ -22349,8 +19901,8 @@
           "id": 70,
           "atlas": "atlas_01.png",
           "rect": [
-            133,
-            609,
+            331,
+            439,
             64,
             32
           ]
@@ -22366,8 +19918,8 @@
           "id": 71,
           "atlas": "atlas_01.png",
           "rect": [
-            199,
-            609,
+            397,
+            439,
             64,
             32
           ]
@@ -22383,8 +19935,8 @@
           "id": 72,
           "atlas": "atlas_01.png",
           "rect": [
-            265,
-            609,
+            463,
+            439,
             64,
             32
           ]
@@ -22400,8 +19952,8 @@
           "id": 73,
           "atlas": "atlas_01.png",
           "rect": [
-            331,
-            609,
+            529,
+            439,
             64,
             32
           ]
@@ -22417,8 +19969,8 @@
           "id": 74,
           "atlas": "atlas_01.png",
           "rect": [
-            397,
-            609,
+            595,
+            439,
             64,
             32
           ]
@@ -22434,8 +19986,8 @@
           "id": 75,
           "atlas": "atlas_01.png",
           "rect": [
-            463,
-            609,
+            661,
+            439,
             64,
             32
           ]
@@ -22451,8 +20003,8 @@
           "id": 76,
           "atlas": "atlas_01.png",
           "rect": [
-            529,
-            609,
+            727,
+            439,
             64,
             32
           ]
@@ -22468,8 +20020,8 @@
           "id": 77,
           "atlas": "atlas_01.png",
           "rect": [
-            595,
-            609,
+            793,
+            439,
             64,
             32
           ]
@@ -22485,8 +20037,8 @@
           "id": 78,
           "atlas": "atlas_01.png",
           "rect": [
-            661,
-            609,
+            859,
+            439,
             64,
             32
           ]
@@ -22502,8 +20054,8 @@
           "id": 79,
           "atlas": "atlas_01.png",
           "rect": [
-            727,
-            609,
+            925,
+            439,
             64,
             32
           ]
@@ -22519,8 +20071,8 @@
           "id": 80,
           "atlas": "atlas_01.png",
           "rect": [
-            793,
-            609,
+            1,
+            473,
             64,
             32
           ]
@@ -22536,8 +20088,8 @@
           "id": 81,
           "atlas": "atlas_01.png",
           "rect": [
-            859,
-            609,
+            67,
+            473,
             64,
             32
           ]
@@ -22553,8 +20105,8 @@
           "id": 82,
           "atlas": "atlas_01.png",
           "rect": [
-            925,
-            609,
+            133,
+            473,
             64,
             32
           ]
@@ -22570,8 +20122,8 @@
           "id": 83,
           "atlas": "atlas_01.png",
           "rect": [
-            1,
-            643,
+            199,
+            473,
             64,
             32
           ]
@@ -22587,8 +20139,8 @@
           "id": 84,
           "atlas": "atlas_01.png",
           "rect": [
-            67,
-            643,
+            265,
+            473,
             64,
             32
           ]
@@ -22608,8 +20160,8 @@
           "id": 1,
           "atlas": "atlas_01.png",
           "rect": [
-            133,
-            643,
+            331,
+            473,
             32,
             32
           ]

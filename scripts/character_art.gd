@@ -14,7 +14,7 @@ const BOW_OFFSET := Vector2i(1, 0) # Native sprite faces left; flip_h mirrors th
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
 const FEET_Y := 80
-const FRAME_COUNTS := {"idle": 4, "walk": 8, "run": 8, "attack": 6}
+const FRAME_COUNTS := {"idle": 4, "walk": 8, "attack": 6}
 # Original chop_attack_sample.gif: six fixed-body frames, exactly 100ms each.
 # Padding accommodates enlarged weapons at their original pixel size.
 const BODY_ORIGIN := Vector2i(64, 48)
@@ -201,7 +201,7 @@ static func local_pose(animation: String, frame: int, attack_type: String, equip
 	var swing := 0 if animation == "idle" else int([0, 1, 1, 0, 0, -1, -1, 0][frame])
 	return {"bob": bob, "grip": Vector2i(35, (42 if spear_grip else (43 if equip_type == 3 else 49)) + bob + swing), "free_hand": Vector2i(46, 41 + bob - swing),
 		"rotation": 0, "visible": true, "effect": -1, "effect_origin": Vector2i.ZERO,
-		"body_frame": frame + (0 if animation == "idle" else (4 if animation == "walk" else 12))}
+		"body_frame": frame + (4 if animation == "walk" else 0)}
 
 static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector2i:
 	if turns == 1: return Vector2i(size.y - 1 - point.y, point.x)
