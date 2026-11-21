@@ -221,7 +221,15 @@ func run() -> void:
 	assert(menu.actions.is_visible_in_tree() and menu.action_button.text == "구매")
 	menu.action_button.pressed.emit()
 	assert(menu.quantity_panel.is_visible_in_tree() and menu.slider.max_value == 2)
-	menu.slider.value = 2
+	await process_frame
+	assert(menu.one_button.size == menu.max_button.size)
+	assert(menu.slider.size.x >= 268)
+	assert(menu.confirm_button.global_position.y - menu.amount.get_global_rect().end.y == 17)
+	menu.max_button.pressed.emit()
+	assert(menu.amount.text == "2")
+	menu.one_button.pressed.emit()
+	assert(menu.amount.text == "1" and menu.slider.value == 1)
+	menu.max_button.pressed.emit()
 	assert(menu.amount.text == "2")
 	menu.confirm_button.pressed.emit()
 	assert(map.crowns == 0 and bag_slot.quantity == 3)
@@ -258,6 +266,28 @@ func run() -> void:
 	menu.slider.value = 4
 	menu.confirm_button.pressed.emit()
 	assert(equipment_slot.quantity == 4 and resale.item.is_empty())
+	inv.set_slot_item(1, {})
+	# Empty a middle market stack, then sell a middle bag stack. Both grids
+	# retain the next item's identity, count and position across the row break.
+	var middle_slot = inv.market_grid.get_child(7)
+	var next_slot = inv.market_grid.get_child(8)
+	var next_item = next_slot.item
+	var next_count = next_slot.quantity
+	var bought_item = middle_slot.item
+	map.crowns = 100000
+	inv.set_slot_item(1, sword)
+	inv.set_slot_item(2, arrow, 4)
+	stock[bought_item.id] = 1
+	inv.refresh_market()
+	click.button_index = MOUSE_BUTTON_RIGHT
+	middle_slot.gui_input.emit(click)
+	assert(middle_slot.item == next_item and middle_slot.quantity == next_count)
+	assert(inv.slot_grid.get_child(3).item == bought_item)
+	equipment_slot.gui_input.emit(click)
+	assert(equipment_slot.item == arrow and equipment_slot.quantity == 4)
+	assert(inv.slot_grid.get_child(2).item == bought_item and inv.slot_grid.get_child(3).item.is_empty())
+	inv.slot_grid.get_child(2).gui_input.emit(click)
+	assert(stock[bought_item.id] == 1 and middle_slot.item == next_item)
 	inv.set_slot_item(1, {})
 	map.crowns = balance
 	map._unhandled_input(cancel)

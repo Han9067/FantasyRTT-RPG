@@ -414,7 +414,24 @@ func open() -> void:
 	show()
 	layout_sheet()
 
+func compact_bag() -> void:
+	var next := 0
+	for cell: ItemSlot in slot_grid.get_children():
+		if cell.item.is_empty(): continue
+		if cell.get_index() != next:
+			fill_slot(slot_grid.get_child(next), cell.item, cell.quantity)
+			fill_slot(cell, {}, 0)
+		next += 1
+
 func open_market(city: Dictionary, crowns: int) -> void:
+	compact_bag()
+	# Earlier markets retained sold-out entries in their display order.
+	var market: Dictionary = economy.markets[city.id]
+	for i in range(market.order.size() - 1, -1, -1):
+		var id := int(market.order[i])
+		if int(market.stock.get(id, 0)) == 0:
+			market.order.remove_at(i)
+			market.stock.erase(id)
 	set_market_mode(city.id)
 	window_title.text = "시장"
 	update_balance(crowns)
@@ -527,6 +544,7 @@ func trade(source: ItemSlot, crowns: int, count: int) -> int:
 		fill_slot(dest, item, dest.quantity + count)
 	else:
 		fill_slot(source, item, source.quantity - count)
+		if source.item.is_empty(): compact_bag()
 	refresh_market()
 	return -totals.back() if buying else totals.back()
 

@@ -39,5 +39,10 @@ func quote_at_stock(id: int, buying: bool, count: int) -> int:
 
 func change_stock(city: String, id: int, amount: int) -> void:
 	var market: Dictionary = markets[city]
+	var remaining := int(market.stock.get(id, 0)) + amount
+	if remaining <= 0:
+		market.stock.erase(id)
+		market.order.erase(id)
+		return
 	if not market.stock.has(id): market.order.append(id)
-	market.stock[id] = int(market.stock.get(id, 0)) + amount
+	market.stock[id] = remaining

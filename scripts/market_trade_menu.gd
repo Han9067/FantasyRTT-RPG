@@ -8,6 +8,8 @@ var quantity_panel := PanelContainer.new()
 var action_button := Button.new()
 var confirm_button := Button.new()
 var slider := HSlider.new()
+var one_button := Button.new()
+var max_button := Button.new()
 var amount := Label.new()
 var title := Label.new()
 var anchor_point := Vector2.ZERO
@@ -26,21 +28,42 @@ func _ready() -> void:
 
 	var content := VBoxContainer.new()
 	content.add_theme_constant_override("separation", 12)
-	quantity_panel.custom_minimum_size.x = 300
 	quantity_panel.add_theme_stylebox_override("panel", GameUITheme.panel_style(16))
 	add_child(quantity_panel)
 	quantity_panel.add_child(content)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(title)
 	content.add_child(HSeparator.new())
+	var slider_row := HBoxContainer.new()
+	slider_row.add_theme_constant_override("separation", 8)
+	content.add_child(slider_row)
+	one_button.text = "1"
+	max_button.text = "최대"
+	slider_row.add_child(one_button)
+	slider_row.add_child(slider)
+	slider_row.add_child(max_button)
+	for button in [one_button, max_button]:
+		for state in ["normal", "hover", "pressed", "hover_pressed"]:
+			var style := GameUITheme.button_style(state)
+			style.content_margin_left = 8
+			style.content_margin_right = 8
+			button.add_theme_stylebox_override(state, style)
+	one_button.custom_minimum_size = max_button.get_combined_minimum_size()
+	one_button.pressed.connect(func(): slider.value = slider.min_value)
+	max_button.pressed.connect(func(): slider.value = slider.max_value)
+	slider.custom_minimum_size.x = 268
+	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	slider.min_value = 1
 	slider.step = 1
-	content.add_child(slider)
 	amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(amount)
 	slider.value_changed.connect(func(value): amount.text = str(int(value)))
 	var buttons := HBoxContainer.new()
-	content.add_child(buttons)
+	var button_margin := MarginContainer.new()
+	button_margin.add_theme_constant_override("margin_top", 5)
+	content.add_child(button_margin)
+	button_margin.add_child(buttons)
 	confirm_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	buttons.add_child(confirm_button)
 	confirm_button.pressed.connect(func(): quantity_chosen.emit(int(slider.value)))
