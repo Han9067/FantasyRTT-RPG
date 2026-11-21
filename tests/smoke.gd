@@ -31,7 +31,7 @@ func run() -> void:
 			assert(original.get_data() == Art.part_image(path, i).get_data(), "Atlas/import changed source pixels")
 			assert(Rect2i(Vector2i.ZERO, Art.atlas_image(slot.atlas).get_size()).encloses(Art.part_rect(path, i)))
 			part_count += 1
-	assert(part_count == 1174)
+	assert(part_count == 1186)
 	for sheet in catalog.bodies:
 		var slots: Array = catalog.sheets[sheet].slots
 		assert(slots.size() == 12)
@@ -39,7 +39,7 @@ func run() -> void:
 			assert(slots[i].id == i + 1)
 	var config := Art.defaults()
 	assert(Art.count(config, "face") == 40)
-	assert(Art.count(config, "body") == 12)
+	assert(Art.count(config, "body") == 13)
 	assert(Art.count(config, "hair") == 31 and Art.count(config, "beard") == 30)
 	assert(Art.count(config, "weapon") == 10 and Art.count(config, "offhand") == 4)
 	assert(catalog.weapon_items.size() == 159)
@@ -113,7 +113,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.73")
+	assert(game.game_version == "0.0.74")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -230,7 +230,7 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 1174 loose source parts match two atlases byte-for-byte; two weapon slots; 11 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
+	print("PASS: 1186 loose source parts match two atlases byte-for-byte; two weapon slots; 11 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
 	quit()
 
 func verify_shield_layers() -> void:
