@@ -57,6 +57,7 @@ func run() -> void:
 	assert(game.preset_popup == null)
 	game.show_creation()
 	await process_frame
+	assert(game.appearance.hair == 0 and game.appearance.body == 12)
 	for slot in game.preset_buttons: assert(not slot.disabled)
 	assert(game.top_panel.get_global_rect().encloses(game.preset_buttons[2].get_global_rect()))
 	assert(game.create_button.get_global_rect().end.y <= root.size.y)

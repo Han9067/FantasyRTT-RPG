@@ -21,6 +21,7 @@ func run() -> void:
 	root.add_child(game)
 	await process_frame
 	game.show_creation()
+	assert(game.appearance.hair == 0 and game.appearance.body == 12)
 	game.change_part("hair",1)
 	assert(Art.equipped_weapon(game.appearance).family == "one_sword")
 	game.name_input.text = "제국의 여행자"
@@ -54,7 +55,7 @@ func run() -> void:
 	var unarmed := map.player_sprite.sprite_frames.get_frame_texture("idle",0).get_image().get_data()
 	assert(unarmed == Art.compose(game.appearance,"idle",0,false).get_data())
 	assert(unarmed != game.character_frames.get_frame_texture("idle",0).get_image().get_data())
-	assert(map.character_appearance == game.appearance and game.appearance.weapon == 2 and game.appearance.hair == 2)
+	assert(map.character_appearance == game.appearance and game.appearance.weapon == 2 and game.appearance.hair == 1)
 	# Every equipment type, including thrust weapons, produces the same unarmed portrait.
 	for weapon_id in Art.data().weapon_items:
 		var config: Dictionary = game.appearance.duplicate(true)

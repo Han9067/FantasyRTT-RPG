@@ -23,7 +23,7 @@ const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
 const ATTACK_EFFECT_ORIGIN := Vector2i(32, 45)
 const BODY_LABELS := ["검정", "파랑", "갈색", "금색", "초록", "회색", "주황", "분홍", "보라", "빨강", "은색", "노랑", "초록 튜닉"]
 const PARTS := [
-	["skin", "피부색"], ["face", "얼굴"], ["body", "복장 색상"],
+	["skin", "피부색"], ["face", "얼굴"], ["body", "복장"],
 	["hair", "머리 모양"], ["hair_color", "머리 색상"],
 	["beard", "수염 모양"], ["beard_color", "수염 색상"], ["weapon", "무기1 종류"],
 	["weapon_item", "무기1 번호"], ["offhand", "무기2 종류"], ["offhand_item", "무기2 형태"]
@@ -50,7 +50,7 @@ static func weapon_by_item_id(item_id: int) -> Dictionary:
 	return weapons_by_item_id.get(item_id, {})
 
 static func defaults() -> Dictionary:
-	return {"skin": 0, "face": 0, "body": 4, "hair": 1, "hair_color": 1,
+	return {"skin": 0, "face": 0, "body": BODY_LABELS.find("초록 튜닉"), "hair": 0, "hair_color": 1,
 		"beard": 0, "beard_color": 1, "weapon": data().primary_types.find("one_sword"), "weapon_item": 0,
 		"offhand": maxi(0, data().secondary_types.find("one_shield")), "offhand_item": 0}
 

@@ -108,12 +108,12 @@ def build(source=SOURCE, dest=DEST):
         catalog['sheets'][key] = {'slots':slots}
         return key
 
-    human = 'sprites/Characters/human'
+    characters = 'sprites/Characters'
     catalog['races']['human'] = {
-        'heads':[add(f'{human}/head/human_head_skin_{i}') for i in range(1,8)],
-        'hair':[add(f'{human}/hair/hairstyle/human_hair_{i}') for i in range(1,9)],
-        'beard':[add(f'{human}/hair/facial hair/human_facialhair_{i}') for i in range(1,9)],
-        'hand':add(f'{human}/hand/human_hand')}
+        'heads':[add(f'{characters}/head/human/head{i}', f'human_head_skin_{i}') for i in range(1,8)],
+        'hair':[add(f'{characters}/hair/hair{i}', f'human_hair_{i}') for i in range(1,9)],
+        'beard':[add(f'{characters}/beard/beard{i}', f'human_facialhair_{i}') for i in range(1,9)],
+        'hand':add(f'{characters}/hand')}
     for color in BODY_COLORS:
         name = f'body_{color}'
         frames = [f'{name}_{i:02d}.png' for i in range(1, 13)]
