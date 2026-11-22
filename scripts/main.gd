@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.75")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.76")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -320,7 +320,7 @@ func show_creation() -> void:
 		var detail := label_text("", 15)
 		detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		detail.clip_text = true
-		detail.custom_minimum_size.x = 64
+		detail.custom_minimum_size.x = 86 if key == "body" else 64
 		detail.add_theme_color_override("font_color",GOLD)
 		detail.visible = key not in ["weapon", "offhand"]
 		row.add_child(detail)

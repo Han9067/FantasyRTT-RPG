@@ -14,14 +14,14 @@ const BOW_OFFSET := Vector2i(1, 0) # Native sprite faces left; flip_h mirrors th
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
 const FEET_Y := 80
-const FRAME_COUNTS := {"idle": 4, "walk": 8, "attack": 6}
+const FRAME_COUNTS := {"idle": 4, "walk": 4, "attack": 6}
 # Original chop_attack_sample.gif: six fixed-body frames, exactly 100ms each.
 # Padding accommodates enlarged weapons at their original pixel size.
 const BODY_ORIGIN := Vector2i(64, 48)
 const CANVAS_PADDING := Vector2i(32, 24)
 const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
 const ATTACK_EFFECT_ORIGIN := Vector2i(32, 45)
-const BODY_LABELS := ["검정", "파랑", "갈색", "금색", "초록", "회색", "주황", "분홍", "보라", "빨강", "은색", "노랑", "초록 튜닉"]
+const BODY_LABELS := ["검정", "파랑", "갈색", "금색", "초록", "회색", "주황", "분홍", "보라", "빨강", "은색", "노랑", "초록 튜닉", "흰색 튜닉", "검정 가죽 조끼", "흰색 갬비슨"]
 const PARTS := [
 	["skin", "피부색"], ["face", "얼굴"], ["body", "복장"],
 	["hair", "머리 모양"], ["hair_color", "머리 색상"],
@@ -197,8 +197,8 @@ static func local_pose(animation: String, frame: int, attack_type: String, equip
 			"rotation": [0,1,0,0,0,-1][frame], "visible": frame not in [2,3,4],
 			"effect": frame - 2 if frame in [2,3,4] else -1, "body_frame": ATTACK_BODIES[frame],
 			"effect_sheet": data().attack_effect, "effect_rotation": 0, "effect_origin": Vector2i(0,21)}
-	var bob := int([0, 1, 2, 1][frame]) if animation == "idle" else int([0, 1, 0, -1, 0, 1, 0, -1][frame])
-	var swing := 0 if animation == "idle" else int([0, 1, 1, 0, 0, -1, -1, 0][frame])
+	var bob := int([0, 1, 2, 1][frame]) if animation == "idle" else int([0, 1, 0, -1][frame])
+	var swing := 0 if animation == "idle" else int([0, 1, 1, 0][frame])
 	return {"bob": bob, "grip": Vector2i(35, (42 if spear_grip else (43 if equip_type == 3 else 49)) + bob + swing), "free_hand": Vector2i(46, 41 + bob - swing),
 		"rotation": 0, "visible": true, "effect": -1, "effect_origin": Vector2i.ZERO,
 		"body_frame": frame + (4 if animation == "walk" else 0)}

@@ -63,7 +63,7 @@ func run() -> void:
 		var saved: Dictionary = config.duplicate(true)
 		assert(Art.compose(config,"idle",0,false).get_data() == unarmed)
 		assert(config == saved, "World rendering must not unequip the saved weapon")
-	assert(game.character_frames.get_frame_count("idle") == 4 and game.character_frames.get_frame_count("walk") == 8)
+	assert(game.character_frames.get_frame_count("idle") == 4 and game.character_frames.get_frame_count("walk") == 4)
 	# Original border/fill transforms and colours; full white-background alpha is the mask.
 	for layer in [marker.get_child(0),marker.get_child(2)]:
 		assert(layer.self_modulate == Color.WHITE and layer.modulate == Color.WHITE)
