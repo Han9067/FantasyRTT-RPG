@@ -7,6 +7,9 @@ const LEGACY_OUTFITS := [
 	"tunic_black", "tunic_blue", "leather vest_brown", "", "tunic_green", "", "", "",
 	"", "tunic_red", "", "", "tunic_green", "tunic_white", "leather vest_black", "gambeson_white",
 ]
+# Closest eye and mouth to each former face, comparing the original feature pixels.
+const LEGACY_EYES := [9,7,9,7,7,11,7,10,7,7,7,7,5,9,10,9,7,7,7,7,7,10,10,10,10,9,9,10,9,7,9,9,7,10,7,7,10,7,7,10]
+const LEGACY_MOUTHS := [0,0,0,0,1,0,0,0,0,3,3,1,1,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,3,0,0,1,0,0,1,0,0,1,0]
 var path: String
 var slots: Array[Dictionary] = [{}, {}, {}]
 
@@ -17,6 +20,11 @@ func _init(storage_path := "user://appearance_presets.cfg") -> void:
 	if data.get_value("presets", "version", 0) != 1: return
 	for i in range(SLOT_COUNT):
 		var saved: Variant = data.get_value("presets", str(i), {})
+		if saved is Dictionary and saved.get("face") is int and not saved.has("eye"):
+			var old_face := clampi(int(saved.face), 0, LEGACY_EYES.size() - 1)
+			saved.eye = LEGACY_EYES[old_face]
+			saved.mouth = LEGACY_MOUTHS[old_face]
+			saved.gender = 0
 		slots[i] = clean_appearance(saved)
 		if slots[i].is_empty(): continue
 		var outfit_id: String = saved.get("body_id", "")

@@ -91,7 +91,7 @@ func setup(appearance: Dictionary, hero_hp := BattleUnit.HERO_HP) -> void:
 	card.add_theme_stylebox_override("panel", slot_style)
 	people.add_child(card)
 	var avatar := CharacterArt.compose(appearance, "idle", 0, false)
-	var head := CharacterArt.part_image(CharacterArt.human_data().heads[appearance.skin], appearance.face)
+	var head := CharacterArt.part_image(CharacterArt.human_data().heads[appearance.gender], appearance.skin)
 	var face_center := CharacterArt.BODY_ORIGIN + head.get_used_rect().get_center()
 	face_center.y += CharacterArt.pose("idle", 0).bob
 	var closeup := Rect2i(face_center - Vector2i(12, 12), Vector2i(25, 25))

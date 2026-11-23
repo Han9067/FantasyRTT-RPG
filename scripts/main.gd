@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.77")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.78")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -25,7 +25,8 @@ var world_overview: Control
 var battle_button: Button
 var travel_state: Dictionary = {}
 var screen: VBoxContainer
-var selected_gender := 0
+var selected_gender: int:
+	get: return appearance.gender
 var player_name := ""
 var player_age := 20
 var portrait: TextureRect
@@ -301,7 +302,8 @@ func show_creation() -> void:
 		var row := HBoxContainer.new()
 		row.name = key
 		row.add_theme_constant_override("separation", 6)
-		parts_columns[1 if key in ["beard", "beard_color", "weapon", "weapon_item", "offhand", "offhand_item"] else 0].add_child(row)
+		var right_column := key in ["beard", "beard_color", "weapon", "weapon_item", "offhand", "offhand_item"]
+		parts_columns[1 if right_column else 0].add_child(row)
 		var title := label_text(entry[1], 18)
 		title.custom_minimum_size.x = 88
 		row.add_child(title)
@@ -309,22 +311,13 @@ func show_creation() -> void:
 		left.accessibility_name = entry[1] + " 이전"
 		row.add_child(left)
 		var number := label_text("", 19)
-		number.custom_minimum_size.x = 52
-		if key in ["weapon", "offhand"]:
-			number.custom_minimum_size.x = 104
+		number.custom_minimum_size.x = 104 if right_column else 64
 		number.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		row.add_child(number)
 		var right := part_button("▶", change_part.bind(key, 1))
 		right.accessibility_name = entry[1] + " 다음"
 		row.add_child(right)
-		var detail := label_text("", 15)
-		detail.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		detail.clip_text = true
-		detail.custom_minimum_size.x = 86 if key == "body" else 64
-		detail.add_theme_color_override("font_color",GOLD)
-		detail.visible = key not in ["weapon", "offhand"]
-		row.add_child(detail)
-		part_controls[key] = {"left": left, "right": right, "number": number, "detail": detail}
+		part_controls[key] = {"left": left, "right": right, "number": number, "title": title}
 	create_button = button("캐릭터 생성", start_journey)
 	create_button.custom_minimum_size.y = 50
 	screen.add_child(create_button)
@@ -380,6 +373,7 @@ func save_preset(slot: int) -> void:
 func apply_preset(slot: int) -> void:
 	var saved: Dictionary = preset_store.get_appearance(slot)
 	if saved.is_empty(): return
+	saved.gender = selected_gender
 	appearance = saved
 	character_frames = CharacterArt.animations(appearance)
 	refresh_part_controls()
@@ -402,7 +396,10 @@ func set_preview_animation(value: String) -> void:
 	_process(0.0)
 
 func select_gender(value: int) -> void:
-	selected_gender = value
+	if selected_gender != value:
+		appearance.gender = value
+		character_frames = CharacterArt.animations(appearance)
+		set_preview_animation(preview_animation)
 	for i in range(genders.size()):
 		genders[i].button_pressed = i == value
 
@@ -429,19 +426,17 @@ func refresh_part_controls() -> void:
 		var controls: Dictionary = part_controls[key]
 		var counter := "%d/%d" % [int(appearance[key]) + 1, total]
 		controls.number.text = counter
-		controls.detail.text = ""
 		if total == 0:
 			controls.number.text = "미장착"
 		elif key in ["weapon", "offhand"]:
 			controls.number.text = CharacterArt.description(appearance, key)
-		elif key in ["weapon_item", "offhand_item"]:
-			var item := CharacterArt.equipped_weapon(appearance) if key == "weapon_item" else CharacterArt.equipped_offhand(appearance)
-			controls.number.text = "%02d" % int(item.number)
-			controls.detail.text = counter
-		else:
-			controls.detail.text = CharacterArt.description(appearance, key)
+		if key in ["weapon_item", "offhand_item"]:
+			var type_key := "weapon" if key == "weapon_item" else "offhand"
+			var title := CharacterArt.description(appearance, type_key) if total > 0 else "무기2"
+			controls.title.text = title
+			controls.left.accessibility_name = title + " 이전"
+			controls.right.accessibility_name = title + " 다음"
 		controls.left.get_parent().modulate.a = 0.55 if total == 0 else 1.0
-		controls.detail.tooltip_text = controls.detail.text
 		controls.left.disabled = total <= 1
 		controls.right.disabled = total <= 1
 

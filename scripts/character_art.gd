@@ -23,7 +23,7 @@ const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
 const ATTACK_EFFECT_ORIGIN := Vector2i(32, 45)
 const DEFAULT_OUTFIT := "tunic_green"
 const PARTS := [
-	["skin", "피부색"], ["face", "얼굴"], ["body", "복장"],
+	["skin", "피부"], ["eye", "눈"], ["mouth", "입"], ["body", "복장"],
 	["hair", "머리 모양"], ["hair_color", "머리 색상"],
 	["beard", "수염 모양"], ["beard_color", "수염 색상"], ["weapon", "무기1 종류"],
 	["weapon_item", "무기1 번호"], ["offhand", "무기2 종류"], ["offhand_item", "무기2 형태"]
@@ -50,7 +50,7 @@ static func weapon_by_item_id(item_id: int) -> Dictionary:
 	return weapons_by_item_id.get(item_id, {})
 
 static func defaults() -> Dictionary:
-	return {"skin": 0, "face": 0, "body": data().body_ids.find(DEFAULT_OUTFIT), "hair": 0, "hair_color": 1,
+	return {"gender": 0, "skin": 0, "eye": 0, "mouth": 0, "body": data().body_ids.find(DEFAULT_OUTFIT), "hair": 0, "hair_color": 1,
 		"beard": 0, "beard_color": 1, "weapon": data().primary_types.find("one_sword"), "weapon_item": 0,
 		"offhand": maxi(0, data().secondary_types.find("one_shield")), "offhand_item": 0}
 
@@ -61,7 +61,8 @@ static func infantry_appearance(allied: bool, variant: int) -> Dictionary:
 	var config := defaults()
 	config.body = data().body_ids.find("tunic_blue" if allied else "tunic_red")
 	config.skin = [1, 3, 0, 5, 2][variant]
-	config.face = [2, 17, 26, 9, 34][variant]
+	config.eye = [2, 5, 0, 9, 4][variant]
+	config.mouth = [0, 1, 4, 3, 2][variant]
 	config.hair = 0
 	config.helmet = data().infantry_helmet
 	config.equipped_weapon = "one_sword/1"
@@ -99,8 +100,9 @@ static func is_primary_melee(family: String) -> bool:
 static func count(config: Dictionary, key: String) -> int:
 	var human := human_data()
 	match key:
-		"skin": return human.heads.size()
-		"face": return data().sheets[human.heads[config.skin]].slots.size()
+		"gender": return human.heads.size()
+		"skin": return data().sheets[human.heads[config.gender]].slots.size()
+		"eye", "mouth": return data().sheets[human[key]].slots.size()
 		"body": return data().bodies.size()
 		"hair": return 1 + data().sheets[human.hair[config.hair_color]].slots.size()
 		"hair_color": return human.hair.size()
@@ -132,7 +134,7 @@ static func normalize(config: Dictionary) -> void:
 	# cannot leak into a new character if a previous in-memory config is supplied.
 	for key in ["race", "hands", "hat_family", "hat", "hat_color"]:
 		config.erase(key)
-	for key in ["skin", "face", "body", "hair_color", "hair", "beard_color", "beard", "weapon", "weapon_item", "offhand", "offhand_item"]:
+	for key in ["gender", "skin", "eye", "mouth", "body", "hair_color", "hair", "beard_color", "beard", "weapon", "weapon_item", "offhand", "offhand_item"]:
 		var total := count(config, key)
 		config[key] = clampi(int(config.get(key, 0)), 0, total - 1) if total > 0 else -1
 
@@ -286,7 +288,9 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 			paste(img, data().bow_shot, bow_shot_slot(weapon, frame), weapon_position(config, animation, frame))
 		else:
 			paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
-	paste(img, race.heads[config.skin], config.face, head)
+	paste(img, race.heads[config.gender], config.skin, head)
+	paste(img, race.eye, config.eye, head)
+	paste(img, race.mouth, config.mouth, head)
 	if config.has("helmet"):
 		paste(img, config.helmet, 0, head + Vector2i(0, -2))
 	elif config.hair > 0:

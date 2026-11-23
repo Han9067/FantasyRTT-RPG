@@ -81,8 +81,8 @@ def build(source=SOURCE, dest=DEST):
     catalog = {'schema': 6, 'source_root': 'art/medieval/', 'sheets': {}, 'atlases': [], 'races': {}, 'bodies': [], 'primary_types': [], 'secondary_types': [], 'melee_groups': {}, 'ranged_groups': {}, 'weapon_items': {}}
     offsets = load_weapon_offsets()
     pending = []
-    def add(group, filename_prefix=None, only_file=None, only_files=None, numeric=False):
-        key = group + '.png'
+    def add(group, filename_prefix=None, only_file=None, only_files=None, numeric=False, series=None):
+        key = (f'{group}/{series}' if series else group) + '.png'
         if key in catalog['sheets']:
             return key
         folder = source / group
@@ -91,7 +91,8 @@ def build(source=SOURCE, dest=DEST):
             raise ValueError(f'No loose PNGs in {folder}')
         slots = []
         def number(path):
-            match = re.fullmatch(r'(\d+)' if numeric else re.escape(filename_prefix or folder.name) + r'_(\d+)', path.stem)
+            prefix = series if series else ('' if numeric else (filename_prefix or folder.name) + '_')
+            match = re.fullmatch(re.escape(prefix) + r'(\d+)', path.stem)
             if not match:
                 raise ValueError(f'Invalid numbered PNG: {path}')
             return int(match[1])
@@ -117,7 +118,10 @@ def build(source=SOURCE, dest=DEST):
 
     characters = 'sprites/Characters'
     catalog['races']['human'] = {
-        'heads':[add(f'{characters}/head/human/head{i}', f'human_head_skin_{i}') for i in range(1,8)],
+        'heads':[add(f'{characters}/head', only_files=[f'{series}{i}.png' for i in range(1,8)], series=series)
+                 for series in ['m','f']],
+        'eye':add(f'{characters}/eye', numeric=True),
+        'mouth':add(f'{characters}/mouth', numeric=True),
         'hair':[add(f'{characters}/hair/hair{i}', f'human_hair_{i}') for i in range(1,9)],
         'beard':[add(f'{characters}/beard/beard{i}', f'human_facialhair_{i}') for i in range(1,9)],
         'hand':add(f'{characters}/hand')}
