@@ -21,7 +21,7 @@ const BODY_ORIGIN := Vector2i(64, 48)
 const CANVAS_PADDING := Vector2i(32, 24)
 const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
 const ATTACK_EFFECT_ORIGIN := Vector2i(32, 45)
-const BODY_LABELS := ["검정", "파랑", "갈색", "금색", "초록", "회색", "주황", "분홍", "보라", "빨강", "은색", "노랑", "초록 튜닉", "흰색 튜닉", "검정 가죽 조끼", "흰색 갬비슨"]
+const DEFAULT_OUTFIT := "tunic_green"
 const PARTS := [
 	["skin", "피부색"], ["face", "얼굴"], ["body", "복장"],
 	["hair", "머리 모양"], ["hair_color", "머리 색상"],
@@ -50,7 +50,7 @@ static func weapon_by_item_id(item_id: int) -> Dictionary:
 	return weapons_by_item_id.get(item_id, {})
 
 static func defaults() -> Dictionary:
-	return {"skin": 0, "face": 0, "body": BODY_LABELS.find("초록 튜닉"), "hair": 0, "hair_color": 1,
+	return {"skin": 0, "face": 0, "body": data().body_ids.find(DEFAULT_OUTFIT), "hair": 0, "hair_color": 1,
 		"beard": 0, "beard_color": 1, "weapon": data().primary_types.find("one_sword"), "weapon_item": 0,
 		"offhand": maxi(0, data().secondary_types.find("one_shield")), "offhand_item": 0}
 
@@ -59,7 +59,7 @@ static func human_data() -> Dictionary:
 
 static func infantry_appearance(allied: bool, variant: int) -> Dictionary:
 	var config := defaults()
-	config.body = BODY_LABELS.find("파랑" if allied else "빨강")
+	config.body = data().body_ids.find("tunic_blue" if allied else "tunic_red")
 	config.skin = [1, 3, 0, 5, 2][variant]
 	config.face = [2, 17, 26, 9, 34][variant]
 	config.hair = 0
@@ -138,7 +138,7 @@ static func normalize(config: Dictionary) -> void:
 
 static func description(config: Dictionary, key: String) -> String:
 	match key:
-		"body": return BODY_LABELS[config.body]
+		"body": return data().body_labels[config.body]
 		"hair": return "없음" if config.hair == 0 else ""
 		"beard": return "없음" if config.beard == 0 else ""
 		"weapon": return TYPE_LABELS.get(data().primary_types[config.weapon], data().primary_types[config.weapon])

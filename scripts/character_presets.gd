@@ -2,6 +2,11 @@ extends RefCounted
 ## Appearance-only presets, independent of the character's personal details.
 const Art = preload("res://scripts/character_art.gd")
 const SLOT_COUNT := 3
+# Body indices saved through 0.0.76. Empty entries use the current default outfit.
+const LEGACY_OUTFITS := [
+	"tunic_black", "tunic_blue", "leather vest_brown", "", "tunic_green", "", "", "",
+	"", "tunic_red", "", "", "tunic_green", "tunic_white", "leather vest_black", "gambeson_white",
+]
 var path: String
 var slots: Array[Dictionary] = [{}, {}, {}]
 
@@ -14,6 +19,11 @@ func _init(storage_path := "user://appearance_presets.cfg") -> void:
 		var saved: Variant = data.get_value("presets", str(i), {})
 		slots[i] = clean_appearance(saved)
 		if slots[i].is_empty(): continue
+		var outfit_id: String = saved.get("body_id", "")
+		if not saved.has("body_id") and saved.body >= 0 and saved.body < LEGACY_OUTFITS.size():
+			outfit_id = LEGACY_OUTFITS[saved.body]
+		var body_index: int = Art.data().body_ids.find(outfit_id)
+		slots[i].body = body_index if body_index >= 0 else Art.data().body_ids.find(Art.DEFAULT_OUTFIT)
 		var family: String = Art.data().primary_types[slots[i].weapon]
 		if family == "two_axe":
 			# Before sparse numbering, the old zero-based index was the file number minus one.
@@ -59,6 +69,7 @@ func save_appearance(slot: int, appearance: Dictionary) -> Error:
 		if not record.is_empty() and Art.data().primary_types[record.weapon] == "two_axe":
 			record.two_axe_id = Art.equipped_weapon(record).id
 		if not record.is_empty():
+			record.body_id = Art.data().body_ids[record.body]
 			var primary := Art.equipped_weapon(record)
 			var secondary := Art.equipped_offhand(record)
 			if primary.has("item_id"): record.primary_item_id = primary.item_id

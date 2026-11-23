@@ -60,7 +60,7 @@ func check_infantry(map: BattleMap) -> void:
 		for total in columns.values(): assert(total == 5)
 		for total in rows.values(): assert(total == 4)
 		var config := Art.infantry_appearance(allied, 0)
-		assert(Art.BODY_LABELS[config.body] == ("파랑" if allied else "빨강"))
+		assert(Art.data().body_ids[config.body] == ("tunic_blue" if allied else "tunic_red"))
 		assert(Art.data().sheets[config.helmet].slots[0].name == "metal_20")
 		assert(config.hair == 0 and Art.equipped_weapon(config).id == "one_sword/1")
 		assert(Art.equipped_offhand(config).id == "one_shield/27")

@@ -57,7 +57,7 @@ func run() -> void:
 	assert(game.preset_popup == null)
 	game.show_creation()
 	await process_frame
-	assert(game.appearance.hair == 0 and game.appearance.body == 12)
+	assert(game.appearance.hair == 0 and game.appearance.body == 3)
 	for slot in game.preset_buttons: assert(not slot.disabled)
 	assert(game.top_panel.get_global_rect().encloses(game.preset_buttons[2].get_global_rect()))
 	assert(game.create_button.get_global_rect().end.y <= root.size.y)
@@ -75,6 +75,7 @@ func run() -> void:
 	assert(restored.get_appearance(-1).is_empty() and restored.get_appearance(3).is_empty())
 	# Catalog indices from older presets must retain their original weapon types.
 	var legacy := Art.defaults()
+	legacy.body = 15 # White gambeson in 0.0.76, outside the current index range.
 	legacy.weapon = 0
 	legacy.weapon_item = 0
 	legacy.offhand = 3
@@ -82,6 +83,7 @@ func run() -> void:
 	data.set_value("presets", "0", legacy)
 	assert(data.save(path) == OK)
 	restored = Store.new(path)
+	assert(Art.description(restored.get_appearance(0), "body") == "흰색 갬비슨")
 	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "one_axe/1")
 	assert(Art.equipped_offhand(restored.get_appearance(0)).id == "one_sword/2")
 	# An old slot index for axe 4 must still select axe 4 after axe 3 is removed.

@@ -13,7 +13,14 @@ SOURCE = ROOT / 'art/medieval'
 DEST = ROOT / 'assets/medieval'
 PAGE_SIZE = 1024
 GUTTER = 1
-BODY_COLORS = ['black','blue','brown','gold','green','grey','orange','pink','purple','red','silver','yellow']
+# Category order is the creator order; variants within each category use English color order.
+OUTFITS = {
+    'tunic_beige': '베이지 튜닉', 'tunic_black': '검정 튜닉', 'tunic_blue': '파란 튜닉',
+    'tunic_green': '초록 튜닉', 'tunic_red': '빨간 튜닉', 'tunic_white': '흰색 튜닉',
+    'leather vest_black': '검정 가죽 조끼', 'leather vest_brown': '갈색 가죽 조끼',
+    'gambeson_blue': '파란 갬비슨', 'gambeson_green': '초록 갬비슨',
+    'gambeson_red': '빨간 갬비슨', 'gambeson_white': '흰색 갬비슨', 'chain mail': '체인 메일',
+}
 
 
 def weapon_grip(family, name, image):
@@ -114,11 +121,9 @@ def build(source=SOURCE, dest=DEST):
         'hair':[add(f'{characters}/hair/hair{i}', f'human_hair_{i}') for i in range(1,9)],
         'beard':[add(f'{characters}/beard/beard{i}', f'human_facialhair_{i}') for i in range(1,9)],
         'hand':add(f'{characters}/hand')}
-    for color in BODY_COLORS:
-        name = f'body_{color}'
-        frames = [f'{name}_{i:02d}.png' for i in range(1, 9)]
-        catalog['bodies'].append(add(f'sprites/Characters/body/{name}', only_files=frames))
-    for outfit in ['green tunic', 'white tunic', 'black leather vest', 'white gambeson']:
+    catalog['body_ids'] = list(OUTFITS)
+    catalog['body_labels'] = list(OUTFITS.values())
+    for outfit in OUTFITS:
         catalog['bodies'].append(add(f'sprites/Characters/body/{outfit}',
                                      only_files=[f'{i}.png' for i in range(1, 9)], numeric=True))
     # Register every held weapon by filename, not its position in a sheet.

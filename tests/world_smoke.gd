@@ -21,7 +21,7 @@ func run() -> void:
 	root.add_child(game)
 	await process_frame
 	game.show_creation()
-	assert(game.appearance.hair == 0 and game.appearance.body == 12)
+	assert(game.appearance.hair == 0 and game.appearance.body == 3)
 	game.change_part("hair",1)
 	assert(Art.equipped_weapon(game.appearance).family == "one_sword")
 	game.name_input.text = "제국의 여행자"
