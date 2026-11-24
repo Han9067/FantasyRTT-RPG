@@ -117,14 +117,14 @@ def build(source=SOURCE, dest=DEST):
         return key
 
     characters = 'sprites/Characters'
+    hair_colors = sorted(p.name for p in (source / characters / 'hair').iterdir() if p.is_dir())
     catalog['races']['human'] = {
         'heads':[add(f'{characters}/head', only_files=[f'{series}{i}.png' for i in range(1,8)], series=series)
                  for series in ['m','f']],
         'eye':add(f'{characters}/eye', numeric=True),
-        'mouth':add(f'{characters}/mouth', numeric=True),
-        'hair':[add(f'{characters}/hair/hair{i}', f'human_hair_{i}') for i in range(1,9)],
-        'beard':[add(f'{characters}/beard/beard{i}', f'human_facialhair_{i}') for i in range(1,9)],
-        'hand':add(f'{characters}/hand')}
+        'hair':[[add(f'{characters}/hair/{color}', only_files=[f'{series}{i}.png' for i in range(1, count + 1)], series=series)
+                 for color in hair_colors] for series, count in [('m', 7), ('f', 3)]],
+        'hand':add(f'{characters}/hand', numeric=True)}
     catalog['body_ids'] = list(OUTFITS)
     catalog['body_labels'] = list(OUTFITS.values())
     for outfit in OUTFITS:

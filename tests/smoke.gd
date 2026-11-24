@@ -7,7 +7,7 @@ func _initialize() -> void:
 func run() -> void:
 	root.size = Vector2i(1280, 800)
 	var catalog := Art.data()
-	assert(catalog.schema == 6 and catalog.atlases.size() == 2)
+	assert(catalog.schema == 6 and catalog.atlases.size() == 1)
 	assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/Characters/elf"))
 	assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/Characters/body/body_black 1"))
 	assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/Characters/body/body_black 2"))
@@ -31,16 +31,16 @@ func run() -> void:
 			assert(original.get_data() == Art.part_image(path, i).get_data(), "Atlas/import changed source pixels")
 			assert(Rect2i(Vector2i.ZERO, Art.atlas_image(slot.atlas).get_size()).encloses(Art.part_rect(path, i)))
 			part_count += 1
-	assert(part_count == 886)
+	assert(part_count == 464)
 	for sheet in catalog.bodies:
 		var slots: Array = catalog.sheets[sheet].slots
 		assert(slots.size() == 8)
 		for i in slots.size():
 			assert(slots[i].id == i + 1)
 	var config := Art.defaults()
-	assert(Art.count(config, "eye") == 12 and Art.count(config, "mouth") == 6)
+	assert(Art.count(config, "eye") == 8)
 	assert(Art.count(config, "body") == 13)
-	assert(Art.count(config, "hair") == 31 and Art.count(config, "beard") == 30)
+	assert(Art.count(config, "hair") == 8 and Art.count(config, "hair_color") == 6)
 	assert(Art.count(config, "weapon") == 10 and Art.count(config, "offhand") == 4)
 	assert(catalog.weapon_items.size() == 159)
 	assert(not catalog.primary_types.has("one_shield"))
@@ -56,11 +56,9 @@ func run() -> void:
 		config.skin = skin
 		for gender in 2:
 			config.gender = gender
-			for eye in 12:
+			for eye in 8:
 				config.eye = eye
-				for mouth in 6:
-					config.mouth = mouth
-					assert(not Art.compose(config).is_invisible())
+				assert(not Art.compose(config).is_invisible())
 		for weapon_index in range(3):
 			config.weapon = weapon_index
 			var weapon: Dictionary = Art.equipped_weapon(config)
@@ -112,12 +110,12 @@ func run() -> void:
 	assert(Art.pose("attack",1).rotation == 1 and Art.pose("attack",5).rotation == -1)
 	config.merge({"race": 3, "hands": 12, "hat_family": 6, "hat_color": 7, "hat": 22})
 	Art.normalize(config)
-	for hidden in ["race", "hands", "hat_family", "hat_color", "hat"]:
+	for hidden in ["race", "hands", "hat_family", "hat_color", "hat", "beard", "beard_color", "mouth"]:
 		assert(not config.has(hidden))
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.78")
+	assert(game.game_version == "0.0.79")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -134,17 +132,17 @@ func run() -> void:
 		assert(label.text not in ["외형 미리보기", "외형 파츠", "좌우 버튼으로 외형과 무기 선택", "성별과 관계없이 파츠 조합 가능"])
 	assert(not game.top_panel.is_ancestor_of(game.portrait))
 	assert(game.top_panel.is_ancestor_of(game.name_input))
-	assert(game.part_controls.size() == 12)
-	assert(game.part_controls.eye.number.text == "1/12")
+	assert(game.part_controls.size() == 9)
+	assert(game.part_controls.eye.number.text == "1/8")
 	assert(game.create_button.get_global_rect().end.y <= root.size.y)
 	assert(game.find_children("*", "ScrollContainer", true, false).is_empty())
-	assert(game.parts_columns[0].get_child_count() == 6 and game.parts_columns[1].get_child_count() == 6)
-	for key in ["beard", "beard_color", "weapon", "weapon_item", "offhand", "offhand_item"]:
+	assert(game.parts_columns[0].get_child_count() == 5 and game.parts_columns[1].get_child_count() == 4)
+	for key in ["weapon", "weapon_item", "offhand", "offhand_item"]:
 		assert(game.part_controls[key].left.global_position.x == game.part_controls.weapon.left.global_position.x)
 		assert(game.part_controls[key].right.global_position.x == game.part_controls.weapon.right.global_position.x)
 		assert(game.parts_columns[1].is_ancestor_of(game.part_controls[key].right))
 		assert(game.part_controls[key].right.global_position.x > game.part_controls.skin.right.global_position.x)
-	assert(is_equal_approx(game.part_controls.beard.right.global_position.y, game.part_controls.skin.right.global_position.y))
+	assert(is_equal_approx(game.part_controls.weapon.right.global_position.y, game.part_controls.skin.right.global_position.y))
 	for key in game.part_controls:
 		for control in [game.part_controls[key].left, game.part_controls[key].right, game.part_controls[key].number]:
 			assert(game.bottom_panel.get_global_rect().encloses(control.get_global_rect()), "Part selector is outside the panel")
@@ -160,12 +158,21 @@ func run() -> void:
 		assert(game.portrait.texture.get_size() == Vector2(Art.PREVIEW_REGION.size))
 		game.part_controls[key].left.pressed.emit()
 		assert(game.appearance[key] == previous)
-	game.appearance.eye = 11
+	game.change_part("hair", -1)
+	assert(game.part_controls.hair.number.text == "8/8")
+	game.select_gender(1)
+	assert(game.part_controls.hair.number.text == "4/4" and game.appearance.hair == 3)
+	assert(game.character_frames.get_frame_texture("idle", 0).get_image().get_data() == Art.compose(game.appearance).get_data())
+	game.change_part("hair", 1)
+	assert(game.part_controls.hair.number.text == "1/4")
+	game.select_gender(0)
+	assert(game.part_controls.hair.number.text == "1/8")
+	game.appearance.eye = 7
 	game.change_part("eye", 1)
-	assert(game.appearance.eye == 0 and game.part_controls.eye.number.text == "1/12")
+	assert(game.appearance.eye == 0 and game.part_controls.eye.number.text == "1/8")
 	game.change_part("eye", -1)
-	assert(game.appearance.eye == 11)
-	for hidden in ["race", "hands", "hat_family", "hat_color", "hat"]:
+	assert(game.appearance.eye == 7)
+	for hidden in ["race", "hands", "hat_family", "hat_color", "hat", "beard", "beard_color", "mouth"]:
 		assert(not game.part_controls.has(hidden) and not game.appearance.has(hidden))
 	assert(game.part_controls.weapon.number.text == "한손 검")
 	assert(Art.selection_order(game.appearance,"weapon") == [2,0,1,7,3,4,6,5,8,9])
@@ -238,7 +245,7 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 886 loose source parts match two atlases byte-for-byte; two weapon slots; 12 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
+	print("PASS: 464 loose parts match their atlas pixels; two weapon slots; 9 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
 	quit()
 
 func verify_shield_layers() -> void:

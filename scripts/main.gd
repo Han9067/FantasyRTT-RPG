@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.78")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.79")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -291,7 +291,7 @@ func show_creation() -> void:
 	content.add_child(columns)
 	for i in range(2):
 		var rows := VBoxContainer.new()
-		rows.name = "BodyParts" if i == 0 else "BeardAndWeapon"
+		rows.name = "BodyParts" if i == 0 else "Weapons"
 		rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		rows.size_flags_stretch_ratio = 1.0
 		rows.add_theme_constant_override("separation", 6)
@@ -302,7 +302,7 @@ func show_creation() -> void:
 		var row := HBoxContainer.new()
 		row.name = key
 		row.add_theme_constant_override("separation", 6)
-		var right_column := key in ["beard", "beard_color", "weapon", "weapon_item", "offhand", "offhand_item"]
+		var right_column := key in ["weapon", "weapon_item", "offhand", "offhand_item"]
 		parts_columns[1 if right_column else 0].add_child(row)
 		var title := label_text(entry[1], 18)
 		title.custom_minimum_size.x = 88
@@ -374,6 +374,7 @@ func apply_preset(slot: int) -> void:
 	var saved: Dictionary = preset_store.get_appearance(slot)
 	if saved.is_empty(): return
 	saved.gender = selected_gender
+	CharacterArt.normalize(saved)
 	appearance = saved
 	character_frames = CharacterArt.animations(appearance)
 	refresh_part_controls()
@@ -398,6 +399,8 @@ func set_preview_animation(value: String) -> void:
 func select_gender(value: int) -> void:
 	if selected_gender != value:
 		appearance.gender = value
+		CharacterArt.normalize(appearance)
+		refresh_part_controls()
 		character_frames = CharacterArt.animations(appearance)
 		set_preview_animation(preview_animation)
 	for i in range(genders.size()):

@@ -22,7 +22,6 @@ func run() -> void:
 	var snapshots: Array[Dictionary] = []
 	for i in range(3):
 		game.change_part("eye", 1)
-		game.change_part("mouth", 1)
 		game.change_part("hair", 1)
 		game.change_part("weapon", -1 if i < 2 else 1)
 		snapshots.append(game.appearance.duplicate(true))
@@ -66,6 +65,14 @@ func run() -> void:
 	game.start_journey()
 	await process_frame
 	assert(game.world.character_appearance == replacement)
+	game.show_creation()
+	game.select_gender(0)
+	game.appearance.hair = 7
+	game.save_preset(0)
+	game.select_gender(1)
+	game.apply_preset(0)
+	assert(game.appearance.hair == 3 and game.part_controls.hair.number.text == "4/4")
+	assert(game.preset_store.get_appearance(0).hair == 7)
 	# Invalid saved slot data is treated as empty; other slots survive.
 	var data := ConfigFile.new()
 	assert(data.load(path) == OK)
@@ -76,7 +83,9 @@ func run() -> void:
 	assert(restored.get_appearance(-1).is_empty() and restored.get_appearance(3).is_empty())
 	# Catalog indices from older presets must retain their original weapon types.
 	var legacy := Art.defaults()
-	for key in ["eye","mouth","gender"]: legacy.erase(key)
+	for key in ["eye","gender"]: legacy.erase(key)
+	legacy.mouth = 4
+	legacy.beard = 25
 	legacy.face = 1
 	legacy.body = 15 # White gambeson in 0.0.76, outside the current index range.
 	legacy.weapon = 0
@@ -86,7 +95,7 @@ func run() -> void:
 	data.set_value("presets", "0", legacy)
 	assert(data.save(path) == OK)
 	restored = Store.new(path)
-	assert(restored.get_appearance(0).eye == 7 and restored.get_appearance(0).mouth == 0)
+	assert(restored.get_appearance(0).eye == 7 and not restored.get_appearance(0).has("mouth") and not restored.get_appearance(0).has("beard"))
 	assert(Art.description(restored.get_appearance(0), "body") == "흰색 갬비슨")
 	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "one_axe/1")
 	assert(Art.equipped_offhand(restored.get_appearance(0)).id == "one_sword/2")
