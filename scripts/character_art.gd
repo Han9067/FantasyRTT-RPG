@@ -8,8 +8,8 @@ const PREVIEW_SCALE := 3
 const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 0.5)
 const SHIELD_WEAPON_PIVOT := Vector2(0.5, 1.0)
 const ARCHER_BOW := "bow/1"
-const BOW_OFFHAND_CENTER := Vector2i(4, -2)
-const BOW_HOLD_OFFSET := Vector2i(0, 2)
+const BOW_OFFHAND_CENTER := Vector2i(9, -2)
+const BOW_HOLD_OFFSET := Vector2i(-5, 2)
 const BOW_OFFSET := Vector2i(1, 0) # Native sprite faces left; flip_h mirrors this offset.
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
@@ -20,8 +20,10 @@ const FRAME_COUNTS := {"idle": 4, "walk": 4, "attack": 6}
 const BODY_ORIGIN := Vector2i(64, 48)
 const CANVAS_PADDING := Vector2i(32, 24)
 const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
-# On the left-facing sprite, rest grips at x=73 and 87 flank the body pivot at x=80.
-const PRIMARY_GRIP_SHIFT := Vector2i(6, 0)
+# Offsets in native pixels before the whole character is mirrored.
+const PRIMARY_GRIP_SHIFT := Vector2i(1, 0)
+const CROSSBOW_GRIP_SHIFT := Vector2i(6, 0)
+const OFFHAND_WEAPON_SHIFT := Vector2i(5, 0)
 const OFFHAND_GRIP_SHIFT := Vector2i(1, 0)
 const DEFAULT_OUTFIT := "tunic_green"
 const PARTS := [
@@ -166,7 +168,7 @@ static func equipped_offhand(config: Dictionary) -> Dictionary:
 	return data().weapon_items[ids[config.get("offhand_item", 0)]]
 
 # Keep weapon, gripping hand and body bob in one pose calculation.
-static func pose(animation: String, frame: int, attack_type := "chop_attack", equip_type := 0) -> Dictionary:
+static func pose(animation: String, frame: int, attack_type := "chop_attack", equip_type := 0, family := "") -> Dictionary:
 	var result := local_pose(animation, frame, attack_type, equip_type)
 	result.grip += CANVAS_PADDING
 	if equip_type == 3:
@@ -176,9 +178,10 @@ static func pose(animation: String, frame: int, attack_type := "chop_attack", eq
 	else:
 		result.free_hand += CANVAS_PADDING
 		if equip_type >= 0:
-			result.grip += PRIMARY_GRIP_SHIFT
+			var shift := CROSSBOW_GRIP_SHIFT if family == "crossbow" else PRIMARY_GRIP_SHIFT
+			result.grip += shift
 			result.free_hand += OFFHAND_GRIP_SHIFT
-			result.effect_origin += PRIMARY_GRIP_SHIFT
+			result.effect_origin += shift
 	result.effect_origin += CANVAS_PADDING
 	return result
 
@@ -217,15 +220,17 @@ static func rotated_point(point: Vector2i, size: Vector2i, turns: int) -> Vector
 
 static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon := equipped_weapon(config)
-	var current_pose := pose(animation, frame, weapon.attack, weapon.equip_type)
+	var current_pose := pose(animation, frame, weapon.attack, weapon.equip_type, weapon.family)
 	# Rotate the sheet adjustment with the weapon around the gripping hand.
 	if is_primary_melee(weapon.family):
 		var offset := Vector2i(0, -int(weapon.get("y_up", 0)))
 		if current_pose.rotation == 1: offset = Vector2i(-offset.y, offset.x)
 		elif current_pose.rotation == -1: offset = Vector2i(offset.y, -offset.x)
 		return current_pose.grip + offset
-	var offset := bow_offset(weapon) if weapon.family == "bow" else PRIMARY_GRIP_SHIFT
-	return NON_MELEE_WEAPON_ANCHOR + offset + current_pose.grip - pose("idle", 0, weapon.attack, weapon.equip_type).grip
+	var offset := PRIMARY_GRIP_SHIFT
+	if weapon.family == "crossbow": offset = CROSSBOW_GRIP_SHIFT
+	if weapon.family == "bow": offset = bow_offset(weapon)
+	return NON_MELEE_WEAPON_ANCHOR + offset + current_pose.grip - pose("idle", 0, weapon.attack, weapon.equip_type, weapon.family).grip
 
 static func bow_shot_slot(weapon: Dictionary, frame: int) -> int:
 	return (int(weapon.number) - 1) * 12 + frame
@@ -235,7 +240,7 @@ static func bow_offset(weapon: Dictionary) -> Vector2i:
 
 static func weapon_position(config: Dictionary, animation: String, frame: int) -> Vector2i:
 	var weapon: Dictionary = equipped_weapon(config)
-	var current_pose := pose(animation, frame, weapon.attack, weapon.equip_type)
+	var current_pose := pose(animation, frame, weapon.attack, weapon.equip_type, weapon.family)
 	var size := part_rect(data().bow_shot, bow_shot_slot(weapon, frame)).size if weapon.attack == "bow_shot" and animation == "attack" else part_rect(weapon.sheet, weapon.slot).size
 	if is_primary_melee(weapon.family):
 		# Use the same pixel-center rotation as the hand and Image.rotate_90.
@@ -283,7 +288,7 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	var base := BODY_ORIGIN
 	# World portraits omit equipment without changing the saved loadout or body parts.
 	var weapon := equipped_weapon(config) if include_weapon else {}
-	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("equip_type", -1))
+	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("equip_type", -1), weapon.get("family", ""))
 	var head := base + Vector2i(0, current_pose.bob)
 	var race := human_data()
 	var body_index: int = current_pose.body_frame
@@ -299,6 +304,7 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	var shield: bool = secondary.get("family", "") == "one_shield"
 	var offhand_position := Vector2i.ZERO
 	if not secondary.is_empty():
+		if not shield: current_pose.free_hand += OFFHAND_WEAPON_SHIFT
 		offhand_position = current_pose.free_hand + Vector2i(8, 8) - Vector2i(secondary.grip[0], secondary.grip[1])
 		if not shield:
 			paste(img, secondary.sheet, secondary.slot, offhand_position)

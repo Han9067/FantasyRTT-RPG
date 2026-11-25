@@ -74,7 +74,7 @@ func run() -> void:
 					# Verify both visible hands use exactly the selected skin, overlaid above the weapon.
 					var hand_path: String = Art.human_data().hand
 					var hand := Art.part_image(hand_path, skin)
-					var offsets: Array = [pose.free_hand]
+					var offsets: Array = [pose.free_hand + Vector2i(5,0)]
 					if pose.visible and pose.rotation == 0:
 						offsets.append(pose.grip - Vector2i(8, 8))
 					for offset in offsets:
@@ -88,7 +88,7 @@ func run() -> void:
 						for y in range(effect.get_height()):
 							for x in range(effect.get_width()):
 								if effect.get_pixel(x,y).a == 1.0:
-									assert(art.get_pixelv(Vector2i(x,y) + Vector2i(38, 45)) == effect.get_pixel(x,y), "Guide attack trail missing")
+									assert(art.get_pixelv(Vector2i(x,y) + Vector2i(33, 45)) == effect.get_pixel(x,y), "Guide attack trail missing")
 	# Guide phases remain distinct, rotations are exact quarter turns, recovery closes the loop.
 	config = Art.defaults()
 	for weapon_index in range(3):
@@ -116,7 +116,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.84")
+	assert(game.game_version == "0.0.85")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -329,17 +329,17 @@ func verify_equipment(catalog: Dictionary) -> void:
 				assert(slot.id == (weapon.number - 1) * 12 + f + 1)
 			for animation in Art.FRAME_COUNTS:
 				for f in Art.frame_count(config, animation):
-					var bow_pose := Art.pose(animation, f, weapon.attack, weapon.equip_type)
+					var bow_pose := Art.pose(animation, f, weapon.attack, weapon.equip_type, weapon.family)
 					if animation == "attack" or (animation == "idle" and f == 0):
-						assert(bow_pose.grip == Art.CANVAS_PADDING + Vector2i(35,45))
+						assert(bow_pose.grip == Art.CANVAS_PADDING + Vector2i(30,45))
 					assert(Art.weapon_anchor(config, animation, f) == bow_pose.grip + Vector2i(2,-1))
-					assert(bow_pose.free_hand + Vector2i(8,8) == bow_pose.grip + Vector2i(4,-2))
+					assert(bow_pose.free_hand + Vector2i(8,8) == bow_pose.grip + Vector2i(9,-2))
 					var armed := Art.compose(config, animation, f)
 					var with_hand := armed.duplicate() as Image
 					Art.paste(with_hand, Art.human_data().hand, config.skin, bow_pose.free_hand)
 					Art.paste(with_hand, Art.human_data().hand, config.skin, bow_pose.grip - Vector2i(8,8))
 					assert(with_hand.get_data() == armed.get_data())
-			assert(Art.weapon_anchor(config, "idle", 0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(1,0))
+			assert(Art.weapon_anchor(config, "idle", 0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(-4,0))
 			continue
 		var is_spear: bool = weapon.family == "two_spear"
 		assert(weapon.attack == ("thrust_attack" if is_spear else "chop_attack"))
@@ -353,13 +353,13 @@ func verify_equipment(catalog: Dictionary) -> void:
 		if (catalog.melee_groups.has(weapon.family) and weapon.family != "one_shield"):
 			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack,weapon.equip_type).grip - Vector2i(0,expected_offsets.get(id,0)), "Melee anchor must use the sheet upward offset")
 		else:
-			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(6,0))
+			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(6 if weapon.family == "crossbow" else 1,0))
 		assert(region == Rect2(Art.PREVIEW_REGION), "All weapons share the same padded preview canvas")
 		for animation in Art.FRAME_COUNTS:
 			for f in range(Art.FRAME_COUNTS[animation]):
-				var pose := Art.pose(animation, f, weapon.attack, weapon.equip_type)
+				var pose := Art.pose(animation, f, weapon.attack, weapon.equip_type, weapon.family)
 				if animation != "attack":
-					assert(pose.grip.x == 73 and pose.free_hand.x + 8 == 87)
+					assert(pose.grip.x == (73 if weapon.family == "crossbow" else 68) and pose.free_hand.x + 8 == 87)
 				if weapon.family in ["two_axe", "two_blunt", "two_polearm"]:
 					if animation == "attack":
 						assert(pose == Art.pose(animation, f, "chop_attack", 1))
