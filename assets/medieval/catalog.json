@@ -10223,7 +10223,7 @@
         24
       ],
       "attack": "chop_attack",
-      "y_up": 7,
+      "y_up": 8,
       "item_id": 1001,
       "equip_type": 0,
       "is_unique": false,

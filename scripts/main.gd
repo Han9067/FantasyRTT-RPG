@@ -1,6 +1,6 @@
 extends Control
 
-var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.86")
+var game_version: String = ProjectSettings.get_setting("application/config/version", "0.0.87")
 const PresetStore = preload("res://scripts/character_presets.gd")
 const CharacterArt = preload("res://scripts/character_art.gd")
 
@@ -374,6 +374,10 @@ func apply_preset(slot: int) -> void:
 	var saved: Dictionary = preset_store.get_appearance(slot)
 	if saved.is_empty(): return
 	saved.gender = selected_gender
+	# Old presets can contain a crossbow. Substitute the final visible ranged option on load.
+	if CharacterArt.data().primary_types[saved.weapon] == "crossbow":
+		saved.weapon = CharacterArt.data().primary_types.find("bow")
+		saved.weapon_item = 0
 	CharacterArt.normalize(saved)
 	appearance = saved
 	character_frames = CharacterArt.animations(appearance)
@@ -407,9 +411,9 @@ func select_gender(value: int) -> void:
 		genders[i].button_pressed = i == value
 
 func change_part(key: String, direction: int) -> void:
-	var total := CharacterArt.count(appearance, key)
-	if total <= 1: return
 	var order := CharacterArt.selection_order(appearance, key)
+	var total := order.size()
+	if total <= 1: return
 	appearance[key] = order[posmod(order.find(int(appearance[key])) + direction, total)]
 	if key == "weapon":
 		appearance.erase("equipped_weapon")
@@ -425,7 +429,7 @@ func change_part(key: String, direction: int) -> void:
 func refresh_part_controls() -> void:
 	for entry in CharacterArt.PARTS:
 		var key: String = entry[0]
-		var total := CharacterArt.count(appearance, key)
+		var total := CharacterArt.selection_order(appearance, key).size()
 		var controls: Dictionary = part_controls[key]
 		var counter := "%d/%d" % [int(appearance[key]) + 1, total]
 		controls.number.text = counter

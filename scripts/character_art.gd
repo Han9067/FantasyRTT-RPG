@@ -21,9 +21,10 @@ const BODY_ORIGIN := Vector2i(64, 48)
 const CANVAS_PADDING := Vector2i(32, 24)
 const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
 # Offsets in native pixels before the whole character is mirrored.
-const PRIMARY_GRIP_SHIFT := Vector2i(1, 0)
+const PRIMARY_GRIP_SHIFT := Vector2i(2, 0)
 const CROSSBOW_GRIP_SHIFT := Vector2i(6, 0)
-const OFFHAND_GRIP_SHIFT := Vector2i(5, 0)
+const OFFHAND_GRIP_SHIFT := Vector2i(4, 0)
+const EMPTY_OFFHAND_SHIFT := Vector2i(2, 0)
 const SHIELD_GRIP_SHIFT := Vector2i(1, 0)
 const DEFAULT_OUTFIT := "tunic_green"
 const PARTS := [
@@ -124,11 +125,11 @@ static func selection_order(config: Dictionary, key: String) -> Array:
 	var types: Array = data().primary_types if key == "weapon" else data().secondary_types
 	order.clear()
 	if key == "offhand": order.append(-1)
-	for family in ["one_sword", "one_axe", "one_blunt", "two_sword", "two_axe", "two_blunt", "two_spear", "two_polearm", "bow", "crossbow"]:
+	for family in ["one_sword", "one_axe", "one_blunt", "two_sword", "two_axe", "two_blunt", "two_spear", "two_polearm", "bow"]:
 		var index := types.find(family)
 		if index >= 0: order.append(index)
 	for index in range(types.size()):
-		if not order.has(index): order.append(index)
+		if types[index] != "crossbow" and not order.has(index): order.append(index)
 	return order
 
 static func normalize(config: Dictionary) -> void:
@@ -168,7 +169,7 @@ static func equipped_offhand(config: Dictionary) -> Dictionary:
 	return data().weapon_items[ids[config.get("offhand_item", 0)]]
 
 # Keep weapon, gripping hand and body bob in one pose calculation.
-static func pose(animation: String, frame: int, attack_type := "chop_attack", equip_type := 0, family := "", shield := false) -> Dictionary:
+static func pose(animation: String, frame: int, attack_type := "chop_attack", equip_type := 0, family := "", offhand_family := "") -> Dictionary:
 	var result := local_pose(animation, frame, attack_type, equip_type)
 	result.grip += CANVAS_PADDING
 	if equip_type == 3:
@@ -177,7 +178,10 @@ static func pose(animation: String, frame: int, attack_type := "chop_attack", eq
 		result.free_hand = result.grip + BOW_OFFHAND_CENTER - Vector2i(8, 8)
 	else:
 		result.free_hand += CANVAS_PADDING
-		result.free_hand += SHIELD_GRIP_SHIFT if shield else OFFHAND_GRIP_SHIFT
+		match offhand_family:
+			"": result.free_hand += EMPTY_OFFHAND_SHIFT
+			"one_shield": result.free_hand += SHIELD_GRIP_SHIFT
+			_: result.free_hand += OFFHAND_GRIP_SHIFT
 		if equip_type >= 0:
 			var shift := CROSSBOW_GRIP_SHIFT if family == "crossbow" else PRIMARY_GRIP_SHIFT
 			result.grip += shift
@@ -290,7 +294,7 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	var weapon := equipped_weapon(config) if include_weapon else {}
 	var secondary := equipped_offhand(config) if include_weapon else {}
 	var shield: bool = secondary.get("family", "") == "one_shield"
-	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("equip_type", -1), weapon.get("family", ""), shield)
+	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("equip_type", -1), weapon.get("family", ""), secondary.get("family", ""))
 	var head := base + Vector2i(0, current_pose.bob)
 	var race := human_data()
 	var body_index: int = current_pose.body_frame

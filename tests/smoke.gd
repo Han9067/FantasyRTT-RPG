@@ -74,7 +74,9 @@ func run() -> void:
 					# Verify both visible hands use exactly the selected skin, overlaid above the weapon.
 					var hand_path: String = Art.human_data().hand
 					var hand := Art.part_image(hand_path, skin)
-					var offsets: Array = [pose.free_hand]
+					var offhand_pose := Art.pose(animation, frame, weapon.attack, weapon.equip_type, weapon.family, "one_sword")
+					assert(offhand_pose.free_hand.x + 8 == 90)
+					var offsets: Array = [offhand_pose.free_hand]
 					if pose.visible and pose.rotation == 0:
 						offsets.append(pose.grip - Vector2i(8, 8))
 					for offset in offsets:
@@ -88,7 +90,7 @@ func run() -> void:
 						for y in range(effect.get_height()):
 							for x in range(effect.get_width()):
 								if effect.get_pixel(x,y).a == 1.0:
-									assert(art.get_pixelv(Vector2i(x,y) + Vector2i(33, 45)) == effect.get_pixel(x,y), "Guide attack trail missing")
+									assert(art.get_pixelv(Vector2i(x,y) + Vector2i(34, 45)) == effect.get_pixel(x,y), "Guide attack trail missing")
 	# Guide phases remain distinct, rotations are exact quarter turns, recovery closes the loop.
 	config = Art.defaults()
 	for weapon_index in range(3):
@@ -116,7 +118,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.86")
+	assert(game.game_version == "0.0.87")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -181,9 +183,9 @@ func run() -> void:
 	for hidden in ["race", "hands", "hat_family", "hat_color", "hat", "beard", "beard_color", "mouth"]:
 		assert(not game.part_controls.has(hidden) and not game.appearance.has(hidden))
 	assert(game.part_controls.weapon.number.text == "한손 검")
-	assert(Art.selection_order(game.appearance,"weapon") == [2,0,1,7,3,4,6,5,8,9])
+	assert(Art.selection_order(game.appearance,"weapon") == [2,0,1,7,3,4,6,5,8])
 	assert(Art.selection_order(game.appearance,"offhand") == [-1,3,0,1,2])
-	for family in ["one_sword","one_axe","one_blunt","two_sword","two_axe","two_blunt","two_spear","two_polearm","bow","crossbow"]:
+	for family in ["one_sword","one_axe","one_blunt","two_sword","two_axe","two_blunt","two_spear","two_polearm","bow"]:
 		assert(Art.equipped_weapon(game.appearance).family == family)
 		game.change_part("weapon",1)
 	assert(Art.equipped_weapon(game.appearance).family == "one_sword")
@@ -266,9 +268,9 @@ func verify_shield_layers() -> void:
 	bare.offhand = -1
 	for animation in Art.FRAME_COUNTS:
 		for frame in range(Art.FRAME_COUNTS[animation]):
-			var pose := Art.pose(animation, frame, "chop_attack", 0, "one_sword", true)
+			var pose := Art.pose(animation, frame, "chop_attack", 0, "one_sword", "one_shield")
 			var bare_pose := Art.pose(animation, frame)
-			assert(pose.free_hand.x + 8 == 87 and bare_pose.free_hand.x + 8 == 91)
+			assert(pose.free_hand.x + 8 == 87 and bare_pose.free_hand.x + 8 == 88)
 			var bare_frame := Art.compose(bare, animation, frame)
 			var hand := Art.part_image(Art.human_data().hand, config.skin)
 			for y in hand.get_height():
@@ -317,7 +319,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 	var axe_offsets := [4, 6, 5, 4, 4, 5, 5, 5, 5, 6, 5, 4, 6, 6, 6]
 	for index in range(axe_offsets.size()):
 		expected_offsets["one_axe/%d" % (index + 1)] = axe_offsets[index]
-	var sword_offsets := [7,10,11,10,10,10,10,9,9,10,11,7,6,8]
+	var sword_offsets := [8,10,11,10,10,10,10,9,9,10,11,7,6,8]
 	for index in range(sword_offsets.size()):
 		expected_offsets["one_sword/%d" % (index + 1)] = sword_offsets[index]
 	for number in range(1, 8): expected_offsets["bow/%d" % number] = 2
@@ -365,13 +367,13 @@ func verify_equipment(catalog: Dictionary) -> void:
 		if (catalog.melee_groups.has(weapon.family) and weapon.family != "one_shield"):
 			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack,weapon.equip_type).grip - Vector2i(0,expected_offsets.get(id,0)), "Melee anchor must use the sheet upward offset")
 		else:
-			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(6 if weapon.family == "crossbow" else 1,0))
+			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(6 if weapon.family == "crossbow" else 2,0))
 		assert(region == Rect2(Art.PREVIEW_REGION), "All weapons share the same padded preview canvas")
 		for animation in Art.FRAME_COUNTS:
 			for f in range(Art.FRAME_COUNTS[animation]):
 				var pose := Art.pose(animation, f, weapon.attack, weapon.equip_type, weapon.family)
 				if animation != "attack":
-					assert(pose.grip.x == (73 if weapon.family == "crossbow" else 68) and pose.free_hand.x + 8 == 91)
+					assert(pose.grip.x == (73 if weapon.family == "crossbow" else 69) and pose.free_hand.x + 8 == 88)
 				if weapon.family in ["two_axe", "two_blunt", "two_polearm"]:
 					if animation == "attack":
 						assert(pose == Art.pose(animation, f, "chop_attack", 1))
