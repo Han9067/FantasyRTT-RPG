@@ -66,13 +66,16 @@ func run() -> void:
 	await process_frame
 	assert(game.world.character_appearance == replacement)
 	game.show_creation()
-	game.select_gender(0)
-	game.appearance.hair = 7
+	game.select_gender(1)
+	game.appearance.hair = 8
 	game.save_preset(0)
+	game.preset_store = Store.new(path)
+	game.select_gender(0)
+	game.apply_preset(0)
+	assert(game.appearance.hair == 7 and game.part_controls.hair.number.text == "8/8")
 	game.select_gender(1)
 	game.apply_preset(0)
-	assert(game.appearance.hair == 3 and game.part_controls.hair.number.text == "4/4")
-	assert(game.preset_store.get_appearance(0).hair == 7)
+	assert(game.appearance.hair == 8 and game.part_controls.hair.number.text == "9/9")
 	# Invalid saved slot data is treated as empty; other slots survive.
 	var data := ConfigFile.new()
 	assert(data.load(path) == OK)

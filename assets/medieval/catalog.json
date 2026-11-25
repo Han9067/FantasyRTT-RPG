@@ -2,392 +2,6 @@
   "schema": 6,
   "source_root": "art/medieval/",
   "sheets": {
-    "sprites/Characters/head/m.png": {
-      "slots": [
-        {
-          "name": "m1",
-          "source": "sprites/Characters/head/m1.png",
-          "sha256": "51ce20fdb1ce26fefd57fddfb078d6237b0d8a391e468e155326191c6dddb275",
-          "size": [
-            32,
-            32
-          ],
-          "id": 1,
-          "atlas": "atlas_00.png",
-          "rect": [
-            1,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "m2",
-          "source": "sprites/Characters/head/m2.png",
-          "sha256": "9a3e25af8ddf3b76ed1ca3659428f2f9966408e59b32be61bd8772295a2a71ff",
-          "size": [
-            32,
-            32
-          ],
-          "id": 2,
-          "atlas": "atlas_00.png",
-          "rect": [
-            35,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "m3",
-          "source": "sprites/Characters/head/m3.png",
-          "sha256": "dec6ab3cc3e631947d58524cbb10ece79903871d2c34813fda809077ca389170",
-          "size": [
-            32,
-            32
-          ],
-          "id": 3,
-          "atlas": "atlas_00.png",
-          "rect": [
-            69,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "m4",
-          "source": "sprites/Characters/head/m4.png",
-          "sha256": "0cff914085d820c14946915bf951cad7f900b7a8a607d39da1649dca16033a42",
-          "size": [
-            32,
-            32
-          ],
-          "id": 4,
-          "atlas": "atlas_00.png",
-          "rect": [
-            103,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "m5",
-          "source": "sprites/Characters/head/m5.png",
-          "sha256": "591a7b6ffb47a796a8f10bf6a9a5f8a6e39b18acecaf05117a5d6fe7e951a451",
-          "size": [
-            32,
-            32
-          ],
-          "id": 5,
-          "atlas": "atlas_00.png",
-          "rect": [
-            137,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "m6",
-          "source": "sprites/Characters/head/m6.png",
-          "sha256": "3760ea7ee7aa837947e7f34638d371ca9fa2b4c4b2647a57080d6edbdc1890ab",
-          "size": [
-            32,
-            32
-          ],
-          "id": 6,
-          "atlas": "atlas_00.png",
-          "rect": [
-            171,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "m7",
-          "source": "sprites/Characters/head/m7.png",
-          "sha256": "4c7546131014201d2f0b4505030ff9bf1c2f992bab51a9537973cfd99bb19260",
-          "size": [
-            32,
-            32
-          ],
-          "id": 7,
-          "atlas": "atlas_00.png",
-          "rect": [
-            205,
-            1,
-            32,
-            32
-          ]
-        }
-      ]
-    },
-    "sprites/Characters/head/f.png": {
-      "slots": [
-        {
-          "name": "f1",
-          "source": "sprites/Characters/head/f1.png",
-          "sha256": "77c1968e723a5f3012e731b6607ceb76bc4a9a16bef346459108c7e20f0dc745",
-          "size": [
-            32,
-            32
-          ],
-          "id": 1,
-          "atlas": "atlas_00.png",
-          "rect": [
-            239,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "f2",
-          "source": "sprites/Characters/head/f2.png",
-          "sha256": "cd0d0d1f312a3dea1b06028f5ceb848be13ea94e179411ac09a1b8a00dfd04cd",
-          "size": [
-            32,
-            32
-          ],
-          "id": 2,
-          "atlas": "atlas_00.png",
-          "rect": [
-            273,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "f3",
-          "source": "sprites/Characters/head/f3.png",
-          "sha256": "5c0db154ac85bc614f8bcab142ccff43005c3a8d9095b3764560f0413ca8da0d",
-          "size": [
-            32,
-            32
-          ],
-          "id": 3,
-          "atlas": "atlas_00.png",
-          "rect": [
-            307,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "f4",
-          "source": "sprites/Characters/head/f4.png",
-          "sha256": "141d579da0ff9973b5d8347bc1dc8118df44bba83d40d19ed58a22afbaae60cc",
-          "size": [
-            32,
-            32
-          ],
-          "id": 4,
-          "atlas": "atlas_00.png",
-          "rect": [
-            341,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "f5",
-          "source": "sprites/Characters/head/f5.png",
-          "sha256": "d2b7feed18410e6354933631a0657d86f1263fd7f7ddf10788753dae23f40ae3",
-          "size": [
-            32,
-            32
-          ],
-          "id": 5,
-          "atlas": "atlas_00.png",
-          "rect": [
-            375,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "f6",
-          "source": "sprites/Characters/head/f6.png",
-          "sha256": "6494c8c30c638699c65f540a00ae37426fc40fb9761c698bfe6f714cf1d74765",
-          "size": [
-            32,
-            32
-          ],
-          "id": 6,
-          "atlas": "atlas_00.png",
-          "rect": [
-            409,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "f7",
-          "source": "sprites/Characters/head/f7.png",
-          "sha256": "11a354150b535fbfa0026dc0aa89c0d932936511e7a07650524dd96bde6b4bc4",
-          "size": [
-            32,
-            32
-          ],
-          "id": 7,
-          "atlas": "atlas_00.png",
-          "rect": [
-            443,
-            1,
-            32,
-            32
-          ]
-        }
-      ]
-    },
-    "sprites/Characters/eye.png": {
-      "slots": [
-        {
-          "name": "1",
-          "source": "sprites/Characters/eye/1.png",
-          "sha256": "2c1ae976d8dba21e819bcd3d658fbfccd376d1c66102c91658afca0efb6e9405",
-          "size": [
-            32,
-            32
-          ],
-          "id": 1,
-          "atlas": "atlas_00.png",
-          "rect": [
-            477,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "2",
-          "source": "sprites/Characters/eye/2.png",
-          "sha256": "933c637d4441cfc10c983085b35f0fd11dfbb6bc95755d1f0a1e15deb7cd93e0",
-          "size": [
-            32,
-            32
-          ],
-          "id": 2,
-          "atlas": "atlas_00.png",
-          "rect": [
-            511,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "3",
-          "source": "sprites/Characters/eye/3.png",
-          "sha256": "58e0c712a0de708cb9c1f0bf22deebe40051ea0b35ee8a5d6e006b40cac28464",
-          "size": [
-            32,
-            32
-          ],
-          "id": 3,
-          "atlas": "atlas_00.png",
-          "rect": [
-            545,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "4",
-          "source": "sprites/Characters/eye/4.png",
-          "sha256": "cba645c6e896a4e3ba27b83a5e3dc0fe4c10fccc0046feb7f81ff9d231d58556",
-          "size": [
-            32,
-            32
-          ],
-          "id": 4,
-          "atlas": "atlas_00.png",
-          "rect": [
-            579,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "5",
-          "source": "sprites/Characters/eye/5.png",
-          "sha256": "48ae379b369321b92980b6cc19cfe2fb20cf175d60e46cafaccb8a6f138ef515",
-          "size": [
-            32,
-            32
-          ],
-          "id": 5,
-          "atlas": "atlas_00.png",
-          "rect": [
-            613,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "6",
-          "source": "sprites/Characters/eye/6.png",
-          "sha256": "56157ee35e31158d09c51b791872a7eac5c795e014ef2205d491d81cb188cb05",
-          "size": [
-            32,
-            32
-          ],
-          "id": 6,
-          "atlas": "atlas_00.png",
-          "rect": [
-            647,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "7",
-          "source": "sprites/Characters/eye/7.png",
-          "sha256": "861dcd0bc6ac4c33cc4ea66ee777c1f601fd3b024f5239bb0b3b514336bcb1b2",
-          "size": [
-            32,
-            32
-          ],
-          "id": 7,
-          "atlas": "atlas_00.png",
-          "rect": [
-            681,
-            1,
-            32,
-            32
-          ]
-        },
-        {
-          "name": "8",
-          "source": "sprites/Characters/eye/8.png",
-          "sha256": "8b21b58ca92da377d1f146741a6d0d4217a660c2e639b75dba7f98d252f28cdf",
-          "size": [
-            32,
-            32
-          ],
-          "id": 8,
-          "atlas": "atlas_00.png",
-          "rect": [
-            715,
-            1,
-            32,
-            32
-          ]
-        }
-      ]
-    },
     "sprites/Characters/hair/black/m.png": {
       "slots": [
         {
@@ -401,7 +15,7 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            749,
+            1,
             1,
             32,
             32
@@ -418,7 +32,7 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            783,
+            35,
             1,
             32,
             32
@@ -435,7 +49,7 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            817,
+            69,
             1,
             32,
             32
@@ -452,7 +66,7 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            851,
+            103,
             1,
             32,
             32
@@ -469,7 +83,7 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            885,
+            137,
             1,
             32,
             32
@@ -486,7 +100,7 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            919,
+            171,
             1,
             32,
             32
@@ -503,7 +117,7 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            953,
+            205,
             1,
             32,
             32
@@ -524,7 +138,7 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            987,
+            239,
             1,
             32,
             32
@@ -541,8 +155,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
+            273,
             1,
-            35,
             32,
             32
           ]
@@ -558,8 +172,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            35,
-            35,
+            307,
+            1,
             32,
             32
           ]
@@ -575,8 +189,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            69,
-            35,
+            341,
+            1,
             32,
             32
           ]
@@ -592,8 +206,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            103,
-            35,
+            375,
+            1,
             32,
             32
           ]
@@ -609,8 +223,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            137,
-            35,
+            409,
+            1,
             32,
             32
           ]
@@ -626,8 +240,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            171,
-            35,
+            443,
+            1,
             32,
             32
           ]
@@ -647,8 +261,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            205,
-            35,
+            477,
+            1,
             32,
             32
           ]
@@ -664,8 +278,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            239,
-            35,
+            511,
+            1,
             32,
             32
           ]
@@ -681,8 +295,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            273,
-            35,
+            545,
+            1,
             32,
             32
           ]
@@ -698,8 +312,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            307,
-            35,
+            579,
+            1,
             32,
             32
           ]
@@ -715,8 +329,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            341,
-            35,
+            613,
+            1,
             32,
             32
           ]
@@ -732,8 +346,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            375,
-            35,
+            647,
+            1,
             32,
             32
           ]
@@ -749,8 +363,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            409,
-            35,
+            681,
+            1,
             32,
             32
           ]
@@ -770,8 +384,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            443,
-            35,
+            715,
+            1,
             32,
             32
           ]
@@ -787,8 +401,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            477,
-            35,
+            749,
+            1,
             32,
             32
           ]
@@ -804,8 +418,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            511,
-            35,
+            783,
+            1,
             32,
             32
           ]
@@ -821,8 +435,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            545,
-            35,
+            817,
+            1,
             32,
             32
           ]
@@ -838,8 +452,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            579,
-            35,
+            851,
+            1,
             32,
             32
           ]
@@ -855,8 +469,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            613,
-            35,
+            885,
+            1,
             32,
             32
           ]
@@ -872,8 +486,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            647,
-            35,
+            919,
+            1,
             32,
             32
           ]
@@ -893,8 +507,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            681,
-            35,
+            953,
+            1,
             32,
             32
           ]
@@ -910,8 +524,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            715,
-            35,
+            987,
+            1,
             32,
             32
           ]
@@ -927,7 +541,7 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            749,
+            1,
             35,
             32,
             32
@@ -944,7 +558,7 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            783,
+            35,
             35,
             32,
             32
@@ -961,7 +575,7 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            817,
+            69,
             35,
             32,
             32
@@ -978,7 +592,7 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            851,
+            103,
             35,
             32,
             32
@@ -995,7 +609,7 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            885,
+            137,
             35,
             32,
             32
@@ -1016,7 +630,7 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            919,
+            171,
             35,
             32,
             32
@@ -1033,7 +647,7 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            953,
+            205,
             35,
             32,
             32
@@ -1050,7 +664,7 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            987,
+            239,
             35,
             32,
             32
@@ -1067,8 +681,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            69,
+            273,
+            35,
             32,
             32
           ]
@@ -1084,8 +698,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
+            307,
             35,
-            69,
             32,
             32
           ]
@@ -1101,8 +715,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            69,
-            69,
+            341,
+            35,
             32,
             32
           ]
@@ -1118,8 +732,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            103,
-            69,
+            375,
+            35,
             32,
             32
           ]
@@ -1139,8 +753,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            137,
-            69,
+            409,
+            35,
             32,
             32
           ]
@@ -1156,8 +770,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            171,
-            69,
+            443,
+            35,
             32,
             32
           ]
@@ -1173,8 +787,93 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            205,
-            69,
+            477,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f4",
+          "source": "sprites/Characters/hair/black/f4.png",
+          "sha256": "99c0c02f85e1430c24578a51ae8ed63cd887bf39f18ae12b0c429c17bf28a12d",
+          "size": [
+            32,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            511,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f5",
+          "source": "sprites/Characters/hair/black/f5.png",
+          "sha256": "c10b643adb4aff38a5129dfb3e2143abddc380018522f14de8de48aa1955e820",
+          "size": [
+            32,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
+            545,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f6",
+          "source": "sprites/Characters/hair/black/f6.png",
+          "sha256": "a89db611c2e040b239c75adba3841599741c470cf09b9674fc8c1dc8fa369866",
+          "size": [
+            32,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            579,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f7",
+          "source": "sprites/Characters/hair/black/f7.png",
+          "sha256": "718a6885a8040271962a87af03f50e29aee7eab5af8c44dd3e6a77835cb027d3",
+          "size": [
+            32,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_00.png",
+          "rect": [
+            613,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f8",
+          "source": "sprites/Characters/hair/black/f8.png",
+          "sha256": "17a51b2d1340fa9a8b932b5684d788445b4c293872131a253f9b4fd50c85a8de",
+          "size": [
+            32,
+            32
+          ],
+          "id": 8,
+          "atlas": "atlas_00.png",
+          "rect": [
+            647,
+            35,
             32,
             32
           ]
@@ -1194,8 +893,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            239,
-            69,
+            681,
+            35,
             32,
             32
           ]
@@ -1211,8 +910,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            273,
-            69,
+            715,
+            35,
             32,
             32
           ]
@@ -1228,8 +927,93 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            307,
-            69,
+            749,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f4",
+          "source": "sprites/Characters/hair/dark brown/f4.png",
+          "sha256": "7425254a640b618ca898c917dc7d35dccdbbbb2fb2a032b87fe679a992f243ba",
+          "size": [
+            32,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            783,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f5",
+          "source": "sprites/Characters/hair/dark brown/f5.png",
+          "sha256": "436a510c28116e210054a0cfe840fa4641befa81c534850c0c9b42f8b793ceaf",
+          "size": [
+            32,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
+            817,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f6",
+          "source": "sprites/Characters/hair/dark brown/f6.png",
+          "sha256": "253f00b20981ca48544360ea6a8e14740b9693f9d22872bc83b1b1e48b6726f6",
+          "size": [
+            32,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            851,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f7",
+          "source": "sprites/Characters/hair/dark brown/f7.png",
+          "sha256": "c96fb8816884f0bdd9a4b98e1b296eb68d133a56d75cbc11c34aac4164876a7f",
+          "size": [
+            32,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_00.png",
+          "rect": [
+            885,
+            35,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f8",
+          "source": "sprites/Characters/hair/dark brown/f8.png",
+          "sha256": "c83c912ca4040b7ed96da06d0ee874c1b0560e5e9241eb82bedc2d865dfa6fdd",
+          "size": [
+            32,
+            32
+          ],
+          "id": 8,
+          "atlas": "atlas_00.png",
+          "rect": [
+            919,
+            35,
             32,
             32
           ]
@@ -1249,8 +1033,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            341,
-            69,
+            953,
+            35,
             32,
             32
           ]
@@ -1266,8 +1050,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            375,
-            69,
+            987,
+            35,
             32,
             32
           ]
@@ -1283,7 +1067,92 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            409,
+            1,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f4",
+          "source": "sprites/Characters/hair/dark gold/f4.png",
+          "sha256": "d7f4b976957d27956d4fa521ca51147f41fcf304f54f4050dd7a468f26b3894c",
+          "size": [
+            32,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            35,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f5",
+          "source": "sprites/Characters/hair/dark gold/f5.png",
+          "sha256": "f531bedc833bbb6d36a8b144a35ff2d1c5670242ddf6d865025d5055bee4e859",
+          "size": [
+            32,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
+            69,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f6",
+          "source": "sprites/Characters/hair/dark gold/f6.png",
+          "sha256": "c18eefc8e5c1c3e1c576bdb5f3e8602920ebdb331e1759f8e49b4163d258758d",
+          "size": [
+            32,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            103,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f7",
+          "source": "sprites/Characters/hair/dark gold/f7.png",
+          "sha256": "037d23df0072e27894ae3750de640e3d7ad7bf44663b131475708f83ca015400",
+          "size": [
+            32,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_00.png",
+          "rect": [
+            137,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f8",
+          "source": "sprites/Characters/hair/dark gold/f8.png",
+          "sha256": "eb0e1e817ca7d944ed0433303a7f48657e3eac7fc0045a828dc0ec8fe4ff8d76",
+          "size": [
+            32,
+            32
+          ],
+          "id": 8,
+          "atlas": "atlas_00.png",
+          "rect": [
+            171,
             69,
             32,
             32
@@ -1304,7 +1173,7 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            443,
+            205,
             69,
             32,
             32
@@ -1321,7 +1190,7 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            477,
+            239,
             69,
             32,
             32
@@ -1338,7 +1207,92 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            511,
+            273,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f4",
+          "source": "sprites/Characters/hair/gold/f4.png",
+          "sha256": "b058f2bf90959c143fa18a655245caef3ea1152f30bfafdda278f23abdd804ce",
+          "size": [
+            32,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            307,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f5",
+          "source": "sprites/Characters/hair/gold/f5.png",
+          "sha256": "800c2bd0c271ce7b8d602d609c9d52a539607329534d54f637ed0f63d9c884b3",
+          "size": [
+            32,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
+            341,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f6",
+          "source": "sprites/Characters/hair/gold/f6.png",
+          "sha256": "d59f0fe85e8824389888cbde0a71d59b4c1c2da75926081e0344c632f1cfd53c",
+          "size": [
+            32,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            375,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f7",
+          "source": "sprites/Characters/hair/gold/f7.png",
+          "sha256": "fc6ade73664cd125f012ba0cc5bc1d1864b09a92a8acd1d0ab1a9796912c7b28",
+          "size": [
+            32,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_00.png",
+          "rect": [
+            409,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f8",
+          "source": "sprites/Characters/hair/gold/f8.png",
+          "sha256": "a2af74bfd59937840dccb222e1229cb09310c7fe764bd714082733b59e53d0c3",
+          "size": [
+            32,
+            32
+          ],
+          "id": 8,
+          "atlas": "atlas_00.png",
+          "rect": [
+            443,
             69,
             32,
             32
@@ -1359,7 +1313,7 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            545,
+            477,
             69,
             32,
             32
@@ -1376,7 +1330,7 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            579,
+            511,
             69,
             32,
             32
@@ -1393,7 +1347,92 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
+            545,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f4",
+          "source": "sprites/Characters/hair/light brown/f4.png",
+          "sha256": "d16a1c30c4b33840daa6f59d897370c0a955c74e717f61a95901bebc9a36ddeb",
+          "size": [
+            32,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            579,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f5",
+          "source": "sprites/Characters/hair/light brown/f5.png",
+          "sha256": "0ad1b744fd831d06df541ffab0403178cd300f1b63f987f53d7c5e010bec4049",
+          "size": [
+            32,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
             613,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f6",
+          "source": "sprites/Characters/hair/light brown/f6.png",
+          "sha256": "f87a564da6314d15cdcfafedd1a9d57f0714a0587c38b2e4333f3a9dc4d837b8",
+          "size": [
+            32,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            647,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f7",
+          "source": "sprites/Characters/hair/light brown/f7.png",
+          "sha256": "6a0472cefd282816baad84164f210dea03684702c4c2df2217a0dcb247e1f40e",
+          "size": [
+            32,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_00.png",
+          "rect": [
+            681,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f8",
+          "source": "sprites/Characters/hair/light brown/f8.png",
+          "sha256": "1f83885a8229fa1af04d5ef38df10783319a9eab6d194cd46a08e848ea0a7ad0",
+          "size": [
+            32,
+            32
+          ],
+          "id": 8,
+          "atlas": "atlas_00.png",
+          "rect": [
+            715,
             69,
             32,
             32
@@ -1414,7 +1453,7 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            647,
+            749,
             69,
             32,
             32
@@ -1431,7 +1470,7 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            681,
+            783,
             69,
             32,
             32
@@ -1448,8 +1487,479 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            715,
+            817,
             69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f4",
+          "source": "sprites/Characters/hair/light gold/f4.png",
+          "sha256": "8b8f9d7a2cb7a7ed72a048a2269d1d87b5c4af4ce10f9e4fa743460b3cc29a97",
+          "size": [
+            32,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            851,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f5",
+          "source": "sprites/Characters/hair/light gold/f5.png",
+          "sha256": "baa2ade485f58aec8c366640c039c9fe5729a15aabcb57e14c405c9b5b5ef3c6",
+          "size": [
+            32,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
+            885,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f6",
+          "source": "sprites/Characters/hair/light gold/f6.png",
+          "sha256": "073cb845604a5523a7341928cda2fe1f197514dc63fd5151b3c471a430b4c351",
+          "size": [
+            32,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            919,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f7",
+          "source": "sprites/Characters/hair/light gold/f7.png",
+          "sha256": "271871728ddd88ea032abe1610460b17e62422043e0f2fe70cf596e136c1ea16",
+          "size": [
+            32,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_00.png",
+          "rect": [
+            953,
+            69,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f8",
+          "source": "sprites/Characters/hair/light gold/f8.png",
+          "sha256": "1d127a775a88cdda0a122ce82c24276b4bfe4975cf645c844f5883c4a16b54d7",
+          "size": [
+            32,
+            32
+          ],
+          "id": 8,
+          "atlas": "atlas_00.png",
+          "rect": [
+            987,
+            69,
+            32,
+            32
+          ]
+        }
+      ]
+    },
+    "sprites/Characters/head/m.png": {
+      "slots": [
+        {
+          "name": "m1",
+          "source": "sprites/Characters/head/m1.png",
+          "sha256": "51ce20fdb1ce26fefd57fddfb078d6237b0d8a391e468e155326191c6dddb275",
+          "size": [
+            32,
+            32
+          ],
+          "id": 1,
+          "atlas": "atlas_00.png",
+          "rect": [
+            1,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "m2",
+          "source": "sprites/Characters/head/m2.png",
+          "sha256": "9a3e25af8ddf3b76ed1ca3659428f2f9966408e59b32be61bd8772295a2a71ff",
+          "size": [
+            32,
+            32
+          ],
+          "id": 2,
+          "atlas": "atlas_00.png",
+          "rect": [
+            35,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "m3",
+          "source": "sprites/Characters/head/m3.png",
+          "sha256": "dec6ab3cc3e631947d58524cbb10ece79903871d2c34813fda809077ca389170",
+          "size": [
+            32,
+            32
+          ],
+          "id": 3,
+          "atlas": "atlas_00.png",
+          "rect": [
+            69,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "m4",
+          "source": "sprites/Characters/head/m4.png",
+          "sha256": "0cff914085d820c14946915bf951cad7f900b7a8a607d39da1649dca16033a42",
+          "size": [
+            32,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            103,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "m5",
+          "source": "sprites/Characters/head/m5.png",
+          "sha256": "591a7b6ffb47a796a8f10bf6a9a5f8a6e39b18acecaf05117a5d6fe7e951a451",
+          "size": [
+            32,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
+            137,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "m6",
+          "source": "sprites/Characters/head/m6.png",
+          "sha256": "3760ea7ee7aa837947e7f34638d371ca9fa2b4c4b2647a57080d6edbdc1890ab",
+          "size": [
+            32,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            171,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "m7",
+          "source": "sprites/Characters/head/m7.png",
+          "sha256": "4c7546131014201d2f0b4505030ff9bf1c2f992bab51a9537973cfd99bb19260",
+          "size": [
+            32,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_00.png",
+          "rect": [
+            205,
+            103,
+            32,
+            32
+          ]
+        }
+      ]
+    },
+    "sprites/Characters/head/f.png": {
+      "slots": [
+        {
+          "name": "f1",
+          "source": "sprites/Characters/head/f1.png",
+          "sha256": "77c1968e723a5f3012e731b6607ceb76bc4a9a16bef346459108c7e20f0dc745",
+          "size": [
+            32,
+            32
+          ],
+          "id": 1,
+          "atlas": "atlas_00.png",
+          "rect": [
+            239,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f2",
+          "source": "sprites/Characters/head/f2.png",
+          "sha256": "cd0d0d1f312a3dea1b06028f5ceb848be13ea94e179411ac09a1b8a00dfd04cd",
+          "size": [
+            32,
+            32
+          ],
+          "id": 2,
+          "atlas": "atlas_00.png",
+          "rect": [
+            273,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f3",
+          "source": "sprites/Characters/head/f3.png",
+          "sha256": "5c0db154ac85bc614f8bcab142ccff43005c3a8d9095b3764560f0413ca8da0d",
+          "size": [
+            32,
+            32
+          ],
+          "id": 3,
+          "atlas": "atlas_00.png",
+          "rect": [
+            307,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f4",
+          "source": "sprites/Characters/head/f4.png",
+          "sha256": "141d579da0ff9973b5d8347bc1dc8118df44bba83d40d19ed58a22afbaae60cc",
+          "size": [
+            32,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            341,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f5",
+          "source": "sprites/Characters/head/f5.png",
+          "sha256": "d2b7feed18410e6354933631a0657d86f1263fd7f7ddf10788753dae23f40ae3",
+          "size": [
+            32,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
+            375,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f6",
+          "source": "sprites/Characters/head/f6.png",
+          "sha256": "6494c8c30c638699c65f540a00ae37426fc40fb9761c698bfe6f714cf1d74765",
+          "size": [
+            32,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            409,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "f7",
+          "source": "sprites/Characters/head/f7.png",
+          "sha256": "11a354150b535fbfa0026dc0aa89c0d932936511e7a07650524dd96bde6b4bc4",
+          "size": [
+            32,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_00.png",
+          "rect": [
+            443,
+            103,
+            32,
+            32
+          ]
+        }
+      ]
+    },
+    "sprites/Characters/eye.png": {
+      "slots": [
+        {
+          "name": "1",
+          "source": "sprites/Characters/eye/1.png",
+          "sha256": "2c1ae976d8dba21e819bcd3d658fbfccd376d1c66102c91658afca0efb6e9405",
+          "size": [
+            32,
+            32
+          ],
+          "id": 1,
+          "atlas": "atlas_00.png",
+          "rect": [
+            477,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "2",
+          "source": "sprites/Characters/eye/2.png",
+          "sha256": "933c637d4441cfc10c983085b35f0fd11dfbb6bc95755d1f0a1e15deb7cd93e0",
+          "size": [
+            32,
+            32
+          ],
+          "id": 2,
+          "atlas": "atlas_00.png",
+          "rect": [
+            511,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "3",
+          "source": "sprites/Characters/eye/3.png",
+          "sha256": "58e0c712a0de708cb9c1f0bf22deebe40051ea0b35ee8a5d6e006b40cac28464",
+          "size": [
+            32,
+            32
+          ],
+          "id": 3,
+          "atlas": "atlas_00.png",
+          "rect": [
+            545,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "4",
+          "source": "sprites/Characters/eye/4.png",
+          "sha256": "cba645c6e896a4e3ba27b83a5e3dc0fe4c10fccc0046feb7f81ff9d231d58556",
+          "size": [
+            32,
+            32
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            579,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "5",
+          "source": "sprites/Characters/eye/5.png",
+          "sha256": "48ae379b369321b92980b6cc19cfe2fb20cf175d60e46cafaccb8a6f138ef515",
+          "size": [
+            32,
+            32
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
+            613,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "6",
+          "source": "sprites/Characters/eye/6.png",
+          "sha256": "56157ee35e31158d09c51b791872a7eac5c795e014ef2205d491d81cb188cb05",
+          "size": [
+            32,
+            32
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            647,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "7",
+          "source": "sprites/Characters/eye/7.png",
+          "sha256": "861dcd0bc6ac4c33cc4ea66ee777c1f601fd3b024f5239bb0b3b514336bcb1b2",
+          "size": [
+            32,
+            32
+          ],
+          "id": 7,
+          "atlas": "atlas_00.png",
+          "rect": [
+            681,
+            103,
+            32,
+            32
+          ]
+        },
+        {
+          "name": "8",
+          "source": "sprites/Characters/eye/8.png",
+          "sha256": "8b21b58ca92da377d1f146741a6d0d4217a660c2e639b75dba7f98d252f28cdf",
+          "size": [
+            32,
+            32
+          ],
+          "id": 8,
+          "atlas": "atlas_00.png",
+          "rect": [
+            715,
+            103,
             32,
             32
           ]
@@ -1470,7 +1980,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             749,
-            69,
+            103,
             16,
             16
           ]
@@ -1487,7 +1997,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             767,
-            69,
+            103,
             16,
             16
           ]
@@ -1504,7 +2014,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             785,
-            69,
+            103,
             16,
             16
           ]
@@ -1521,7 +2031,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             803,
-            69,
+            103,
             16,
             16
           ]
@@ -1538,7 +2048,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             821,
-            69,
+            103,
             16,
             16
           ]
@@ -1555,7 +2065,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             839,
-            69,
+            103,
             16,
             16
           ]
@@ -1572,7 +2082,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             857,
-            69,
+            103,
             16,
             16
           ]
@@ -1593,7 +2103,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             875,
-            69,
+            103,
             32,
             32
           ]
@@ -1610,7 +2120,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             909,
-            69,
+            103,
             32,
             32
           ]
@@ -1627,7 +2137,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             943,
-            69,
+            103,
             32,
             32
           ]
@@ -1644,7 +2154,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             977,
-            69,
+            103,
             32,
             32
           ]
@@ -1661,7 +2171,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            103,
+            137,
             32,
             32
           ]
@@ -1678,7 +2188,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            103,
+            137,
             32,
             32
           ]
@@ -1695,7 +2205,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            103,
+            137,
             32,
             32
           ]
@@ -1712,7 +2222,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             103,
-            103,
+            137,
             32,
             32
           ]
@@ -1733,7 +2243,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             137,
-            103,
+            137,
             32,
             32
           ]
@@ -1750,7 +2260,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             171,
-            103,
+            137,
             32,
             32
           ]
@@ -1767,7 +2277,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            103,
+            137,
             32,
             32
           ]
@@ -1784,7 +2294,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            103,
+            137,
             32,
             32
           ]
@@ -1801,7 +2311,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            103,
+            137,
             32,
             32
           ]
@@ -1818,7 +2328,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            103,
+            137,
             32,
             32
           ]
@@ -1835,7 +2345,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            103,
+            137,
             32,
             32
           ]
@@ -1852,7 +2362,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            103,
+            137,
             32,
             32
           ]
@@ -1873,7 +2383,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            103,
+            137,
             32,
             32
           ]
@@ -1890,7 +2400,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            103,
+            137,
             32,
             32
           ]
@@ -1907,7 +2417,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            103,
+            137,
             32,
             32
           ]
@@ -1924,7 +2434,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            103,
+            137,
             32,
             32
           ]
@@ -1941,7 +2451,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            103,
+            137,
             32,
             32
           ]
@@ -1958,7 +2468,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            103,
+            137,
             32,
             32
           ]
@@ -1975,7 +2485,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             613,
-            103,
+            137,
             32,
             32
           ]
@@ -1992,7 +2502,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             647,
-            103,
+            137,
             32,
             32
           ]
@@ -2013,7 +2523,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             681,
-            103,
+            137,
             32,
             32
           ]
@@ -2030,7 +2540,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             715,
-            103,
+            137,
             32,
             32
           ]
@@ -2047,7 +2557,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             749,
-            103,
+            137,
             32,
             32
           ]
@@ -2064,7 +2574,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             783,
-            103,
+            137,
             32,
             32
           ]
@@ -2081,7 +2591,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             817,
-            103,
+            137,
             32,
             32
           ]
@@ -2098,7 +2608,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             851,
-            103,
+            137,
             32,
             32
           ]
@@ -2115,7 +2625,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             885,
-            103,
+            137,
             32,
             32
           ]
@@ -2132,7 +2642,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             919,
-            103,
+            137,
             32,
             32
           ]
@@ -2153,7 +2663,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             953,
-            103,
+            137,
             32,
             32
           ]
@@ -2170,7 +2680,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             987,
-            103,
+            137,
             32,
             32
           ]
@@ -2187,7 +2697,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            137,
+            171,
             32,
             32
           ]
@@ -2204,7 +2714,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            137,
+            171,
             32,
             32
           ]
@@ -2221,7 +2731,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            137,
+            171,
             32,
             32
           ]
@@ -2238,7 +2748,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             103,
-            137,
+            171,
             32,
             32
           ]
@@ -2255,7 +2765,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             137,
-            137,
+            171,
             32,
             32
           ]
@@ -2272,7 +2782,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             171,
-            137,
+            171,
             32,
             32
           ]
@@ -2293,7 +2803,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            137,
+            171,
             32,
             32
           ]
@@ -2310,7 +2820,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            137,
+            171,
             32,
             32
           ]
@@ -2327,7 +2837,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            137,
+            171,
             32,
             32
           ]
@@ -2344,7 +2854,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            137,
+            171,
             32,
             32
           ]
@@ -2361,7 +2871,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            137,
+            171,
             32,
             32
           ]
@@ -2378,7 +2888,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            137,
+            171,
             32,
             32
           ]
@@ -2395,7 +2905,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            137,
+            171,
             32,
             32
           ]
@@ -2412,7 +2922,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            137,
+            171,
             32,
             32
           ]
@@ -2433,7 +2943,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            137,
+            171,
             32,
             32
           ]
@@ -2450,7 +2960,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            137,
+            171,
             32,
             32
           ]
@@ -2467,7 +2977,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            137,
+            171,
             32,
             32
           ]
@@ -2484,7 +2994,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            137,
+            171,
             32,
             32
           ]
@@ -2501,7 +3011,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             613,
-            137,
+            171,
             32,
             32
           ]
@@ -2518,7 +3028,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             647,
-            137,
+            171,
             32,
             32
           ]
@@ -2535,7 +3045,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             681,
-            137,
+            171,
             32,
             32
           ]
@@ -2552,7 +3062,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             715,
-            137,
+            171,
             32,
             32
           ]
@@ -2573,7 +3083,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             749,
-            137,
+            171,
             32,
             32
           ]
@@ -2590,7 +3100,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             783,
-            137,
+            171,
             32,
             32
           ]
@@ -2607,7 +3117,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             817,
-            137,
+            171,
             32,
             32
           ]
@@ -2624,7 +3134,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             851,
-            137,
+            171,
             32,
             32
           ]
@@ -2641,7 +3151,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             885,
-            137,
+            171,
             32,
             32
           ]
@@ -2658,7 +3168,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             919,
-            137,
+            171,
             32,
             32
           ]
@@ -2675,7 +3185,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             953,
-            137,
+            171,
             32,
             32
           ]
@@ -2692,7 +3202,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             987,
-            137,
+            171,
             32,
             32
           ]
@@ -2713,7 +3223,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            171,
+            205,
             32,
             32
           ]
@@ -2730,7 +3240,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            171,
+            205,
             32,
             32
           ]
@@ -2747,7 +3257,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            171,
+            205,
             32,
             32
           ]
@@ -2764,7 +3274,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             103,
-            171,
+            205,
             32,
             32
           ]
@@ -2781,7 +3291,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             137,
-            171,
+            205,
             32,
             32
           ]
@@ -2798,7 +3308,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             171,
-            171,
+            205,
             32,
             32
           ]
@@ -2815,7 +3325,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            171,
+            205,
             32,
             32
           ]
@@ -2832,7 +3342,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            171,
+            205,
             32,
             32
           ]
@@ -2853,7 +3363,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            171,
+            205,
             32,
             32
           ]
@@ -2870,7 +3380,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            171,
+            205,
             32,
             32
           ]
@@ -2887,7 +3397,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            171,
+            205,
             32,
             32
           ]
@@ -2904,7 +3414,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            171,
+            205,
             32,
             32
           ]
@@ -2921,7 +3431,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            171,
+            205,
             32,
             32
           ]
@@ -2938,7 +3448,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            171,
+            205,
             32,
             32
           ]
@@ -2955,7 +3465,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            171,
+            205,
             32,
             32
           ]
@@ -2972,7 +3482,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            171,
+            205,
             32,
             32
           ]
@@ -2993,7 +3503,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            171,
+            205,
             32,
             32
           ]
@@ -3010,7 +3520,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            171,
+            205,
             32,
             32
           ]
@@ -3027,7 +3537,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             613,
-            171,
+            205,
             32,
             32
           ]
@@ -3044,7 +3554,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             647,
-            171,
+            205,
             32,
             32
           ]
@@ -3061,7 +3571,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             681,
-            171,
+            205,
             32,
             32
           ]
@@ -3078,7 +3588,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             715,
-            171,
+            205,
             32,
             32
           ]
@@ -3095,7 +3605,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             749,
-            171,
+            205,
             32,
             32
           ]
@@ -3112,7 +3622,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             783,
-            171,
+            205,
             32,
             32
           ]
@@ -3133,7 +3643,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             817,
-            171,
+            205,
             32,
             32
           ]
@@ -3150,7 +3660,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             851,
-            171,
+            205,
             32,
             32
           ]
@@ -3167,7 +3677,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             885,
-            171,
+            205,
             32,
             32
           ]
@@ -3184,7 +3694,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             919,
-            171,
+            205,
             32,
             32
           ]
@@ -3201,7 +3711,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             953,
-            171,
+            205,
             32,
             32
           ]
@@ -3218,7 +3728,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             987,
-            171,
+            205,
             32,
             32
           ]
@@ -3235,7 +3745,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            205,
+            239,
             32,
             32
           ]
@@ -3252,7 +3762,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            205,
+            239,
             32,
             32
           ]
@@ -3273,7 +3783,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            205,
+            239,
             32,
             32
           ]
@@ -3290,7 +3800,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             103,
-            205,
+            239,
             32,
             32
           ]
@@ -3307,7 +3817,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             137,
-            205,
+            239,
             32,
             32
           ]
@@ -3324,7 +3834,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             171,
-            205,
+            239,
             32,
             32
           ]
@@ -3341,7 +3851,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            205,
+            239,
             32,
             32
           ]
@@ -3358,7 +3868,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            205,
+            239,
             32,
             32
           ]
@@ -3375,7 +3885,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            205,
+            239,
             32,
             32
           ]
@@ -3392,7 +3902,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            205,
+            239,
             32,
             32
           ]
@@ -3413,7 +3923,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            205,
+            239,
             32,
             32
           ]
@@ -3430,7 +3940,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            205,
+            239,
             32,
             32
           ]
@@ -3447,7 +3957,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            205,
+            239,
             32,
             32
           ]
@@ -3464,7 +3974,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            205,
+            239,
             32,
             32
           ]
@@ -3481,7 +3991,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            205,
+            239,
             32,
             32
           ]
@@ -3498,7 +4008,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            205,
+            239,
             32,
             32
           ]
@@ -3515,7 +4025,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            205,
+            239,
             32,
             32
           ]
@@ -3532,7 +4042,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            205,
+            239,
             32,
             32
           ]
@@ -3549,7 +4059,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             613,
-            205,
+            239,
             32,
             32
           ]
@@ -3566,7 +4076,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             647,
-            205,
+            239,
             32,
             32
           ]
@@ -3583,7 +4093,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             681,
-            205,
+            239,
             32,
             32
           ]
@@ -3600,7 +4110,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             715,
-            205,
+            239,
             32,
             32
           ]
@@ -3617,7 +4127,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             749,
-            205,
+            239,
             32,
             32
           ]
@@ -3634,7 +4144,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             783,
-            205,
+            239,
             32,
             32
           ]
@@ -3651,7 +4161,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             817,
-            205,
+            239,
             32,
             32
           ]
@@ -3672,7 +4182,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             851,
-            205,
+            239,
             32,
             32
           ]
@@ -3689,7 +4199,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             885,
-            205,
+            239,
             32,
             32
           ]
@@ -3706,7 +4216,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             919,
-            205,
+            239,
             32,
             32
           ]
@@ -3723,7 +4233,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             953,
-            205,
+            239,
             32,
             32
           ]
@@ -3740,7 +4250,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             987,
-            205,
+            239,
             32,
             32
           ]
@@ -3757,7 +4267,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            239,
+            273,
             32,
             32
           ]
@@ -3774,7 +4284,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            239,
+            273,
             32,
             32
           ]
@@ -3791,7 +4301,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            239,
+            273,
             32,
             32
           ]
@@ -3808,7 +4318,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             103,
-            239,
+            273,
             32,
             32
           ]
@@ -3825,7 +4335,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             137,
-            239,
+            273,
             32,
             32
           ]
@@ -3842,7 +4352,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             171,
-            239,
+            273,
             32,
             32
           ]
@@ -3859,7 +4369,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            239,
+            273,
             32,
             32
           ]
@@ -3876,7 +4386,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            239,
+            273,
             32,
             32
           ]
@@ -3893,7 +4403,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            239,
+            273,
             32,
             32
           ]
@@ -3910,7 +4420,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            239,
+            273,
             32,
             32
           ]
@@ -3927,7 +4437,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            239,
+            273,
             32,
             32
           ]
@@ -3944,7 +4454,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            239,
+            273,
             32,
             32
           ]
@@ -3961,7 +4471,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            239,
+            273,
             32,
             32
           ]
@@ -3978,7 +4488,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            239,
+            273,
             32,
             32
           ]
@@ -3999,7 +4509,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            239,
+            273,
             32,
             32
           ]
@@ -4016,7 +4526,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            239,
+            273,
             32,
             32
           ]
@@ -4033,7 +4543,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            239,
+            273,
             32,
             32
           ]
@@ -4050,7 +4560,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            239,
+            273,
             32,
             32
           ]
@@ -4067,7 +4577,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             613,
-            239,
+            273,
             32,
             32
           ]
@@ -4084,7 +4594,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             647,
-            239,
+            273,
             32,
             32
           ]
@@ -4101,7 +4611,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             681,
-            239,
+            273,
             32,
             32
           ]
@@ -4118,7 +4628,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             715,
-            239,
+            273,
             32,
             32
           ]
@@ -4135,7 +4645,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             749,
-            239,
+            273,
             32,
             32
           ]
@@ -4152,7 +4662,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             783,
-            239,
+            273,
             32,
             32
           ]
@@ -4169,7 +4679,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             817,
-            239,
+            273,
             32,
             32
           ]
@@ -4186,7 +4696,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             851,
-            239,
+            273,
             32,
             32
           ]
@@ -4203,7 +4713,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             885,
-            239,
+            273,
             32,
             32
           ]
@@ -4220,7 +4730,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             919,
-            239,
+            273,
             32,
             32
           ]
@@ -4237,7 +4747,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             953,
-            239,
+            273,
             32,
             32
           ]
@@ -4254,7 +4764,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             987,
-            239,
+            273,
             32,
             32
           ]
@@ -4271,7 +4781,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            273,
+            307,
             32,
             32
           ]
@@ -4288,7 +4798,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            273,
+            307,
             32,
             32
           ]
@@ -4305,7 +4815,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            273,
+            307,
             32,
             32
           ]
@@ -4322,7 +4832,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             103,
-            273,
+            307,
             32,
             32
           ]
@@ -4339,7 +4849,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             137,
-            273,
+            307,
             32,
             32
           ]
@@ -4356,7 +4866,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             171,
-            273,
+            307,
             32,
             32
           ]
@@ -4373,7 +4883,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            273,
+            307,
             32,
             32
           ]
@@ -4390,7 +4900,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            273,
+            307,
             32,
             32
           ]
@@ -4407,7 +4917,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            273,
+            307,
             32,
             32
           ]
@@ -4424,7 +4934,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            273,
+            307,
             32,
             32
           ]
@@ -4441,7 +4951,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            273,
+            307,
             32,
             32
           ]
@@ -4458,7 +4968,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            273,
+            307,
             32,
             32
           ]
@@ -4475,7 +4985,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            273,
+            307,
             32,
             32
           ]
@@ -4492,7 +5002,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            273,
+            307,
             32,
             32
           ]
@@ -4509,7 +5019,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            273,
+            307,
             32,
             32
           ]
@@ -4526,7 +5036,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            273,
+            307,
             32,
             32
           ]
@@ -4543,7 +5053,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            273,
+            307,
             32,
             32
           ]
@@ -4560,7 +5070,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            273,
+            307,
             32,
             32
           ]
@@ -4577,7 +5087,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             613,
-            273,
+            307,
             32,
             32
           ]
@@ -4594,7 +5104,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             647,
-            273,
+            307,
             32,
             32
           ]
@@ -4611,7 +5121,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             681,
-            273,
+            307,
             32,
             32
           ]
@@ -4628,7 +5138,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             715,
-            273,
+            307,
             32,
             32
           ]
@@ -4645,7 +5155,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             749,
-            273,
+            307,
             32,
             32
           ]
@@ -4662,7 +5172,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             783,
-            273,
+            307,
             32,
             32
           ]
@@ -4679,7 +5189,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             817,
-            273,
+            307,
             32,
             32
           ]
@@ -4696,7 +5206,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             851,
-            273,
+            307,
             32,
             32
           ]
@@ -4713,7 +5223,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             885,
-            273,
+            307,
             32,
             32
           ]
@@ -4730,7 +5240,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             919,
-            273,
+            307,
             32,
             32
           ]
@@ -4747,7 +5257,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             953,
-            273,
+            307,
             32,
             32
           ]
@@ -4764,7 +5274,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             987,
-            273,
+            307,
             32,
             32
           ]
@@ -4781,7 +5291,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            307,
+            341,
             32,
             32
           ]
@@ -4798,7 +5308,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            307,
+            341,
             32,
             32
           ]
@@ -4819,7 +5329,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            307,
+            341,
             32,
             32
           ]
@@ -4836,7 +5346,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             103,
-            307,
+            341,
             32,
             32
           ]
@@ -4853,7 +5363,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             137,
-            307,
+            341,
             32,
             32
           ]
@@ -4870,7 +5380,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             171,
-            307,
+            341,
             32,
             32
           ]
@@ -4887,7 +5397,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            307,
+            341,
             32,
             32
           ]
@@ -4904,7 +5414,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            307,
+            341,
             32,
             32
           ]
@@ -4921,7 +5431,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            307,
+            341,
             32,
             32
           ]
@@ -4938,7 +5448,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            307,
+            341,
             32,
             32
           ]
@@ -4955,7 +5465,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            307,
+            341,
             32,
             32
           ]
@@ -4972,7 +5482,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            307,
+            341,
             32,
             32
           ]
@@ -4989,7 +5499,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            307,
+            341,
             32,
             32
           ]
@@ -5006,7 +5516,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            307,
+            341,
             32,
             32
           ]
@@ -5023,7 +5533,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            307,
+            341,
             32,
             32
           ]
@@ -5040,7 +5550,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            307,
+            341,
             32,
             32
           ]
@@ -5061,7 +5571,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            307,
+            341,
             32,
             48
           ]
@@ -5078,7 +5588,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            307,
+            341,
             32,
             48
           ]
@@ -5095,7 +5605,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             613,
-            307,
+            341,
             32,
             48
           ]
@@ -5112,7 +5622,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             647,
-            307,
+            341,
             32,
             48
           ]
@@ -5129,7 +5639,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             681,
-            307,
+            341,
             32,
             48
           ]
@@ -5146,7 +5656,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             715,
-            307,
+            341,
             32,
             48
           ]
@@ -5163,7 +5673,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             749,
-            307,
+            341,
             32,
             48
           ]
@@ -5184,7 +5694,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             783,
-            307,
+            341,
             32,
             48
           ]
@@ -5201,7 +5711,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             817,
-            307,
+            341,
             32,
             48
           ]
@@ -5222,7 +5732,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             851,
-            307,
+            341,
             32,
             64
           ]
@@ -5239,7 +5749,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             885,
-            307,
+            341,
             32,
             64
           ]
@@ -5256,7 +5766,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             919,
-            307,
+            341,
             32,
             64
           ]
@@ -5273,7 +5783,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             953,
-            307,
+            341,
             32,
             64
           ]
@@ -5290,7 +5800,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             987,
-            307,
+            341,
             32,
             64
           ]
@@ -5307,7 +5817,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            373,
+            407,
             32,
             64
           ]
@@ -5324,7 +5834,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            373,
+            407,
             32,
             64
           ]
@@ -5341,7 +5851,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            373,
+            407,
             32,
             64
           ]
@@ -5358,7 +5868,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             103,
-            373,
+            407,
             32,
             64
           ]
@@ -5375,7 +5885,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             137,
-            373,
+            407,
             32,
             64
           ]
@@ -5396,7 +5906,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             171,
-            373,
+            407,
             32,
             64
           ]
@@ -5413,7 +5923,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            373,
+            407,
             32,
             64
           ]
@@ -5430,7 +5940,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            373,
+            407,
             32,
             64
           ]
@@ -5447,7 +5957,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            373,
+            407,
             32,
             64
           ]
@@ -5464,7 +5974,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            373,
+            407,
             32,
             64
           ]
@@ -5481,7 +5991,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            373,
+            407,
             32,
             64
           ]
@@ -5498,7 +6008,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            373,
+            407,
             32,
             64
           ]
@@ -5515,7 +6025,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            373,
+            407,
             32,
             64
           ]
@@ -5532,7 +6042,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            373,
+            407,
             32,
             64
           ]
@@ -5549,7 +6059,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            373,
+            407,
             32,
             64
           ]
@@ -5566,7 +6076,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            373,
+            407,
             32,
             64
           ]
@@ -5583,7 +6093,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            373,
+            407,
             32,
             64
           ]
@@ -5600,7 +6110,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            373,
+            407,
             32,
             64
           ]
@@ -5621,7 +6131,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             613,
-            373,
+            407,
             32,
             48
           ]
@@ -5638,7 +6148,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             647,
-            373,
+            407,
             32,
             48
           ]
@@ -5655,7 +6165,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             681,
-            373,
+            407,
             32,
             48
           ]
@@ -5672,7 +6182,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             715,
-            373,
+            407,
             32,
             48
           ]
@@ -5689,7 +6199,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             749,
-            373,
+            407,
             32,
             48
           ]
@@ -5706,7 +6216,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             783,
-            373,
+            407,
             32,
             48
           ]
@@ -5723,7 +6233,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             817,
-            373,
+            407,
             32,
             48
           ]
@@ -5740,7 +6250,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             851,
-            373,
+            407,
             32,
             48
           ]
@@ -5757,7 +6267,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             885,
-            373,
+            407,
             32,
             48
           ]
@@ -5774,7 +6284,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             919,
-            373,
+            407,
             32,
             48
           ]
@@ -5791,7 +6301,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             953,
-            373,
+            407,
             32,
             48
           ]
@@ -5808,7 +6318,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             987,
-            373,
+            407,
             32,
             48
           ]
@@ -5825,7 +6335,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            439,
+            473,
             32,
             48
           ]
@@ -5842,7 +6352,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            439,
+            473,
             32,
             48
           ]
@@ -5859,7 +6369,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            439,
+            473,
             32,
             48
           ]
@@ -5876,7 +6386,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             103,
-            439,
+            473,
             32,
             48
           ]
@@ -5893,7 +6403,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             137,
-            439,
+            473,
             32,
             48
           ]
@@ -5910,7 +6420,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             171,
-            439,
+            473,
             32,
             48
           ]
@@ -5927,7 +6437,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             205,
-            439,
+            473,
             32,
             48
           ]
@@ -5944,7 +6454,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             239,
-            439,
+            473,
             32,
             48
           ]
@@ -5965,7 +6475,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             273,
-            439,
+            473,
             32,
             32
           ]
@@ -5982,7 +6492,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             307,
-            439,
+            473,
             32,
             32
           ]
@@ -5999,7 +6509,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             341,
-            439,
+            473,
             32,
             32
           ]
@@ -6016,7 +6526,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             375,
-            439,
+            473,
             32,
             32
           ]
@@ -6033,7 +6543,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             409,
-            439,
+            473,
             32,
             32
           ]
@@ -6050,7 +6560,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             443,
-            439,
+            473,
             32,
             32
           ]
@@ -6067,7 +6577,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             477,
-            439,
+            473,
             32,
             32
           ]
@@ -6088,7 +6598,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             511,
-            439,
+            473,
             32,
             32
           ]
@@ -6105,7 +6615,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             545,
-            439,
+            473,
             32,
             32
           ]
@@ -6122,7 +6632,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             579,
-            439,
+            473,
             32,
             32
           ]
@@ -6139,7 +6649,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             613,
-            439,
+            473,
             32,
             32
           ]
@@ -6160,7 +6670,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             647,
-            439,
+            473,
             64,
             32
           ]
@@ -6177,7 +6687,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             713,
-            439,
+            473,
             64,
             32
           ]
@@ -6194,7 +6704,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             779,
-            439,
+            473,
             64,
             32
           ]
@@ -6211,7 +6721,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             845,
-            439,
+            473,
             64,
             32
           ]
@@ -6228,7 +6738,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             911,
-            439,
+            473,
             64,
             32
           ]
@@ -6245,7 +6755,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            489,
+            523,
             64,
             32
           ]
@@ -6262,7 +6772,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             67,
-            489,
+            523,
             64,
             32
           ]
@@ -6279,7 +6789,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             133,
-            489,
+            523,
             64,
             32
           ]
@@ -6296,7 +6806,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             199,
-            489,
+            523,
             64,
             32
           ]
@@ -6313,7 +6823,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             265,
-            489,
+            523,
             64,
             32
           ]
@@ -6330,7 +6840,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             331,
-            489,
+            523,
             64,
             32
           ]
@@ -6347,7 +6857,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             397,
-            489,
+            523,
             64,
             32
           ]
@@ -6364,7 +6874,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             463,
-            489,
+            523,
             64,
             32
           ]
@@ -6381,7 +6891,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             529,
-            489,
+            523,
             64,
             32
           ]
@@ -6398,7 +6908,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             595,
-            489,
+            523,
             64,
             32
           ]
@@ -6419,7 +6929,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             661,
-            489,
+            523,
             32,
             32
           ]
@@ -6436,7 +6946,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             695,
-            489,
+            523,
             32,
             32
           ]
@@ -6453,7 +6963,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             729,
-            489,
+            523,
             32,
             32
           ]
@@ -6470,7 +6980,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             763,
-            489,
+            523,
             32,
             32
           ]
@@ -6487,7 +6997,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             797,
-            489,
+            523,
             32,
             32
           ]
@@ -6504,7 +7014,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             831,
-            489,
+            523,
             32,
             32
           ]
@@ -6521,7 +7031,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             865,
-            489,
+            523,
             32,
             32
           ]
@@ -6538,7 +7048,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             899,
-            489,
+            523,
             32,
             32
           ]
@@ -6555,7 +7065,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             933,
-            489,
+            523,
             32,
             32
           ]
@@ -6572,7 +7082,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             967,
-            489,
+            523,
             32,
             32
           ]
@@ -6589,7 +7099,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            523,
+            557,
             32,
             32
           ]
@@ -6610,7 +7120,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             35,
-            523,
+            557,
             32,
             32
           ]
@@ -6631,7 +7141,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             69,
-            523,
+            557,
             64,
             32
           ]
@@ -6648,7 +7158,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             135,
-            523,
+            557,
             64,
             32
           ]
@@ -6665,7 +7175,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             201,
-            523,
+            557,
             64,
             32
           ]
@@ -6682,7 +7192,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             267,
-            523,
+            557,
             64,
             32
           ]
@@ -6699,7 +7209,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             333,
-            523,
+            557,
             64,
             32
           ]
@@ -6716,7 +7226,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             399,
-            523,
+            557,
             64,
             32
           ]
@@ -6733,7 +7243,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             465,
-            523,
+            557,
             64,
             32
           ]
@@ -6750,7 +7260,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             531,
-            523,
+            557,
             64,
             32
           ]
@@ -6767,7 +7277,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             597,
-            523,
+            557,
             64,
             32
           ]
@@ -6784,7 +7294,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             663,
-            523,
+            557,
             64,
             32
           ]
@@ -6801,7 +7311,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             729,
-            523,
+            557,
             64,
             32
           ]
@@ -6818,7 +7328,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             795,
-            523,
+            557,
             64,
             32
           ]
@@ -6835,7 +7345,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             861,
-            523,
+            557,
             64,
             32
           ]
@@ -6852,7 +7362,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             927,
-            523,
+            557,
             64,
             32
           ]
@@ -6869,7 +7379,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            557,
+            591,
             64,
             32
           ]
@@ -6886,7 +7396,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             67,
-            557,
+            591,
             64,
             32
           ]
@@ -6903,7 +7413,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             133,
-            557,
+            591,
             64,
             32
           ]
@@ -6920,7 +7430,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             199,
-            557,
+            591,
             64,
             32
           ]
@@ -6937,7 +7447,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             265,
-            557,
+            591,
             64,
             32
           ]
@@ -6954,7 +7464,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             331,
-            557,
+            591,
             64,
             32
           ]
@@ -6971,7 +7481,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             397,
-            557,
+            591,
             64,
             32
           ]
@@ -6988,7 +7498,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             463,
-            557,
+            591,
             64,
             32
           ]
@@ -7005,7 +7515,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             529,
-            557,
+            591,
             64,
             32
           ]
@@ -7022,7 +7532,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             595,
-            557,
+            591,
             64,
             32
           ]
@@ -7039,7 +7549,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             661,
-            557,
+            591,
             64,
             32
           ]
@@ -7056,7 +7566,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             727,
-            557,
+            591,
             64,
             32
           ]
@@ -7073,7 +7583,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             793,
-            557,
+            591,
             64,
             32
           ]
@@ -7090,7 +7600,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             859,
-            557,
+            591,
             64,
             32
           ]
@@ -7107,7 +7617,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             925,
-            557,
+            591,
             64,
             32
           ]
@@ -7124,7 +7634,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            591,
+            625,
             64,
             32
           ]
@@ -7141,7 +7651,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             67,
-            591,
+            625,
             64,
             32
           ]
@@ -7158,7 +7668,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             133,
-            591,
+            625,
             64,
             32
           ]
@@ -7175,7 +7685,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             199,
-            591,
+            625,
             64,
             32
           ]
@@ -7192,7 +7702,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             265,
-            591,
+            625,
             64,
             32
           ]
@@ -7209,7 +7719,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             331,
-            591,
+            625,
             64,
             32
           ]
@@ -7226,7 +7736,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             397,
-            591,
+            625,
             64,
             32
           ]
@@ -7243,7 +7753,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             463,
-            591,
+            625,
             64,
             32
           ]
@@ -7260,7 +7770,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             529,
-            591,
+            625,
             64,
             32
           ]
@@ -7277,7 +7787,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             595,
-            591,
+            625,
             64,
             32
           ]
@@ -7294,7 +7804,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             661,
-            591,
+            625,
             64,
             32
           ]
@@ -7311,7 +7821,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             727,
-            591,
+            625,
             64,
             32
           ]
@@ -7328,7 +7838,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             793,
-            591,
+            625,
             64,
             32
           ]
@@ -7345,7 +7855,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             859,
-            591,
+            625,
             64,
             32
           ]
@@ -7362,7 +7872,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             925,
-            591,
+            625,
             64,
             32
           ]
@@ -7379,7 +7889,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            625,
+            659,
             64,
             32
           ]
@@ -7396,7 +7906,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             67,
-            625,
+            659,
             64,
             32
           ]
@@ -7413,7 +7923,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             133,
-            625,
+            659,
             64,
             32
           ]
@@ -7430,7 +7940,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             199,
-            625,
+            659,
             64,
             32
           ]
@@ -7447,7 +7957,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             265,
-            625,
+            659,
             64,
             32
           ]
@@ -7464,7 +7974,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             331,
-            625,
+            659,
             64,
             32
           ]
@@ -7481,7 +7991,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             397,
-            625,
+            659,
             64,
             32
           ]
@@ -7498,7 +8008,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             463,
-            625,
+            659,
             64,
             32
           ]
@@ -7515,7 +8025,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             529,
-            625,
+            659,
             64,
             32
           ]
@@ -7532,7 +8042,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             595,
-            625,
+            659,
             64,
             32
           ]
@@ -7549,7 +8059,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             661,
-            625,
+            659,
             64,
             32
           ]
@@ -7566,7 +8076,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             727,
-            625,
+            659,
             64,
             32
           ]
@@ -7583,7 +8093,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             793,
-            625,
+            659,
             64,
             32
           ]
@@ -7600,7 +8110,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             859,
-            625,
+            659,
             64,
             32
           ]
@@ -7617,7 +8127,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             925,
-            625,
+            659,
             64,
             32
           ]
@@ -7634,7 +8144,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            659,
+            693,
             64,
             32
           ]
@@ -7651,7 +8161,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             67,
-            659,
+            693,
             64,
             32
           ]
@@ -7668,7 +8178,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             133,
-            659,
+            693,
             64,
             32
           ]
@@ -7685,7 +8195,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             199,
-            659,
+            693,
             64,
             32
           ]
@@ -7702,7 +8212,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             265,
-            659,
+            693,
             64,
             32
           ]
@@ -7719,7 +8229,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             331,
-            659,
+            693,
             64,
             32
           ]
@@ -7736,7 +8246,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             397,
-            659,
+            693,
             64,
             32
           ]
@@ -7753,7 +8263,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             463,
-            659,
+            693,
             64,
             32
           ]
@@ -7770,7 +8280,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             529,
-            659,
+            693,
             64,
             32
           ]
@@ -7787,7 +8297,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             595,
-            659,
+            693,
             64,
             32
           ]
@@ -7804,7 +8314,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             661,
-            659,
+            693,
             64,
             32
           ]
@@ -7821,7 +8331,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             727,
-            659,
+            693,
             64,
             32
           ]
@@ -7838,7 +8348,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             793,
-            659,
+            693,
             64,
             32
           ]
@@ -7855,7 +8365,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             859,
-            659,
+            693,
             64,
             32
           ]
@@ -7872,7 +8382,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             925,
-            659,
+            693,
             64,
             32
           ]
@@ -7889,7 +8399,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             1,
-            693,
+            727,
             64,
             32
           ]
@@ -7906,7 +8416,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             67,
-            693,
+            727,
             64,
             32
           ]
@@ -7923,7 +8433,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             133,
-            693,
+            727,
             64,
             32
           ]
@@ -7940,7 +8450,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             199,
-            693,
+            727,
             64,
             32
           ]
@@ -7957,7 +8467,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             265,
-            693,
+            727,
             64,
             32
           ]
@@ -7974,7 +8484,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             331,
-            693,
+            727,
             64,
             32
           ]
@@ -7991,7 +8501,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             397,
-            693,
+            727,
             64,
             32
           ]
@@ -8008,7 +8518,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             463,
-            693,
+            727,
             64,
             32
           ]
@@ -8025,7 +8535,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             529,
-            693,
+            727,
             64,
             32
           ]
@@ -8042,7 +8552,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             595,
-            693,
+            727,
             64,
             32
           ]
@@ -8063,7 +8573,7 @@
           "atlas": "atlas_00.png",
           "rect": [
             661,
-            693,
+            727,
             32,
             32
           ]

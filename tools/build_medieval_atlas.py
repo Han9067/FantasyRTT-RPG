@@ -118,12 +118,23 @@ def build(source=SOURCE, dest=DEST):
 
     characters = 'sprites/Characters'
     hair_colors = sorted(p.name for p in (source / characters / 'hair').iterdir() if p.is_dir())
+    hair = []
+    for series in ('m', 'f'):
+        color_sheets = []
+        for color in hair_colors:
+            group = f'{characters}/hair/{color}'
+            names = [p.name for p in (source / group).glob(f'{series}*.png')]
+            if not names or set(names) != {f'{series}{i}.png' for i in range(1, len(names) + 1)}:
+                raise ValueError(f'Expected consecutive {series} hair styles in {group}')
+            if color_sheets and len(names) != len(catalog['sheets'][color_sheets[0]]['slots']):
+                raise ValueError(f'Inconsistent {series} hair style count in {group}')
+            color_sheets.append(add(group, only_files=names, series=series))
+        hair.append(color_sheets)
     catalog['races']['human'] = {
         'heads':[add(f'{characters}/head', only_files=[f'{series}{i}.png' for i in range(1,8)], series=series)
                  for series in ['m','f']],
         'eye':add(f'{characters}/eye', numeric=True),
-        'hair':[[add(f'{characters}/hair/{color}', only_files=[f'{series}{i}.png' for i in range(1, count + 1)], series=series)
-                 for color in hair_colors] for series, count in [('m', 7), ('f', 3)]],
+        'hair':hair,
         'hand':add(f'{characters}/hand', numeric=True)}
     catalog['body_ids'] = list(OUTFITS)
     catalog['body_labels'] = list(OUTFITS.values())

@@ -31,7 +31,7 @@ func run() -> void:
 			assert(original.get_data() == Art.part_image(path, i).get_data(), "Atlas/import changed source pixels")
 			assert(Rect2i(Vector2i.ZERO, Art.atlas_image(slot.atlas).get_size()).encloses(Art.part_rect(path, i)))
 			part_count += 1
-	assert(part_count == 464)
+	assert(part_count == 494)
 	for sheet in catalog.bodies:
 		var slots: Array = catalog.sheets[sheet].slots
 		assert(slots.size() == 8)
@@ -115,7 +115,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.79")
+	assert(game.game_version == "0.0.80")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -161,10 +161,12 @@ func run() -> void:
 	game.change_part("hair", -1)
 	assert(game.part_controls.hair.number.text == "8/8")
 	game.select_gender(1)
-	assert(game.part_controls.hair.number.text == "4/4" and game.appearance.hair == 3)
+	assert(game.part_controls.hair.number.text == "8/9" and game.appearance.hair == 7)
 	assert(game.character_frames.get_frame_texture("idle", 0).get_image().get_data() == Art.compose(game.appearance).get_data())
 	game.change_part("hair", 1)
-	assert(game.part_controls.hair.number.text == "1/4")
+	assert(game.part_controls.hair.number.text == "9/9")
+	game.change_part("hair", 1)
+	assert(game.part_controls.hair.number.text == "1/9")
 	game.select_gender(0)
 	assert(game.part_controls.hair.number.text == "1/8")
 	game.appearance.eye = 7
@@ -245,7 +247,7 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 464 loose parts match their atlas pixels; two weapon slots; 9 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
+	print("PASS: 494 loose parts match their atlas pixels; two weapon slots; 9 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
 	quit()
 
 func verify_shield_layers() -> void:
