@@ -20,7 +20,9 @@ const FRAME_COUNTS := {"idle": 4, "walk": 4, "attack": 6}
 const BODY_ORIGIN := Vector2i(64, 48)
 const CANVAS_PADDING := Vector2i(32, 24)
 const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
-const ATTACK_EFFECT_ORIGIN := Vector2i(32, 45)
+# On the left-facing sprite, rest grips at x=73 and 87 flank the body pivot at x=80.
+const PRIMARY_GRIP_SHIFT := Vector2i(6, 0)
+const OFFHAND_GRIP_SHIFT := Vector2i(1, 0)
 const DEFAULT_OUTFIT := "tunic_green"
 const PARTS := [
 	["skin", "피부"], ["eye", "눈"], ["body", "복장"],
@@ -173,6 +175,10 @@ static func pose(animation: String, frame: int, attack_type := "chop_attack", eq
 		result.free_hand = result.grip + BOW_OFFHAND_CENTER - Vector2i(8, 8)
 	else:
 		result.free_hand += CANVAS_PADDING
+		if equip_type >= 0:
+			result.grip += PRIMARY_GRIP_SHIFT
+			result.free_hand += OFFHAND_GRIP_SHIFT
+			result.effect_origin += PRIMARY_GRIP_SHIFT
 	result.effect_origin += CANVAS_PADDING
 	return result
 
@@ -218,7 +224,7 @@ static func weapon_anchor(config: Dictionary, animation: String, frame: int) -> 
 		if current_pose.rotation == 1: offset = Vector2i(-offset.y, offset.x)
 		elif current_pose.rotation == -1: offset = Vector2i(offset.y, -offset.x)
 		return current_pose.grip + offset
-	var offset := bow_offset(weapon) if weapon.family == "bow" else Vector2i.ZERO
+	var offset := bow_offset(weapon) if weapon.family == "bow" else PRIMARY_GRIP_SHIFT
 	return NON_MELEE_WEAPON_ANCHOR + offset + current_pose.grip - pose("idle", 0, weapon.attack, weapon.equip_type).grip
 
 static func bow_shot_slot(weapon: Dictionary, frame: int) -> int:
@@ -277,7 +283,7 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	var base := BODY_ORIGIN
 	# World portraits omit equipment without changing the saved loadout or body parts.
 	var weapon := equipped_weapon(config) if include_weapon else {}
-	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("equip_type", 0))
+	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("equip_type", -1))
 	var head := base + Vector2i(0, current_pose.bob)
 	var race := human_data()
 	var body_index: int = current_pose.body_frame
