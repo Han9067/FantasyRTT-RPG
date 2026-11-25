@@ -41,7 +41,7 @@ func run() -> void:
 	assert(Art.count(config, "eye") == 8)
 	assert(Art.count(config, "body") == 13)
 	assert(Art.count(config, "hair") == 8 and Art.count(config, "hair_color") == 6)
-	assert(Art.count(config, "weapon") == 10 and Art.count(config, "offhand") == 4)
+	assert(Art.count(config, "weapon") == 10 and Art.count(config, "offhand") == 5)
 	assert(catalog.weapon_items.size() == 159)
 	assert(not catalog.primary_types.has("one_shield"))
 	assert(catalog.secondary_types == ["one_axe", "one_blunt", "one_shield", "one_sword"])
@@ -52,6 +52,7 @@ func run() -> void:
 	verify_equipment(catalog)
 	verify_shield_layers()
 	config.offhand = catalog.secondary_types.find("one_sword")
+	config.offhand_item = 0
 	for skin in range(Art.count(config, "skin")):
 		config.skin = skin
 		for gender in 2:
@@ -115,7 +116,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.82")
+	assert(game.game_version == "0.0.83")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -149,6 +150,9 @@ func run() -> void:
 	assert(game.part_controls.weapon.right.global_position.y < game.part_controls.hair_color.right.global_position.y)
 	for entry in Art.PARTS:
 		var key: String = entry[0]
+		if key == "offhand_item":
+			assert(game.part_controls[key].right.disabled and game.part_controls.offhand.number.text == "미장착")
+			continue
 		var previous: int = game.appearance[key]
 		game.part_controls[key].right.pressed.emit()
 		var order := Art.selection_order(game.appearance, key)
@@ -178,7 +182,7 @@ func run() -> void:
 		assert(not game.part_controls.has(hidden) and not game.appearance.has(hidden))
 	assert(game.part_controls.weapon.number.text == "한손 검")
 	assert(Art.selection_order(game.appearance,"weapon") == [2,0,1,7,3,4,6,5,8,9])
-	assert(Art.selection_order(game.appearance,"offhand") == [3,0,1,2])
+	assert(Art.selection_order(game.appearance,"offhand") == [-1,3,0,1,2])
 	for family in ["one_sword","one_axe","one_blunt","two_sword","two_axe","two_blunt","two_spear","two_polearm","bow","crossbow"]:
 		assert(Art.equipped_weapon(game.appearance).family == family)
 		game.change_part("weapon",1)
@@ -211,7 +215,12 @@ func run() -> void:
 		assert(game.appearance[key] == -1)
 	assert(Art.equipped_offhand(game.appearance).is_empty())
 	game.change_part("weapon", -1)
-	assert(not game.part_controls.offhand.right.disabled and Art.equipped_offhand(game.appearance).id == "one_axe/1")
+	assert(not game.part_controls.offhand.right.disabled and Art.equipped_offhand(game.appearance).is_empty())
+	assert(game.part_controls.offhand.number.text == "미장착" and game.part_controls.offhand_item.right.disabled)
+	game.change_part("offhand", 1)
+	assert(Art.equipped_offhand(game.appearance).id == "one_sword/1")
+	game.change_part("offhand", -1)
+	assert(Art.equipped_offhand(game.appearance).is_empty())
 	game.name_input.text = "파츠 테스트"
 	game.name_input.text_changed.emit(game.name_input.text)
 	game.age_slider.value = 16
@@ -252,6 +261,7 @@ func run() -> void:
 
 func verify_shield_layers() -> void:
 	var config := Art.defaults()
+	config.offhand = Art.data().secondary_types.find("one_shield")
 	var bare := config.duplicate()
 	bare.offhand = -1
 	for animation in Art.FRAME_COUNTS:
@@ -264,10 +274,11 @@ func verify_shield_layers() -> void:
 				var grip := Vector2i(shield.grip[0], shield.grip[1])
 				var expected := base.duplicate() as Image
 				Art.paste(expected, shield.sheet, shield.slot, pose.free_hand + Vector2i(8, 8) - grip)
-				# Only compare the hand area; attack trails can cover the shield elsewhere.
-				var hand := Rect2i(pose.free_hand, Vector2i(16, 16))
+				if pose.visible:
+					var origin: Vector2i = pose.grip - Art.rotated_point(Vector2i(8,8), Vector2i(16,16), pose.rotation)
+					Art.paste_rotated(expected, Art.human_data().hand, config.skin, origin, pose.rotation)
 				var actual := Art.compose(config, animation, frame)
-				assert(actual.get_region(hand).get_data() == expected.get_region(hand).get_data(), shield.id)
+				assert(actual.get_data() == expected.get_data(), shield.id)
 	print("PASS: all shields cover the offhand in idle, walk and attack frames")
 
 func verify_equipment(catalog: Dictionary) -> void:
@@ -326,6 +337,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 					var armed := Art.compose(config, animation, f)
 					var with_hand := armed.duplicate() as Image
 					Art.paste(with_hand, Art.human_data().hand, config.skin, bow_pose.free_hand)
+					Art.paste(with_hand, Art.human_data().hand, config.skin, bow_pose.grip - Vector2i(8,8))
 					assert(with_hand.get_data() == armed.get_data())
 			assert(Art.weapon_anchor(config, "idle", 0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(1,0))
 			continue
@@ -347,7 +359,10 @@ func verify_equipment(catalog: Dictionary) -> void:
 			for f in range(Art.FRAME_COUNTS[animation]):
 				var pose := Art.pose(animation, f, weapon.attack, weapon.equip_type)
 				if weapon.family in ["two_axe", "two_blunt", "two_polearm"]:
-					assert(pose.grip == Art.pose(animation, f, "thrust_attack", 2).grip)
+					if animation == "attack":
+						assert(pose == Art.pose(animation, f, "chop_attack", 1))
+					else:
+						assert(pose.grip == Art.pose(animation, f, "thrust_attack", 2).grip)
 				var rendered := frames.get_frame_texture(animation, f)
 				assert(Art.preview_texture(rendered).region == region, "Preview crop changes between poses")
 				assert(Rect2i(region).encloses(rendered.get_image().get_used_rect()))
@@ -383,7 +398,8 @@ func verify_equipment(catalog: Dictionary) -> void:
 							for x in range(effect.get_width()):
 								if effect.get_pixel(x,y).a == 1.0:
 									assert(rendered.get_image().get_pixelv(pose.effect_origin + Vector2i(x,y)) == effect.get_pixel(x,y))
-		assert(Art.compose(config,"attack",0).get_data() == Art.compose(config,"idle",0).get_data())
+		if weapon.family not in ["two_axe", "two_blunt", "two_polearm"]:
+			assert(Art.compose(config,"attack",0).get_data() == Art.compose(config,"idle",0).get_data())
 		if is_spear:
 			var ready := Art.pose("attack",1,weapon.attack,weapon.equip_type)
 			var extended := Art.pose("attack",5,weapon.attack,weapon.equip_type)

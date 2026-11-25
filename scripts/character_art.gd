@@ -52,7 +52,7 @@ static func weapon_by_item_id(item_id: int) -> Dictionary:
 static func defaults() -> Dictionary:
 	return {"gender": 0, "skin": 0, "eye": 0, "body": data().body_ids.find(DEFAULT_OUTFIT), "hair": 0, "hair_color": 1,
 		"weapon": data().primary_types.find("one_sword"), "weapon_item": 0,
-		"offhand": maxi(0, data().secondary_types.find("one_shield")), "offhand_item": 0}
+		"offhand": -1, "offhand_item": -1}
 
 static func human_data() -> Dictionary:
 	return data().races.human
@@ -107,9 +107,9 @@ static func count(config: Dictionary, key: String) -> int:
 		"hair_color": return human.hair[config.gender].size()
 		"weapon": return data().primary_types.size()
 		"weapon_item": return primary_items(data().primary_types[config.weapon]).size()
-		"offhand": return data().secondary_types.size() if not equipped_weapon(config).two_handed else 0
+		"offhand": return 1 + data().secondary_types.size() if not equipped_weapon(config).two_handed else 0
 		"offhand_item":
-			if count(config, "offhand") == 0: return 0
+			if config.offhand < 0 or count(config, "offhand") == 0: return 0
 			return data().melee_groups[data().secondary_types[config.offhand]].size()
 	return 1
 
@@ -119,6 +119,7 @@ static func selection_order(config: Dictionary, key: String) -> Array:
 	if key not in ["weapon", "offhand"] or order.is_empty(): return order
 	var types: Array = data().primary_types if key == "weapon" else data().secondary_types
 	order.clear()
+	if key == "offhand": order.append(-1)
 	for family in ["one_sword", "one_axe", "one_blunt", "two_sword", "two_axe", "two_blunt", "two_spear", "two_polearm", "bow", "crossbow"]:
 		var index := types.find(family)
 		if index >= 0: order.append(index)
@@ -133,7 +134,8 @@ static func normalize(config: Dictionary) -> void:
 		config.erase(key)
 	for key in ["gender", "skin", "eye", "body", "hair_color", "hair", "weapon", "weapon_item", "offhand", "offhand_item"]:
 		var total := count(config, key)
-		config[key] = clampi(int(config.get(key, 0)), 0, total - 1) if total > 0 else -1
+		var first := -1 if key == "offhand" else 0
+		config[key] = clampi(int(config.get(key, first)), first, first + total - 1) if total > 0 else -1
 
 static func description(config: Dictionary, key: String) -> String:
 	match key:
@@ -141,6 +143,7 @@ static func description(config: Dictionary, key: String) -> String:
 		"hair": return "없음" if config.hair == 0 else ""
 		"weapon": return TYPE_LABELS.get(data().primary_types[config.weapon], data().primary_types[config.weapon])
 		"offhand":
+			if config.offhand < 0: return "미장착"
 			var family: String = data().secondary_types[config.offhand]
 			return TYPE_LABELS.get(family, family)
 	return ""
@@ -180,7 +183,7 @@ static func local_pose(animation: String, frame: int, attack_type: String, equip
 			"rotation": 0, "visible": true, "effect": -1, "effect_origin": Vector2i.ZERO, "body_frame": 0}
 	if animation == "attack":
 		var grip: Vector2i
-		if spear_grip:
+		if attack_type == "thrust_attack":
 			grip = [Vector2i(35,42), Vector2i(48,48), Vector2i(35,48), Vector2i(35,48), Vector2i(35,48), Vector2i(31,48)][frame]
 		else:
 			grip = [Vector2i(35,49), Vector2i(41,24), Vector2i(35,49), Vector2i(35,49), Vector2i(35,49), Vector2i(32,47)][frame]
@@ -279,33 +282,34 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	var race := human_data()
 	var body_index: int = current_pose.body_frame
 	paste(img, data().bodies[config.body], body_index, base)
-	if include_weapon and current_pose.visible:
-		if weapon.attack == "bow_shot" and animation == "attack":
-			paste(img, data().bow_shot, bow_shot_slot(weapon, frame), weapon_position(config, animation, frame))
-		else:
-			paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
 	paste(img, race.heads[config.gender], config.skin, head)
 	paste(img, race.eye, config.eye, head)
 	if config.has("helmet"):
 		paste(img, config.helmet, 0, head + Vector2i(0, -2))
 	elif config.hair > 0:
 		paste(img, race.hair[config.gender][config.hair_color], config.hair - 1, head)
-	# Skin indices share the original human hand palette. No glove override.
-	var hand_path: String = race.hand
-	if current_pose.visible:
-		var hand_origin: Vector2i = current_pose.grip - rotated_point(Vector2i(8, 8), Vector2i(16, 16), current_pose.rotation)
-		paste_rotated(img, hand_path, config.skin, hand_origin, current_pose.rotation)
+	# Draw back to front. A shield covers the secondary hand; the primary hand is foremost.
 	var secondary := equipped_offhand(config) if include_weapon else {}
-	var has_shield: bool = secondary.get("family", "") == "one_shield"
-	if has_shield:
-		paste(img, hand_path, config.skin, current_pose.free_hand)
+	var shield: bool = secondary.get("family", "") == "one_shield"
+	var offhand_position := Vector2i.ZERO
 	if not secondary.is_empty():
-		var grip := Vector2i(secondary.grip[0], secondary.grip[1])
-		paste(img, secondary.sheet, secondary.slot, current_pose.free_hand + Vector2i(8, 8) - grip)
-	if not has_shield and weapon.get("equip_type", 0) in [0, 3]:
-		paste(img, hand_path, config.skin, current_pose.free_hand)
+		offhand_position = current_pose.free_hand + Vector2i(8, 8) - Vector2i(secondary.grip[0], secondary.grip[1])
+		if not shield:
+			paste(img, secondary.sheet, secondary.slot, offhand_position)
+	if include_weapon and current_pose.visible:
+		if weapon.attack == "bow_shot" and animation == "attack":
+			paste(img, data().bow_shot, bow_shot_slot(weapon, frame), weapon_position(config, animation, frame))
+		else:
+			paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
 	if include_weapon and current_pose.effect >= 0:
 		paste_rotated(img, current_pose.effect_sheet, current_pose.effect, current_pose.effect_origin, current_pose.effect_rotation)
+	if weapon.get("equip_type", 0) in [0, 3]:
+		paste(img, race.hand, config.skin, current_pose.free_hand)
+	if shield:
+		paste(img, secondary.sheet, secondary.slot, offhand_position)
+	if current_pose.visible:
+		var hand_origin: Vector2i = current_pose.grip - rotated_point(Vector2i(8, 8), Vector2i(16, 16), current_pose.rotation)
+		paste_rotated(img, race.hand, config.skin, hand_origin, current_pose.rotation)
 	return img
 
 static func animations(config: Dictionary) -> SpriteFrames:

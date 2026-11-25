@@ -88,9 +88,9 @@ func run() -> void:
 	for i in range(9):
 		var cell := gear.get_child(i) as Panel
 		assert(cell.size == Vector2(64, 64))
-		if i == 0 or i == 2:
+		if i == 0:
 			var equipment := cell.get_child(0) as TextureRect
-			var art := CharacterArt.equipped_weapon(map.character_appearance) if i == 0 else CharacterArt.equipped_offhand(map.character_appearance)
+			var art := CharacterArt.equipped_weapon(map.character_appearance)
 			cell.mouse_entered.emit()
 			assert(map.inventory.item_popup.visible)
 			assert(not map.inventory.quantity_text.visible and map.inventory.price_text.text == "100")
@@ -100,6 +100,7 @@ func run() -> void:
 			assert(view.texture == equipment.texture)
 		else:
 			var empty := cell.get_child(0) as Label
+			if i == 2: assert(empty.text == "무기2")
 			assert(empty.horizontal_alignment == HORIZONTAL_ALIGNMENT_CENTER and empty.vertical_alignment == VERTICAL_ALIGNMENT_CENTER)
 	map.inventory.set_slot_item(0, CharacterArt.data().weapon_items["two_spear/13"])
 	assert(view.texture.get_width() <= 64 and view.texture.get_height() <= 64)

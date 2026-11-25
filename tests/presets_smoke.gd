@@ -116,6 +116,7 @@ func run() -> void:
 	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "two_axe/14")
 	var dual := Art.defaults()
 	dual.offhand = Art.data().secondary_types.find("one_axe")
+	dual.offhand_item = 0
 	assert(restored.save_appearance(0, dual) == OK and data.load(path) == OK)
 	var record: Dictionary = data.get_value("presets", "0")
 	assert(record.primary_item_id == 1001 and record.secondary_item_id == 1201)
