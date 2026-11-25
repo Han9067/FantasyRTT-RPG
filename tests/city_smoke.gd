@@ -55,18 +55,26 @@ func run() -> void:
 		assert(not map.inventory.item_popup.visible)
 		slot.mouse_exited.emit()
 	# Exercise populated slots explicitly without giving the player test weapons.
-	for id in ["bow/1", "crossbow_01"]:
+	var poses := {
+		"one_sword/1": Vector2(PI / 4, 2), "two_axe/2": Vector2(PI / 4, 2),
+		"one_shield/1": Vector2(0, 2), "two_spear/13": Vector2(PI / 4, 1.5),
+		"two_polearm/1": Vector2(PI / 4, 1.5),
+		"bow/1": Vector2(-PI / 4, 2), "crossbow_01": Vector2(-PI / 4, 2)
+	}
+	for id in poses:
 		var item: Dictionary = CharacterArt.data().weapon_items[id]
 		map.inventory.set_slot_item(0, item)
-		var ranged_slot = map.inventory.slot_grid.get_child(0)
+		var weapon_slot = map.inventory.slot_grid.get_child(0)
 		var art := CharacterArt.part_image(item.sheet, item.slot)
-		var diagonal := map.inventory.weapon_icon_image(art, PI / 4)
-		assert(ranged_slot.get_child(0).texture.get_image().get_data() == diagonal.get_data())
-		ranged_slot.mouse_entered.emit()
+		var pose: Vector2 = poses[id]
+		var expected := map.inventory.weapon_icon_image(art, pose.x, pose.y)
+		assert(weapon_slot.get_child(0).texture.get_image().get_data() == expected.get_data())
+		assert(weapon_slot.get_child(0).stretch_mode == TextureRect.STRETCH_KEEP_CENTERED)
+		weapon_slot.mouse_entered.emit()
 		assert(map.inventory.item_popup.visible and not map.inventory.item_title.text.is_empty())
 		assert(map.inventory.price_text.text == "100")
 		assert(map.inventory.get_global_rect().encloses(map.inventory.item_popup.get_global_rect()))
-		ranged_slot.mouse_exited.emit()
+		weapon_slot.mouse_exited.emit()
 		assert(not map.inventory.item_popup.visible)
 	var view: TextureRect = map.inventory.slot_grid.get_child(0).get_child(0)
 	for dimensions in [Vector2i(32, 32), Vector2i(32, 64), Vector2i(96, 48)]:

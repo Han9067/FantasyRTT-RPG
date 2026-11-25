@@ -10,7 +10,9 @@ class ItemIcon extends TextureRect:
 		update_fit()
 
 	func update_fit() -> void:
-		if texture != null and (texture.get_width() > size.x or texture.get_height() > size.y):
+		var slot := get_parent() as ItemSlot
+		var weapon: bool = slot != null and CharacterArt.data().weapon_items.has(slot.item.get("id", ""))
+		if not weapon and texture != null and (texture.get_width() > size.x or texture.get_height() > size.y):
 			stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		else:
 			stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
@@ -21,7 +23,6 @@ class ItemSlot extends Panel:
 	var count_text: Label
 
 const EQUIPMENT_SIZE := Vector2(64, 64)
-const WEAPON_ICON_SCALE := 1.4
 var item_textures: Dictionary = {}
 const GOODS_ART := preload("res://assets/world/trade_icons.png")
 const GRID_SIDE := 8
@@ -350,16 +351,23 @@ func inventory_item_texture(item: Dictionary) -> Texture2D:
 		item_textures[item.id] = atlas
 		return atlas
 	var art := CharacterArt.part_image(item.sheet, item.slot)
-	var shield: bool = item.family == "one_shield"
-	if shield or CharacterArt.is_primary_melee(item.family) or item.family in ["bow", "crossbow"]:
-		art = weapon_icon_image(art, 0.0 if shield else PI / 4.0)
+	match item.family:
+		"one_shield":
+			art = weapon_icon_image(art, 0.0, 2.0)
+		"two_spear", "two_polearm":
+			art = weapon_icon_image(art, PI / 4.0, 1.5)
+		"bow", "crossbow":
+			art = weapon_icon_image(art, -PI / 4.0, 2.0)
+		_:
+			if CharacterArt.is_primary_melee(item.family):
+				art = weapon_icon_image(art, PI / 4.0, 2.0)
 	var texture := ImageTexture.create_from_image(art)
 	item_textures[item.id] = texture
 	return texture
 
-func weapon_icon_image(source: Image, angle: float) -> Image:
+func weapon_icon_image(source: Image, angle: float, pixel_scale: float) -> Image:
 	# Sample at pixel centers onto a padded canvas, then center the visible artwork in the slot.
-	var side := ceili(Vector2(source.get_size()).length() * WEAPON_ICON_SCALE) + 2
+	var side := ceili(Vector2(source.get_size()).length() * pixel_scale) + 2
 	var canvas := Image.create(side, side, false, Image.FORMAT_RGBA8)
 	var inverse_basis := Transform2D(-angle, Vector2.ZERO)
 	var center := Vector2(source.get_size()) * 0.5
@@ -367,7 +375,7 @@ func weapon_icon_image(source: Image, angle: float) -> Image:
 	var bounds := Rect2i(Vector2i.ZERO, source.get_size())
 	for y in range(side):
 		for x in range(side):
-			var point := center + inverse_basis * (Vector2(x, y) + origin) / WEAPON_ICON_SCALE
+			var point := center + inverse_basis * (Vector2(x, y) + origin) / pixel_scale
 			var pixel := Vector2i(point.floor())
 			if bounds.has_point(pixel):
 				canvas.set_pixel(x, y, source.get_pixelv(pixel))
