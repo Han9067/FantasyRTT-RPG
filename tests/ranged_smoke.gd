@@ -115,9 +115,9 @@ func art_check() -> void:
 		var actual := frames.get_frame_texture("attack",i).get_image()
 		strip.blit_rect(actual,Rect2i(Vector2i.ZERO,Art.FRAME_SIZE),Vector2i((i%6)*Art.FRAME_SIZE.x,(i/6)*Art.FRAME_SIZE.y))
 		assert(Art.pose("attack",i,"bow_shot",3).body_frame == 0)
-	assert(Art.part_image(catalog.arrow,0).get_data() == Image.load_from_file("res://art/medieval/sprites/weapons/projectiles/arrow/arrow_01.png").get_data())
+	assert(Art.part_image(catalog.arrow,0).get_data() == Image.load_from_file("res://art/medieval/sprites/weapons/projectiles/arrow/arrow1.png").get_data())
 	strip.save_png("/workspace/outputs/archer-shot-strip.png")
-	print("PASS: infantry appearance, two-handed bow/1, all 12 native bow_shot poses, original arrow_01")
+	print("PASS: infantry appearance, two-handed bow/1, all 12 native bow_shot poses, original arrow1")
 
 func run() -> void:
 	seed(20261116)
@@ -161,6 +161,15 @@ func run() -> void:
 		assert(arrow.elapsed == 0.0 and arrow.aim_snapshot == arrow.intended.contact_box().get_center())
 	assert(victims.size() > 5, "Individual archers choose random targets")
 	var first: BattleArrow = map.combat.ranged.projectiles[0]
+	var texture_image := first.sprite.texture.get_image()
+	assert(texture_image.get_data() == Art.part_image(Art.data().arrow, 0).get_data())
+	assert(first.sprite.get_rect().size == Vector2(32, 32))
+	assert(texture_image.get_used_rect().size == Vector2i(27, 11))
+	for zoom in [1.0, 2.0, 3.0]:
+		map.change_zoom(zoom - map.zoom_level, map.world_to_screen(first.position))
+		assert(first.sprite.global_scale.is_equal_approx(Vector2.ONE))
+		assert(first.sprite.get_global_transform_with_canvas().get_scale().is_equal_approx(Vector2.ONE * zoom))
+	map.change_zoom(1.0 - map.zoom_level, map.world_to_screen(first.position))
 	var frozen := [first.position,first.elapsed,first.sprite.position,map.archers[0].cooldown,map.archers[0].shot_time,map.archers[0].frame]
 	map.set_battle_paused(true)
 	advance(map,8.0)

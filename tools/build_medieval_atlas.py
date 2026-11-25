@@ -91,7 +91,7 @@ def build(source=SOURCE, dest=DEST):
             raise ValueError(f'No loose PNGs in {folder}')
         slots = []
         def number(path):
-            prefix = series if series else ('' if numeric else (filename_prefix or folder.name) + '_')
+            prefix = series if series else ('' if numeric else (filename_prefix or (folder.name + '_')))
             match = re.fullmatch(re.escape(prefix) + r'(\d+)', path.stem)
             if not match:
                 raise ValueError(f'Invalid numbered PNG: {path}')
@@ -159,7 +159,7 @@ def build(source=SOURCE, dest=DEST):
                 files = [p.name for p in folder.glob('*.png') if f'two_axe/{p.stem}' in offsets]
                 if not files:
                     continue
-            key = add(folder.relative_to(source).as_posix(), prefix, only_files=files, numeric=melee or family == 'bow')
+            key = add(folder.relative_to(source).as_posix(), prefix + '_', only_files=files, numeric=melee or family == 'bow')
             slots = catalog['sheets'][key]['slots']
             if melee:
                 catalog['melee_groups'][folder.name] = [f"{folder.name}/{slot['id']}" for slot in slots]
@@ -226,7 +226,7 @@ def build(source=SOURCE, dest=DEST):
     shot_count = 12 * len(catalog['ranged_groups']['bow'])
     catalog['bow_shot'] = add('sprites/weapons/ranged weapons/bow_shot',
                               only_files=[f'bow_shot_{i:02d}.png' for i in range(1, shot_count + 1)])
-    catalog['arrow'] = add('sprites/weapons/projectiles/arrow', only_file='arrow_01.png')
+    catalog['arrow'] = add('sprites/weapons/projectiles/arrow', filename_prefix='arrow', only_file='arrow1.png')
     catalog['attack_references']['bow_shot'] = {'frames':12, 'durations_ms':[100]*12,
         'source':'sprites/weapons/ranged weapons/bow_shot', 'release_frame':7}
 

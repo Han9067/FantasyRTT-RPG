@@ -8562,9 +8562,9 @@
     "sprites/weapons/projectiles/arrow.png": {
       "slots": [
         {
-          "name": "arrow_01",
-          "source": "sprites/weapons/projectiles/arrow/arrow_01.png",
-          "sha256": "922c18cf797b66e97cac5788471bcae1743adbc50926acc9b92deb00be0ad46e",
+          "name": "arrow1",
+          "source": "sprites/weapons/projectiles/arrow/arrow1.png",
+          "sha256": "ad88e931ddf20dbbb3fbb4e0a5e0b56dce57e0126954e6fc2a9fc87d8a500f67",
           "size": [
             32,
             32
