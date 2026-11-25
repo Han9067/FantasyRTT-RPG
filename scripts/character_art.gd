@@ -8,8 +8,8 @@ const PREVIEW_SCALE := 3
 const PRIMARY_WEAPON_PIVOT := Vector2(0.5, 0.5)
 const SHIELD_WEAPON_PIVOT := Vector2(0.5, 1.0)
 const ARCHER_BOW := "bow/1"
-const BOW_OFFHAND_CENTER := Vector2i(9, -2)
-const BOW_HOLD_OFFSET := Vector2i(-5, 2)
+const BOW_OFFHAND_CENTER := Vector2i(4, -2)
+const BOW_HOLD_OFFSET := Vector2i(0, 2)
 const BOW_OFFSET := Vector2i(1, 0) # Native sprite faces left; flip_h mirrors this offset.
 const NON_MELEE_WEAPON_ANCHOR := Vector2i(68, 68)
 const WORLD_SCALE := 1.0
@@ -23,8 +23,8 @@ const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
 # Offsets in native pixels before the whole character is mirrored.
 const PRIMARY_GRIP_SHIFT := Vector2i(1, 0)
 const CROSSBOW_GRIP_SHIFT := Vector2i(6, 0)
-const OFFHAND_WEAPON_SHIFT := Vector2i(5, 0)
-const OFFHAND_GRIP_SHIFT := Vector2i(1, 0)
+const OFFHAND_GRIP_SHIFT := Vector2i(5, 0)
+const SHIELD_GRIP_SHIFT := Vector2i(1, 0)
 const DEFAULT_OUTFIT := "tunic_green"
 const PARTS := [
 	["skin", "피부"], ["eye", "눈"], ["body", "복장"],
@@ -168,7 +168,7 @@ static func equipped_offhand(config: Dictionary) -> Dictionary:
 	return data().weapon_items[ids[config.get("offhand_item", 0)]]
 
 # Keep weapon, gripping hand and body bob in one pose calculation.
-static func pose(animation: String, frame: int, attack_type := "chop_attack", equip_type := 0, family := "") -> Dictionary:
+static func pose(animation: String, frame: int, attack_type := "chop_attack", equip_type := 0, family := "", shield := false) -> Dictionary:
 	var result := local_pose(animation, frame, attack_type, equip_type)
 	result.grip += CANVAS_PADDING
 	if equip_type == 3:
@@ -177,10 +177,10 @@ static func pose(animation: String, frame: int, attack_type := "chop_attack", eq
 		result.free_hand = result.grip + BOW_OFFHAND_CENTER - Vector2i(8, 8)
 	else:
 		result.free_hand += CANVAS_PADDING
+		result.free_hand += SHIELD_GRIP_SHIFT if shield else OFFHAND_GRIP_SHIFT
 		if equip_type >= 0:
 			var shift := CROSSBOW_GRIP_SHIFT if family == "crossbow" else PRIMARY_GRIP_SHIFT
 			result.grip += shift
-			result.free_hand += OFFHAND_GRIP_SHIFT
 			result.effect_origin += shift
 	result.effect_origin += CANVAS_PADDING
 	return result
@@ -288,7 +288,9 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	var base := BODY_ORIGIN
 	# World portraits omit equipment without changing the saved loadout or body parts.
 	var weapon := equipped_weapon(config) if include_weapon else {}
-	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("equip_type", -1), weapon.get("family", ""))
+	var secondary := equipped_offhand(config) if include_weapon else {}
+	var shield: bool = secondary.get("family", "") == "one_shield"
+	var current_pose := pose(animation, frame, weapon.get("attack", "chop_attack"), weapon.get("equip_type", -1), weapon.get("family", ""), shield)
 	var head := base + Vector2i(0, current_pose.bob)
 	var race := human_data()
 	var body_index: int = current_pose.body_frame
@@ -300,11 +302,8 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 	elif config.hair > 0:
 		paste(img, race.hair[config.gender][config.hair_color], config.hair - 1, head)
 	# Draw back to front. A shield covers the secondary hand; the primary hand is foremost.
-	var secondary := equipped_offhand(config) if include_weapon else {}
-	var shield: bool = secondary.get("family", "") == "one_shield"
 	var offhand_position := Vector2i.ZERO
 	if not secondary.is_empty():
-		if not shield: current_pose.free_hand += OFFHAND_WEAPON_SHIFT
 		offhand_position = current_pose.free_hand + Vector2i(8, 8) - Vector2i(secondary.grip[0], secondary.grip[1])
 		if not shield:
 			paste(img, secondary.sheet, secondary.slot, offhand_position)

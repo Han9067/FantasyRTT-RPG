@@ -106,7 +106,7 @@ func art_check() -> void:
 			assert(Art.weapon_position(config,movement,i) + Vector2i(16,16) == Art.weapon_anchor(config,movement,i))
 	var strip := Image.create(Art.FRAME_SIZE.x*6,Art.FRAME_SIZE.y*2,false,Image.FORMAT_RGBA8)
 	for i in range(12):
-		assert(Art.weapon_anchor(config,"attack",i) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(-4, 0))
+		assert(Art.weapon_anchor(config,"attack",i) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(1, 0))
 		var source := Art.part_image(catalog.bow_shot,i)
 		assert(Art.weapon_position(config,"attack",i) + source.get_size()/2 == Art.weapon_anchor(config,"attack",i))
 		var occupied := source.get_used_rect()
@@ -192,14 +192,14 @@ func run() -> void:
 	shooter.target = shooter.position
 	victim.position = Vector2(900,800)
 	var left_shot: BattleArrow = map.combat.ranged.fire(shooter, victim)
-	assert(not shooter.flip_h and left_shot.launch == shooter.position + Vector2(-21,-13))
+	assert(not shooter.flip_h and left_shot.launch == shooter.position + Vector2(-16,-13))
 	map.combat.ranged.projectiles.erase(left_shot)
 	left_shot.queue_free()
 	victim.position = Vector2(1300,800)
 	victim.target = victim.position+Vector2(1,0) # Explicit move prevents auto retaliation in this fixture.
 	shooter.accuracy = 1.0
 	var arrow: BattleArrow = map.combat.ranged.fire(shooter,victim)
-	assert(shooter.flip_h and arrow.launch == shooter.position + Vector2(21,-13))
+	assert(shooter.flip_h and arrow.launch == shooter.position + Vector2(16,-13))
 	# Keep a visible but low arc at short/long distances in every firing direction.
 	# Compare orientation to actual neighboring positions instead of forcing a down-facing tip.
 	for offset in [Vector2(40,0),Vector2(320,0),Vector2(640,0),Vector2(-640,0),Vector2(0,-640),Vector2(0,640),Vector2(400,-400)]:
