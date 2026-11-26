@@ -31,7 +31,7 @@ func run() -> void:
 			assert(original.get_data() == Art.part_image(path, i).get_data(), "Atlas/import changed source pixels")
 			assert(Rect2i(Vector2i.ZERO, Art.atlas_image(slot.atlas).get_size()).encloses(Art.part_rect(path, i)))
 			part_count += 1
-	assert(part_count == 494)
+	assert(part_count == 497)
 	for sheet in catalog.bodies:
 		var slots: Array = catalog.sheets[sheet].slots
 		assert(slots.size() == 8)
@@ -42,7 +42,7 @@ func run() -> void:
 	assert(Art.count(config, "body") == 13)
 	assert(Art.count(config, "hair") == 8 and Art.count(config, "hair_color") == 6)
 	assert(Art.count(config, "weapon") == 10 and Art.count(config, "offhand") == 5)
-	assert(catalog.weapon_items.size() == 159)
+	assert(catalog.weapon_items.size() == 162)
 	assert(not catalog.primary_types.has("one_shield"))
 	assert(catalog.secondary_types == ["one_axe", "one_blunt", "one_shield", "one_sword"])
 	assert(Art.PRIMARY_WEAPON_PIVOT == Vector2(0.5,0.5))
@@ -66,7 +66,7 @@ func run() -> void:
 			var preview := Art.preview_texture(Art.animations(config).get_frame_texture("idle", 0))
 			for animation in Art.FRAME_COUNTS:
 				for frame in range(Art.FRAME_COUNTS[animation]):
-					var pose := Art.pose(animation, frame)
+					var pose := Art.pose(animation, frame, weapon.attack, weapon.equip_type, weapon.family)
 					var position := Art.weapon_position(config, animation, frame)
 					assert(position + Art.rotated_point(Vector2i(16,16),Vector2i(32,32),pose.rotation) == Art.weapon_anchor(config,animation,frame), "Primary weapon image center must use the hand anchor")
 					var art := Art.compose(config, animation, frame)
@@ -90,7 +90,7 @@ func run() -> void:
 						for y in range(effect.get_height()):
 							for x in range(effect.get_width()):
 								if effect.get_pixel(x,y).a == 1.0:
-									assert(art.get_pixelv(Vector2i(x,y) + Vector2i(34, 45)) == effect.get_pixel(x,y), "Guide attack trail missing")
+									assert(art.get_pixelv(Vector2i(x,y) + pose.effect_origin) == effect.get_pixel(x,y), "Guide attack trail missing")
 	# Guide phases remain distinct, rotations are exact quarter turns, recovery closes the loop.
 	config = Art.defaults()
 	for weapon_index in range(3):
@@ -118,7 +118,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.89")
+	assert(game.game_version == "0.0.90")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -258,7 +258,7 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 494 loose parts match their atlas pixels; two weapon slots; 9 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
+	print("PASS: 497 loose parts match their atlas pixels; two weapon slots; 9 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
 	quit()
 
 func verify_shield_layers() -> void:
@@ -299,7 +299,9 @@ func verify_equipment(catalog: Dictionary) -> void:
 	var config := Art.defaults()
 	var spear_count := 0
 	assert(catalog.weapon_items.has("two_spear/13") and not catalog.weapon_items.has("two_spear/14") and not catalog.weapon_items.has("spear_101"))
-	var expected_offsets := {"two_axe/1": 7, "two_axe/2": 6, "two_axe/4": 7, "two_axe/11": 6, "two_axe/12": 6, "two_axe/13": 6, "two_axe/14": 6}
+	var expected_offsets := {}
+	for number in range(1, 11):
+		expected_offsets["two_axe/%d" % number] = 5 if number <= 6 else 6
 	assert(catalog.melee_groups.two_axe == expected_offsets.keys())
 	var two_blunt_offsets := [5, 7]
 	for index in range(two_blunt_offsets.size()):
@@ -316,20 +318,20 @@ func verify_equipment(catalog: Dictionary) -> void:
 	var blunt_offsets := [5, 6, 3, 4, 4, 4, 4, 4, 4, 4, 4, 6, 5, 5, 5, 5, 6, 7, 6]
 	for index in range(blunt_offsets.size()):
 		expected_offsets["one_blunt/%d" % (index + 1)] = blunt_offsets[index]
-	var axe_offsets := [4, 6, 5, 4, 4, 5, 5, 5, 5, 6, 5, 4, 6, 6, 6]
+	var axe_offsets := [4, 5, 5, 4, 4, 4, 4, 4, 4, 5, 4, 4, 6, 5, 5]
 	for index in range(axe_offsets.size()):
 		expected_offsets["one_axe/%d" % (index + 1)] = axe_offsets[index]
-	var sword_offsets := [8,10,11,10,10,10,10,9,9,10,11,7,6,8]
+	var sword_offsets := [6,10,11,10,10,10,10,9,9,10,11,7,6,8]
 	for index in range(sword_offsets.size()):
 		expected_offsets["one_sword/%d" % (index + 1)] = sword_offsets[index]
 	for number in range(1, 8): expected_offsets["bow/%d" % number] = 2
-	for removed in ["throwing weapons", "ranged weapons/pistol", "ranged weapons/musket", "ranged weapons/arquebus"]:
+	for removed in ["melee weapons", "ranged weapons", "throwing weapons", "ranged/pistol", "ranged/musket", "ranged/arquebus"]:
 		assert(not DirAccess.dir_exists_absolute("res://art/medieval/sprites/weapons/" + removed))
 	for id in catalog.weapon_items:
 		config.equipped_weapon = id
 		var weapon: Dictionary = Art.equipped_weapon(config)
 		assert(int(weapon.get("y_up",0)) == expected_offsets.get(id,0), "Only sheet rows may shift weapons upward")
-		if weapon.equip_type in [1, 2]:
+		if weapon.equip_type == 1:
 			var armed := Art.compose(config)
 			var with_free_hand := armed.duplicate() as Image
 			Art.paste(with_free_hand, Art.human_data().hand, config.skin, Art.pose("idle", 0).free_hand)
@@ -365,7 +367,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 		var region := preview.region
 		assert(preview.get_size() == Vector2(Art.PREVIEW_REGION.size), "Equipment must not resize the preview canvas")
 		if (catalog.melee_groups.has(weapon.family) and weapon.family != "one_shield"):
-			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack,weapon.equip_type).grip - Vector2i(0,expected_offsets.get(id,0)), "Melee anchor must use the sheet upward offset")
+			assert(Art.weapon_anchor(config,"idle",0) == Art.pose("idle",0,weapon.attack,weapon.equip_type,weapon.family).grip - Vector2i(0,expected_offsets.get(id,0)), "Melee anchor must use the sheet upward offset")
 		else:
 			assert(Art.weapon_anchor(config,"idle",0) == Art.NON_MELEE_WEAPON_ANCHOR + Vector2i(6 if weapon.family == "crossbow" else 2,0))
 		assert(region == Rect2(Art.PREVIEW_REGION), "All weapons share the same padded preview canvas")
@@ -373,10 +375,26 @@ func verify_equipment(catalog: Dictionary) -> void:
 			for f in range(Art.FRAME_COUNTS[animation]):
 				var pose := Art.pose(animation, f, weapon.attack, weapon.equip_type, weapon.family)
 				if animation != "attack":
-					assert(pose.grip.x == (73 if weapon.family == "crossbow" else 69) and pose.free_hand.x + 8 == 87)
+					assert(pose.grip.x == (73 if weapon.family == "crossbow" else 69) )
+					if weapon.equip_type != 2: assert(pose.free_hand.x + 8 == 87)
+				if weapon.family == "one_axe":
+					var base := Art.pose(animation, f, weapon.attack, 0, "one_sword", "one_sword")
+					assert(pose.grip == base.grip + Vector2i(0, -2))
+					var second := Art.pose(animation, f, weapon.attack, 0, "one_sword", "one_axe")
+					assert(second.free_hand == base.free_hand + Vector2i(0, -2))
+				if weapon.equip_type == 2:
+					assert(pose.free_hand + Vector2i(8, 8) == pose.grip + Vector2i(0, 4))
+					if pose.visible:
+						var composite := Art.compose(config, animation, f)
+						var expected := composite.duplicate() as Image
+						Art.paste(expected, Art.human_data().hand, config.skin, pose.free_hand)
+						var origin: Vector2i = pose.grip - Art.rotated_point(Vector2i(8,8), Vector2i(16,16), pose.rotation)
+						Art.paste_rotated(expected, Art.human_data().hand, config.skin, origin, pose.rotation)
+						assert(expected.get_data() == composite.get_data(), id)
 				if weapon.family in ["two_axe", "two_blunt", "two_polearm"]:
 					if animation == "attack":
-						assert(pose == Art.pose(animation, f, "chop_attack", 1))
+						var sword := Art.pose(animation, f, "chop_attack", 1)
+						assert(pose.grip == sword.grip and pose.rotation == sword.rotation and pose.effect_origin == sword.effect_origin)
 					else:
 						assert(pose.grip == Art.pose(animation, f, "thrust_attack", 2).grip)
 				var rendered := frames.get_frame_texture(animation, f)

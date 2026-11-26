@@ -143,11 +143,11 @@ def build(source=SOURCE, dest=DEST):
                                      only_files=[f'{i}.png' for i in range(1, 9)], numeric=True))
     # Register every held weapon by filename, not its position in a sheet.
     # Projectile/shot PNGs remain editable sources, not separate equipped weapons.
-    for category in ['melee weapons', 'ranged weapons']:
+    for category in ['melee', 'ranged']:
         for folder in sorted((source / 'sprites/weapons' / category).iterdir()):
             if not folder.is_dir() or folder.name.endswith('_shot'):
                 continue
-            melee = category == 'melee weapons'
+            melee = category == 'melee'
             family = folder.name
             if melee:
                 hands, family = folder.name.split('_', 1)
@@ -224,11 +224,11 @@ def build(source=SOURCE, dest=DEST):
 
     # Each numbered bow has twelve consecutive native shooting frames.
     shot_count = 12 * len(catalog['ranged_groups']['bow'])
-    catalog['bow_shot'] = add('sprites/weapons/ranged weapons/bow_shot',
+    catalog['bow_shot'] = add('sprites/weapons/ranged/bow_shot',
                               only_files=[f'bow_shot_{i:02d}.png' for i in range(1, shot_count + 1)])
     catalog['arrow'] = add('sprites/weapons/projectiles/arrow', filename_prefix='arrow', only_file='arrow1.png')
     catalog['attack_references']['bow_shot'] = {'frames':12, 'durations_ms':[100]*12,
-        'source':'sprites/weapons/ranged weapons/bow_shot', 'release_frame':7}
+        'source':'sprites/weapons/ranged/bow_shot', 'release_frame':7}
 
     pages = [Image.new('RGBA', (PAGE_SIZE,PAGE_SIZE))]
     x = y = GUTTER

@@ -24,6 +24,8 @@ const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
 const PRIMARY_GRIP_SHIFT := Vector2i(2, 0)
 const CROSSBOW_GRIP_SHIFT := Vector2i(6, 0)
 const OFFHAND_GRIP_SHIFT := Vector2i(4, 0)
+const AXE_GRIP_LIFT := Vector2i(0, -2)
+const SUPPORT_HAND_OFFSET := Vector2i(0, 4)
 const SHIELD_GRIP_SHIFT := Vector2i(1, 0)
 const DEFAULT_OUTFIT := "tunic_green"
 const PARTS := [
@@ -179,11 +181,15 @@ static func pose(animation: String, frame: int, attack_type := "chop_attack", eq
 		result.free_hand += CANVAS_PADDING
 		match offhand_family:
 			"", "one_shield": result.free_hand += SHIELD_GRIP_SHIFT
+			"one_axe": result.free_hand += OFFHAND_GRIP_SHIFT + AXE_GRIP_LIFT
 			_: result.free_hand += OFFHAND_GRIP_SHIFT
 		if equip_type >= 0:
 			var shift := CROSSBOW_GRIP_SHIFT if family == "crossbow" else PRIMARY_GRIP_SHIFT
+			if family == "one_axe": shift += AXE_GRIP_LIFT
 			result.grip += shift
 			result.effect_origin += shift
+		if equip_type == 2:
+			result.free_hand = result.grip + SUPPORT_HAND_OFFSET - Vector2i(8, 8)
 	result.effect_origin += CANVAS_PADDING
 	return result
 
@@ -316,7 +322,8 @@ static func compose(config: Dictionary, animation := "idle", frame := 0, include
 			paste_rotated(img, weapon.sheet, weapon.slot, weapon_position(config, animation, frame), current_pose.rotation)
 	if include_weapon and current_pose.effect >= 0:
 		paste_rotated(img, current_pose.effect_sheet, current_pose.effect, current_pose.effect_origin, current_pose.effect_rotation)
-	if weapon.get("equip_type", 0) in [0, 3]:
+	var equip_type: int = weapon.get("equip_type", 0)
+	if equip_type in [0, 3] or (equip_type == 2 and current_pose.visible):
 		paste(img, race.hand, config.skin, current_pose.free_hand)
 	if shield:
 		paste(img, secondary.sheet, secondary.slot, offhand_position)

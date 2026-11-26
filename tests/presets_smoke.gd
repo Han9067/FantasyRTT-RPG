@@ -102,7 +102,7 @@ func run() -> void:
 	assert(Art.description(restored.get_appearance(0), "body") == "흰색 갬비슨")
 	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "one_axe/1")
 	assert(Art.equipped_offhand(restored.get_appearance(0)).id == "one_sword/2")
-	# An old slot index for axe 4 must still select axe 4 after axe 3 is removed.
+	# An old slot index for axe 4 must still select axe 4 across catalog changes.
 	legacy.weapon = Art.data().primary_types.find("two_axe")
 	legacy.weapon_item = 3
 	data.set_value("presets", "0", legacy)
@@ -110,10 +110,19 @@ func run() -> void:
 	restored = Store.new(path)
 	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "two_axe/4")
 	var late_axe := restored.get_appearance(0)
-	late_axe.weapon_item = Art.data().melee_groups.two_axe.find("two_axe/14")
+	late_axe.weapon_item = Art.data().melee_groups.two_axe.find("two_axe/10")
 	assert(restored.save_appearance(0, late_axe) == OK)
 	restored = Store.new(path)
-	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "two_axe/14")
+	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "two_axe/10")
+	# Presets written before the four late axes were renumbered retain the same art.
+	assert(data.load(path) == OK)
+	var old_record: Dictionary = data.get_value("presets", "0")
+	old_record.primary_item_id = 1314
+	old_record.two_axe_id = "two_axe/14"
+	data.set_value("presets", "0", old_record)
+	assert(data.save(path) == OK)
+	restored = Store.new(path)
+	assert(Art.equipped_weapon(restored.get_appearance(0)).id == "two_axe/7")
 	var dual := Art.defaults()
 	dual.offhand = Art.data().secondary_types.find("one_axe")
 	dual.offhand_item = 0
@@ -126,7 +135,7 @@ func run() -> void:
 	assert(data.save(path) == OK)
 	restored = Store.new(path)
 	assert(restored.get_appearance(0) == dual)
-	assert(Art.weapon_by_item_id(1613).id == "two_spear/13" and Art.weapon_by_item_id(1303).is_empty())
+	assert(Art.weapon_by_item_id(1613).id == "two_spear/13" and Art.weapon_by_item_id(1303).id == "two_axe/3")
 	# Existing bow slots stored an index; resaving also records the new sheet ID.
 	legacy.weapon = Art.data().primary_types.find("bow")
 	legacy.weapon_item = 6

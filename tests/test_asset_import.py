@@ -27,7 +27,7 @@ class AssetImportTest(unittest.TestCase):
             untouched = {p.relative_to(source).as_posix(): p.read_bytes() for p in source.rglob('*') if p.is_file() and not p.is_relative_to(weapons)}
             (weapons/'removed_weapon.png').write_bytes(b'stale')
             with zipfile.ZipFile(archive,'w') as z:
-                for name, data in inputs.items(): z.writestr(name, data)
+                for name, data in inputs.items(): z.writestr("weapons/" + name, data)
             with patch.object(importer,'SOURCE',source), patch.object(importer,'DEST',runtime), patch.object(sys,'argv',['import',str(archive),'--weapons']), contextlib.redirect_stdout(io.StringIO()):
                 importer.main()
             self.assertEqual({p.relative_to(weapons).as_posix():p.read_bytes() for p in weapons.rglob('*') if p.is_file()}, inputs)
@@ -46,7 +46,7 @@ class AssetImportTest(unittest.TestCase):
             source, runtime = root/'source', root/'runtime'
             shutil.copytree(ROOT/'art/medieval', source)
             runtime.mkdir()
-            melee = source/'sprites/weapons/melee weapons'
+            melee = source/'sprites/weapons/melee'
             inputs = {p.relative_to(melee).as_posix(): p.read_bytes() for p in melee.rglob('*.png')}
             untouched = {p.relative_to(source).as_posix(): p.read_bytes() for p in source.rglob('*')
                          if p.is_file() and not p.is_relative_to(melee)}

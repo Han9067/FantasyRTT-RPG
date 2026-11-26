@@ -16,7 +16,7 @@ def main():
     melee_only = '--melee' in sys.argv[2:]
     if weapons_only and melee_only:
         raise ValueError('Choose only one import scope')
-    subtree = 'sprites/weapons/melee weapons' if melee_only else 'sprites/weapons'
+    subtree = 'sprites/weapons/melee' if melee_only else 'sprites/weapons'
     with tempfile.TemporaryDirectory(prefix='medieval-import-', dir=SOURCE.parent) as temp:
         staging = Path(temp)/'source'
         generated = Path(temp)/'runtime'
@@ -28,7 +28,7 @@ def main():
         else:
             staging.mkdir()
             imported = staging
-        names = set()
+        names = {}
         with zipfile.ZipFile(sys.argv[1]) as archive:
             for info in archive.infolist():
                 if info.is_dir():
@@ -36,10 +36,15 @@ def main():
                 path = PurePosixPath(info.filename)
                 if (path.is_absolute() or '..' in path.parts or '\\' in info.filename or ':' in info.filename
                         or stat.S_ISLNK(info.external_attr >> 16)
-                        or path.suffix.lower() not in {'.png', '.gif', '.rtf'}
-                        or info.filename in names):
+                        or path.suffix.lower() not in {'.png', '.gif', '.rtf'}):
                     raise ValueError(f'Invalid asset entry: {info.filename}')
-                if weapons_only and (path.parts[0] not in {'melee weapons', 'ranged weapons', 'projectiles'} or path.suffix.lower() != '.png'):
+                if weapons_only and path.parts[0] == 'weapons':
+                    path = path.relative_to('weapons')
+                if weapons_only and path.parts[0] in {'melee weapons', 'ranged weapons'}:
+                    path = PurePosixPath(path.parts[0].removesuffix(' weapons'), *path.parts[1:])
+                if str(path) in names:
+                    raise ValueError(f'Duplicate asset entry: {path}')
+                if weapons_only and (path.parts[0] not in {'melee', 'ranged', 'projectiles'} or path.suffix.lower() != '.png'):
                     raise ValueError(f'Invalid weapon entry: {info.filename}')
                 if melee_only and (len(path.parts) != 2 or path.parts[0] not in {
                         'one_axe', 'one_blunt', 'one_sword', 'one_shield', 'two_axe',
@@ -49,7 +54,7 @@ def main():
                 target = imported/str(path)
                 target.parent.mkdir(parents=True,exist_ok=True)
                 target.write_bytes(archive.read(info))
-                names.add(info.filename)
+                names[str(path)] = info.filename
         if melee_only and {n.split('/')[0] for n in names} != {
                 'one_axe', 'one_blunt', 'one_sword', 'one_shield', 'two_axe',
                 'two_blunt', 'two_sword', 'two_polearm', 'two_spear'}:
@@ -57,12 +62,15 @@ def main():
         (staging/'.gdignore').write_text('')
         # Resolve all renamed active parts, parse the guide and verify atlas pixels
         # before touching the existing project source or runtime output.
-        build(staging, generated)
+        try:
+            build(staging, generated)
+        except FileNotFoundError as error:
+            raise ValueError(f'Incomplete asset archive: {error.filename}') from error
         actual = {p.relative_to(imported).as_posix() for p in imported.rglob('*') if p.is_file() and p.name != '.gdignore'}
-        if actual != names:
+        if actual != set(names):
             raise AssertionError('Imported tree differs from ZIP file list')
         with zipfile.ZipFile(sys.argv[1]) as archive:
-            if any((imported/name).read_bytes() != archive.read(name) for name in names):
+            if any((imported/name).read_bytes() != archive.read(entry) for name, entry in names.items()):
                 raise AssertionError('Imported bytes differ from ZIP')
         for page in generated.glob('*.png'):
             metadata = DEST/(page.name+'.import')

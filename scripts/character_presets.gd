@@ -9,6 +9,8 @@ const LEGACY_OUTFITS := [
 ]
 # Closest eye to each former face, comparing the original feature pixels.
 const LEGACY_EYES := [9,7,9,7,7,11,7,10,7,7,7,7,5,9,10,9,7,7,7,7,7,10,10,10,10,9,9,10,9,7,9,9,7,10,7,7,10,7,7,10]
+const RENUMBERED_AXES := {"two_axe/11": "two_axe/9", "two_axe/12": "two_axe/10",
+	"two_axe/13": "two_axe/8", "two_axe/14": "two_axe/7"}
 var path: String
 var slots: Array[Dictionary] = [{}, {}, {}]
 
@@ -34,7 +36,7 @@ func _init(storage_path := "user://appearance_presets.cfg") -> void:
 		if family == "two_axe":
 			# Before sparse numbering, the old zero-based index was the file number minus one.
 			var id: String = saved.get("two_axe_id", "two_axe/%d" % (int(saved.weapon_item) + 1))
-			slots[i].weapon_item = maxi(0, Art.data().melee_groups.two_axe.find(id))
+			slots[i].weapon_item = maxi(0, Art.data().melee_groups.two_axe.find(RENUMBERED_AXES.get(id, id)))
 
 		# Numeric sheet IDs take precedence over the older selector positions.
 		restore_weapon(slots[i], saved.get("primary_item_id"), true)
