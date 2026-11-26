@@ -118,7 +118,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.88")
+	assert(game.game_version == "0.0.89")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -270,7 +270,7 @@ func verify_shield_layers() -> void:
 		for frame in range(Art.FRAME_COUNTS[animation]):
 			var pose := Art.pose(animation, frame, "chop_attack", 0, "one_sword", "one_shield")
 			var bare_pose := Art.pose(animation, frame)
-			assert(pose.free_hand.x + 8 == 87 and bare_pose.free_hand.x + 8 == 89)
+			assert(pose.free_hand.x + 8 == 87 and bare_pose.free_hand == pose.free_hand)
 			var bare_frame := Art.compose(bare, animation, frame)
 			var hand := Art.part_image(Art.human_data().hand, config.skin)
 			for y in hand.get_height():
@@ -373,7 +373,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 			for f in range(Art.FRAME_COUNTS[animation]):
 				var pose := Art.pose(animation, f, weapon.attack, weapon.equip_type, weapon.family)
 				if animation != "attack":
-					assert(pose.grip.x == (73 if weapon.family == "crossbow" else 69) and pose.free_hand.x + 8 == 89)
+					assert(pose.grip.x == (73 if weapon.family == "crossbow" else 69) and pose.free_hand.x + 8 == 87)
 				if weapon.family in ["two_axe", "two_blunt", "two_polearm"]:
 					if animation == "attack":
 						assert(pose == Art.pose(animation, f, "chop_attack", 1))
