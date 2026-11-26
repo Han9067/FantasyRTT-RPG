@@ -51,6 +51,7 @@ func run() -> void:
 	assert(Art.weapon_pivot_offset(Vector2i(32,64),-1) == Vector2i(32,16))
 	verify_equipment(catalog)
 	verify_shield_layers()
+	verify_dual_axes()
 	config.offhand = catalog.secondary_types.find("one_sword")
 	config.offhand_item = 0
 	for skin in range(Art.count(config, "skin")):
@@ -118,7 +119,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.90")
+	assert(game.game_version == "0.0.91")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -260,6 +261,29 @@ func run() -> void:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
 	print("PASS: 497 loose parts match their atlas pixels; two weapon slots; 9 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
 	quit()
+
+func verify_dual_axes() -> void:
+	var config := Art.defaults()
+	config.weapon = Art.data().primary_types.find("one_axe")
+	config.offhand = Art.data().secondary_types.find("one_axe")
+	for index in Art.count(config, "offhand_item"):
+		config.weapon_item = index
+		config.offhand_item = index
+		var axe := Art.equipped_weapon(config)
+		var blade := Art.part_image(axe.sheet, axe.slot)
+		var contact := blade.get_size() / 2 + Vector2i(0, int(axe.y_up))
+		assert(Vector2i(axe.grip[0], axe.grip[1]) == contact)
+		for animation in ["idle", "walk"]:
+			for f in Art.FRAME_COUNTS[animation]:
+				var pose := Art.pose(animation, f, axe.attack, axe.equip_type, axe.family, axe.family)
+				var rendered := Art.compose(config, animation, f)
+				for y in range(contact.y - 8):
+					for x in blade.get_width():
+						var color := blade.get_pixel(x, y)
+						if color.a != 1.0: continue
+						var delta := Vector2i(x, y) - contact
+						assert(rendered.get_pixelv(pose.grip + delta) == color, axe.id)
+						assert(rendered.get_pixelv(pose.free_hand + Vector2i(8,8) + delta) == color, axe.id)
 
 func verify_shield_layers() -> void:
 	var config := Art.defaults()

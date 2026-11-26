@@ -172,9 +172,14 @@ def build(source=SOURCE, dest=DEST):
                 catalog['primary_types'].append(family)
                 catalog['ranged_groups'][family] = []
             for index, slot in enumerate(slots):
-                with Image.open(source / slot['source']) as image:
-                    grip = weapon_grip(family, slot['name'], image.convert('RGBA'))
                 equipment_id = f"{folder.name}/{slot['id']}" if melee or family == 'bow' else slot['name']
+                if folder.name == 'one_axe':
+                    # The secondary slot takes a source pixel as its grip. Match the primary pivot and sheet Y.
+                    width, height = slot['size']
+                    grip = [width // 2, height // 2 + offsets.get(equipment_id, 0)]
+                else:
+                    with Image.open(source / slot['source']) as image:
+                        grip = weapon_grip(family, slot['name'], image.convert('RGBA'))
                 if family in catalog['ranged_groups']:
                     catalog['ranged_groups'][family].append(equipment_id)
                 if equipment_id in catalog['weapon_items']:
