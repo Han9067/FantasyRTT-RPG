@@ -155,8 +155,8 @@ def build(source=SOURCE, dest=DEST):
                     raise ValueError(f'Expected one_ or two_ in {folder}')
             prefix = family + '_big' if melee and hands == 'two' and family in ('axe', 'blunt', 'sword') else family
             files = None
-            if folder.name == 'two_axe':
-                files = [p.name for p in folder.glob('*.png') if f'two_axe/{p.stem}' in offsets]
+            if folder.name in ('two_axe', 'two_blunt'):
+                files = [p.name for p in folder.glob('*.png') if f'{folder.name}/{p.stem}' in offsets]
                 if not files:
                     continue
             key = add(folder.relative_to(source).as_posix(), prefix + '_', only_files=files, numeric=melee or family == 'bow')

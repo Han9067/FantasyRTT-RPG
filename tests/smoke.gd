@@ -31,7 +31,7 @@ func run() -> void:
 			assert(original.get_data() == Art.part_image(path, i).get_data(), "Atlas/import changed source pixels")
 			assert(Rect2i(Vector2i.ZERO, Art.atlas_image(slot.atlas).get_size()).encloses(Art.part_rect(path, i)))
 			part_count += 1
-	assert(part_count == 497)
+	assert(part_count == 501)
 	for sheet in catalog.bodies:
 		var slots: Array = catalog.sheets[sheet].slots
 		assert(slots.size() == 8)
@@ -42,7 +42,7 @@ func run() -> void:
 	assert(Art.count(config, "body") == 13)
 	assert(Art.count(config, "hair") == 8 and Art.count(config, "hair_color") == 6)
 	assert(Art.count(config, "weapon") == 10 and Art.count(config, "offhand") == 5)
-	assert(catalog.weapon_items.size() == 162)
+	assert(catalog.weapon_items.size() == 166)
 	assert(not catalog.primary_types.has("one_shield"))
 	assert(catalog.secondary_types == ["one_axe", "one_blunt", "one_shield", "one_sword"])
 	assert(Art.PRIMARY_WEAPON_PIVOT == Vector2(0.5,0.5))
@@ -119,7 +119,7 @@ func run() -> void:
 	var game = load("res://main.tscn").instantiate()
 	root.add_child(game)
 	await process_frame
-	assert(game.game_version == "0.0.91")
+	assert(game.game_version == "0.0.92")
 	for item: Dictionary in Art.data().weapon_items.values():
 		assert(item.price == 100)
 		assert(item["is_unique"] is bool)
@@ -259,7 +259,7 @@ func run() -> void:
 		assert(game.player_age == 40 and game.player_name == "파츠 테스트")
 	for old in ["assets/characters", "assets/adventurers", "assets/adventurers_side", "tests/fixtures", "tools/references"]:
 		assert(not DirAccess.dir_exists_absolute("res://" + old))
-	print("PASS: 497 loose parts match their atlas pixels; two weapon slots; 9 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
+	print("PASS: 501 loose parts match their atlas pixels; two weapon slots; 9 selectors; original GIF six-frame/100ms attack, fixed body, left follow-through, trail alignment and two-column scroll-free layout; skin-matched hands; unclipped animations and world entry continuity")
 	quit()
 
 func verify_dual_axes() -> void:
@@ -327,10 +327,10 @@ func verify_equipment(catalog: Dictionary) -> void:
 	for number in range(1, 11):
 		expected_offsets["two_axe/%d" % number] = 5 if number <= 6 else 6
 	assert(catalog.melee_groups.two_axe == expected_offsets.keys())
-	var two_blunt_offsets := [5, 7]
+	var two_blunt_offsets := [5, 5, 5, 5, 5, 5]
 	for index in range(two_blunt_offsets.size()):
 		expected_offsets["two_blunt/%d" % (index + 1)] = two_blunt_offsets[index]
-	var two_spear_offsets := [9, 9, 7, 7, 5, 3, 10, 10, 10, 4, 6, 6, 6]
+	var two_spear_offsets := [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]
 	for index in range(two_spear_offsets.size()):
 		expected_offsets["two_spear/%d" % (index + 1)] = two_spear_offsets[index]
 	var two_polearm_offsets := [9, 7, 7, 7, 7, 7, 7, 6, 9, 8]
@@ -339,7 +339,7 @@ func verify_equipment(catalog: Dictionary) -> void:
 	var two_sword_offsets := [13, 13, 13, 14, 13, 14, 14, 14, 14, 14, 13, 13, 12, 14, 13, 14, 14, 14, 15, 14]
 	for index in range(two_sword_offsets.size()):
 		expected_offsets["two_sword/%d" % (index + 1)] = two_sword_offsets[index]
-	var blunt_offsets := [5, 6, 3, 4, 4, 4, 4, 4, 4, 4, 4, 6, 5, 5, 5, 5, 6, 7, 6]
+	var blunt_offsets := [5, 5, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 6, 5]
 	for index in range(blunt_offsets.size()):
 		expected_offsets["one_blunt/%d" % (index + 1)] = blunt_offsets[index]
 	var axe_offsets := [4, 5, 5, 4, 4, 4, 4, 4, 4, 5, 4, 4, 6, 5, 5]
@@ -401,6 +401,8 @@ func verify_equipment(catalog: Dictionary) -> void:
 				if animation != "attack":
 					assert(pose.grip.x == (73 if weapon.family == "crossbow" else 69) )
 					if weapon.equip_type != 2: assert(pose.free_hand.x + 8 == 87)
+				if weapon.family == "one_blunt":
+					assert(pose == Art.pose(animation, f, weapon.attack, 0, "one_axe"))
 				if weapon.family == "one_axe":
 					var base := Art.pose(animation, f, weapon.attack, 0, "one_sword", "one_sword")
 					assert(pose.grip == base.grip + Vector2i(0, -2))

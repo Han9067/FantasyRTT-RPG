@@ -24,7 +24,7 @@ const ATTACK_BODIES := [0, 0, 0, 0, 0, 0]
 const PRIMARY_GRIP_SHIFT := Vector2i(2, 0)
 const CROSSBOW_GRIP_SHIFT := Vector2i(6, 0)
 const OFFHAND_GRIP_SHIFT := Vector2i(4, 0)
-const AXE_GRIP_LIFT := Vector2i(0, -2)
+const ONE_HAND_GRIP_LIFT := Vector2i(0, -2)
 const SUPPORT_HAND_OFFSET := Vector2i(0, 4)
 const SHIELD_GRIP_SHIFT := Vector2i(1, 0)
 const DEFAULT_OUTFIT := "tunic_green"
@@ -181,11 +181,11 @@ static func pose(animation: String, frame: int, attack_type := "chop_attack", eq
 		result.free_hand += CANVAS_PADDING
 		match offhand_family:
 			"", "one_shield": result.free_hand += SHIELD_GRIP_SHIFT
-			"one_axe": result.free_hand += OFFHAND_GRIP_SHIFT + AXE_GRIP_LIFT
+			"one_axe": result.free_hand += OFFHAND_GRIP_SHIFT + ONE_HAND_GRIP_LIFT
 			_: result.free_hand += OFFHAND_GRIP_SHIFT
 		if equip_type >= 0:
 			var shift := CROSSBOW_GRIP_SHIFT if family == "crossbow" else PRIMARY_GRIP_SHIFT
-			if family == "one_axe": shift += AXE_GRIP_LIFT
+			if family in ["one_axe", "one_blunt"]: shift += ONE_HAND_GRIP_LIFT
 			result.grip += shift
 			result.effect_origin += shift
 		if equip_type == 2:

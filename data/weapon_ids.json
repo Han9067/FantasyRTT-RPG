@@ -1,7 +1,7 @@
 {
   "spreadsheet_url": "https://docs.google.com/spreadsheets/d/1BWG4PpFc1Berv_unuYejSReYtNKQtu-MyeWKj5tWXKY/edit#gid=1008322047",
-  "range": "무기!A2:F111",
-  "synced_on": "2026-11-26",
+  "range": "무기!A2:F115",
+  "synced_on": "2026-11-27",
   "items": {
     "one_sword/1": {"item_id": 1001, "equip_type": 0, "is_unique": false},
     "one_sword/2": {"item_id": 1002, "equip_type": 0, "is_unique": false},
@@ -83,6 +83,10 @@
     "one_blunt/19": {"item_id": 1419, "equip_type": 0, "is_unique": false},
     "two_blunt/1": {"item_id": 1501, "equip_type": 2, "is_unique": false},
     "two_blunt/2": {"item_id": 1502, "equip_type": 2, "is_unique": false},
+    "two_blunt/3": {"item_id": 1503, "equip_type": 2, "is_unique": false},
+    "two_blunt/4": {"item_id": 1504, "equip_type": 2, "is_unique": false},
+    "two_blunt/5": {"item_id": 1505, "equip_type": 2, "is_unique": false},
+    "two_blunt/6": {"item_id": 1506, "equip_type": 2, "is_unique": false},
     "two_spear/1": {"item_id": 1601, "equip_type": 2, "is_unique": false},
     "two_spear/2": {"item_id": 1602, "equip_type": 2, "is_unique": false},
     "two_spear/3": {"item_id": 1603, "equip_type": 2, "is_unique": false},

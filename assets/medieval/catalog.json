@@ -4173,7 +4173,7 @@
         {
           "name": "1",
           "source": "sprites/weapons/melee/one_blunt/1.png",
-          "sha256": "23c4c7aa0898873aff323dcd48de7298df8a5e3f35275ea0b6122e6bc22e7315",
+          "sha256": "d2b1bf57b984ee30812b5130606788e78728efceed1896c6d19d87aa858883e1",
           "size": [
             32,
             32
@@ -4190,7 +4190,7 @@
         {
           "name": "2",
           "source": "sprites/weapons/melee/one_blunt/2.png",
-          "sha256": "b0447af1dccd5d353f1a932a22cc58c19a32da82172cd84680861cb9ad4ed36d",
+          "sha256": "9b26167726240b75a3a15b8f4e24dd5b636a231e6265cc2dfe5ec91f693386c2",
           "size": [
             32,
             32
@@ -4207,7 +4207,7 @@
         {
           "name": "3",
           "source": "sprites/weapons/melee/one_blunt/3.png",
-          "sha256": "15992a7f9a4aae460e34c44496ed326144251d960a26ebb204e7327a38d57c95",
+          "sha256": "22f11196de8ed95d31d68c53d52489bb325b5af2337ba32088c121dd5765f909",
           "size": [
             32,
             32
@@ -4224,7 +4224,7 @@
         {
           "name": "4",
           "source": "sprites/weapons/melee/one_blunt/4.png",
-          "sha256": "194483ebbc0e42b6b6dd4609d2bb042afd369263b3bf5f27566acfb93c82c2c2",
+          "sha256": "c832dc6d261f98221051ce0bad8aa457674e78bac7a57f37f334b8671ae67fc0",
           "size": [
             32,
             32
@@ -4258,7 +4258,7 @@
         {
           "name": "6",
           "source": "sprites/weapons/melee/one_blunt/6.png",
-          "sha256": "4ba5a91aeb0ec3dd90568d1bbb04427ec16fb62a3143dadb4903d308e35facee",
+          "sha256": "1ad90f2d778791201330478e96ec0f04b0315f7578039035de58091d7249ebc2",
           "size": [
             32,
             32
@@ -4275,7 +4275,7 @@
         {
           "name": "7",
           "source": "sprites/weapons/melee/one_blunt/7.png",
-          "sha256": "b5b48dcf92b266bedbf9cd9f2f093b0b57e31ef4cd242dd87f6a6d701d58d394",
+          "sha256": "ace01287c81bde7402ebb3432c9249b370d3cbb2ccd8b346430cce3b45161b21",
           "size": [
             32,
             32
@@ -4292,7 +4292,7 @@
         {
           "name": "8",
           "source": "sprites/weapons/melee/one_blunt/8.png",
-          "sha256": "09551a355a35b689f9eb60c01de7ba074d2fb0aaf2fda8a38bb5238329de8c05",
+          "sha256": "094d4d2b5a821d0f2939161fcdc4ad19682f159bda89e45ec1b9dfeec4df326b",
           "size": [
             32,
             32
@@ -4309,7 +4309,7 @@
         {
           "name": "9",
           "source": "sprites/weapons/melee/one_blunt/9.png",
-          "sha256": "842c3f2bfb83a349954e2cb5b68b7f992004b46f6747be31185b476df0704fc4",
+          "sha256": "23ed223cc59967a3f6d5fc49efd23572420976ccb8535888b088fab39aa3b01b",
           "size": [
             32,
             32
@@ -4326,7 +4326,7 @@
         {
           "name": "10",
           "source": "sprites/weapons/melee/one_blunt/10.png",
-          "sha256": "2410a22f078cd1a822a072de3737e0291b6edd28dab63d1add217a507d098196",
+          "sha256": "77b0396ed4fd88819589ede9bd1e74d0d506082816def454dad67eda2f8d12ad",
           "size": [
             32,
             32
@@ -4343,7 +4343,7 @@
         {
           "name": "11",
           "source": "sprites/weapons/melee/one_blunt/11.png",
-          "sha256": "2cc03ef2fcf4679167bc57c4800d49d5639f8839dc2343c96ceeb0f671dfd97a",
+          "sha256": "90564c835a9aa31ed9fc7df0186672c2eeb647759e5e9e85a0e4b9ed0463eeb9",
           "size": [
             32,
             32
@@ -4360,7 +4360,7 @@
         {
           "name": "12",
           "source": "sprites/weapons/melee/one_blunt/12.png",
-          "sha256": "97ea21bca59acff6a582f275ad04d6a37191e303cad5e4856f954c521f651c6c",
+          "sha256": "2c28efc20566c213847439dfb03e8d9d9db21638185321c2d8f1ae22ebe76801",
           "size": [
             32,
             32
@@ -4377,7 +4377,7 @@
         {
           "name": "13",
           "source": "sprites/weapons/melee/one_blunt/13.png",
-          "sha256": "676cdb0aedde95d5b013942eb2d604c6bc36df2412895f08b629e377befa4afb",
+          "sha256": "c8027d7748a01935b529e76b99b3bc80ac1a8e6de3a880f58d32d3a1004063d9",
           "size": [
             32,
             32
@@ -4394,7 +4394,7 @@
         {
           "name": "14",
           "source": "sprites/weapons/melee/one_blunt/14.png",
-          "sha256": "bca87fdd0308545dad9ed8d2c897a782972a07a964d3fef3e4e00c9f1d5d16f9",
+          "sha256": "b41af3fcb3a4c3aeb35a55c27958b3caef8e1f7943681a94c48a870c1ea1f664",
           "size": [
             32,
             32
@@ -4411,7 +4411,7 @@
         {
           "name": "15",
           "source": "sprites/weapons/melee/one_blunt/15.png",
-          "sha256": "5b212ef12fa5c9302319ecfca6051fde1d84f74bf1f2e426436c95912fb3d678",
+          "sha256": "ef654788505f5872b7cf5442601daae0b80b8c0bb4c27b93fa02b08c5a3ab180",
           "size": [
             32,
             32
@@ -4428,7 +4428,7 @@
         {
           "name": "16",
           "source": "sprites/weapons/melee/one_blunt/16.png",
-          "sha256": "3749eb4f8962f8cc9ea5fc3472cdee3d4e92fb58a0da66e1a48d9ad774fb346d",
+          "sha256": "235b42b73f22b1afa252fefe3cb7335da1ea2a9f7beca44a940ffeb6e85f31db",
           "size": [
             32,
             32
@@ -4445,7 +4445,7 @@
         {
           "name": "17",
           "source": "sprites/weapons/melee/one_blunt/17.png",
-          "sha256": "112dc3be67865b5e3fca8a2c24856ea9240e76d768812fa78177d8e2984c500f",
+          "sha256": "dc6d9c6a24335d20f21703843f3a384dd9d0b9436e650e4a0756d370f1a3c834",
           "size": [
             32,
             32
@@ -4462,7 +4462,7 @@
         {
           "name": "18",
           "source": "sprites/weapons/melee/one_blunt/18.png",
-          "sha256": "dddf3a7e35c31415a94d978dadc605e3427c616911211730ffd14efa179e0456",
+          "sha256": "7d519460eb62ab3cba008f220dbba3f2ac21aae070f15efedbd0814b81d33317",
           "size": [
             32,
             32
@@ -4479,7 +4479,7 @@
         {
           "name": "19",
           "source": "sprites/weapons/melee/one_blunt/19.png",
-          "sha256": "6c562c7f6db97ce7984399f0f5e6e7a8d90dc18f2992ecb31ffc0638cbc2425b",
+          "sha256": "5220498bbd2a646be585ff8243c8159530bf105acdc2e05e95ee79abd35c07ce",
           "size": [
             32,
             32
@@ -5736,7 +5736,7 @@
         {
           "name": "1",
           "source": "sprites/weapons/melee/two_blunt/1.png",
-          "sha256": "743c9b69d5d01dfc1fa567218fd2cdd1320c4cc81f1bb08934eceb13164aee7b",
+          "sha256": "72917a65f6b048e4d4192c11f0b4f5d77c577d0fa56985c85d0871a4500a08f9",
           "size": [
             32,
             48
@@ -5753,7 +5753,7 @@
         {
           "name": "2",
           "source": "sprites/weapons/melee/two_blunt/2.png",
-          "sha256": "ec90dfaf387ffea152c6a86478845bf819c80239740c83399e172b20421ad543",
+          "sha256": "3464a8a5f46ff3b56b4ae87b9f03e12231906e1d6190d3ac5f9c3764f95218c2",
           "size": [
             32,
             48
@@ -5763,6 +5763,74 @@
           "rect": [
             919,
             341,
+            32,
+            48
+          ]
+        },
+        {
+          "name": "3",
+          "source": "sprites/weapons/melee/two_blunt/3.png",
+          "sha256": "8fbdbb7d9c4876ee1569936e8b2929f193451e566b3347c5e5537ed5f6d58e5f",
+          "size": [
+            32,
+            48
+          ],
+          "id": 3,
+          "atlas": "atlas_00.png",
+          "rect": [
+            953,
+            341,
+            32,
+            48
+          ]
+        },
+        {
+          "name": "4",
+          "source": "sprites/weapons/melee/two_blunt/4.png",
+          "sha256": "de8d53646da0d527241c10d6c124bfd19b99d56594db743bf09ee41abda3edc0",
+          "size": [
+            32,
+            48
+          ],
+          "id": 4,
+          "atlas": "atlas_00.png",
+          "rect": [
+            987,
+            341,
+            32,
+            48
+          ]
+        },
+        {
+          "name": "5",
+          "source": "sprites/weapons/melee/two_blunt/5.png",
+          "sha256": "e55b07d4211af847a7057471b05c74f9d58f7600d519f3d4ebdc42dcc9d0782d",
+          "size": [
+            32,
+            48
+          ],
+          "id": 5,
+          "atlas": "atlas_00.png",
+          "rect": [
+            1,
+            391,
+            32,
+            48
+          ]
+        },
+        {
+          "name": "6",
+          "source": "sprites/weapons/melee/two_blunt/6.png",
+          "sha256": "cb14c7032d497e58ca5f54b8204202e388dc049c0241cfc8cdd4ead2e9e97461",
+          "size": [
+            32,
+            48
+          ],
+          "id": 6,
+          "atlas": "atlas_00.png",
+          "rect": [
+            35,
+            391,
             32,
             48
           ]
@@ -5782,8 +5850,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            953,
-            341,
+            69,
+            391,
             32,
             64
           ]
@@ -5799,8 +5867,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            987,
-            341,
+            103,
+            391,
             32,
             64
           ]
@@ -5816,8 +5884,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            407,
+            137,
+            391,
             32,
             64
           ]
@@ -5833,8 +5901,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            35,
-            407,
+            171,
+            391,
             32,
             64
           ]
@@ -5850,8 +5918,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            69,
-            407,
+            205,
+            391,
             32,
             64
           ]
@@ -5867,8 +5935,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            103,
-            407,
+            239,
+            391,
             32,
             64
           ]
@@ -5884,8 +5952,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            137,
-            407,
+            273,
+            391,
             32,
             64
           ]
@@ -5901,8 +5969,8 @@
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            171,
-            407,
+            307,
+            391,
             32,
             64
           ]
@@ -5918,8 +5986,8 @@
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
-            205,
-            407,
+            341,
+            391,
             32,
             64
           ]
@@ -5935,8 +6003,8 @@
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            239,
-            407,
+            375,
+            391,
             32,
             64
           ]
@@ -5948,222 +6016,222 @@
         {
           "name": "1",
           "source": "sprites/weapons/melee/two_spear/1.png",
-          "sha256": "fe56395c638c7a83ad68e5027df64b952250a2e2209a4675633dd44c542eb38d",
+          "sha256": "55a8eb8f3214d3e0d1efe513b59cbb5667fd8876ed3bf45dfb998784f85d89aa",
           "size": [
             32,
-            64
+            48
           ],
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            273,
-            407,
+            409,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "2",
           "source": "sprites/weapons/melee/two_spear/2.png",
-          "sha256": "03648ca7176c9c02cb840aeae3c0673b596eff3afc689aba2939eedf0e125dff",
+          "sha256": "e896e2fd5c276a77d2553d1eeaa6576cce2f5a1441de8d432f2573a68c7e2b1a",
           "size": [
             32,
-            64
+            48
           ],
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            307,
-            407,
+            443,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "3",
           "source": "sprites/weapons/melee/two_spear/3.png",
-          "sha256": "1e49f3f1aee4c61505d304c2e9d8eaa9b383180facf3b93baa17ae83ec165b17",
+          "sha256": "82ad9b898260a24edbb4a648870f407afdfabdc21a891eed39e8435361995b24",
           "size": [
             32,
-            64
+            48
           ],
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            341,
-            407,
+            477,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "4",
           "source": "sprites/weapons/melee/two_spear/4.png",
-          "sha256": "11eb063450feaa427c23874c615569af489a01dc40aebf580e5a15970900077b",
+          "sha256": "73c7f4e10570f5140ab793f76abc354eb47067fe245a2947b1d57d8d46688041",
           "size": [
             32,
-            64
+            48
           ],
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            375,
-            407,
+            511,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "5",
           "source": "sprites/weapons/melee/two_spear/5.png",
-          "sha256": "0aa18540d40398f75964a94c599e9ded9c90eb5dffeaae862f628e5ab0267ebd",
+          "sha256": "2fd78fbdd84282a1d5be929fb1c0bb55a05aafa35aaab1c2be44f51c108b4c3d",
           "size": [
             32,
-            64
+            48
           ],
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            409,
-            407,
+            545,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "6",
           "source": "sprites/weapons/melee/two_spear/6.png",
-          "sha256": "e8f0db48d046799a085636e768de58ea3de321814f3b3131c409543a38de9435",
+          "sha256": "c326f022fd4c6db9c3acf8389f88af8ca5aea916ed6b7a349fcf2911f3a2e199",
           "size": [
             32,
-            64
+            48
           ],
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            443,
-            407,
+            579,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "7",
           "source": "sprites/weapons/melee/two_spear/7.png",
-          "sha256": "f62feff7a7727dc272bb325bb349185895df7ecbf2f5dd4f0213b45f323e1c3f",
+          "sha256": "86a54e9f09ea9901aa188cf8bb0a0894dfcba4190146087ab3271053a9f93e7f",
           "size": [
             32,
-            64
+            48
           ],
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            477,
-            407,
+            613,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "8",
           "source": "sprites/weapons/melee/two_spear/8.png",
-          "sha256": "43671b274f3f203e98fe01802e3e5b5f2acc3dea999380f9d8880ad68b9542fa",
+          "sha256": "fe6c675d49a896b80417a7f755b1b96920cb754d65eeda03b5b902de46732b1d",
           "size": [
             32,
-            64
+            48
           ],
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            511,
-            407,
+            647,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "9",
           "source": "sprites/weapons/melee/two_spear/9.png",
-          "sha256": "991130dc5934ca368c4e076295383df002705ef58fee203007974c43918ef347",
+          "sha256": "a4548b45ca376d1128a49775ad6bf8da23418859638c2fbc8646dddb2d22523d",
           "size": [
             32,
-            64
+            48
           ],
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
-            545,
-            407,
+            681,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "10",
           "source": "sprites/weapons/melee/two_spear/10.png",
-          "sha256": "5f5901fbb71109508cf67a8a4ed5f1a7967f1d25e079b3cba849fb41400b7c3f",
+          "sha256": "db662f699d236e52bb7350df17dd6000b2cdb4d3612e079df907769dbd1dc13f",
           "size": [
             32,
-            64
+            48
           ],
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            579,
-            407,
+            715,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "11",
           "source": "sprites/weapons/melee/two_spear/11.png",
-          "sha256": "01c28dc44d13797c40a5399ef943380569aab53562e5f99bf862dd8e7b7e6739",
+          "sha256": "428379a3b232248aba399561e128db0cac568e892fa6ee9a59394d25b00969f4",
           "size": [
             32,
-            64
+            48
           ],
           "id": 11,
           "atlas": "atlas_00.png",
           "rect": [
-            613,
-            407,
+            749,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "12",
           "source": "sprites/weapons/melee/two_spear/12.png",
-          "sha256": "7039e8b528d11732fa585cc7fdfdb265a660ee42a3999b5230af8163b14ca397",
+          "sha256": "e3d63c2e24890020d7e3ea7e3205572ded1bd370d1a213b4bf56f475526009aa",
           "size": [
             32,
-            64
+            48
           ],
           "id": 12,
           "atlas": "atlas_00.png",
           "rect": [
-            647,
-            407,
+            783,
+            391,
             32,
-            64
+            48
           ]
         },
         {
           "name": "13",
           "source": "sprites/weapons/melee/two_spear/13.png",
-          "sha256": "64cd59d3d0e58700ed8dbd0ccae2a9c0c993ee4a9a3cc34de6f07cdb04156dfa",
+          "sha256": "e7d9cbc7d03fae44c8c4426fec9ffa8edd41444f26a329aed38f0fd747d4cb7b",
           "size": [
             32,
-            64
+            48
           ],
           "id": 13,
           "atlas": "atlas_00.png",
           "rect": [
-            681,
-            407,
+            817,
+            391,
             32,
-            64
+            48
           ]
         }
       ]
@@ -6181,8 +6249,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            715,
-            407,
+            851,
+            391,
             32,
             48
           ]
@@ -6198,8 +6266,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            749,
-            407,
+            885,
+            391,
             32,
             48
           ]
@@ -6215,8 +6283,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            783,
-            407,
+            919,
+            391,
             32,
             48
           ]
@@ -6232,8 +6300,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            817,
-            407,
+            953,
+            391,
             32,
             48
           ]
@@ -6249,8 +6317,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            851,
-            407,
+            987,
+            391,
             32,
             48
           ]
@@ -6266,8 +6334,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            885,
-            407,
+            1,
+            457,
             32,
             48
           ]
@@ -6283,8 +6351,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            919,
-            407,
+            35,
+            457,
             32,
             48
           ]
@@ -6300,8 +6368,8 @@
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            953,
-            407,
+            69,
+            457,
             32,
             48
           ]
@@ -6317,8 +6385,8 @@
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
-            987,
-            407,
+            103,
+            457,
             32,
             48
           ]
@@ -6334,8 +6402,8 @@
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            473,
+            137,
+            457,
             32,
             48
           ]
@@ -6351,8 +6419,8 @@
           "id": 11,
           "atlas": "atlas_00.png",
           "rect": [
-            35,
-            473,
+            171,
+            457,
             32,
             48
           ]
@@ -6368,8 +6436,8 @@
           "id": 12,
           "atlas": "atlas_00.png",
           "rect": [
-            69,
-            473,
+            205,
+            457,
             32,
             48
           ]
@@ -6385,8 +6453,8 @@
           "id": 13,
           "atlas": "atlas_00.png",
           "rect": [
-            103,
-            473,
+            239,
+            457,
             32,
             48
           ]
@@ -6402,8 +6470,8 @@
           "id": 14,
           "atlas": "atlas_00.png",
           "rect": [
-            137,
-            473,
+            273,
+            457,
             32,
             48
           ]
@@ -6419,8 +6487,8 @@
           "id": 15,
           "atlas": "atlas_00.png",
           "rect": [
-            171,
-            473,
+            307,
+            457,
             32,
             48
           ]
@@ -6436,8 +6504,8 @@
           "id": 16,
           "atlas": "atlas_00.png",
           "rect": [
-            205,
-            473,
+            341,
+            457,
             32,
             48
           ]
@@ -6453,8 +6521,8 @@
           "id": 17,
           "atlas": "atlas_00.png",
           "rect": [
-            239,
-            473,
+            375,
+            457,
             32,
             48
           ]
@@ -6470,8 +6538,8 @@
           "id": 18,
           "atlas": "atlas_00.png",
           "rect": [
-            273,
-            473,
+            409,
+            457,
             32,
             48
           ]
@@ -6487,8 +6555,8 @@
           "id": 19,
           "atlas": "atlas_00.png",
           "rect": [
-            307,
-            473,
+            443,
+            457,
             32,
             48
           ]
@@ -6504,8 +6572,8 @@
           "id": 20,
           "atlas": "atlas_00.png",
           "rect": [
-            341,
-            473,
+            477,
+            457,
             32,
             48
           ]
@@ -6525,8 +6593,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            375,
-            473,
+            511,
+            457,
             32,
             32
           ]
@@ -6542,8 +6610,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            409,
-            473,
+            545,
+            457,
             32,
             32
           ]
@@ -6559,8 +6627,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            443,
-            473,
+            579,
+            457,
             32,
             32
           ]
@@ -6576,8 +6644,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            477,
-            473,
+            613,
+            457,
             32,
             32
           ]
@@ -6593,8 +6661,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            511,
-            473,
+            647,
+            457,
             32,
             32
           ]
@@ -6610,8 +6678,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            545,
-            473,
+            681,
+            457,
             32,
             32
           ]
@@ -6627,8 +6695,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            579,
-            473,
+            715,
+            457,
             32,
             32
           ]
@@ -6648,8 +6716,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            613,
-            473,
+            749,
+            457,
             32,
             32
           ]
@@ -6665,8 +6733,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            647,
-            473,
+            783,
+            457,
             32,
             32
           ]
@@ -6682,8 +6750,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            681,
-            473,
+            817,
+            457,
             32,
             32
           ]
@@ -6699,8 +6767,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            715,
-            473,
+            851,
+            457,
             32,
             32
           ]
@@ -6720,8 +6788,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            749,
-            473,
+            885,
+            457,
             64,
             32
           ]
@@ -6737,8 +6805,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            815,
-            473,
+            951,
+            457,
             64,
             32
           ]
@@ -6754,8 +6822,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            881,
-            473,
+            1,
+            507,
             64,
             32
           ]
@@ -6771,8 +6839,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            947,
-            473,
+            67,
+            507,
             64,
             32
           ]
@@ -6788,8 +6856,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            523,
+            133,
+            507,
             64,
             32
           ]
@@ -6805,8 +6873,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            67,
-            523,
+            199,
+            507,
             64,
             32
           ]
@@ -6822,8 +6890,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            133,
-            523,
+            265,
+            507,
             64,
             32
           ]
@@ -6839,8 +6907,8 @@
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            199,
-            523,
+            331,
+            507,
             64,
             32
           ]
@@ -6856,8 +6924,8 @@
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
-            265,
-            523,
+            397,
+            507,
             64,
             32
           ]
@@ -6873,8 +6941,8 @@
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            331,
-            523,
+            463,
+            507,
             64,
             32
           ]
@@ -6890,8 +6958,8 @@
           "id": 11,
           "atlas": "atlas_00.png",
           "rect": [
-            397,
-            523,
+            529,
+            507,
             64,
             32
           ]
@@ -6907,8 +6975,8 @@
           "id": 12,
           "atlas": "atlas_00.png",
           "rect": [
-            463,
-            523,
+            595,
+            507,
             64,
             32
           ]
@@ -6924,8 +6992,8 @@
           "id": 13,
           "atlas": "atlas_00.png",
           "rect": [
-            529,
-            523,
+            661,
+            507,
             64,
             32
           ]
@@ -6941,8 +7009,8 @@
           "id": 14,
           "atlas": "atlas_00.png",
           "rect": [
-            595,
-            523,
+            727,
+            507,
             64,
             32
           ]
@@ -6958,8 +7026,8 @@
           "id": 15,
           "atlas": "atlas_00.png",
           "rect": [
-            661,
-            523,
+            793,
+            507,
             64,
             32
           ]
@@ -6979,8 +7047,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            727,
-            523,
+            859,
+            507,
             32,
             32
           ]
@@ -6996,8 +7064,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            761,
-            523,
+            893,
+            507,
             32,
             32
           ]
@@ -7013,8 +7081,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            795,
-            523,
+            927,
+            507,
             32,
             32
           ]
@@ -7030,8 +7098,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            829,
-            523,
+            961,
+            507,
             32,
             32
           ]
@@ -7047,8 +7115,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            863,
-            523,
+            1,
+            541,
             32,
             32
           ]
@@ -7064,8 +7132,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            897,
-            523,
+            35,
+            541,
             32,
             32
           ]
@@ -7081,8 +7149,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            931,
-            523,
+            69,
+            541,
             32,
             32
           ]
@@ -7098,8 +7166,8 @@
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            965,
-            523,
+            103,
+            541,
             32,
             32
           ]
@@ -7115,8 +7183,8 @@
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            557,
+            137,
+            541,
             32,
             32
           ]
@@ -7132,8 +7200,8 @@
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            35,
-            557,
+            171,
+            541,
             32,
             32
           ]
@@ -7149,8 +7217,8 @@
           "id": 11,
           "atlas": "atlas_00.png",
           "rect": [
-            69,
-            557,
+            205,
+            541,
             32,
             32
           ]
@@ -7170,8 +7238,8 @@
           "id": 20,
           "atlas": "atlas_00.png",
           "rect": [
-            103,
-            557,
+            239,
+            541,
             32,
             32
           ]
@@ -7191,8 +7259,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            137,
-            557,
+            273,
+            541,
             64,
             32
           ]
@@ -7208,8 +7276,8 @@
           "id": 2,
           "atlas": "atlas_00.png",
           "rect": [
-            203,
-            557,
+            339,
+            541,
             64,
             32
           ]
@@ -7225,8 +7293,8 @@
           "id": 3,
           "atlas": "atlas_00.png",
           "rect": [
-            269,
-            557,
+            405,
+            541,
             64,
             32
           ]
@@ -7242,8 +7310,8 @@
           "id": 4,
           "atlas": "atlas_00.png",
           "rect": [
-            335,
-            557,
+            471,
+            541,
             64,
             32
           ]
@@ -7259,8 +7327,8 @@
           "id": 5,
           "atlas": "atlas_00.png",
           "rect": [
-            401,
-            557,
+            537,
+            541,
             64,
             32
           ]
@@ -7276,8 +7344,8 @@
           "id": 6,
           "atlas": "atlas_00.png",
           "rect": [
-            467,
-            557,
+            603,
+            541,
             64,
             32
           ]
@@ -7293,8 +7361,8 @@
           "id": 7,
           "atlas": "atlas_00.png",
           "rect": [
-            533,
-            557,
+            669,
+            541,
             64,
             32
           ]
@@ -7310,8 +7378,8 @@
           "id": 8,
           "atlas": "atlas_00.png",
           "rect": [
-            599,
-            557,
+            735,
+            541,
             64,
             32
           ]
@@ -7327,8 +7395,8 @@
           "id": 9,
           "atlas": "atlas_00.png",
           "rect": [
-            665,
-            557,
+            801,
+            541,
             64,
             32
           ]
@@ -7344,8 +7412,8 @@
           "id": 10,
           "atlas": "atlas_00.png",
           "rect": [
-            731,
-            557,
+            867,
+            541,
             64,
             32
           ]
@@ -7361,8 +7429,8 @@
           "id": 11,
           "atlas": "atlas_00.png",
           "rect": [
-            797,
-            557,
+            933,
+            541,
             64,
             32
           ]
@@ -7378,8 +7446,8 @@
           "id": 12,
           "atlas": "atlas_00.png",
           "rect": [
-            863,
-            557,
+            1,
+            575,
             64,
             32
           ]
@@ -7395,8 +7463,8 @@
           "id": 13,
           "atlas": "atlas_00.png",
           "rect": [
-            929,
-            557,
+            67,
+            575,
             64,
             32
           ]
@@ -7412,8 +7480,8 @@
           "id": 14,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            591,
+            133,
+            575,
             64,
             32
           ]
@@ -7429,8 +7497,8 @@
           "id": 15,
           "atlas": "atlas_00.png",
           "rect": [
-            67,
-            591,
+            199,
+            575,
             64,
             32
           ]
@@ -7446,8 +7514,8 @@
           "id": 16,
           "atlas": "atlas_00.png",
           "rect": [
-            133,
-            591,
+            265,
+            575,
             64,
             32
           ]
@@ -7463,8 +7531,8 @@
           "id": 17,
           "atlas": "atlas_00.png",
           "rect": [
-            199,
-            591,
+            331,
+            575,
             64,
             32
           ]
@@ -7480,8 +7548,8 @@
           "id": 18,
           "atlas": "atlas_00.png",
           "rect": [
-            265,
-            591,
+            397,
+            575,
             64,
             32
           ]
@@ -7497,8 +7565,8 @@
           "id": 19,
           "atlas": "atlas_00.png",
           "rect": [
-            331,
-            591,
+            463,
+            575,
             64,
             32
           ]
@@ -7514,8 +7582,8 @@
           "id": 20,
           "atlas": "atlas_00.png",
           "rect": [
-            397,
-            591,
+            529,
+            575,
             64,
             32
           ]
@@ -7531,8 +7599,8 @@
           "id": 21,
           "atlas": "atlas_00.png",
           "rect": [
-            463,
-            591,
+            595,
+            575,
             64,
             32
           ]
@@ -7548,8 +7616,8 @@
           "id": 22,
           "atlas": "atlas_00.png",
           "rect": [
-            529,
-            591,
+            661,
+            575,
             64,
             32
           ]
@@ -7565,8 +7633,8 @@
           "id": 23,
           "atlas": "atlas_00.png",
           "rect": [
-            595,
-            591,
+            727,
+            575,
             64,
             32
           ]
@@ -7582,8 +7650,8 @@
           "id": 24,
           "atlas": "atlas_00.png",
           "rect": [
-            661,
-            591,
+            793,
+            575,
             64,
             32
           ]
@@ -7599,8 +7667,8 @@
           "id": 25,
           "atlas": "atlas_00.png",
           "rect": [
-            727,
-            591,
+            859,
+            575,
             64,
             32
           ]
@@ -7616,8 +7684,8 @@
           "id": 26,
           "atlas": "atlas_00.png",
           "rect": [
-            793,
-            591,
+            925,
+            575,
             64,
             32
           ]
@@ -7633,8 +7701,8 @@
           "id": 27,
           "atlas": "atlas_00.png",
           "rect": [
-            859,
-            591,
+            1,
+            609,
             64,
             32
           ]
@@ -7650,8 +7718,8 @@
           "id": 28,
           "atlas": "atlas_00.png",
           "rect": [
-            925,
-            591,
+            67,
+            609,
             64,
             32
           ]
@@ -7667,8 +7735,8 @@
           "id": 29,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            625,
+            133,
+            609,
             64,
             32
           ]
@@ -7684,8 +7752,8 @@
           "id": 30,
           "atlas": "atlas_00.png",
           "rect": [
-            67,
-            625,
+            199,
+            609,
             64,
             32
           ]
@@ -7701,8 +7769,8 @@
           "id": 31,
           "atlas": "atlas_00.png",
           "rect": [
-            133,
-            625,
+            265,
+            609,
             64,
             32
           ]
@@ -7718,8 +7786,8 @@
           "id": 32,
           "atlas": "atlas_00.png",
           "rect": [
-            199,
-            625,
+            331,
+            609,
             64,
             32
           ]
@@ -7735,8 +7803,8 @@
           "id": 33,
           "atlas": "atlas_00.png",
           "rect": [
-            265,
-            625,
+            397,
+            609,
             64,
             32
           ]
@@ -7752,8 +7820,8 @@
           "id": 34,
           "atlas": "atlas_00.png",
           "rect": [
-            331,
-            625,
+            463,
+            609,
             64,
             32
           ]
@@ -7769,8 +7837,8 @@
           "id": 35,
           "atlas": "atlas_00.png",
           "rect": [
-            397,
-            625,
+            529,
+            609,
             64,
             32
           ]
@@ -7786,8 +7854,8 @@
           "id": 36,
           "atlas": "atlas_00.png",
           "rect": [
-            463,
-            625,
+            595,
+            609,
             64,
             32
           ]
@@ -7803,8 +7871,8 @@
           "id": 37,
           "atlas": "atlas_00.png",
           "rect": [
-            529,
-            625,
+            661,
+            609,
             64,
             32
           ]
@@ -7820,8 +7888,8 @@
           "id": 38,
           "atlas": "atlas_00.png",
           "rect": [
-            595,
-            625,
+            727,
+            609,
             64,
             32
           ]
@@ -7837,8 +7905,8 @@
           "id": 39,
           "atlas": "atlas_00.png",
           "rect": [
-            661,
-            625,
+            793,
+            609,
             64,
             32
           ]
@@ -7854,8 +7922,8 @@
           "id": 40,
           "atlas": "atlas_00.png",
           "rect": [
-            727,
-            625,
+            859,
+            609,
             64,
             32
           ]
@@ -7871,8 +7939,8 @@
           "id": 41,
           "atlas": "atlas_00.png",
           "rect": [
-            793,
-            625,
+            925,
+            609,
             64,
             32
           ]
@@ -7888,8 +7956,8 @@
           "id": 42,
           "atlas": "atlas_00.png",
           "rect": [
-            859,
-            625,
+            1,
+            643,
             64,
             32
           ]
@@ -7905,8 +7973,8 @@
           "id": 43,
           "atlas": "atlas_00.png",
           "rect": [
-            925,
-            625,
+            67,
+            643,
             64,
             32
           ]
@@ -7922,8 +7990,8 @@
           "id": 44,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            659,
+            133,
+            643,
             64,
             32
           ]
@@ -7939,8 +8007,8 @@
           "id": 45,
           "atlas": "atlas_00.png",
           "rect": [
-            67,
-            659,
+            199,
+            643,
             64,
             32
           ]
@@ -7956,8 +8024,8 @@
           "id": 46,
           "atlas": "atlas_00.png",
           "rect": [
-            133,
-            659,
+            265,
+            643,
             64,
             32
           ]
@@ -7973,8 +8041,8 @@
           "id": 47,
           "atlas": "atlas_00.png",
           "rect": [
-            199,
-            659,
+            331,
+            643,
             64,
             32
           ]
@@ -7990,8 +8058,8 @@
           "id": 48,
           "atlas": "atlas_00.png",
           "rect": [
-            265,
-            659,
+            397,
+            643,
             64,
             32
           ]
@@ -8007,8 +8075,8 @@
           "id": 49,
           "atlas": "atlas_00.png",
           "rect": [
-            331,
-            659,
+            463,
+            643,
             64,
             32
           ]
@@ -8024,8 +8092,8 @@
           "id": 50,
           "atlas": "atlas_00.png",
           "rect": [
-            397,
-            659,
+            529,
+            643,
             64,
             32
           ]
@@ -8041,8 +8109,8 @@
           "id": 51,
           "atlas": "atlas_00.png",
           "rect": [
-            463,
-            659,
+            595,
+            643,
             64,
             32
           ]
@@ -8058,8 +8126,8 @@
           "id": 52,
           "atlas": "atlas_00.png",
           "rect": [
-            529,
-            659,
+            661,
+            643,
             64,
             32
           ]
@@ -8075,8 +8143,8 @@
           "id": 53,
           "atlas": "atlas_00.png",
           "rect": [
-            595,
-            659,
+            727,
+            643,
             64,
             32
           ]
@@ -8092,8 +8160,8 @@
           "id": 54,
           "atlas": "atlas_00.png",
           "rect": [
-            661,
-            659,
+            793,
+            643,
             64,
             32
           ]
@@ -8109,8 +8177,8 @@
           "id": 55,
           "atlas": "atlas_00.png",
           "rect": [
-            727,
-            659,
+            859,
+            643,
             64,
             32
           ]
@@ -8126,8 +8194,8 @@
           "id": 56,
           "atlas": "atlas_00.png",
           "rect": [
-            793,
-            659,
+            925,
+            643,
             64,
             32
           ]
@@ -8143,8 +8211,8 @@
           "id": 57,
           "atlas": "atlas_00.png",
           "rect": [
-            859,
-            659,
+            1,
+            677,
             64,
             32
           ]
@@ -8160,8 +8228,8 @@
           "id": 58,
           "atlas": "atlas_00.png",
           "rect": [
-            925,
-            659,
+            67,
+            677,
             64,
             32
           ]
@@ -8177,8 +8245,8 @@
           "id": 59,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            693,
+            133,
+            677,
             64,
             32
           ]
@@ -8194,8 +8262,8 @@
           "id": 60,
           "atlas": "atlas_00.png",
           "rect": [
-            67,
-            693,
+            199,
+            677,
             64,
             32
           ]
@@ -8211,8 +8279,8 @@
           "id": 61,
           "atlas": "atlas_00.png",
           "rect": [
-            133,
-            693,
+            265,
+            677,
             64,
             32
           ]
@@ -8228,8 +8296,8 @@
           "id": 62,
           "atlas": "atlas_00.png",
           "rect": [
-            199,
-            693,
+            331,
+            677,
             64,
             32
           ]
@@ -8245,8 +8313,8 @@
           "id": 63,
           "atlas": "atlas_00.png",
           "rect": [
-            265,
-            693,
+            397,
+            677,
             64,
             32
           ]
@@ -8262,8 +8330,8 @@
           "id": 64,
           "atlas": "atlas_00.png",
           "rect": [
-            331,
-            693,
+            463,
+            677,
             64,
             32
           ]
@@ -8279,8 +8347,8 @@
           "id": 65,
           "atlas": "atlas_00.png",
           "rect": [
-            397,
-            693,
+            529,
+            677,
             64,
             32
           ]
@@ -8296,8 +8364,8 @@
           "id": 66,
           "atlas": "atlas_00.png",
           "rect": [
-            463,
-            693,
+            595,
+            677,
             64,
             32
           ]
@@ -8313,8 +8381,8 @@
           "id": 67,
           "atlas": "atlas_00.png",
           "rect": [
-            529,
-            693,
+            661,
+            677,
             64,
             32
           ]
@@ -8330,8 +8398,8 @@
           "id": 68,
           "atlas": "atlas_00.png",
           "rect": [
-            595,
-            693,
+            727,
+            677,
             64,
             32
           ]
@@ -8347,8 +8415,8 @@
           "id": 69,
           "atlas": "atlas_00.png",
           "rect": [
-            661,
-            693,
+            793,
+            677,
             64,
             32
           ]
@@ -8364,8 +8432,8 @@
           "id": 70,
           "atlas": "atlas_00.png",
           "rect": [
-            727,
-            693,
+            859,
+            677,
             64,
             32
           ]
@@ -8381,8 +8449,8 @@
           "id": 71,
           "atlas": "atlas_00.png",
           "rect": [
-            793,
-            693,
+            925,
+            677,
             64,
             32
           ]
@@ -8398,8 +8466,8 @@
           "id": 72,
           "atlas": "atlas_00.png",
           "rect": [
-            859,
-            693,
+            1,
+            711,
             64,
             32
           ]
@@ -8415,8 +8483,8 @@
           "id": 73,
           "atlas": "atlas_00.png",
           "rect": [
-            925,
-            693,
+            67,
+            711,
             64,
             32
           ]
@@ -8432,8 +8500,8 @@
           "id": 74,
           "atlas": "atlas_00.png",
           "rect": [
-            1,
-            727,
+            133,
+            711,
             64,
             32
           ]
@@ -8449,8 +8517,8 @@
           "id": 75,
           "atlas": "atlas_00.png",
           "rect": [
-            67,
-            727,
+            199,
+            711,
             64,
             32
           ]
@@ -8466,8 +8534,8 @@
           "id": 76,
           "atlas": "atlas_00.png",
           "rect": [
-            133,
-            727,
+            265,
+            711,
             64,
             32
           ]
@@ -8483,8 +8551,8 @@
           "id": 77,
           "atlas": "atlas_00.png",
           "rect": [
-            199,
-            727,
+            331,
+            711,
             64,
             32
           ]
@@ -8500,8 +8568,8 @@
           "id": 78,
           "atlas": "atlas_00.png",
           "rect": [
-            265,
-            727,
+            397,
+            711,
             64,
             32
           ]
@@ -8517,8 +8585,8 @@
           "id": 79,
           "atlas": "atlas_00.png",
           "rect": [
-            331,
-            727,
+            463,
+            711,
             64,
             32
           ]
@@ -8534,8 +8602,8 @@
           "id": 80,
           "atlas": "atlas_00.png",
           "rect": [
-            397,
-            727,
+            529,
+            711,
             64,
             32
           ]
@@ -8551,8 +8619,8 @@
           "id": 81,
           "atlas": "atlas_00.png",
           "rect": [
-            463,
-            727,
+            595,
+            711,
             64,
             32
           ]
@@ -8568,8 +8636,8 @@
           "id": 82,
           "atlas": "atlas_00.png",
           "rect": [
-            529,
-            727,
+            661,
+            711,
             64,
             32
           ]
@@ -8585,8 +8653,8 @@
           "id": 83,
           "atlas": "atlas_00.png",
           "rect": [
-            595,
             727,
+            711,
             64,
             32
           ]
@@ -8602,8 +8670,8 @@
           "id": 84,
           "atlas": "atlas_00.png",
           "rect": [
-            661,
-            727,
+            793,
+            711,
             64,
             32
           ]
@@ -8623,8 +8691,8 @@
           "id": 1,
           "atlas": "atlas_00.png",
           "rect": [
-            727,
-            727,
+            859,
+            711,
             32,
             32
           ]
@@ -8815,7 +8883,11 @@
     ],
     "two_blunt": [
       "two_blunt/1",
-      "two_blunt/2"
+      "two_blunt/2",
+      "two_blunt/3",
+      "two_blunt/4",
+      "two_blunt/5",
+      "two_blunt/6"
     ],
     "two_polearm": [
       "two_polearm/1",
@@ -9164,7 +9236,7 @@
       "price": 100,
       "grip": [
         16,
-        24
+        22
       ],
       "attack": "chop_attack",
       "y_up": 5,
@@ -9182,10 +9254,10 @@
       "price": 100,
       "grip": [
         16,
-        24
+        23
       ],
       "attack": "chop_attack",
-      "y_up": 6,
+      "y_up": 5,
       "item_id": 1402,
       "equip_type": 0,
       "is_unique": false,
@@ -9272,7 +9344,7 @@
       "price": 100,
       "grip": [
         16,
-        24
+        23
       ],
       "attack": "chop_attack",
       "y_up": 4,
@@ -9308,7 +9380,7 @@
       "price": 100,
       "grip": [
         16,
-        26
+        23
       ],
       "attack": "chop_attack",
       "y_up": 4,
@@ -9326,7 +9398,7 @@
       "price": 100,
       "grip": [
         16,
-        26
+        22
       ],
       "attack": "chop_attack",
       "y_up": 4,
@@ -9344,7 +9416,7 @@
       "price": 100,
       "grip": [
         16,
-        25
+        23
       ],
       "attack": "chop_attack",
       "y_up": 4,
@@ -9362,10 +9434,10 @@
       "price": 100,
       "grip": [
         16,
-        26
+        23
       ],
       "attack": "chop_attack",
-      "y_up": 6,
+      "y_up": 4,
       "item_id": 1412,
       "equip_type": 0,
       "is_unique": true,
@@ -9380,10 +9452,10 @@
       "price": 100,
       "grip": [
         16,
-        25
+        23
       ],
       "attack": "chop_attack",
-      "y_up": 5,
+      "y_up": 4,
       "item_id": 1413,
       "equip_type": 0,
       "is_unique": true,
@@ -9398,10 +9470,10 @@
       "price": 100,
       "grip": [
         16,
-        25
+        23
       ],
       "attack": "chop_attack",
-      "y_up": 5,
+      "y_up": 4,
       "item_id": 1414,
       "equip_type": 0,
       "is_unique": false,
@@ -9416,10 +9488,10 @@
       "price": 100,
       "grip": [
         16,
-        26
+        25
       ],
       "attack": "chop_attack",
-      "y_up": 5,
+      "y_up": 4,
       "item_id": 1415,
       "equip_type": 0,
       "is_unique": false,
@@ -9434,10 +9506,10 @@
       "price": 100,
       "grip": [
         16,
-        25
+        22
       ],
       "attack": "chop_attack",
-      "y_up": 5,
+      "y_up": 4,
       "item_id": 1416,
       "equip_type": 0,
       "is_unique": false,
@@ -9452,10 +9524,10 @@
       "price": 100,
       "grip": [
         16,
-        25
+        23
       ],
       "attack": "chop_attack",
-      "y_up": 6,
+      "y_up": 5,
       "item_id": 1417,
       "equip_type": 0,
       "is_unique": true,
@@ -9470,10 +9542,10 @@
       "price": 100,
       "grip": [
         16,
-        25
+        23
       ],
       "attack": "chop_attack",
-      "y_up": 7,
+      "y_up": 6,
       "item_id": 1418,
       "equip_type": 0,
       "is_unique": false,
@@ -9488,10 +9560,10 @@
       "price": 100,
       "grip": [
         16,
-        26
+        23
       ],
       "attack": "chop_attack",
-      "y_up": 6,
+      "y_up": 5,
       "item_id": 1419,
       "equip_type": 0,
       "is_unique": false,
@@ -10706,7 +10778,7 @@
       "price": 100,
       "grip": [
         16,
-        34
+        36
       ],
       "attack": "chop_attack",
       "y_up": 5,
@@ -10724,11 +10796,83 @@
       "price": 100,
       "grip": [
         16,
+        36
+      ],
+      "attack": "chop_attack",
+      "y_up": 5,
+      "item_id": 1502,
+      "equip_type": 2,
+      "is_unique": false,
+      "two_handed": true
+    },
+    "two_blunt/3": {
+      "id": "two_blunt/3",
+      "family": "two_blunt",
+      "sheet": "sprites/weapons/melee/two_blunt.png",
+      "slot": 2,
+      "number": 3,
+      "price": 100,
+      "grip": [
+        16,
+        36
+      ],
+      "attack": "chop_attack",
+      "y_up": 5,
+      "item_id": 1503,
+      "equip_type": 2,
+      "is_unique": false,
+      "two_handed": true
+    },
+    "two_blunt/4": {
+      "id": "two_blunt/4",
+      "family": "two_blunt",
+      "sheet": "sprites/weapons/melee/two_blunt.png",
+      "slot": 3,
+      "number": 4,
+      "price": 100,
+      "grip": [
+        16,
         35
       ],
       "attack": "chop_attack",
-      "y_up": 7,
-      "item_id": 1502,
+      "y_up": 5,
+      "item_id": 1504,
+      "equip_type": 2,
+      "is_unique": false,
+      "two_handed": true
+    },
+    "two_blunt/5": {
+      "id": "two_blunt/5",
+      "family": "two_blunt",
+      "sheet": "sprites/weapons/melee/two_blunt.png",
+      "slot": 4,
+      "number": 5,
+      "price": 100,
+      "grip": [
+        16,
+        36
+      ],
+      "attack": "chop_attack",
+      "y_up": 5,
+      "item_id": 1505,
+      "equip_type": 2,
+      "is_unique": false,
+      "two_handed": true
+    },
+    "two_blunt/6": {
+      "id": "two_blunt/6",
+      "family": "two_blunt",
+      "sheet": "sprites/weapons/melee/two_blunt.png",
+      "slot": 5,
+      "number": 6,
+      "price": 100,
+      "grip": [
+        16,
+        35
+      ],
+      "attack": "chop_attack",
+      "y_up": 5,
+      "item_id": 1506,
       "equip_type": 2,
       "is_unique": false,
       "two_handed": true
@@ -10922,10 +11066,10 @@
       "price": 100,
       "grip": [
         16,
-        46
+        34
       ],
       "attack": "thrust_attack",
-      "y_up": 9,
+      "y_up": 6,
       "item_id": 1601,
       "equip_type": 2,
       "is_unique": false,
@@ -10940,10 +11084,10 @@
       "price": 100,
       "grip": [
         16,
-        46
+        33
       ],
       "attack": "thrust_attack",
-      "y_up": 9,
+      "y_up": 6,
       "item_id": 1602,
       "equip_type": 2,
       "is_unique": false,
@@ -10958,10 +11102,10 @@
       "price": 100,
       "grip": [
         16,
-        45
+        32
       ],
       "attack": "thrust_attack",
-      "y_up": 7,
+      "y_up": 6,
       "item_id": 1603,
       "equip_type": 2,
       "is_unique": false,
@@ -10976,10 +11120,10 @@
       "price": 100,
       "grip": [
         16,
-        45
+        32
       ],
       "attack": "thrust_attack",
-      "y_up": 7,
+      "y_up": 6,
       "item_id": 1604,
       "equip_type": 2,
       "is_unique": false,
@@ -10994,10 +11138,10 @@
       "price": 100,
       "grip": [
         16,
-        41
+        31
       ],
       "attack": "thrust_attack",
-      "y_up": 5,
+      "y_up": 6,
       "item_id": 1605,
       "equip_type": 2,
       "is_unique": false,
@@ -11012,10 +11156,10 @@
       "price": 100,
       "grip": [
         16,
-        41
+        32
       ],
       "attack": "thrust_attack",
-      "y_up": 3,
+      "y_up": 6,
       "item_id": 1606,
       "equip_type": 2,
       "is_unique": false,
@@ -11030,10 +11174,10 @@
       "price": 100,
       "grip": [
         16,
-        45
+        32
       ],
       "attack": "thrust_attack",
-      "y_up": 10,
+      "y_up": 6,
       "item_id": 1607,
       "equip_type": 2,
       "is_unique": false,
@@ -11048,10 +11192,10 @@
       "price": 100,
       "grip": [
         16,
-        46
+        32
       ],
       "attack": "thrust_attack",
-      "y_up": 10,
+      "y_up": 6,
       "item_id": 1608,
       "equip_type": 2,
       "is_unique": false,
@@ -11066,10 +11210,10 @@
       "price": 100,
       "grip": [
         16,
-        44
+        32
       ],
       "attack": "thrust_attack",
-      "y_up": 10,
+      "y_up": 6,
       "item_id": 1609,
       "equip_type": 2,
       "is_unique": false,
@@ -11084,10 +11228,10 @@
       "price": 100,
       "grip": [
         16,
-        40
+        32
       ],
       "attack": "thrust_attack",
-      "y_up": 4,
+      "y_up": 6,
       "item_id": 1610,
       "equip_type": 2,
       "is_unique": false,
@@ -11102,7 +11246,7 @@
       "price": 100,
       "grip": [
         16,
-        45
+        31
       ],
       "attack": "thrust_attack",
       "y_up": 6,
@@ -11120,7 +11264,7 @@
       "price": 100,
       "grip": [
         16,
-        41
+        31
       ],
       "attack": "thrust_attack",
       "y_up": 6,
@@ -11138,7 +11282,7 @@
       "price": 100,
       "grip": [
         16,
-        43
+        31
       ],
       "attack": "thrust_attack",
       "y_up": 6,
